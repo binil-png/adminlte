@@ -1,0 +1,1395 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pappyjoe 3 | Contacts</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback"
+    />
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="../../plugins/fontawesome-free/css/all.min.css"
+    />
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../dist/css/adminlte.min.css" />
+    <style>
+      /* Lightweight AdminLTE-like layout */
+      body {
+        background: #fafafa;
+      }
+      .page-wrap {
+        display: flex;
+        min-height: 100vh;
+      }
+      .sidebar {
+        width: 300px;
+        background: #fff;
+        border-right: 1px solid #e6e6e6;
+        padding: 20px;
+        height: auto;
+      }
+      .content {
+        flex: 1;
+        padding: 24px 40px;
+      }
+      .timeline-card {
+        background: #fff;
+        border-radius: 6px;
+        padding: 16px;
+        margin-bottom: 16px;
+        box-shadow: 0 1px 0 rgba(0, 0, 0, 0.03);
+      }
+      .small-chip {
+        display: inline-block;
+        padding: 6px 10px;
+        background: #f3f6fb;
+        border-radius: 20px;
+        font-size: 13px;
+        margin-right: 6px;
+      }
+      .accordion .card {
+        border-radius: 8px;
+        overflow: hidden;
+      }
+      .card-header {
+        background: #fff;
+        border-bottom: 1px solid #eee;
+      }
+      .card-body .form-control[readonly] {
+        background: #f7f7f9;
+      }
+      .floating-save {
+        position: fixed;
+        right: 18px;
+        bottom: 18px;
+        z-index: 1200;
+      }
+      .quick-badges .badge {
+        margin-right: 8px;
+      }
+      .invoice-summary td,
+      .invoice-summary th {
+        border-top: none !important;
+      }
+    </style>
+  </head>
+  <body class="hold-transition sidebar-mini">
+    <!-- Site wrapper -->
+    <div class="wrapper">
+      <!-- Navbar -->
+      <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+        <!-- Left navbar links -->
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button"
+              ><i class="fas fa-bars"></i
+            ></a>
+          </li>
+          <li class="nav-item d-none d-sm-inline-block">
+            <a href="../../index.html" class="nav-link">Home</a>
+          </li>
+          <li class="nav-item d-none d-sm-inline-block">
+            <a href="#" class="nav-link">Contact</a>
+          </li>
+        </ul>
+
+        <!-- Right navbar links -->
+        <ul class="navbar-nav ml-auto">
+          <!-- Navbar Search -->
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              data-widget="navbar-search"
+              href="#"
+              role="button"
+            >
+              <i class="fas fa-search"></i>
+            </a>
+            <div class="navbar-search-block">
+              <form class="form-inline">
+                <div class="input-group input-group-sm">
+                  <input
+                    class="form-control form-control-navbar"
+                    type="search"
+                    placeholder="Search"
+                    aria-label="Search"
+                  />
+                  <div class="input-group-append">
+                    <button class="btn btn-navbar" type="submit">
+                      <i class="fas fa-search"></i>
+                    </button>
+                    <button
+                      class="btn btn-navbar"
+                      type="button"
+                      data-widget="navbar-search"
+                    >
+                      <i class="fas fa-times"></i>
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </li>
+
+          <!-- Messages Dropdown Menu -->
+          <li class="nav-item dropdown">
+            <a class="nav-link" data-toggle="dropdown" href="#">
+              <i class="far fa-comments"></i>
+              <span class="badge badge-danger navbar-badge">3</span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+              <a href="#" class="dropdown-item">
+                <!-- Message Start -->
+                <div class="media">
+                  <img
+                    src="../../dist/img/user1-128x128.jpg"
+                    alt="User Avatar"
+                    class="img-size-50 mr-3 img-circle"
+                  />
+                  <div class="media-body">
+                    <h3 class="dropdown-item-title">
+                      Brad Diesel
+                      <span class="float-right text-sm text-danger"
+                        ><i class="fas fa-star"></i
+                      ></span>
+                    </h3>
+                    <p class="text-sm">Call me whenever you can...</p>
+                    <p class="text-sm text-muted">
+                      <i class="far fa-clock mr-1"></i> 4 Hours Ago
+                    </p>
+                  </div>
+                </div>
+                <!-- Message End -->
+              </a>
+              <div class="dropdown-divider"></div>
+              <a href="#" class="dropdown-item">
+                <!-- Message Start -->
+                <div class="media">
+                  <img
+                    src="../../dist/img/user8-128x128.jpg"
+                    alt="User Avatar"
+                    class="img-size-50 img-circle mr-3"
+                  />
+                  <div class="media-body">
+                    <h3 class="dropdown-item-title">
+                      John Pierce
+                      <span class="float-right text-sm text-muted"
+                        ><i class="fas fa-star"></i
+                      ></span>
+                    </h3>
+                    <p class="text-sm">I got your message bro</p>
+                    <p class="text-sm text-muted">
+                      <i class="far fa-clock mr-1"></i> 4 Hours Ago
+                    </p>
+                  </div>
+                </div>
+                <!-- Message End -->
+              </a>
+              <div class="dropdown-divider"></div>
+              <a href="#" class="dropdown-item">
+                <!-- Message Start -->
+                <div class="media">
+                  <img
+                    src="../../dist/img/user3-128x128.jpg"
+                    alt="User Avatar"
+                    class="img-size-50 img-circle mr-3"
+                  />
+                  <div class="media-body">
+                    <h3 class="dropdown-item-title">
+                      Nora Silvester
+                      <span class="float-right text-sm text-warning"
+                        ><i class="fas fa-star"></i
+                      ></span>
+                    </h3>
+                    <p class="text-sm">The subject goes here</p>
+                    <p class="text-sm text-muted">
+                      <i class="far fa-clock mr-1"></i> 4 Hours Ago
+                    </p>
+                  </div>
+                </div>
+                <!-- Message End -->
+              </a>
+              <div class="dropdown-divider"></div>
+              <a href="#" class="dropdown-item dropdown-footer"
+                >See All Messages</a
+              >
+            </div>
+          </li>
+          <!-- Notifications Dropdown Menu -->
+          <li class="nav-item dropdown">
+            <a class="nav-link" data-toggle="dropdown" href="#">
+              <i class="far fa-bell"></i>
+              <span class="badge badge-warning navbar-badge">15</span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+              <span class="dropdown-item dropdown-header"
+                >15 Notifications</span
+              >
+              <div class="dropdown-divider"></div>
+              <a href="#" class="dropdown-item">
+                <i class="fas fa-envelope mr-2"></i> 4 new messages
+                <span class="float-right text-muted text-sm">3 mins</span>
+              </a>
+              <div class="dropdown-divider"></div>
+              <a href="#" class="dropdown-item">
+                <i class="fas fa-users mr-2"></i> 8 friend requests
+                <span class="float-right text-muted text-sm">12 hours</span>
+              </a>
+              <div class="dropdown-divider"></div>
+              <a href="#" class="dropdown-item">
+                <i class="fas fa-file mr-2"></i> 3 new reports
+                <span class="float-right text-muted text-sm">2 days</span>
+              </a>
+              <div class="dropdown-divider"></div>
+              <a href="#" class="dropdown-item dropdown-footer"
+                >See All Notifications</a
+              >
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+              <i class="fas fa-expand-arrows-alt"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              data-widget="control-sidebar"
+              data-slide="true"
+              href="#"
+              role="button"
+            >
+              <i class="fas fa-th-large"></i>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <!-- /.navbar -->
+
+      <!-- Main Sidebar Container -->
+      <aside class="main-sidebar sidebar-light-primary elevation-4">
+        <!-- Brand Logo -->
+        <a href="../../index.html" class="brand-link">
+          <img
+            src="../../dist/img/AdminLTELogo.png"
+            alt="AdminLTE Logo"
+            class="brand-image img-circle elevation-3"
+            style="opacity: 0.8"
+          />
+          <span class="brand-text font-weight-light">Pappyjoe</span>
+        </a>
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+          <!-- Sidebar user (optional) -->
+          <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="image">
+              <img
+                src="../../dist/img/user2-160x160.jpg"
+                class="img-circle elevation-2"
+                alt="User Image"
+              />
+            </div>
+            <div class="info">
+              <a href="#" class="d-block">Care & Cure</a>
+            </div>
+          </div>
+
+          <!-- SidebarSearch Form -->
+          <div class="form-inline">
+            <div class="input-group" data-widget="sidebar-search">
+              <input
+                class="form-control form-control-sidebar"
+                type="search"
+                placeholder="Search"
+                aria-label="Search"
+              />
+              <div class="input-group-append">
+                <button class="btn btn-sidebar">
+                  <i class="fas fa-search fa-fw"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sidebar Menu -->
+          <nav class="mt-2">
+            <ul
+              class="nav nav-pills nav-sidebar flex-column"
+              data-widget="treeview"
+              role="menu"
+              data-accordion="false"
+            >
+              <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+
+              <li class="nav-item menu-open">
+                <a href="#" class="nav-link active">
+                  <i class="nav-icon fas fa-book"></i>
+                  <p>
+                    Pages
+                    <i class="fas fa-angle-left right"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="../examples/project-detail.html" class="nav-link">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Project Detail</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="../examples/contacts.html" class="nav-link active">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Contacts</p>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+
+              <li class="nav-header">MULTI LEVEL EXAMPLE</li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="fas fa-circle nav-icon"></i>
+                  <p>Level 1</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="nav-icon fas fa-circle"></i>
+                  <p>
+                    Level 1
+                    <i class="right fas fa-angle-left"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="#" class="nav-link">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Level 2</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="#" class="nav-link">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>
+                        Level 2
+                        <i class="right fas fa-angle-left"></i>
+                      </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                      <li class="nav-item">
+                        <a href="#" class="nav-link">
+                          <i class="far fa-dot-circle nav-icon"></i>
+                          <p>Level 3</p>
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <a href="#" class="nav-link">
+                          <i class="far fa-dot-circle nav-icon"></i>
+                          <p>Level 3</p>
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <a href="#" class="nav-link">
+                          <i class="far fa-dot-circle nav-icon"></i>
+                          <p>Level 3</p>
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </nav>
+          <!-- /.sidebar-menu -->
+        </div>
+        <!-- /.sidebar -->
+      </aside>
+
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+          <div class="container-fluid">
+            <div class="row mb-2">
+              <div class="col-sm-12">
+                <h1>EHR</h1>
+              </div>
+            </div>
+          </div>
+          <!-- /.container-fluid -->
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+          <div class="card card-primary card-outline">
+            <div class="card-header">
+              <h3 class="card-title">
+                <i class="fas fa-edit"></i>
+                PATIENTS
+              </h3>
+            </div>
+            <div class="card-body">
+              <div class="page-wrap">
+                <aside class="sidebar">
+                  <div class="mb-4">
+                    <input
+                      class="form-control"
+                      placeholder="Search patient..."
+                    />
+                  </div>
+                  <h5>Patient History</h5>
+                  <div class="mt-3">
+                    <div class="timeline-card">
+                      <strong>Vitals Recorded</strong>
+                      <div class="text-muted small mt-2">
+                        Temp: <span class="text-danger">98.6°F</span> • BP:
+                        120/80 • Pulse: 72 bpm
+                      </div>
+                      <div class="text-muted small mt-2">
+                        3:00 PM • Nurse Station
+                      </div>
+                    </div>
+                    <div class="timeline-card">
+                      <strong>Clinical Notes</strong>
+                      <div class="text-muted small mt-2">
+                        Chief complaints: Fever, cough, bad cold
+                      </div>
+                      <div class="text-muted small mt-2">
+                        2:45 PM • Dr. Smith
+                      </div>
+                    </div>
+                    <div class="timeline-card">
+                      <strong>Prescription</strong>
+                      <div class="text-muted small mt-2">
+                        Paracetamol 250mg • Duration: 5 days
+                      </div>
+                    </div>
+                  </div>
+                </aside>
+
+                <main class="content">
+                  <div
+                    class="d-flex justify-content-between align-items-start mb-3"
+                  >
+                    <div>
+                      <h4 class="mb-0">John Doe</h4>
+                      <small class="text-muted"
+                        >27Y • Female • New York • +1 123 456 7890</small
+                      >
+                    </div>
+                    <div class="text-right text-muted">
+                      <div>
+                        Amount Payable <br />
+                        <strong>₹0</strong>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Accordion -->
+                  <div id="patientAccordion" class="accordion">
+                    <!-- Vitals -->
+                    <div class="card mb-2">
+                      <div class="card-header" id="headingVitals">
+                        <h5 class="mb-0">
+                          <button
+                            class="btn btn-link"
+                            data-toggle="collapse"
+                            data-target="#collapseVitals"
+                            aria-expanded="true"
+                          >
+                            📋 Vitals
+                          </button>
+                        </h5>
+                      </div>
+                      <div
+                        id="collapseVitals"
+                        class="collapse show"
+                        data-parent="#patientAccordion"
+                      >
+                        <div class="card-body">
+                          <form id="vitalsForm">
+                            <div class="form-row">
+                              <div class="form-group col-md-2">
+                                <label>Height (cm)</label>
+                                <input
+                                  type="number"
+                                  name="height"
+                                  class="form-control"
+                                  value="170"
+                                />
+                              </div>
+                              <div class="form-group col-md-2">
+                                <label>Weight (kg)</label>
+                                <input
+                                  type="number"
+                                  name="weight"
+                                  class="form-control"
+                                  value="65"
+                                />
+                              </div>
+                              <div class="form-group col-md-2">
+                                <label>Temp (°F)</label>
+                                <input
+                                  type="text"
+                                  name="temp"
+                                  class="form-control"
+                                  value="98.6"
+                                />
+                              </div>
+                              <div class="form-group col-md-2">
+                                <label>BP</label>
+                                <input
+                                  type="text"
+                                  name="bp"
+                                  class="form-control"
+                                  value="120/80"
+                                />
+                              </div>
+                              <div class="form-group col-md-2">
+                                <label>HR (bpm)</label>
+                                <input
+                                  type="number"
+                                  name="hr"
+                                  class="form-control"
+                                  value="72"
+                                />
+                              </div>
+                            </div>
+                            <div class="form-row align-items-end">
+                              <div class="form-group col-md-8">
+                                <label>Allergies</label>
+                                <div id="allergyList" class="mb-2">
+                                  <div class="input-group mb-2 allergy-row">
+                                    <input
+                                      type="text"
+                                      class="form-control"
+                                      value="Penicillin"
+                                    />
+                                    <div class="input-group-append">
+                                      <button
+                                        class="btn btn-outline-danger btn-remove-allergy"
+                                        type="button"
+                                      >
+                                        ✖
+                                      </button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-group col-md-4 text-right">
+                                <button
+                                  id="addAllergy"
+                                  class="btn btn-sm btn-outline-primary"
+                                >
+                                  + Add Allergy
+                                </button>
+                              </div>
+                            </div>
+                            <button
+                              type="button"
+                              class="btn btn-primary btn-sm"
+                              id="saveVitals"
+                            >
+                              Save
+                            </button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Clinical Notes -->
+                    <div class="card mb-2">
+                      <div class="card-header" id="headingNotes">
+                        <h5 class="mb-0">
+                          <button
+                            class="btn btn-link collapsed"
+                            data-toggle="collapse"
+                            data-target="#collapseNotes"
+                          >
+                            📝 Clinical Notes
+                          </button>
+                        </h5>
+                      </div>
+                      <div
+                        id="collapseNotes"
+                        class="collapse"
+                        data-parent="#patientAccordion"
+                      >
+                        <div class="card-body">
+                          <div class="quick-badges mb-3">
+                            <span class="badge badge-primary"
+                              >Fever & Cold</span
+                            >
+                            <span class="badge badge-primary">Headache</span>
+                            <span class="badge badge-primary"
+                              >Stomach Pain</span
+                            >
+                          </div>
+                          <form id="notesForm">
+                            <div class="form-row">
+                              <div class="form-group col-md-6">
+                                <label>Chief Complaints</label>
+                                <textarea
+                                  class="form-control"
+                                  rows="3"
+                                  placeholder="e.g., fever, cough, infection"
+                                ></textarea>
+                              </div>
+                              <div class="form-group col-md-6">
+                                <label>Medical History</label>
+                                <textarea
+                                  class="form-control"
+                                  rows="3"
+                                  placeholder="Previous medical history..."
+                                ></textarea>
+                              </div>
+                            </div>
+
+                            <div class="form-row">
+                              <div class="form-group col-md-6">
+                                <label>Observations</label>
+                                <textarea
+                                  class="form-control"
+                                  rows="2"
+                                ></textarea>
+                              </div>
+                              <div class="form-group col-md-6">
+                                <label>Investigations</label>
+                                <textarea
+                                  class="form-control"
+                                  rows="2"
+                                ></textarea>
+                              </div>
+                            </div>
+
+                            <div class="form-row">
+                              <div class="form-group col-md-6">
+                                <label>Diagnosis</label>
+                                <textarea
+                                  class="form-control"
+                                  rows="2"
+                                ></textarea>
+                              </div>
+                              <div class="form-group col-md-6">
+                                <label>Treatment</label>
+                                <textarea
+                                  class="form-control"
+                                  rows="2"
+                                ></textarea>
+                              </div>
+                            </div>
+
+                            <div class="form-group">
+                              <label>Advice</label>
+                              <textarea
+                                class="form-control"
+                                rows="3"
+                              ></textarea>
+                            </div>
+
+                            <div class="text-right">
+                              <button
+                                type="button"
+                                class="btn btn-warning btn-sm"
+                                id="aidx"
+                              >
+                                AI Diagnosis
+                              </button>
+                              <button
+                                type="button"
+                                class="btn btn-primary btn-sm"
+                                id="saveNotes"
+                              >
+                                Save
+                              </button>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Procedures & Treatments -->
+                    <div class="card mb-2">
+                      <div class="card-header" id="headingProc">
+                        <h5 class="mb-0">
+                          <button
+                            class="btn btn-link collapsed"
+                            data-toggle="collapse"
+                            data-target="#collapseProc"
+                          >
+                            💊 Procedures & Treatments
+                            <small class="text-muted">
+                              • Total: <span id="procTotal">₹0</span></small
+                            >
+                          </button>
+                        </h5>
+                      </div>
+                      <div
+                        id="collapseProc"
+                        class="collapse"
+                        data-parent="#patientAccordion"
+                      >
+                        <div class="card-body">
+                          <div class="quick-badges mb-3">
+                            <span class="badge badge-primary">Wound Care</span>
+                            <span class="badge badge-primary">Dental</span>
+                            <span class="badge badge-primary">X-Ray</span>
+                          </div>
+                          <form id="procForm">
+                            <div class="form-row align-items-end">
+                              <div class="form-group col-md-3">
+                                <label>Date</label>
+                                <input
+                                  type="date"
+                                  class="form-control"
+                                  name="proc_date"
+                                />
+                              </div>
+                              <div class="form-group col-md-3">
+                                <label>Doctor</label>
+                                <select class="form-control" name="proc_doc">
+                                  <option>Select Doctor</option>
+                                </select>
+                              </div>
+                            </div>
+
+                            <table
+                              class="table table-sm table-bordered"
+                              id="procTable"
+                            >
+                              <thead class="thead-light">
+                                <tr>
+                                  <th>Sr No.</th>
+                                  <th>Procedure</th>
+                                  <th>Qty</th>
+                                  <th>Price</th>
+                                  <th>Discount (%)</th>
+                                  <th>Total</th>
+                                  <th></th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <td class="align-middle">1</td>
+                                  <td>
+                                    <select class="form-control proc-name">
+                                      <option value="">SELECT</option>
+                                      <option value="Dental Cleaning">
+                                        Dental Cleaning
+                                      </option>
+                                    </select>
+                                  </td>
+                                  <td>
+                                    <input
+                                      type="number"
+                                      class="form-control proc-qty"
+                                      value="1"
+                                    />
+                                  </td>
+                                  <td>
+                                    <input
+                                      type="number"
+                                      class="form-control proc-price"
+                                      value="0"
+                                    />
+                                  </td>
+                                  <td>
+                                    <input
+                                      type="number"
+                                      class="form-control proc-discount"
+                                      value="0"
+                                    />
+                                  </td>
+                                  <td class="proc-line-total align-middle">
+                                    ₹0
+                                  </td>
+                                  <td>
+                                    <button
+                                      type="button"
+                                      class="btn btn-sm btn-danger btn-remove-proc"
+                                    >
+                                      ✖
+                                    </button>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                            <button
+                              type="button"
+                              class="btn btn-link"
+                              id="addProc"
+                            >
+                              + ADD NEW
+                            </button>
+                            <div class="mt-2">
+                              Total ₹ <span id="procSum">0</span>
+                            </div>
+                            <div class="text-right mt-3">
+                              <button
+                                type="button"
+                                class="btn btn-primary"
+                                id="saveProc"
+                              >
+                                Save
+                              </button>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Prescriptions -->
+                    <div class="card mb-2">
+                      <div class="card-header" id="headingPresc">
+                        <h5 class="mb-0">
+                          <button
+                            class="btn btn-link collapsed"
+                            data-toggle="collapse"
+                            data-target="#collapsePresc"
+                          >
+                            💊 Prescriptions
+                          </button>
+                        </h5>
+                      </div>
+                      <div
+                        id="collapsePresc"
+                        class="collapse"
+                        data-parent="#patientAccordion"
+                      >
+                        <div class="card-body">
+                          <div class="quick-badges mb-3">
+                            <span class="badge badge-primary">Fever Kit</span>
+                            <span class="badge badge-primary">Pain Relief</span>
+                            <span class="badge badge-primary">Antibiotic</span>
+                          </div>
+                          <form id="prescForm">
+                            <div id="medList">
+                              <div class="medicine-card card mb-2 p-3">
+                                <h6>Medicine 1</h6>
+                                <div class="form-row">
+                                  <div class="form-group col-md-8">
+                                    <input
+                                      class="form-control"
+                                      placeholder="e.g., Paracetamol 500mg"
+                                    />
+                                  </div>
+                                  <div class="form-group col-md-4 text-right">
+                                    <button
+                                      class="btn btn-sm btn-danger btn-remove-med"
+                                      type="button"
+                                    >
+                                      Remove
+                                    </button>
+                                  </div>
+                                </div>
+                                <div class="form-row">
+                                  <div class="form-group col-md-3">
+                                    <input
+                                      class="form-control"
+                                      placeholder="Dosage e.g., 500mg"
+                                    />
+                                  </div>
+                                  <div class="form-group col-md-3">
+                                    <input
+                                      class="form-control"
+                                      placeholder="Duration e.g., 5 days"
+                                    />
+                                  </div>
+                                  <div class="form-group col-md-3">
+                                    <input
+                                      class="form-control"
+                                      placeholder="Frequency e.g., 1-1-1"
+                                    />
+                                  </div>
+                                  <div class="form-group col-md-3">
+                                    <input
+                                      class="form-control"
+                                      placeholder="Instructions"
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <button
+                              type="button"
+                              class="btn btn-link"
+                              id="addMed"
+                            >
+                              + Add Medicine
+                            </button>
+                            <div class="text-right mt-3">
+                              <button
+                                type="button"
+                                class="btn btn-primary"
+                                id="savePresc"
+                              >
+                                Save
+                              </button>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Files -->
+                    <div class="card mb-2">
+                      <div class="card-header" id="headingFiles">
+                        <h5 class="mb-0">
+                          <button
+                            class="btn btn-link collapsed"
+                            data-toggle="collapse"
+                            data-target="#collapseFiles"
+                          >
+                            📁 Files
+                          </button>
+                        </h5>
+                      </div>
+                      <div
+                        id="collapseFiles"
+                        class="collapse"
+                        data-parent="#patientAccordion"
+                      >
+                        <div class="card-body">
+                          <form id="filesForm">
+                            <div class="form-group">
+                              <label>Upload Files</label>
+                              <input
+                                type="file"
+                                class="form-control-file"
+                                id="fileInput"
+                                multiple
+                              />
+                            </div>
+                            <ul id="fileList" class="list-unstyled"></ul>
+                            <div class="text-right">
+                              <button
+                                type="button"
+                                class="btn btn-primary"
+                                id="saveFiles"
+                              >
+                                Save
+                              </button>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Generate Invoice Button -->
+                  <div class="mt-4">
+                    <button class="btn btn-outline-secondary" id="openInvoice">
+                      Generate Invoice
+                    </button>
+                  </div>
+
+                  <!-- Invoice Section (hidden / separate page area) -->
+                  <section
+                    id="invoiceSection"
+                    class="mt-4"
+                    style="display: none"
+                  >
+                    <div class="card">
+                      <div class="card-body">
+                        <h5>Generate Invoice</h5>
+                        <table
+                          class="table table-sm table-bordered mb-3"
+                          id="invoiceTable"
+                        >
+                          <thead>
+                            <tr>
+                              <th>Services</th>
+                              <th style="width: 80px">Qty</th>
+                              <th style="width: 120px">Price</th>
+                              <th style="width: 120px">Discount</th>
+                              <th style="width: 120px">Taxes</th>
+                              <th style="width: 140px">Total</th>
+                              <th></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>
+                                <input
+                                  class="form-control invoice-service"
+                                  value="Dental Cleaning"
+                                />
+                              </td>
+                              <td>
+                                <input
+                                  type="number"
+                                  class="form-control invoice-qty"
+                                  value="1"
+                                />
+                              </td>
+                              <td>
+                                <input
+                                  type="number"
+                                  class="form-control invoice-price"
+                                  value="1500"
+                                />
+                              </td>
+                              <td>
+                                <input
+                                  type="number"
+                                  class="form-control invoice-discount"
+                                  value="0"
+                                />
+                              </td>
+                              <td>
+                                <input
+                                  type="number"
+                                  class="form-control invoice-tax"
+                                  value="0"
+                                />
+                              </td>
+                              <td class="invoice-line-total">₹1500.00</td>
+                              <td>
+                                <button
+                                  class="btn btn-sm btn-danger btn-remove-inv"
+                                >
+                                  ✖
+                                </button>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <div class="text-center">
+                          <button class="btn btn-link" id="addInvItem">
+                            + Add Item
+                          </button>
+                        </div>
+
+                        <div class="row mt-4">
+                          <div class="col-md-6">
+                            <h6>Receipt</h6>
+                            <div class="form-group">
+                              <label>PAY NOW (Payment Mode 1)</label>
+                              <div class="input-group">
+                                <input
+                                  type="number"
+                                  class="form-control payment-1"
+                                  value="1500"
+                                /><select class="form-control">
+                                  <option>Cash</option>
+                                  <option>Card</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label>PAY NOW (Payment Mode 2 - Optional)</label>
+                              <div class="input-group">
+                                <input
+                                  type="number"
+                                  class="form-control payment-2"
+                                  value="0"
+                                /><select class="form-control">
+                                  <option>--</option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <table
+                              class="table table-borderless invoice-summary"
+                            >
+                              <tr>
+                                <td>Total Price</td>
+                                <td class="text-right">
+                                  ₹<span id="invPrice">1500.00</span>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>Total Discount</td>
+                                <td class="text-right text-danger">
+                                  -₹<span id="invDiscount">0.00</span>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>Total Tax</td>
+                                <td class="text-right">
+                                  +₹<span id="invTax">0.00</span>
+                                </td>
+                              </tr>
+                              <tr class="font-weight-bold">
+                                <td>Grand Total</td>
+                                <td class="text-right">
+                                  ₹<span id="invGrand">1500.00</span>
+                                </td>
+                              </tr>
+                            </table>
+                            <div class="text-right">
+                              <button class="btn btn-success" id="saveInvoice">
+                                Save Invoice and Receipt
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+                </main>
+              </div>
+            </div>
+            <!-- /.card -->
+          </div>
+
+          <!-- Default box -->
+        </section>
+        <!-- /.content -->
+      </div>
+      <!-- /.content-wrapper -->
+
+      <footer class="main-footer">
+        <div class="float-right d-none d-sm-block"><b>Version</b> 3.2.0</div>
+        <strong>Copyright &copy; 2014-2022 <a href="#">AdminLTE.io</a>.</strong>
+        All rights reserved.
+      </footer>
+
+      <!-- Control Sidebar -->
+      <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+      </aside>
+      <!-- /.control-sidebar -->
+    </div>
+    <!-- ./wrapper -->
+
+    <script src="../../plugins/jquery/jquery.min.js"></script>
+    <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../../dist/js/adminlte.min.js"></script>
+    <script>
+      $(function () {
+        // Allergy add/remove
+        $("#addAllergy").on("click", function (e) {
+          e.preventDefault();
+          $("#allergyList").append(
+            '<div class="input-group mb-2 allergy-row">< + """>'
+          );
+        });
+
+        // Better implementation: use template
+        function addAllergyRow(value) {
+          var row = $('<div class="input-group mb-2 allergy-row">')
+            .append(
+              $('<input type="text" class="form-control">').val(value || "")
+            )
+            .append(
+              $('<div class="input-group-append">').append(
+                $(
+                  '<button class="btn btn-outline-danger btn-remove-allergy" type="button">✖</button>'
+                )
+              )
+            );
+          $("#allergyList").append(row);
+        }
+        // initialize existing
+        $("#allergyList .allergy-row input").each(function () {
+          /* already exist*/
+        });
+        $("#addAllergy")
+          .off("click")
+          .on("click", function (e) {
+            e.preventDefault();
+            addAllergyRow("");
+          });
+        $(document).on("click", ".btn-remove-allergy", function () {
+          $(this).closest(".allergy-row").remove();
+        });
+
+        // Procedures: add/remove and calculate
+        function recalcProcedures() {
+          var sum = 0;
+          $("#procTable tbody tr").each(function () {
+            var qty = parseFloat($(this).find(".proc-qty").val() || 0);
+            var price = parseFloat($(this).find(".proc-price").val() || 0);
+            var disc = parseFloat($(this).find(".proc-discount").val() || 0);
+            var line = qty * price * (1 - disc / 100);
+            $(this)
+              .find(".proc-line-total")
+              .text("₹" + line.toFixed(2));
+            sum += line;
+          });
+          $("#procSum").text(sum.toFixed(2));
+          $("#procTotal").text("₹" + sum.toFixed(2));
+        }
+        $("#addProc").on("click", function () {
+          var idx = $("#procTable tbody tr").length + 1;
+          var newRow = $("<tr>")
+            .append('<td class="align-middle">' + idx + "</td>")
+            .append(
+              '<td><select class="form-control proc-name"><option value="">SELECT</option><option value="Dental Cleaning">Dental Cleaning</option><option value="General Consultation">General Consultation</option></select></td>'
+            )
+            .append(
+              '<td><input type="number" class="form-control proc-qty" value="1"></td>'
+            )
+            .append(
+              '<td><input type="number" class="form-control proc-price" value="0"></td>'
+            )
+            .append(
+              '<td><input type="number" class="form-control proc-discount" value="0"></td>'
+            )
+            .append('<td class="proc-line-total align-middle">₹0</td>')
+            .append(
+              '<td><button type="button" class="btn btn-sm btn-danger btn-remove-proc">✖</button></td>'
+            );
+          $("#procTable tbody").append(newRow);
+          recalcProcedures();
+        });
+        $(document).on("click", ".btn-remove-proc", function () {
+          $(this).closest("tr").remove();
+          // re-index
+          $("#procTable tbody tr").each(function (i) {
+            $(this)
+              .find("td:first")
+              .text(i + 1);
+          });
+          recalcProcedures();
+        });
+        $(document).on(
+          "input",
+          ".proc-qty, .proc-price, .proc-discount",
+          function () {
+            recalcProcedures();
+          }
+        );
+        recalcProcedures();
+
+        // Prescriptions: add/remove
+        $("#addMed").on("click", function () {
+          var count = $("#medList .medicine-card").length + 1;
+          var card = $('<div class="medicine-card card mb-2 p-3">')
+            .append("<h6>Medicine " + count + "</h6>")
+            .append(
+              '<div class="form-row"><div class="form-group col-md-8"><input class="form-control" placeholder="e.g., Paracetamol 500mg"></div><div class="form-group col-md-4 text-right"><button class="btn btn-sm btn-danger btn-remove-med" type="button">Remove</button></div></div>'
+            )
+            .append(
+              '<div class="form-row"><div class="form-group col-md-3"><input class="form-control" placeholder="Dosage"></div><div class="form-group col-md-3"><input class="form-control" placeholder="Duration"></div><div class="form-group col-md-3"><input class="form-control" placeholder="Frequency"></div><div class="form-group col-md-3"><input class="form-control" placeholder="Instructions"></div></div>'
+            );
+          $("#medList").append(card);
+        });
+        $(document).on("click", ".btn-remove-med", function () {
+          $(this).closest(".medicine-card").remove();
+        });
+
+        // Files
+        $("#fileInput").on("change", function () {
+          $("#fileList").empty();
+          Array.from(this.files).forEach(function (f, i) {
+            $("#fileList").append(
+              "<li>" +
+                f.name +
+                ' <button data-index="' +
+                i +
+                '" class="btn btn-sm btn-link btn-remove-file">Remove</button></li>'
+            );
+          });
+        });
+        $(document).on("click", ".btn-remove-file", function () {
+          $(this).parent().remove();
+        });
+
+        // Invoice behaviors
+        function recalcInvoice() {
+          var totalPrice = 0,
+            totalDiscount = 0,
+            totalTax = 0;
+          $("#invoiceTable tbody tr").each(function () {
+            var qty = parseFloat($(this).find(".invoice-qty").val() || 0);
+            var price = parseFloat($(this).find(".invoice-price").val() || 0);
+            var discount = parseFloat(
+              $(this).find(".invoice-discount").val() || 0
+            );
+            var tax = parseFloat($(this).find(".invoice-tax").val() || 0);
+            var linePrice = qty * price;
+            var lineDiscount = linePrice * (discount / 100);
+            var lineTax = (linePrice - lineDiscount) * (tax / 100);
+            var lineTotal = linePrice - lineDiscount + lineTax;
+            $(this)
+              .find(".invoice-line-total")
+              .text("₹" + lineTotal.toFixed(2));
+            totalPrice += linePrice;
+            totalDiscount += lineDiscount;
+            totalTax += lineTax;
+          });
+          $("#invPrice").text(totalPrice.toFixed(2));
+          $("#invDiscount").text(totalDiscount.toFixed(2));
+          $("#invTax").text(totalTax.toFixed(2));
+          $("#invGrand").text(
+            (totalPrice - totalDiscount + totalTax).toFixed(2)
+          );
+        }
+        $("#addInvItem").on("click", function () {
+          var row = $("<tr>")
+            .append(
+              '<td><input class="form-control invoice-service" value=""></td>'
+            )
+            .append(
+              '<td><input type="number" class="form-control invoice-qty" value="1"></td>'
+            )
+            .append(
+              '<td><input type="number" class="form-control invoice-price" value="0"></td>'
+            )
+            .append(
+              '<td><input type="number" class="form-control invoice-discount" value="0"></td>'
+            )
+            .append(
+              '<td><input type="number" class="form-control invoice-tax" value="0"></td>'
+            )
+            .append('<td class="invoice-line-total">₹0.00</td>')
+            .append(
+              '<td><button class="btn btn-sm btn-danger btn-remove-inv">✖</button></td>'
+            );
+          $("#invoiceTable tbody").append(row);
+          recalcInvoice();
+        });
+        $(document).on("click", ".btn-remove-inv", function () {
+          $(this).closest("tr").remove();
+          recalcInvoice();
+        });
+        $(document).on(
+          "input",
+          ".invoice-qty, .invoice-price, .invoice-discount, .invoice-tax",
+          recalcInvoice
+        );
+
+        $("#openInvoice").on("click", function () {
+          $("#invoiceSection").toggle();
+          $("html,body").animate(
+            { scrollTop: $("#invoiceSection").offset().top - 20 },
+            400
+          );
+          recalcInvoice();
+        });
+
+        $("#saveInvoice").on("click", function () {
+          alert("Invoice saved. Grand Total: ₹" + $("#invGrand").text());
+        });
+
+        // Global save & buttons
+        $(
+          "#globalSave, #saveVitals, #saveNotes, #saveProc, #savePresc, #saveFiles"
+        ).on("click", function () {
+          $(this).prop("disabled", true);
+          setTimeout(() => $(this).prop("disabled", false), 800);
+          // In a real app we'd send AJAX here
+          $(this).closest("form").addClass("border-success");
+        });
+
+        // small UX: when collapse shows, scroll into view
+        $(".collapse").on("shown.bs.collapse", function () {
+          $("html,body").animate(
+            { scrollTop: $(this).prev().offset().top - 60 },
+            300
+          );
+        });
+      });
+    </script>
+  </body>
+</html>
