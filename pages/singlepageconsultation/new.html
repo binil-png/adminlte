@@ -34,8 +34,8 @@
         height: auto;
       }
       .content {
-        flex: 1;
-        padding: 24px 40px;
+        /* flex: 1; */
+        padding: 24px 24px;
       }
       .timeline-card {
         background: #fff;
@@ -79,11 +79,8 @@
     </style>
   </head>
   <body class="hold-transition sidebar-mini">
-    <!-- Site wrapper -->
-    <div class="wrapper">
-      <!-- Navbar -->
-      <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-        <!-- Left navbar links -->
+    <div class="">
+      <nav class="navbar navbar-expand navbar-white navbar-light">
         <ul class="navbar-nav">
           <li class="nav-item">
             <a class="nav-link" data-widget="pushmenu" href="#" role="button"
@@ -269,172 +266,25 @@
           </li>
         </ul>
       </nav>
-      <!-- /.navbar -->
-
-      <!-- Main Sidebar Container -->
-      <aside class="main-sidebar sidebar-light-primary elevation-4">
-        <!-- Brand Logo -->
-        <a href="../../index.html" class="brand-link">
-          <img
-            src="../../dist/img/AdminLTELogo.png"
-            alt="AdminLTE Logo"
-            class="brand-image img-circle elevation-3"
-            style="opacity: 0.8"
-          />
-          <span class="brand-text font-weight-light">Pappyjoe</span>
-        </a>
-
-        <!-- Sidebar -->
-        <div class="sidebar">
-          <!-- Sidebar user (optional) -->
-          <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-            <div class="image">
-              <img
-                src="../../dist/img/user2-160x160.jpg"
-                class="img-circle elevation-2"
-                alt="User Image"
-              />
-            </div>
-            <div class="info">
-              <a href="#" class="d-block">Care & Cure</a>
-            </div>
-          </div>
-
-          <!-- SidebarSearch Form -->
-          <div class="form-inline">
-            <div class="input-group" data-widget="sidebar-search">
-              <input
-                class="form-control form-control-sidebar"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-              <div class="input-group-append">
-                <button class="btn btn-sidebar">
-                  <i class="fas fa-search fa-fw"></i>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <!-- Sidebar Menu -->
-          <nav class="mt-2">
-            <ul
-              class="nav nav-pills nav-sidebar flex-column"
-              data-widget="treeview"
-              role="menu"
-              data-accordion="false"
+      <!-- <div class="card-header  border-top">
+        <div class="d-flex justify-content-between align-items-start">
+          <div>
+            <h4 class="mb-0">John Doe</h4>
+            <small class="text-muted"
+              >27Y • Mele • New York • +1 123 456 7890</small
             >
-              <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-
-              <li class="nav-item menu-open">
-                <a href="#" class="nav-link active">
-                  <i class="nav-icon fas fa-book"></i>
-                  <p>
-                    Pages
-                    <i class="fas fa-angle-left right"></i>
-                  </p>
-                </a>
-                <ul class="nav nav-treeview">
-                  <li class="nav-item">
-                    <a href="../examples/project-detail.html" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Project Detail</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="../examples/contacts.html" class="nav-link active">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Contacts</p>
-                    </a>
-                  </li>
-                </ul>
-              </li>
-
-              <li class="nav-header">MULTI LEVEL EXAMPLE</li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="fas fa-circle nav-icon"></i>
-                  <p>Level 1</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="nav-icon fas fa-circle"></i>
-                  <p>
-                    Level 1
-                    <i class="right fas fa-angle-left"></i>
-                  </p>
-                </a>
-                <ul class="nav nav-treeview">
-                  <li class="nav-item">
-                    <a href="#" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Level 2</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="#" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>
-                        Level 2
-                        <i class="right fas fa-angle-left"></i>
-                      </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                      <li class="nav-item">
-                        <a href="#" class="nav-link">
-                          <i class="far fa-dot-circle nav-icon"></i>
-                          <p>Level 3</p>
-                        </a>
-                      </li>
-                      <li class="nav-item">
-                        <a href="#" class="nav-link">
-                          <i class="far fa-dot-circle nav-icon"></i>
-                          <p>Level 3</p>
-                        </a>
-                      </li>
-                      <li class="nav-item">
-                        <a href="#" class="nav-link">
-                          <i class="far fa-dot-circle nav-icon"></i>
-                          <p>Level 3</p>
-                        </a>
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </nav>
-          <!-- /.sidebar-menu -->
-        </div>
-        <!-- /.sidebar -->
-      </aside>
-
-      <!-- Content Wrapper. Contains page content -->
-      <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <section class="content-header">
-          <div class="container-fluid">
-            <div class="row mb-2">
-              <div class="col-sm-12">
-                <h1>EHR</h1>
-              </div>
+          </div>
+          <div class="text-right text-muted">
+            <div>
+              Amount Payable <br />
+              <strong>₹0</strong>
             </div>
           </div>
-          <!-- /.container-fluid -->
-        </section>
-
-        <!-- Main content -->
+        </div>
+      </div> -->
+      <div class="container">
         <section class="content">
           <div class="card card-primary card-outline">
-            <div class="card-header">
-              <h3 class="card-title">
-                <i class="fas fa-edit"></i>
-                PATIENTS
-              </h3>
-            </div>
             <div class="card-body">
               <div class="page-wrap">
                 <aside class="sidebar">
@@ -475,24 +325,6 @@
                 </aside>
 
                 <main class="content">
-                  <div
-                    class="d-flex justify-content-between align-items-start mb-3"
-                  >
-                    <div>
-                      <h4 class="mb-0">John Doe</h4>
-                      <small class="text-muted"
-                        >27Y • Female • New York • +1 123 456 7890</small
-                      >
-                    </div>
-                    <div class="text-right text-muted">
-                      <div>
-                        Amount Payable <br />
-                        <strong>₹0</strong>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Accordion -->
                   <div id="patientAccordion" class="accordion">
                     <!-- Vitals -->
                     <div class="card mb-2">
@@ -1138,258 +970,20 @@
                 </main>
               </div>
             </div>
-            <!-- /.card -->
           </div>
-
-          <!-- Default box -->
         </section>
-        <!-- /.content -->
       </div>
-      <!-- /.content-wrapper -->
 
       <footer class="main-footer">
         <div class="float-right d-none d-sm-block"><b>Version</b> 3.2.0</div>
         <strong>Copyright &copy; 2014-2022 <a href="#">AdminLTE.io</a>.</strong>
         All rights reserved.
       </footer>
-
-      <!-- Control Sidebar -->
-      <aside class="control-sidebar control-sidebar-dark">
-        <!-- Control sidebar content goes here -->
-      </aside>
-      <!-- /.control-sidebar -->
     </div>
-    <!-- ./wrapper -->
 
     <script src="../../plugins/jquery/jquery.min.js"></script>
     <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../../dist/js/adminlte.min.js"></script>
-    <script>
-      $(function () {
-        // Allergy add/remove
-        $("#addAllergy").on("click", function (e) {
-          e.preventDefault();
-          $("#allergyList").append(
-            '<div class="input-group mb-2 allergy-row">< + """>'
-          );
-        });
-
-        // Better implementation: use template
-        function addAllergyRow(value) {
-          var row = $('<div class="input-group mb-2 allergy-row">')
-            .append(
-              $('<input type="text" class="form-control">').val(value || "")
-            )
-            .append(
-              $('<div class="input-group-append">').append(
-                $(
-                  '<button class="btn btn-outline-danger btn-remove-allergy" type="button">✖</button>'
-                )
-              )
-            );
-          $("#allergyList").append(row);
-        }
-        // initialize existing
-        $("#allergyList .allergy-row input").each(function () {
-          /* already exist*/
-        });
-        $("#addAllergy")
-          .off("click")
-          .on("click", function (e) {
-            e.preventDefault();
-            addAllergyRow("");
-          });
-        $(document).on("click", ".btn-remove-allergy", function () {
-          $(this).closest(".allergy-row").remove();
-        });
-
-        // Procedures: add/remove and calculate
-        function recalcProcedures() {
-          var sum = 0;
-          $("#procTable tbody tr").each(function () {
-            var qty = parseFloat($(this).find(".proc-qty").val() || 0);
-            var price = parseFloat($(this).find(".proc-price").val() || 0);
-            var disc = parseFloat($(this).find(".proc-discount").val() || 0);
-            var line = qty * price * (1 - disc / 100);
-            $(this)
-              .find(".proc-line-total")
-              .text("₹" + line.toFixed(2));
-            sum += line;
-          });
-          $("#procSum").text(sum.toFixed(2));
-          $("#procTotal").text("₹" + sum.toFixed(2));
-        }
-        $("#addProc").on("click", function () {
-          var idx = $("#procTable tbody tr").length + 1;
-          var newRow = $("<tr>")
-            .append('<td class="align-middle">' + idx + "</td>")
-            .append(
-              '<td><select class="form-control proc-name"><option value="">SELECT</option><option value="Dental Cleaning">Dental Cleaning</option><option value="General Consultation">General Consultation</option></select></td>'
-            )
-            .append(
-              '<td><input type="number" class="form-control proc-qty" value="1"></td>'
-            )
-            .append(
-              '<td><input type="number" class="form-control proc-price" value="0"></td>'
-            )
-            .append(
-              '<td><input type="number" class="form-control proc-discount" value="0"></td>'
-            )
-            .append('<td class="proc-line-total align-middle">₹0</td>')
-            .append(
-              '<td><button type="button" class="btn btn-sm btn-danger btn-remove-proc">✖</button></td>'
-            );
-          $("#procTable tbody").append(newRow);
-          recalcProcedures();
-        });
-        $(document).on("click", ".btn-remove-proc", function () {
-          $(this).closest("tr").remove();
-          // re-index
-          $("#procTable tbody tr").each(function (i) {
-            $(this)
-              .find("td:first")
-              .text(i + 1);
-          });
-          recalcProcedures();
-        });
-        $(document).on(
-          "input",
-          ".proc-qty, .proc-price, .proc-discount",
-          function () {
-            recalcProcedures();
-          }
-        );
-        recalcProcedures();
-
-        // Prescriptions: add/remove
-        $("#addMed").on("click", function () {
-          var count = $("#medList .medicine-card").length + 1;
-          var card = $('<div class="medicine-card card mb-2 p-3">')
-            .append("<h6>Medicine " + count + "</h6>")
-            .append(
-              '<div class="form-row"><div class="form-group col-md-8"><input class="form-control" placeholder="e.g., Paracetamol 500mg"></div><div class="form-group col-md-4 text-right"><button class="btn btn-sm btn-danger btn-remove-med" type="button">Remove</button></div></div>'
-            )
-            .append(
-              '<div class="form-row"><div class="form-group col-md-3"><input class="form-control" placeholder="Dosage"></div><div class="form-group col-md-3"><input class="form-control" placeholder="Duration"></div><div class="form-group col-md-3"><input class="form-control" placeholder="Frequency"></div><div class="form-group col-md-3"><input class="form-control" placeholder="Instructions"></div></div>'
-            );
-          $("#medList").append(card);
-        });
-        $(document).on("click", ".btn-remove-med", function () {
-          $(this).closest(".medicine-card").remove();
-        });
-
-        // Files
-        $("#fileInput").on("change", function () {
-          $("#fileList").empty();
-          Array.from(this.files).forEach(function (f, i) {
-            $("#fileList").append(
-              "<li>" +
-                f.name +
-                ' <button data-index="' +
-                i +
-                '" class="btn btn-sm btn-link btn-remove-file">Remove</button></li>'
-            );
-          });
-        });
-        $(document).on("click", ".btn-remove-file", function () {
-          $(this).parent().remove();
-        });
-
-        // Invoice behaviors
-        function recalcInvoice() {
-          var totalPrice = 0,
-            totalDiscount = 0,
-            totalTax = 0;
-          $("#invoiceTable tbody tr").each(function () {
-            var qty = parseFloat($(this).find(".invoice-qty").val() || 0);
-            var price = parseFloat($(this).find(".invoice-price").val() || 0);
-            var discount = parseFloat(
-              $(this).find(".invoice-discount").val() || 0
-            );
-            var tax = parseFloat($(this).find(".invoice-tax").val() || 0);
-            var linePrice = qty * price;
-            var lineDiscount = linePrice * (discount / 100);
-            var lineTax = (linePrice - lineDiscount) * (tax / 100);
-            var lineTotal = linePrice - lineDiscount + lineTax;
-            $(this)
-              .find(".invoice-line-total")
-              .text("₹" + lineTotal.toFixed(2));
-            totalPrice += linePrice;
-            totalDiscount += lineDiscount;
-            totalTax += lineTax;
-          });
-          $("#invPrice").text(totalPrice.toFixed(2));
-          $("#invDiscount").text(totalDiscount.toFixed(2));
-          $("#invTax").text(totalTax.toFixed(2));
-          $("#invGrand").text(
-            (totalPrice - totalDiscount + totalTax).toFixed(2)
-          );
-        }
-        $("#addInvItem").on("click", function () {
-          var row = $("<tr>")
-            .append(
-              '<td><input class="form-control invoice-service" value=""></td>'
-            )
-            .append(
-              '<td><input type="number" class="form-control invoice-qty" value="1"></td>'
-            )
-            .append(
-              '<td><input type="number" class="form-control invoice-price" value="0"></td>'
-            )
-            .append(
-              '<td><input type="number" class="form-control invoice-discount" value="0"></td>'
-            )
-            .append(
-              '<td><input type="number" class="form-control invoice-tax" value="0"></td>'
-            )
-            .append('<td class="invoice-line-total">₹0.00</td>')
-            .append(
-              '<td><button class="btn btn-sm btn-danger btn-remove-inv">✖</button></td>'
-            );
-          $("#invoiceTable tbody").append(row);
-          recalcInvoice();
-        });
-        $(document).on("click", ".btn-remove-inv", function () {
-          $(this).closest("tr").remove();
-          recalcInvoice();
-        });
-        $(document).on(
-          "input",
-          ".invoice-qty, .invoice-price, .invoice-discount, .invoice-tax",
-          recalcInvoice
-        );
-
-        $("#openInvoice").on("click", function () {
-          $("#invoiceSection").toggle();
-          $("html,body").animate(
-            { scrollTop: $("#invoiceSection").offset().top - 20 },
-            400
-          );
-          recalcInvoice();
-        });
-
-        $("#saveInvoice").on("click", function () {
-          alert("Invoice saved. Grand Total: ₹" + $("#invGrand").text());
-        });
-
-        // Global save & buttons
-        $(
-          "#globalSave, #saveVitals, #saveNotes, #saveProc, #savePresc, #saveFiles"
-        ).on("click", function () {
-          $(this).prop("disabled", true);
-          setTimeout(() => $(this).prop("disabled", false), 800);
-          // In a real app we'd send AJAX here
-          $(this).closest("form").addClass("border-success");
-        });
-
-        // small UX: when collapse shows, scroll into view
-        $(".collapse").on("shown.bs.collapse", function () {
-          $("html,body").animate(
-            { scrollTop: $(this).prev().offset().top - 60 },
-            300
-          );
-        });
-      });
-    </script>
+    <script src="./new.js"></script>
   </body>
 </html>
