@@ -15,6 +15,14 @@
       rel="stylesheet"
       href="../../plugins/fontawesome-free/css/all.min.css"
     />
+
+    <!-- Required bootstrap cdn link -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Required bootstrap cdn link -->
+
     <!-- Theme style -->
     <link rel="stylesheet" href="../../dist/css/adminlte.min.css" />
     <style>
@@ -271,36 +279,116 @@
       <div class="container-fluid">
         <div class="row border-top">
           <!-- Sidebar -->
-          <aside  class="col-md-2 col-lg-2 border border-top-0 border-end bg-white vh-100 p-3 overflow-auto">
+          <aside
+            class="col-md-2 col-lg-2 border border-top-0 border-end bg-white vh-100 p-3 overflow-auto"
+          >
             <input class="form-control mb-3" placeholder="Search patient..." />
 
             <h6 class="text-uppercase text-muted small fw-bold mb-2">
               Patient History
             </h6>
 
-            <div class="card mb-2 shadow-sm">
-              <div class="card-body">
-                <h6 class="fw-semibold">Vitals Recorded</h6>
-                <p class="mb-1 small">
-                  Temp: <span class="badge bg-danger">98.6°F</span> | BP 120/80
-                  | Pulse 72
-                </p>
-                <small class="text-muted">3:00 PM • Nurse Station</small>
-              </div>
+            <div
+              class="mb-3 py-3 border-bottom border-top d-flex flex-wrap gap-2"
+              id="chipFilters"
+            >
+              <span
+                role="button"
+                class="badge rounded bg-dark text-white p-2 active-filter"
+                data-filter="all"
+                >All (7)</span
+              >
+              <span
+                role="button"
+                class="badge rounded p-2 border text-muted"
+                data-filter="vitals"
+                >Vital (2)</span
+              >
+              <span
+                role="button"
+                class="badge rounded p-2 border text-muted"
+                data-filter="notes"
+                >Clinical Notes (2)</span
+              >
+              <span
+                role="button"
+                class="badge rounded p-2 border text-muted"
+                data-filter="prescription"
+                >Prescription (2)</span
+              >
+              <span
+                role="button"
+                class="badge rounded p-2 border text-muted"
+                data-filter="procedure"
+                >Procedure (2)</span
+              >
+              <span
+                role="button"
+                class="badge rounded p-2 border text-muted"
+                data-filter="files"
+                >Files (2)</span
+              >
             </div>
 
-            <div class="card mb-2 shadow-sm">
-              <div class="card-body">
-                <h6 class="fw-semibold">Clinical Notes</h6>
-                <p class="small mb-1">Chief Complaints: Fever, Cough</p>
-                <small class="text-muted">2:45 PM • Dr. Smith</small>
+            <!-- Filterable Content -->
+            <div class="content-area">
+              <div class="card mb-2 shadow-sm filter-item" data-type="vitals">
+                <div class="card-body">
+                  <h6 class="fw-semibold">Vitals Recorded</h6>
+                  <p class="mb-1 small">
+                    Temp: <span class="badge bg-danger">98.6°F</span> | BP
+                    120/80 | Pulse 72
+                  </p>
+                  <small class="text-muted">3:00 PM • Nurse Station</small>
+                </div>
               </div>
-            </div>
 
-            <div class="card shadow-sm">
-              <div class="card-body">
-                <h6 class="fw-semibold">Prescription</h6>
-                <p class="small mb-0">Paracetamol • 5 days</p>
+              <div class="card mb-2 shadow-sm filter-item" data-type="notes">
+                <div class="card-body">
+                  <h6 class="fw-semibold">Clinical Notes</h6>
+                  <p class="small mb-1">Chief Complaints: Fever, Cough</p>
+                  <small class="text-muted">2:45 PM • Dr. Smith</small>
+                </div>
+              </div>
+
+              <div
+                class="card mb-2 shadow-sm filter-item"
+                data-type="prescription"
+              >
+                <div class="card-body">
+                  <h6 class="fw-semibold">Prescription</h6>
+                  <p class="small mb-0">Paracetamol • 5 days</p>
+                </div>
+              </div>
+
+              <div
+                class="card mb-2 shadow-sm filter-item"
+                data-type="procedure"
+              >
+                <div class="card-body">
+                  <h6 class="fw-semibold mb-1">Procedure Performed</h6>
+
+                  <p class="small mb-1">
+                    Wound cleaning and sterile dressing applied. Patient advised
+                    to avoid moisture exposure.
+                  </p>
+
+                  <p class="small mb-1">
+                    Status:
+                    <span class="badge bg-info text-dark">Completed</span>
+                  </p>
+
+                  <small class="text-muted d-block"
+                    >4:15 PM • Nurse Emily • Ward 3B</small
+                  >
+                </div>
+              </div>
+
+              <div class="card mb-2 shadow-sm filter-item" data-type="files">
+                <div class="card-body">
+                  <h6 class="fw-semibold">Uploaded Report</h6>
+                  <p class="small mb-0">Blood Test Report.pdf</p>
+                </div>
               </div>
             </div>
           </aside>
@@ -308,22 +396,657 @@
           <!-- Main Content -->
           <main class="col-md-10 col-lg-10 p-0">
             <!-- Patient Header -->
-            <div class="bg-white mb-3 border-bottom">
-              <div class="card-body d-flex justify-content-between">
-                <div>
-                  <h4 class="mb-1">John Doe</h4>
-                  <p class="mb-0 text-muted small">
-                    27Y • Male • New York • +1 123 456 7890
-                  </p>
+            <div class="card border-0 border-bottom rounded-0 bg-white p-3">
+              <div class="d-flex justify-content-between align-items-center">
+                <!-- Left Section -->
+                <div class="d-flex align-items-center w-auto">
+                  <img
+                    src="https://www.nicepng.com/png/detail/186-1866063_dicks-out-for-harambe-sample-avatar.png"
+                    class="rounded-circle border me-4"
+                    width="40"
+                    height="40"
+                  />
+                  <div>
+                    <h6 class="mb-1 fw-semibold">John Doe</h6>
+                    <div class="text-muted small">27Y • Male • New York</div>
+                  </div>
                 </div>
-                <div class="text-end">
-                  <label class="text-muted small">Amount Payable</label>
-                  <h4 class="text-success fw-semibold mb-0">₹0</h4>
+
+                <div class="d-flex align-items-center mt-1 gap-2">
+                  <span class="text-muted small me-2">Allergies:</span>
+                  <span class="badge bg-danger rounded-pill px-3 py-1"
+                    >Penicillin</span
+                  >
+                </div>
+
+                <!-- Right Section -->
+                <div class="d-flex align-items-center gap-4">
+                  <!-- Amount -->
+                  <div class="text-center">
+                    <div class="text-muted small">Amount Due</div>
+                    <div class="">₹0</div>
+                  </div>
+
+                  <!-- Visits -->
+                  <div class="text-center">
+                    <div class="text-muted small">Visits</div>
+                    <div class="">1</div>
+                  </div>
+
+                  <!-- Last Visit -->
+                  <div class="text-center">
+                    <div class="text-muted small">Last Visit</div>
+                    <div class="">Today</div>
+                  </div>
+
+                  <!-- Phone -->
+                  <div class="d-flex align-items-center">
+                    <i class="bi bi-telephone text-secondary me-2"></i>
+                    <span class=""
+                      ><i class="fas fa-file mr-2"></i> 98712376538</span
+                    >
+                  </div>
                 </div>
               </div>
             </div>
+
             <!-- Accordion Sections -->
-            <div class="accordion" id="emrAccordion"></div>
+
+            <div id="patientAccordion" class="accordion p-5">
+              <!-- Vitals -->
+              <div class="card mb-2">
+                <div class="card-header" id="headingVitals">
+                  <div
+                    role="button"
+                    class="d-flex justify-content-between align-items-center"
+                    data-toggle="collapse"
+                    data-target="#collapseVitals"
+                    aria-expanded="true"
+                  >
+                    <button
+                      class="btn btn-link collapsed text-decoration-none p-0"
+                    >
+                      <h6 class="mb-0 fw-semibold text-dark">Vitals</h6>
+                    </button>
+
+                    <!-- Preview Text -->
+                    <small class="text-muted" id="clinicalNotesPrev"
+                      >No items yet</small
+                    >
+                  </div>
+                </div>
+
+                <div
+                  id="collapseVitals"
+                  class="collapse show"
+                  data-parent="#patientAccordion"
+                >
+                  <div class="card-body">
+                    <form id="vitalsForm">
+                      <div class="form-row">
+                        <div class="form-group col-md-2">
+                          <label>Height (cm)</label>
+                          <input
+                            type="number"
+                            name="height"
+                            class="form-control"
+                            value="170"
+                          />
+                        </div>
+                        <div class="form-group col-md-2">
+                          <label>Weight (kg)</label>
+                          <input
+                            type="number"
+                            name="weight"
+                            class="form-control"
+                            value="65"
+                          />
+                        </div>
+                        <div class="form-group col-md-2">
+                          <label>Temp (°F)</label>
+                          <input
+                            type="text"
+                            name="temp"
+                            class="form-control"
+                            value="98.6"
+                          />
+                        </div>
+                        <div class="form-group col-md-2">
+                          <label>BP</label>
+                          <input
+                            type="text"
+                            name="bp"
+                            class="form-control"
+                            value="120/80"
+                          />
+                        </div>
+                        <div class="form-group col-md-2">
+                          <label>HR (bpm)</label>
+                          <input
+                            type="number"
+                            name="hr"
+                            class="form-control"
+                            value="72"
+                          />
+                        </div>
+                      </div>
+                      <div class="form-row align-items-end">
+                        <div class="form-group col-md-8">
+                          <label>Allergies</label>
+                          <div id="allergyList" class="mb-2">
+                            <div class="input-group mb-2 allergy-row">
+                              <input
+                                type="text"
+                                class="form-control"
+                                value="Penicillin"
+                              />
+                              <div class="input-group-append">
+                                <button
+                                  class="btn btn-outline-danger btn-remove-allergy"
+                                  type="button"
+                                >
+                                  ✖
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group col-md-4 text-right">
+                          <button
+                            id="addAllergy"
+                            class="btn btn-sm btn-outline-primary"
+                          >
+                            + Add Allergy
+                          </button>
+                        </div>
+                      </div>
+                      <button
+                        type="button"
+                        class="btn btn-primary btn-sm"
+                        id="saveVitals"
+                      >
+                        Save
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Clinical Notes -->
+              <div class="card mb-2">
+                <div class="card-header" id="headingClinicalNotes">
+                  <div
+                    role="button"
+                    class="d-flex justify-content-between align-items-center"
+                    data-toggle="collapse"
+                    data-target="#collapseNotes"
+                  >
+                    <button
+                      class="btn btn-link collapsed text-decoration-none p-0"
+                    >
+                      <h6 class="mb-0 fw-semibold text-dark">Clinical Notes</h6>
+                    </button>
+
+                    <!-- Preview Text -->
+                    <small class="text-muted" id="clinicalNotesPrev"
+                      >No items yet</small
+                    >
+                  </div>
+                </div>
+
+                <div
+                  id="collapseNotes"
+                  class="collapse"
+                  data-parent="#patientAccordion"
+                >
+                  <div class="card-body">
+                    <div class="quick-badges mb-3">
+                      <span class="badge badge-primary">Fever & Cold</span>
+                      <span class="badge badge-primary">Headache</span>
+                      <span class="badge badge-primary">Stomach Pain</span>
+                    </div>
+                    <form id="notesForm">
+                      <div class="form-row">
+                        <div class="form-group col-md-6">
+                          <label>Chief Complaints</label>
+                          <textarea
+                            class="form-control"
+                            rows="3"
+                            placeholder="e.g., fever, cough, infection"
+                          ></textarea>
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label>Medical History</label>
+                          <textarea
+                            class="form-control"
+                            rows="3"
+                            placeholder="Previous medical history..."
+                          ></textarea>
+                        </div>
+                      </div>
+
+                      <div class="form-row">
+                        <div class="form-group col-md-6">
+                          <label>Observations</label>
+                          <textarea class="form-control" rows="2"></textarea>
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label>Investigations</label>
+                          <textarea class="form-control" rows="2"></textarea>
+                        </div>
+                      </div>
+
+                      <div class="form-row">
+                        <div class="form-group col-md-6">
+                          <label>Diagnosis</label>
+                          <textarea class="form-control" rows="2"></textarea>
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label>Treatment</label>
+                          <textarea class="form-control" rows="2"></textarea>
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label>Advice</label>
+                        <textarea class="form-control" rows="3"></textarea>
+                      </div>
+
+                      <div class="text-right">
+                        <button
+                          type="button"
+                          class="btn btn-warning btn-sm"
+                          id="aidx"
+                        >
+                          AI Diagnosis
+                        </button>
+                        <button
+                          type="button"
+                          class="btn btn-primary btn-sm"
+                          id="saveNotes"
+                        >
+                          Save
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Procedures & Treatments -->
+              <div class="card mb-2">
+                <div
+                  role="button"
+                  class="card-header d-flex justify-content-between align-items-center"
+                  data-toggle="collapse"
+                  data-target="#collapseProcedure"
+                >
+                  <button
+                    class="btn btn-link collapsed text-decoration-none p-0"
+                  >
+                    <h6 class="mb-0 fw-semibold text-dark">
+                      Procedures & Treatments
+                    </h6>
+                  </button>
+                  <small class="text-muted" id="procPreview"
+                    >No procedures added</small
+                  >
+                </div>
+
+                <div
+                  id="collapseProcedure"
+                  class="collapse"
+                  data-parent="#patientAccordion"
+                >
+                  <div class="card-body">
+                    <table class="table table-sm table-bordered" id="procTable">
+                      <thead class="thead-light">
+                        <tr>
+                          <th>Sr No.</th>
+                          <th>Procedure</th>
+                          <th>Qty</th>
+                          <th>Price</th>
+                          <th>Discount (%)</th>
+                          <th>Total</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+
+                      <tbody>
+                        <tr>
+                          <td class="align-middle">1</td>
+                          <td>
+                            <select class="form-control proc-name">
+                              <option value="">SELECT</option>
+                              <option value="Dental Cleaning">
+                                Dental Cleaning
+                              </option>
+                              <option value="Root Canal">Root Canal</option>
+                              <option value="X-Ray">X-Ray Imaging</option>
+                            </select>
+                          </td>
+                          <td>
+                            <input
+                              type="number"
+                              class="form-control proc-qty"
+                              value="1"
+                            />
+                          </td>
+                          <td>
+                            <input
+                              type="number"
+                              class="form-control proc-price"
+                              value="0"
+                            />
+                          </td>
+                          <td>
+                            <input
+                              type="number"
+                              class="form-control proc-discount"
+                              value="0"
+                            />
+                          </td>
+                          <td class="proc-line-total align-middle">₹0</td>
+                          <td>
+                            <button
+                              type="button"
+                              class="btn btn-sm btn-danger btn-remove-proc"
+                            >
+                              ✖
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+
+                    <div class="mt-2 fw-bold">
+                      Total: ₹ <span id="procSum">0</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Prescriptions -->
+              <div class="card mb-2">
+                <div class="card-header" id="headingPresc">
+                  <div
+                    role="button"
+                    class="d-flex justify-content-between align-items-center"
+                    data-toggle="collapse"
+                    data-target="#collapsePresc"
+                  >
+                    <!-- Button -->
+                    <button
+                      class="btn btn-link collapsed text-decoration-none p-0"
+                    >
+                      <h6 class="mb-0 fw-semibold text-dark">Prescriptions</h6>
+                    </button>
+
+                    <!-- Preview Text -->
+                    <small class="text-muted" id="prescPreview"
+                      >No items yet</small
+                    >
+                  </div>
+                </div>
+
+                <div
+                  id="collapsePresc"
+                  class="collapse"
+                  data-parent="#patientAccordion"
+                >
+                  <div class="card-body">
+                    <div id="medList">
+                      <!-- Sample Medicine Block -->
+                      <div class="medicine-card card mb-2 p-3">
+                        <div>
+                          <h6 class="mb-2">Medicine</h6>
+                        </div>
+
+                        <div class="form-row">
+                          <div class="form-group col-md-3">
+                            <input
+                              class="form-control med-name"
+                              placeholder="Medicine Name"
+                            />
+                          </div>
+                          <div class="form-group col-md-3">
+                            <input class="form-control" placeholder="Dosage" />
+                          </div>
+                          <div class="form-group col-md-3">
+                            <input
+                              class="form-control"
+                              placeholder="Duration"
+                            />
+                          </div>
+                          <div class="form-group col-md-3">
+                            <input
+                              class="form-control"
+                              placeholder="Frequency"
+                            />
+                          </div>
+                        </div>
+
+                        <div class="form-row">
+                          <div class="form-group col-md-6">
+                            <input
+                              class="form-control"
+                              placeholder="Instructions"
+                            />
+                          </div>
+                          <div
+                            class="form-group col-md-6 d-flex justify-content-end align-items-center"
+                          >
+                            <button
+                              class="btn btn-sm btn-danger btn-remove-med"
+                              type="button"
+                            >
+                              Remove
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <button type="button" class="btn btn-link" id="addMed">
+                      + Add Medicine
+                    </button>
+
+                    <div class="text-right mt-3">
+                      <button
+                        type="button"
+                        class="btn btn-primary"
+                        id="savePresc"
+                      >
+                        Save
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Files -->
+              <div class="card mb-2">
+                <div class="card-header" id="headingVitals">
+                  <div
+                    role="button"
+                    class="d-flex justify-content-between align-items-center"
+                    data-toggle="collapse"
+                    data-target="#collapseFiles"
+                  >
+                    <button
+                      class="btn btn-link collapsed text-decoration-none p-0"
+                    >
+                      <h6 class="mb-0 fw-semibold text-dark">Files</h6>
+                    </button>
+
+                    <!-- Preview Text -->
+                    <small class="text-muted" id="clinicalNotesPrev"
+                      >No items yet</small
+                    >
+                  </div>
+                </div>
+
+                <div
+                  id="collapseFiles"
+                  class="collapse"
+                  data-parent="#patientAccordion"
+                >
+                  <div class="card-body">
+                    <form id="filesForm">
+                      <div class="form-group">
+                        <label>Upload Files</label>
+                        <input
+                          type="file"
+                          class="form-control-file"
+                          id="fileInput"
+                          multiple
+                        />
+                      </div>
+                      <ul id="fileList" class="list-unstyled"></ul>
+                      <div class="text-right">
+                        <button
+                          type="button"
+                          class="btn btn-primary"
+                          id="saveFiles"
+                        >
+                          Save
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card mb-2">
+                <div class="card-header" id="headingDental">
+                  <div
+                    role="button"
+                    data-toggle="collapse"
+                    data-target="#collapseDental"
+                    class="d-flex gap-2 justify-content-between align-items-center"
+                  >
+                    <button
+                      class="btn btn-link collapsed text-decoration-none p-0"
+                    >
+                      <h6 class="mb-0 fw-semibold text-dark">
+                        Dental Notes & Procedure
+                      </h6>
+                    </button>
+
+                    <!-- Preview Text -->
+                    <small class="text-muted ml-2">
+                      • Teeth: <span id="selectedTeethPreview">None</span>
+                    </small>
+                  </div>
+                </div>
+
+                <div
+                  id="collapseDental"
+                  class="collapse"
+                  data-parent="#patientAccordion"
+                >
+                  <div class="card-body">
+                    <!-- Tooth Selection -->
+                    <label class="font-weight-bold">Select Teeth</label>
+                    <div
+                      class="d-flex flex-wrap gap-2 mb-3  justify-content-center"
+                      id="teethSelector1"
+                    >
+                      <!-- Tooth first row render here -->
+                    </div>
+                    <div
+                      class="d-flex flex-wrap gap-2 mb-3 justify-content-center"
+                      id="teethSelector2"
+                    >
+                      <!-- Tooth second row render here -->
+                    </div>
+
+                    <!-- Notes Section -->
+                    <div class="form-group">
+                      <label>Clinical Notes</label>
+                      <textarea
+                        class="form-control"
+                        id="dentalNotes"
+                        rows="2"
+                      ></textarea>
+                    </div>
+
+                    <!-- Procedure Table -->
+                    <table
+                      class="table table-sm table-bordered"
+                      id="dentalProcTable"
+                    >
+                      <thead class="thead-light">
+                        <tr>
+                          <th>Procedure</th>
+                          <th>Qty</th>
+                          <th>Price</th>
+                          <th>Total</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>
+                            <select class="form-control dental-proc">
+                              <option value="">SELECT</option>
+                              <option value="Filling">Filling</option>
+                              <option value="Extraction">Extraction</option>
+                              <option value="Scaling">Scaling</option>
+                            </select>
+                          </td>
+                          <td>
+                            <input
+                              type="number"
+                              class="form-control dental-qty"
+                              value="1"
+                            />
+                          </td>
+                          <td>
+                            <input
+                              type="number"
+                              class="form-control dental-price"
+                              value="0"
+                            />
+                          </td>
+                          <td class="dental-line-total align-middle">₹0</td>
+                          <td>
+                            <button
+                              type="button"
+                              class="btn btn-sm btn-danger btn-remove-dental"
+                            >
+                              ✖
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+
+                    <button
+                      type="button"
+                      class="btn btn-link"
+                      id="addDentalProc"
+                    >
+                      + ADD NEW
+                    </button>
+
+                    <div class="mt-2 font-weight-bold">
+                      Total: ₹ <span id="dentalSum">0</span>
+                    </div>
+
+                    <div class="text-right mt-3">
+                      <button
+                        type="button"
+                        class="btn btn-primary"
+                        id="saveDental"
+                      >
+                        Save
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </main>
         </div>
       </div>
