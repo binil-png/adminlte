@@ -70,7 +70,7 @@
         z-index: 1200;
       }
       .quick-badges .badge {
-        margin-right: 8px;
+        margin-right: 4px;
       }
       .invoice-summary td,
       .invoice-summary th {
@@ -81,6 +81,7 @@
       }
       .sidebar {
         max-height: calc(100vh - 62px);
+        min-height: calc(100vh - 62px);
         overflow: auto;
         padding-bottom: 0px;
         /* background-color: red; */
@@ -96,6 +97,22 @@
       .patient-details {
         max-height: calc(100vh - 150px);
         overflow: auto;
+      }
+      .input-style {
+        height: 28px;
+        padding: 3px 7px; /* small padding to keep text readable */
+        font-size: 14px;
+        line-height: 1.2;
+      }
+      .bg-custom {
+        background: #fafafa;
+      }
+      .accordion-highlight {
+        color: #0d6efd !important; /* bootstrap primary color */
+        font-weight: 600 !important;
+      }
+      .text-custom {
+        color: #0c0908;
       }
     </style>
   </head>
@@ -177,7 +194,7 @@
                       ></span>
                     </h3>
                     <p class="text-sm">Call me whenever you can...</p>
-                    <p class="text-sm text-muted">
+                    <p class="text-sm text-custom">
                       <i class="far fa-clock mr-1"></i> 4 Hours Ago
                     </p>
                   </div>
@@ -196,12 +213,12 @@
                   <div class="media-body">
                     <h3 class="dropdown-item-title">
                       John Pierce
-                      <span class="float-right text-sm text-muted"
+                      <span class="float-right text-sm text-custom"
                         ><i class="fas fa-star"></i
                       ></span>
                     </h3>
                     <p class="text-sm">I got your message bro</p>
-                    <p class="text-sm text-muted">
+                    <p class="text-sm text-custom">
                       <i class="far fa-clock mr-1"></i> 4 Hours Ago
                     </p>
                   </div>
@@ -225,7 +242,7 @@
                       ></span>
                     </h3>
                     <p class="text-sm">The subject goes here</p>
-                    <p class="text-sm text-muted">
+                    <p class="text-sm text-custom">
                       <i class="far fa-clock mr-1"></i> 4 Hours Ago
                     </p>
                   </div>
@@ -251,17 +268,17 @@
               <div class="dropdown-divider"></div>
               <a href="#" class="dropdown-item">
                 <i class="fas fa-envelope mr-2"></i> 4 new messages
-                <span class="float-right text-muted text-sm">3 mins</span>
+                <span class="float-right text-custom text-sm">3 mins</span>
               </a>
               <div class="dropdown-divider"></div>
               <a href="#" class="dropdown-item">
                 <i class="fas fa-users mr-2"></i> 8 friend requests
-                <span class="float-right text-muted text-sm">12 hours</span>
+                <span class="float-right text-custom text-sm">12 hours</span>
               </a>
               <div class="dropdown-divider"></div>
               <a href="#" class="dropdown-item">
                 <i class="fas fa-file mr-2"></i> 3 new reports
-                <span class="float-right text-muted text-sm">2 days</span>
+                <span class="float-right text-custom text-sm">2 days</span>
               </a>
               <div class="dropdown-divider"></div>
               <a href="#" class="dropdown-item dropdown-footer"
@@ -294,112 +311,151 @@
           <aside
             class="col-md-2 col-lg-2 border border-top-0 border-bottom-0 p-3 sidebar hide-scrollbar"
           >
-            <input class="form-control mb-3" placeholder="Search patient..." />
+            <input
+              class="form-control mb-3 rounded-4"
+              placeholder="Search patient..."
+            />
 
-            <h6 class="text-uppercase text-muted small fw-bold mb-2">
+            <h6 class="text-uppercase text-custom small fw-bold mb-2">
               Patient History
             </h6>
 
+            <!-- Chips Filter -->
             <div
               class="mb-3 py-3 border-bottom border-top d-flex flex-wrap gap-2"
               id="chipFilters"
             >
               <span
                 role="button"
-                class="badge rounded bg-dark text-white p-2 active-filter"
+                class="badge rounded-4 bg-dark text-white p-2 active-filter"
                 data-filter="all"
-                >All (7)</span
+                >All</span
               >
               <span
                 role="button"
-                class="badge rounded p-2 border text-muted"
+                class="badge rounded-4 p-2 border text-custom"
                 data-filter="vitals"
-                >Vital (2)</span
+                >Vitals</span
               >
               <span
                 role="button"
-                class="badge rounded p-2 border text-muted"
+                class="badge rounded-4 p-2 border text-custom"
                 data-filter="notes"
-                >Clinical Notes (2)</span
+                >Notes</span
               >
               <span
                 role="button"
-                class="badge rounded p-2 border text-muted"
+                class="badge rounded-4 p-2 border text-custom"
                 data-filter="prescription"
-                >Prescription (2)</span
+                >Prescription</span
               >
               <span
                 role="button"
-                class="badge rounded p-2 border text-muted"
+                class="badge rounded-4 p-2 border text-custom"
                 data-filter="procedure"
-                >Procedure (2)</span
+                >Procedure</span
               >
               <span
                 role="button"
-                class="badge rounded p-2 border text-muted"
+                class="badge rounded-4 p-2 border text-custom"
+                data-filter="dental"
+                >Dental</span
+              >
+              <span
+                role="button"
+                class="badge rounded-4 p-2 border text-custom"
                 data-filter="files"
-                >Files (2)</span
+                >Files</span
               >
             </div>
 
-            <!-- Filterable Content -->
+            <!-- Date Filter -->
+            <div class="mb-3">
+              <label class="form-label small text-custom fw-semibold"
+                >Filter by Date</label
+              >
+              <input
+                type="date"
+                id="dateFilter"
+                class="form-control rounded-4"
+              />
+            </div>
+
+            <!-- Content Area -->
             <div class="content-area">
-              <div class="card mb-2 shadow-sm filter-item" data-type="vitals">
-                <div class="card-body">
-                  <h6 class="fw-semibold">Vitals Recorded</h6>
-                  <p class="mb-1 small">
+              <!-- ========== GROUP: TODAY ========== -->
+              <h6 class="fw-bold small text-custom mt-3">Today</h6>
+
+              <div
+                class="rounded-2 bg-white mb-2 filter-item"
+                data-type="vitals"
+                data-date="2025-11-26"
+              >
+                <div class="p-2">
+                  <h6 class="fw-semibold text-custom">Vitals Recorded</h6>
+                  <p class="small mb-1">
                     Temp: <span class="badge bg-danger">98.6°F</span> | BP
                     120/80 | Pulse 72
                   </p>
-                  <small class="text-muted">3:00 PM • Nurse Station</small>
-                </div>
-              </div>
-
-              <div class="card mb-2 shadow-sm filter-item" data-type="notes">
-                <div class="card-body">
-                  <h6 class="fw-semibold">Clinical Notes</h6>
-                  <p class="small mb-1">Chief Complaints: Fever, Cough</p>
-                  <small class="text-muted">2:45 PM • Dr. Smith</small>
+                  <small class="text-custom">3:00 PM • Nurse Station</small>
                 </div>
               </div>
 
               <div
                 class="card mb-2 shadow-sm filter-item"
                 data-type="prescription"
+                data-date="2025-11-26"
               >
                 <div class="card-body">
                   <h6 class="fw-semibold">Prescription</h6>
-                  <p class="small mb-0">Paracetamol • 5 days</p>
+                  <p class="small mb-0">Paracetamol • 5 Days</p>
                 </div>
               </div>
+
+              <!-- ========== GROUP: YESTERDAY ========== -->
+              <h6 class="fw-bold small text-custom mt-3">Yesterday</h6>
 
               <div
                 class="card mb-2 shadow-sm filter-item"
                 data-type="procedure"
+                data-date="2025-11-25"
               >
                 <div class="card-body">
-                  <h6 class="fw-semibold mb-1">Procedure Performed</h6>
-
-                  <p class="small mb-1">
-                    Wound cleaning and sterile dressing applied. Patient advised
-                    to avoid moisture exposure.
-                  </p>
-
+                  <h6 class="fw-medium text-custom">Procedure Performed</h6>
+                  <p class="small mb-1">Wound cleaning & dressing applied.</p>
                   <p class="small mb-1">
                     Status:
                     <span class="badge bg-info text-dark">Completed</span>
                   </p>
-
-                  <small class="text-muted d-block"
+                  <small class="text-custom"
                     >4:15 PM • Nurse Emily • Ward 3B</small
                   >
                 </div>
               </div>
 
-              <div class="card mb-2 shadow-sm filter-item" data-type="files">
+              <!-- ========== GROUP: OLDER ========== -->
+              <h6 class="fw-bold small text-custom mt-3">20-11-2025</h6>
+
+              <div
+                class="card mb-2 shadow-sm filter-item"
+                data-type="files"
+                data-date="2025-11-22"
+              >
                 <div class="card-body">
                   <h6 class="fw-semibold">Uploaded Report</h6>
                   <p class="small mb-0">Blood Test Report.pdf</p>
+                </div>
+              </div>
+
+              <div
+                class="card mb-2 shadow-sm filter-item"
+                data-type="dental"
+                data-date="2025-11-22"
+              >
+                <div class="card-body">
+                  <h6 class="fw-semibold mb-1">Dental Procedure</h6>
+                  <p class="small mb-1">Root canal performed on tooth 36.</p>
+                  <small class="text-custom">1:30 PM • Dr. Miller</small>
                 </div>
               </div>
             </div>
@@ -420,12 +476,12 @@
                   />
                   <div>
                     <h6 class="mb-1 fw-semibold">John Doe</h6>
-                    <div class="text-muted small">27Y • Male • New York</div>
+                    <div class="text-custom small">27Y • Male • New York</div>
                   </div>
                 </div>
 
                 <div class="d-flex align-items-center mt-1 gap-2">
-                  <span class="text-muted small me-2">Allergies:</span>
+                  <span class="text-custom small me-2">Allergies:</span>
                   <span class="badge bg-danger rounded-pill px-3 py-1"
                     >Penicillin</span
                   >
@@ -435,19 +491,19 @@
                 <div class="d-flex align-items-center gap-4">
                   <!-- Amount -->
                   <div class="text-center">
-                    <div class="text-muted small">Amount Due</div>
+                    <div class="text-custom small">Amount Due</div>
                     <div class="">₹0</div>
                   </div>
 
                   <!-- Visits -->
                   <div class="text-center">
-                    <div class="text-muted small">Visits</div>
+                    <div class="text-custom small">Visits</div>
                     <div class="">1</div>
                   </div>
 
                   <!-- Last Visit -->
                   <div class="text-center">
-                    <div class="text-muted small">Last Visit</div>
+                    <div class="text-custom small">Last Visit</div>
                     <div class="">Today</div>
                   </div>
 
@@ -455,7 +511,8 @@
                   <div class="d-flex align-items-center">
                     <i class="bi bi-telephone text-secondary me-2"></i>
                     <span class=""
-                      ><i class="fa fa-mobile mr-2 text-muted"></i> 98712376538</span
+                      ><i class="fa fa-mobile mr-2 text-custom"></i>
+                      98712376538</span
                     >
                   </div>
                 </div>
@@ -477,13 +534,13 @@
                     data-target="#collapseVitals"
                   >
                     <button
-                      class="btn btn-link collapsed text-decoration-none p-0"
+                      class="btn btn-link collapsed text-decoration-none p-0 focus-ring-primary"
                     >
-                      <h6 class="mb-0 fw-semibold text-dark">Vitals</h6>
+                      <h6 class="mb-0 fw-semibold text-custom">Vitals</h6>
                     </button>
 
                     <!-- Preview Text -->
-                    <small class="text-muted" id="clinicalNotesPrev"
+                    <small class="text-custom" id="VitalPreview"
                       >No items yet</small
                     >
                   </div>
@@ -498,88 +555,94 @@
                     <form id="vitalsForm">
                       <div class="form-row">
                         <div class="form-group col-md-2">
-                          <label>Height (cm)</label>
+                          <label class="fw-medium text-custom"
+                            >Height (cm)</label
+                          >
                           <input
                             type="number"
                             name="height"
-                            class="form-control"
+                            class="form-control rounded-4 input-style"
                             value="170"
                           />
                         </div>
                         <div class="form-group col-md-2">
-                          <label>Weight (kg)</label>
+                          <label class="fw-medium text-custom"
+                            >Weight (kg)</label
+                          >
                           <input
                             type="number"
                             name="weight"
-                            class="form-control"
+                            class="form-control rounded-4 input-style"
                             value="65"
                           />
                         </div>
                         <div class="form-group col-md-2">
-                          <label>Temp (°F)</label>
+                          <label class="fw-medium text-custom">Temp (°F)</label>
                           <input
                             type="text"
                             name="temp"
-                            class="form-control"
+                            class="form-control rounded-4 input-style"
                             value="98.6"
                           />
                         </div>
                         <div class="form-group col-md-2">
-                          <label>BP</label>
+                          <label class="fw-medium text-custom">BP</label>
                           <input
                             type="text"
                             name="bp"
-                            class="form-control"
+                            class="form-control rounded-4 input-style"
                             value="120/80"
                           />
                         </div>
                         <div class="form-group col-md-2">
-                          <label>HR (bpm)</label>
+                          <label class="fw-medium text-custom">HR (bpm)</label>
                           <input
                             type="number"
                             name="hr"
-                            class="form-control"
+                            class="form-control rounded-4 input-style"
                             value="72"
                           />
                         </div>
                       </div>
                       <div class="form-row align-items-end">
                         <div class="form-group col-md-8">
-                          <label>Allergies</label>
-                          <div id="allergyList" class="mb-2">
-                            <div class="input-group mb-2 allergy-row">
+                          <label class="fw-medium text-custom">Allergies</label>
+                          <div id="allergyList" class="mb-2 row">
+                            <div
+                              class="input-group mb-2 allergy-row col-md-4 col-lg-4"
+                            >
                               <input
                                 type="text"
-                                class="form-control"
-                                value="Penicillin"
+                                class="form-control rounded-start-4 input-style"
                               />
                               <div class="input-group-append">
                                 <button
-                                  class="btn btn-outline-danger btn-remove-allergy"
+                                  style="padding: 0px 8px"
+                                  class="btn btn-outline-danger btn-remove-allergy rounded-end-4"
                                   type="button"
                                 >
-                                  ✖
+                                  <i class="fas fa-times"></i>
                                 </button>
                               </div>
                             </div>
                           </div>
                         </div>
-                        <div class="form-group col-md-4 text-right">
-                          <button
-                            id="addAllergy"
-                            class="btn btn-sm btn-outline-primary"
-                          >
-                            + Add Allergy
-                          </button>
-                        </div>
                       </div>
-                      <button
-                        type="button"
-                        class="btn btn-primary btn-sm"
-                        id="saveVitals"
-                      >
-                        Save
-                      </button>
+                      <div class="form-group text-right d-flex justify-content-between">
+                        <button
+                          id="addAllergy"
+                          class="btn btn-sm btn-outline-primary rounded-4"
+                        >
+                          + Add Allergy
+                        </button>
+                        <button
+                          type="button"
+                          class="btn btn-success btn-sm rounded-4"
+                          id="saveVitals"
+                        >
+                          Save <i class="fas fa-save ms-2"></i>
+                        </button>
+                      </div>
                     </form>
                   </div>
                 </div>
@@ -598,11 +661,13 @@
                     <button
                       class="btn btn-link collapsed text-decoration-none p-0"
                     >
-                      <h6 class="mb-0 fw-semibold text-dark">Clinical Notes</h6>
+                      <h6 class="mb-0 fw-semibold text-custom">
+                        Clinical Notes
+                      </h6>
                     </button>
 
                     <!-- Preview Text -->
-                    <small class="text-muted" id="clinicalNotesPrev"
+                    <small class="text-custom" id="clinicalNotesPrev"
                       >No items yet</small
                     >
                   </div>
@@ -614,26 +679,52 @@
                   data-parent="#patientAccordion"
                 >
                   <div class="card-body">
-                    <div class="quick-badges mb-3">
-                      <span class="badge badge-primary">Fever & Cold</span>
-                      <span class="badge badge-primary">Headache</span>
-                      <span class="badge badge-primary">Stomach Pain</span>
+                    <div
+                      class="p-2 d-flex justify-content-between align-items-center"
+                    >
+                      <div
+                        style="width: 50%"
+                        class="quick-badges flex-wrap mb-3 d-flex align-items-center justify-content-stat gap-1"
+                      >
+                        <span class="badge badge-primary">Fever & Cold</span>
+                        <span class="badge badge-primary">Headache</span>
+                        <select
+                          class="form-control proc-name rounded-4 w-25 input-style"
+                        >
+                          <option value="">Select template</option>
+                          <option value="Dental Cleaning">Doctor A</option>
+                          <option value="Root Canal">Doctor B</option>
+                          <option value="X-Ray">Doctor C</option>
+                        </select>
+                      </div>
+
+                      <button
+                        type="button"
+                        class="btn btn-outline-success btn-sm rounded-4"
+                        id="saveVitals"
+                      >
+                        Save as template<i class="fas fa-save ms-2"></i>
+                      </button>
                     </div>
                     <form id="notesForm">
                       <div class="form-row">
                         <div class="form-group col-md-6">
-                          <label>Chief Complaints</label>
+                          <label class="fw-medium text-custom"
+                            >Chief Complaints</label
+                          >
                           <textarea
-                            class="form-control"
-                            rows="3"
+                            class="form-control rounded-4"
+                            rows="1"
                             placeholder="e.g., fever, cough, infection"
                           ></textarea>
                         </div>
                         <div class="form-group col-md-6">
-                          <label>Medical History</label>
+                          <label class="fw-medium text-custom"
+                            >Medical History</label
+                          >
                           <textarea
-                            class="form-control"
-                            rows="3"
+                            class="form-control rounded-4"
+                            rows="1"
                             placeholder="Previous medical history..."
                           ></textarea>
                         </div>
@@ -641,45 +732,64 @@
 
                       <div class="form-row">
                         <div class="form-group col-md-6">
-                          <label>Observations</label>
-                          <textarea class="form-control" rows="2"></textarea>
+                          <label class="fw-medium text-custom"
+                            >Observations</label
+                          >
+                          <textarea
+                            class="form-control rounded-4"
+                            rows="1"
+                          ></textarea>
                         </div>
                         <div class="form-group col-md-6">
-                          <label>Investigations</label>
-                          <textarea class="form-control" rows="2"></textarea>
+                          <label class="fw-medium text-custom"
+                            >Investigations</label
+                          >
+                          <textarea
+                            class="form-control rounded-4"
+                            rows="1"
+                          ></textarea>
                         </div>
                       </div>
 
                       <div class="form-row">
                         <div class="form-group col-md-6">
-                          <label>Diagnosis</label>
-                          <textarea class="form-control" rows="2"></textarea>
+                          <label class="fw-medium text-custom">Diagnosis</label>
+                          <textarea
+                            class="form-control rounded-4"
+                            rows="1"
+                          ></textarea>
                         </div>
                         <div class="form-group col-md-6">
-                          <label>Treatment</label>
-                          <textarea class="form-control" rows="2"></textarea>
+                          <label class="fw-medium text-custom">Treatment</label>
+                          <textarea
+                            class="form-control rounded-4"
+                            rows="1"
+                          ></textarea>
                         </div>
                       </div>
 
                       <div class="form-group">
-                        <label>Advice</label>
-                        <textarea class="form-control" rows="3"></textarea>
+                        <label class="fw-medium text-custom">Advice</label>
+                        <textarea
+                          class="form-control rounded-4"
+                          rows="1"
+                        ></textarea>
                       </div>
 
                       <div class="text-right">
                         <button
                           type="button"
-                          class="btn btn-warning btn-sm"
+                          class="btn btn-sm btn-sm btn-warning rounded-4 btn-sm"
                           id="aidx"
                         >
-                          AI Diagnosis
+                          AI Diagnosis <i class="fas fa-robot ms-2"></i>
                         </button>
                         <button
                           type="button"
-                          class="btn btn-primary btn-sm"
+                          class="btn btn-sm btn-primary rounded-4 btn-sm"
                           id="saveNotes"
                         >
-                          Save
+                          Save <i class="fas fa-save ms-2"></i>
                         </button>
                       </div>
                     </form>
@@ -691,18 +801,20 @@
               <div class="card mb-2">
                 <div
                   role="button"
+                  id="headingProcedure"
                   class="card-header d-flex justify-content-between align-items-center"
                   data-toggle="collapse"
                   data-target="#collapseProcedure"
                 >
                   <button
-                    class="btn btn-link collapsed text-decoration-none p-0"
+                    class="btn btn-sm btn-link collapsed text-decoration-none p-0"
                   >
-                    <h6 class="mb-0 fw-semibold text-dark">
+                    <h6 class="mb-0 fw-semibold text-custom">
                       Procedures & Treatments
                     </h6>
                   </button>
-                  <small class="text-muted" id="procPreview"
+
+                  <small class="text-custom" id="procPreview"
                     >No procedures added</small
                   >
                 </div>
@@ -713,67 +825,140 @@
                   data-parent="#patientAccordion"
                 >
                   <div class="card-body">
-                    <table class="table table-sm table-bordered" id="procTable">
-                      <thead class="thead-light">
-                        <tr>
-                          <th>Sr No.</th>
-                          <th>Procedure</th>
-                          <th>Qty</th>
-                          <th>Price</th>
-                          <th>Discount (%)</th>
-                          <th>Total</th>
-                          <th></th>
-                        </tr>
-                      </thead>
-
-                      <tbody>
-                        <tr>
-                          <td class="align-middle">1</td>
-                          <td>
-                            <select class="form-control proc-name">
-                              <option value="">SELECT</option>
-                              <option value="Dental Cleaning">
-                                Dental Cleaning
-                              </option>
-                              <option value="Root Canal">Root Canal</option>
-                              <option value="X-Ray">X-Ray Imaging</option>
-                            </select>
-                          </td>
-                          <td>
-                            <input
-                              type="number"
-                              class="form-control proc-qty"
-                              value="1"
-                            />
-                          </td>
-                          <td>
-                            <input
-                              type="number"
-                              class="form-control proc-price"
-                              value="0"
-                            />
-                          </td>
-                          <td>
-                            <input
-                              type="number"
-                              class="form-control proc-discount"
-                              value="0"
-                            />
-                          </td>
-                          <td class="proc-line-total align-middle">₹0</td>
-                          <td>
-                            <button
-                              type="button"
-                              class="btn btn-sm btn-danger btn-remove-proc"
+                    <div class="pb-3 d-flex justify-content-between">
+                      <select
+                        class="form-control proc-name rounded-4 w-25 input-style"
+                      >
+                        <option value="">Select template</option>
+                        <option value="Template 1">Template 1</option>
+                        <option value="Template 2">Template 2</option>
+                        <option value="Template 3">Template 3</option>
+                      </select>
+                      <button
+                        type="button"
+                        class="btn btn-outline-success btn-sm rounded-4"
+                        id="saveVitals"
+                      >
+                        Save as template<i class="fas fa-save ms-2"></i>
+                      </button>
+                    </div>
+                    <div class="border rounded-4">
+                      <table
+                        style="border-radius: 10px; overflow: hidden"
+                        class="table table-sm table-borderless"
+                        id="procTable"
+                      >
+                        <thead class="thead-light">
+                          <tr>
+                            <th
+                              style="width: 70px"
+                              class="text-custom text-center"
                             >
-                              ✖
-                            </button>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
+                              Sr No.
+                            </th>
+                            <th class="text-custom">Procedure</th>
+                            <th style="width: 150px" class="text-custom">
+                              Qty
+                            </th>
+                            <th style="width: 150px" class="text-custom">
+                              Price
+                            </th>
+                            <th style="width: 150px" class="text-custom">
+                              Discount (%)
+                            </th>
+                            <th style="width: 150px" class="text-custom">
+                              Status
+                            </th>
+                            <th style="width: 150px" class="text-custom">
+                              Total
+                            </th>
+                            <th style="width: 150px" class="text-custom"></th>
+                          </tr>
+                        </thead>
 
-                    <div class="mt-2 fw-bold">
+                        <tbody>
+                          <tr>
+                            <td class="align-middle text-center">1</td>
+                            <td class="align-middle">
+                              <select
+                                class="form-control proc-name rounded-4 input-style"
+                              >
+                                <option value="">Select procedure</option>
+                                <option value="Dental Cleaning">
+                                  Dental Cleaning
+                                </option>
+                                <option value="Root Canal">Root Canal</option>
+                                <option value="X-Ray">X-Ray Imaging</option>
+                              </select>
+                            </td>
+                            <td class="align-middle">
+                              <input
+                                type="number"
+                                class="form-control proc-qty rounded-4 input-style"
+                                value="1"
+                              />
+                            </td>
+                            <td class="align-middle">
+                              <input
+                                type="number"
+                                class="form-control proc-price rounded-4 input-style"
+                                value="0"
+                              />
+                            </td>
+                            <td class="align-middle">
+                              <input
+                                type="number"
+                                class="form-control proc-discount rounded-4 input-style"
+                                value="0"
+                              />
+                            </td>
+                            <td class="align-middle">
+                              <select
+                                class="form-control proc-name rounded-4 input-style"
+                              >
+                                <option value="">Select status</option>
+                                <option value="Planned/Completed">
+                                  Planned/Completed
+                                </option>
+                                <option value="Nursing Performed?">
+                                  Nursing Performed
+                                </option>
+                                <option value="Send to Radiology">
+                                  Send to Radiology
+                                </option>
+                              </select>
+                            </td>
+                            <td class="proc-line-total align-middle">₹0</td>
+                            <td class="align-middle">
+                              <button
+                                type="button"
+                                class="btn btn-sm btn-remove-proc"
+                              >
+                                <i class="fas fa-trash text-danger"></i>
+                              </button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+
+                    <div class="d-flex justify-content-between p-2">
+                      <button
+                        id="addProc"
+                        class="btn btn-sm text-primary rounded-4"
+                      >
+                        + Add procedure
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-success rounded-4"
+                        id="savePresc"
+                      >
+                        Save <i class="fas fa-save ms-2"></i>
+                      </button>
+                    </div>
+
+                    <div class="mt-2 ms-4 fw-bold text-custom">
                       Total: ₹ <span id="procSum">0</span>
                     </div>
                   </div>
@@ -791,13 +976,15 @@
                   >
                     <!-- Button -->
                     <button
-                      class="btn btn-link collapsed text-decoration-none p-0"
+                      class="btn btn-sm btn-link collapsed text-decoration-none p-0"
                     >
-                      <h6 class="mb-0 fw-semibold text-dark">Prescriptions</h6>
+                      <h6 class="mb-0 fw-semibold text-custom">
+                        Prescriptions
+                      </h6>
                     </button>
 
                     <!-- Preview Text -->
-                    <small class="text-muted" id="prescPreview"
+                    <small class="text-custom" id="prescPreview"
                       >No items yet</small
                     >
                   </div>
@@ -809,69 +996,244 @@
                   data-parent="#patientAccordion"
                 >
                   <div class="card-body">
+                    <div
+                      class="w-25 px-2 py-3 quick-badges d-flex gap-1 flex-wrap justify-content-start align-items-center"
+                    >
+                      <span class="badge badge-primary">Template A</span>
+                      <span class="badge badge-primary">Template B</span>
+                      <span class="badge badge-primary">Template C</span>
+                      <span class="badge badge-primary">Template C</span>
+                      <span class="badge badge-primary">Template C</span>
+                      <select
+                        class="form-control proc-name rounded-4 w-50 input-style"
+                      >
+                        <option value="">Select template</option>
+                        <option value="Dental Cleaning">Template 1</option>
+                        <option value="Root Canal">Template 2</option>
+                        <option value="X-Ray">Template 3</option>
+                      </select>
+                    </div>
+                    <div
+                      class="d-flex pb-3 gap-2 justify-content-between align-items-center"
+                    >
+                      <!-- need to change the date format dd-mm-yyyy -->
+                      <div class="d-flex w-50 gap-2">
+                        <div class="col-6">
+                          <input
+                            type="date"
+                            id="dateFilter"
+                            class="form-control rounded-4 input-style"
+                          />
+                        </div>
+                        <div class="col-6">
+                          <select
+                            class="form-control proc-name rounded-4 input-style"
+                          >
+                            <option value="">Select doctor</option>
+                            <option value="Dental Cleaning">Doctor A</option>
+                            <option value="Root Canal">Doctor B</option>
+                            <option value="X-Ray">Doctor C</option>
+                          </select>
+                        </div>
+                      </div>
+                      <button
+                        type="button"
+                        class="btn btn-outline-success btn-sm rounded-4"
+                        id="saveVitals"
+                      >
+                        Save as template<i class="fas fa-save ms-2"></i>
+                      </button>
+                    </div>
                     <div id="medList">
                       <!-- Sample Medicine Block -->
-                      <div class="medicine-card card mb-2 p-3">
+                      <div class="medicine-card bg-custom mt-2 rounded-4 p-3">
                         <div>
                           <h6 class="mb-2">Medicine</h6>
                         </div>
 
                         <div class="form-row">
-                          <div class="form-group col-md-3">
+                          <div class="form-group col-md-3 m-0">
                             <input
-                              class="form-control med-name"
+                              class="form-control med-name rounded-4 input-style"
                               placeholder="Medicine Name"
                             />
                           </div>
-                          <div class="form-group col-md-3">
-                            <input class="form-control" placeholder="Dosage" />
-                          </div>
-                          <div class="form-group col-md-3">
-                            <input
-                              class="form-control"
-                              placeholder="Duration"
-                            />
-                          </div>
-                          <div class="form-group col-md-3">
-                            <input
-                              class="form-control"
-                              placeholder="Frequency"
-                            />
-                          </div>
-                        </div>
+                          <div class="form-group col-md-9 row m-0">
+                            <div class="form-group col-md-4 d-flex">
+                              <input
+                                class="form-control rounded-start-4 rounded-end-0 border-end-0 input-style"
+                                placeholder="Dosage"
+                              />
+                              <select
+                                class="form-control text-center rounded-end-4 rounded-start-0 input-style"
+                              >
+                                <option>Unit</option>
+                                <option>mg</option>
+                                <option>ml</option>
+                              </select>
+                            </div>
 
-                        <div class="form-row">
-                          <div class="form-group col-md-6">
+                            <div class="form-group col-md-4 d-flex">
+                              <input
+                                class="form-control rounded-start-4 rounded-end-0 border-end-0 input-style"
+                                placeholder="Duration"
+                              />
+                              <select
+                                class="form-control text-center rounded-end-4 rounded-start-0 input-style"
+                              >
+                                <option>Day (s)</option>
+                                <option>Week (s)</option>
+                                <option>Month (s)</option>
+                              </select>
+                            </div>
+
+                            <div class="form-group col-md-4 d-flex">
+                              <input
+                                class="form-control rounded-start-4 rounded-end-0 border-end-0 input-style"
+                                placeholder="Frequency"
+                              />
+                              <select
+                                class="form-control text-center rounded-end-4 rounded-start-0 input-style"
+                              >
+                                <option>Before food</option>
+                                <option>After food</option>
+                                <option>None</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="form-group col-md-3 m-0">
                             <input
-                              class="form-control"
+                              class="form-control rounded-4 input-style"
                               placeholder="Instructions"
                             />
                           </div>
-                          <div
-                            class="form-group col-md-6 d-flex justify-content-end align-items-center"
-                          >
-                            <button
-                              class="btn btn-sm btn-danger btn-remove-med"
-                              type="button"
+                          <div class="form-group col-md-3 m-0">
+                            <select
+                              data-placeholder="Select"
+                              class="form-control rounded-4 input-style"
+                              tabindex="2"
+                              name="musage1"
+                              id="musage1"
+                              data-gtm-form-interact-field-id="0"
                             >
-                              Remove
-                            </button>
+                              <option value="">Select usage or route</option>
+                              <option
+                                value=""
+                                disabled=""
+                                class="placeholder-option"
+                              >
+                                -------USAGE-------
+                              </option>
+                              <option value="SOS">SOS</option>
+                              <option value="Now">Now</option>
+                              <option value="STAT">STAT</option>
+                              <option value="1 Hour">1 Hour</option>
+
+                              <option value="1/2 Hourly">1/2 Hourly</option>
+                              <option value="1 Hourly">1 Hourly</option>
+                              <option value="2 Hourly">2 Hourly</option>
+                              <option value="3 Hourly">3 Hourly</option>
+                              <option value="4 Hourly">4 Hourly</option>
+                              <option value="5 Hourly">5 Hourly</option>
+                              <option value="6 Hourly">6 Hourly</option>
+                              <option value="8 Hourly">8 Hourly</option>
+                              <option value="12 hourly">12 hourly</option>
+                              <option value="Morning">Morning</option>
+                              <option value="Afternoon">Afternoon</option>
+                              <option value="Evening">Evening</option>
+                              <option value="Night">Night</option>
+                              <option value="2 Times">2 Times</option>
+                              <option value="3 Times">3 Times</option>
+                              <option value="4 Times">4 Times</option>
+                              <option value="Empty Stomach">
+                                Empty Stomach
+                              </option>
+                              <option value="External Application">
+                                External Application
+                              </option>
+                              <option value="Bed Time">Bed Time</option>
+                              <option value="With Food">With Food</option>
+                              <option value="With Milk">With Milk</option>
+                              <option value="One hour before food">
+                                One hour before food
+                              </option>
+                              <option value="One hour after food">
+                                One hour after food
+                              </option>
+                              <option value="15 minutes before food">
+                                15 minutes before food
+                              </option>
+                              <option value="Pills/Globules (SG)">
+                                Pills/Globules (SG)
+                              </option>
+                              <option value="Powder dose (SL)">
+                                Powder dose (SL)
+                              </option>
+                              <option value="Dry dose (SL)">
+                                Dry dose (SL)
+                              </option>
+                              <option value="Aqua">Aqua</option>
+
+                              <option
+                                value=""
+                                disabled=""
+                                class="placeholder-option"
+                              >
+                                -------ROUTE-------
+                              </option>
+                              <option value="oral">Oral (PO)</option>
+                              <option value="sublingual">
+                                Sublingual (SL)
+                              </option>
+                              <option value="buccal">Buccal</option>
+                              <option value="topical">Topical</option>
+                              <option value="transdermal">Transdermal</option>
+                              <option value="inhalation">Inhalation</option>
+                              <option value="intravenous">
+                                Intravenous (IV)
+                              </option>
+                              <option value="intramuscular">
+                                Intramuscular (IM)
+                              </option>
+                              <option value="subcutaneous">
+                                Subcutaneous (SC)
+                              </option>
+                              <option value="rectal">Rectal (PR)</option>
+                              <option value="vaginal">Vaginal</option>
+                              <option value="ophthalmic">Ophthalmic</option>
+                              <option value="otic">Otic</option>
+                              <option value="nasal">Nasal</option>
+                            </select>
                           </div>
+                        </div>
+                        <div
+                          class="form-group d-flex justify-content-end align-items-center m-0"
+                        >
+                          <button
+                            class="btn btn-sm btn-sm rounded-4 text-danger btn-remove-med"
+                            type="button"
+                          >
+                            Remove
+                          </button>
                         </div>
                       </div>
                     </div>
 
-                    <button type="button" class="btn btn-link" id="addMed">
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-link"
+                      id="addMed"
+                    >
                       + Add Medicine
                     </button>
 
                     <div class="text-right mt-3">
                       <button
                         type="button"
-                        class="btn btn-primary"
+                        class="btn btn-sm btn-success rounded-4"
                         id="savePresc"
                       >
-                        Save
+                        Save <i class="fas fa-save ms-2"></i>
                       </button>
                     </div>
                   </div>
@@ -879,6 +1241,7 @@
               </div>
 
               <!-- Dental procedure -->
+              <!-- on clicking on a tooth show a modal and able to add values -->
               <div class="card mb-2">
                 <div class="card-header" id="headingDental">
                   <div
@@ -888,15 +1251,15 @@
                     class="d-flex gap-2 justify-content-between align-items-center"
                   >
                     <button
-                      class="btn btn-link collapsed text-decoration-none p-0"
+                      class="btn btn-sm btn-link collapsed text-decoration-none p-0"
                     >
-                      <h6 class="mb-0 fw-semibold text-dark">
+                      <h6 class="mb-0 fw-semibold text-custom">
                         Dental Notes & Procedure
                       </h6>
                     </button>
 
                     <!-- Preview Text -->
-                    <small class="text-muted ml-2">
+                    <small class="text-custom ml-2">
                       • Teeth: <span id="selectedTeethPreview">None</span>
                     </small>
                   </div>
@@ -909,7 +1272,9 @@
                 >
                   <div class="card-body">
                     <!-- Tooth Selection -->
-                    <label class="font-weight-bold">Select Teeth</label>
+                    <label class="font-weight-bold text-custom"
+                      >Select Teeth</label
+                    >
                     <div
                       class="d-flex flex-wrap gap-2 mb-3 justify-content-center"
                       id="teethSelector1"
@@ -924,86 +1289,170 @@
                     </div>
 
                     <!-- Notes Section -->
-                    <div class="form-group">
-                      <label>Clinical Notes</label>
-                      <textarea
-                        class="form-control"
-                        id="dentalNotes"
-                        rows="2"
-                      ></textarea>
-                    </div>
 
                     <!-- Procedure Table -->
-                    <table
-                      class="table table-sm table-bordered"
-                      id="dentalProcTable"
-                    >
-                      <thead class="thead-light">
-                        <tr>
-                          <th>Procedure</th>
-                          <th>Qty</th>
-                          <th>Price</th>
-                          <th>Total</th>
-                          <th></th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>
-                            <select class="form-control dental-proc">
-                              <option value="">SELECT</option>
-                              <option value="Filling">Filling</option>
-                              <option value="Extraction">Extraction</option>
-                              <option value="Scaling">Scaling</option>
-                            </select>
-                          </td>
-                          <td>
-                            <input
-                              type="number"
-                              class="form-control dental-qty"
-                              value="1"
-                            />
-                          </td>
-                          <td>
-                            <input
-                              type="number"
-                              class="form-control dental-price"
-                              value="0"
-                            />
-                          </td>
-                          <td class="dental-line-total align-middle">₹0</td>
-                          <td>
-                            <button
-                              type="button"
-                              class="btn btn-sm btn-danger btn-remove-dental"
-                            >
-                              ✖
-                            </button>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
 
-                    <button
-                      type="button"
-                      class="btn btn-link"
-                      id="addDentalProc"
-                    >
-                      + ADD NEW
-                    </button>
-
-                    <div class="mt-2 font-weight-bold">
+                    <div class="mt-2 ms-3 font-weight-bold text-custom">
                       Total: ₹ <span id="dentalSum">0</span>
                     </div>
 
                     <div class="text-right mt-3">
                       <button
                         type="button"
-                        class="btn btn-primary"
+                        class="btn btn-sm btn-primary rounded-4"
                         id="saveDental"
                       >
-                        Save
+                        Save <i class="fas fa-save ms-2"></i>
                       </button>
+                    </div>
+                  </div>
+                </div>
+                <!-- modal -->
+                <div
+                  class="modal fade"
+                  id="toothModal"
+                  tabindex="-1"
+                  aria-labelledby="toothModalLabel"
+                  aria-hidden="true"
+                >
+                  <div class="modal-dialog modal-dialog-centered modal-xl">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="toothModalLabel">
+                          Dental procedure
+                        </h5>
+                      </div>
+
+                      <div class="px-5 py-3">
+                        <div class="row">
+                          <div class="col-md-6 col-lg-6">
+                            <div class="form-group">
+                              <label class="fw-medium text-custom"
+                                >Cheif complaints</label
+                              >
+                              <textarea
+                                class="form-control rounded-4"
+                                id="dentalNotes"
+                                rows="2"
+                              ></textarea>
+                            </div>
+                          </div>
+                          <div class="col-md-6 col-lg-6">
+                            <div class="form-group">
+                              <label class="fw-medium text-custom"
+                                >Observations</label
+                              >
+                              <textarea
+                                class="form-control rounded-4"
+                                id="dentalNotes"
+                                rows="2"
+                              ></textarea>
+                            </div>
+                          </div>
+                          <div class="col-md-6 col-lg-6">
+                            <div class="form-group">
+                              <label class="fw-medium text-custom"
+                                >Medical history</label
+                              >
+                              <textarea
+                                class="form-control rounded-4"
+                                id="dentalNotes"
+                                rows="2"
+                              ></textarea>
+                            </div>
+                          </div>
+                          <div class="col-md-6 col-lg-6">
+                            <div class="form-group">
+                              <label class="fw-medium text-custom"
+                                >Advice</label
+                              >
+                              <textarea
+                                class="form-control rounded-4"
+                                id="dentalNotes"
+                                rows="2"
+                              ></textarea>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="border rounded-4">
+                          <table
+                            style="border-radius: 10px; overflow: hidden"
+                            class="table table-sm table-borderless rounded-4"
+                            id="dentalProcTable"
+                          >
+                            <thead class="thead-light">
+                              <tr>
+                                <th>Procedure</th>
+                                <th>Qty</th>
+                                <th>Price</th>
+                                <th>Total</th>
+                                <th></th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td class="px-3 py-2">
+                                  <select
+                                    class="form-control dental-proc rounded-4 input-style"
+                                  >
+                                    <option value="">Select procedure</option>
+                                    <option value="Filling">Filling</option>
+                                    <option value="Extraction">
+                                      Extraction
+                                    </option>
+                                    <option value="Scaling">Scaling</option>
+                                  </select>
+                                </td>
+                                <td class="px-3 py-2" style="width: 150px">
+                                  <input
+                                    type="number"
+                                    class="form-control dental-qty rounded-4 input-style"
+                                    value="1"
+                                  />
+                                </td>
+                                <td class="px-3 py-2" style="width: 150px">
+                                  <input
+                                    type="number"
+                                    class="form-control dental-price rounded-4 input-style"
+                                    value="0"
+                                  />
+                                </td>
+                                <td
+                                  style="width: 150px"
+                                  class="dental-line-total align-middle px-3 py-2"
+                                >
+                                  ₹0
+                                </td>
+                                <td class="px-3 py-2" style="width: 150px">
+                                  <button
+                                    type="button"
+                                    class="btn btn-sm btn-remove-dental"
+                                  >
+                                    <i class="fas fa-trash text-danger"></i>
+                                  </button>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+
+                          <button
+                            type="button"
+                            class="btn btn-sm btn-link"
+                            id="addDentalProc"
+                          >
+                            + ADD NEW
+                          </button>
+                        </div>
+                      </div>
+
+                      <div class="modal-footer">
+                        <button
+                          type="button"
+                          class="btn rounded-4 btn-sm btn-primary"
+                        >
+                          Save changes
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -1011,7 +1460,7 @@
 
               <!-- Files -->
               <div class="card mb-2 rounded-bottom-3">
-                <div class="card-header" id="headingVitals">
+                <div class="card-header" id="headingFiles">
                   <div
                     role="button"
                     class="d-flex justify-content-between align-items-center"
@@ -1019,13 +1468,13 @@
                     data-target="#collapseFiles"
                   >
                     <button
-                      class="btn btn-link collapsed text-decoration-none p-0"
+                      class="btn btn-sm btn-link collapsed text-decoration-none p-0"
                     >
-                      <h6 class="mb-0 fw-semibold text-dark">Files</h6>
+                      <h6 class="mb-0 fw-semibold text-custom">Files</h6>
                     </button>
 
                     <!-- Preview Text -->
-                    <small class="text-muted" id="clinicalNotesPrev"
+                    <small class="text-custom" id="clinicalNotesPrev"
                       >No items yet</small
                     >
                   </div>
@@ -1039,7 +1488,9 @@
                   <div class="card-body">
                     <form id="filesForm">
                       <div class="form-group">
-                        <label>Upload Files</label>
+                        <label class="fw-medium text-custom"
+                          >Upload Files</label
+                        >
                         <input
                           type="file"
                           class="form-control-file"
@@ -1051,10 +1502,10 @@
                       <div class="text-right">
                         <button
                           type="button"
-                          class="btn btn-primary"
+                          class="btn btn-sm btn-success rounded-4"
                           id="saveFiles"
                         >
-                          Save
+                          Save <i class="fas fa-save ms-2"></i>
                         </button>
                       </div>
                     </form>
@@ -1062,14 +1513,31 @@
                 </div>
               </div>
 
-              <div
-                class="d-flex justify-content-end align-items-center gap-2 mt-3"
-              >
-                <button class="btn btn-primary save-btn">
-                  Generate invoice
-                </button>
-                <button class="btn btn-success save-btn">Save</button>
-                <button class="btn btn-success save-btn">Save and share</button>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="d-flex flex-column gap-2 w-25">
+                  <label class="form-label small text-custom fw-semibold m-0"
+                    >Next review date</label
+                  >
+                  <input
+                    type="date"
+                    id="dateFilter"
+                    class="form-control rounded-4 input-style"
+                  />
+                </div>
+
+                <div
+                  class="d-flex justify-content-end align-items-center gap-2 mt-3"
+                >
+                  <button class="btn btn-sm btn-primary rounded-4 save-btn">
+                    Generate invoice <i class="fas fa-file-invoice ms-2"></i>
+                  </button>
+                  <button class="btn btn-sm btn-success save-btn rounded-4">
+                    Save <i class="fas fa-save ms-2"></i>
+                  </button>
+                  <button class="btn btn-sm btn-success save-btn rounded-4">
+                    Save and share <i class="fas fa-share-alt ms-2"></i>
+                  </button>
+                </div>
               </div>
             </div>
           </main>
@@ -1080,5 +1548,7 @@
     <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../../dist/js/adminlte.min.js"></script>
     <script src="./new.js"></script>
+    <script src="./collapse.js"></script>
+    <script src="./preview.js"></script>
   </body>
 </html>

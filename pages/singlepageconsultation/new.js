@@ -9,12 +9,16 @@ $(function () {
 
   // Better implementation: use template
   function addAllergyRow(value) {
-    var row = $('<div class="input-group mb-2 allergy-row">')
-      .append($('<input type="text" class="form-control">').val(value || ""))
+    var row = $('<div class="input-group mb-2 allergy-row col-md-4 col-lg-4">')
+      .append(
+        $(
+          '<input type="text" class="form-control rounded-start-4 input-style">'
+        ).val(value || "")
+      )
       .append(
         $('<div class="input-group-append">').append(
           $(
-            '<button class="btn btn-outline-danger btn-remove-allergy" type="button">✖</button>'
+            '<button style="padding: 0px 8px" class="btn btn-outline-danger btn-remove-allergy rounded-end-4" type="button"><i class="fas fa-times"></i></button>'
           )
         )
       );
@@ -57,22 +61,39 @@ $(function () {
   $("#addProc").on("click", function () {
     var idx = $("#procTable tbody tr").length + 1;
     var newRow = $("<tr>")
-      .append('<td class="align-middle">' + idx + "</td>")
+      .append('<td class="align-middle text-center">' + idx + "</td>")
       .append(
-        '<td><select class="form-control proc-name"><option value="">SELECT</option><option value="Dental Cleaning">Dental Cleaning</option><option value="General Consultation">General Consultation</option></select></td>'
+        '<td><select class="form-control rounded-4 proc-name input-style align-items-center"><option value="">Select procedure</option><option value="Dental Cleaning">Dental Cleaning</option><option value="General Consultation">General Consultation</option></select></td>'
       )
       .append(
-        '<td><input type="number" class="form-control proc-qty" value="1"></td>'
+        '<td><input type="number" class="form-control rounded-4 proc-qty input-style" value="1"></td>'
       )
       .append(
-        '<td><input type="number" class="form-control proc-price" value="0"></td>'
+        '<td><input type="number" class="form-control rounded-4 proc-price input-style" value="0"></td>'
+      )
+
+      .append(
+        '<td><input type="number" class="form-control rounded-4 proc-discount input-style" value="0"></td>'
       )
       .append(
-        '<td><input type="number" class="form-control proc-discount" value="0"></td>'
+        `         <td>
+                   <select class="form-control proc-name rounded-4 input-style">
+                              <option value="">Select status</option>
+                              <option value="Planned/Completed">
+                                Planned/Completed
+                              </option>
+                              <option value="Nursing Performed?">
+                                Nursing Performed
+                              </option>
+                              <option value="Send to Radiology">
+                                Send to Radiology
+                              </option>
+                   </select>
+                 </td>`
       )
       .append('<td class="proc-line-total align-middle">₹0</td>')
       .append(
-        '<td><button type="button" class="btn btn-sm btn-danger btn-remove-proc">✖</button></td>'
+        '<td><button type="button" class="btn btn-sm btn-remove-proc"><i class="fas fa-trash text-danger"></i></button></td>'
       );
     $("#procTable tbody").append(newRow);
     recalcProcedures();
@@ -97,23 +118,6 @@ $(function () {
     }
   );
   recalcProcedures();
-
-  // Prescriptions: add/remove
-  $("#addMed").on("click", function () {
-    var count = $("#medList .medicine-card").length + 1;
-    var card = $('<div class="medicine-card card mb-2 p-3">')
-      .append("<h6>Medicine " + count + "</h6>")
-      .append(
-        '<div class="form-row"><div class="form-group col-md-8"><input class="form-control" placeholder="e.g., Paracetamol 500mg"></div><div class="form-group col-md-4 text-right"><button class="btn btn-sm btn-danger btn-remove-med" type="button">Remove</button></div></div>'
-      )
-      .append(
-        '<div class="form-row"><div class="form-group col-md-3"><input class="form-control" placeholder="Dosage"></div><div class="form-group col-md-3"><input class="form-control" placeholder="Duration"></div><div class="form-group col-md-3"><input class="form-control" placeholder="Frequency"></div><div class="form-group col-md-3"><input class="form-control" placeholder="Instructions"></div></div>'
-      );
-    $("#medList").append(card);
-  });
-  $(document).on("click", ".btn-remove-med", function () {
-    $(this).closest(".medicine-card").remove();
-  });
 
   // Files
   $("#fileInput").on("change", function () {
@@ -227,70 +231,148 @@ $(function () {
 
   //---------------------- chip filter function ------------------------------------------------
 
-  $("#chipFilters span").click(function () {
-    // Remove active class from all chips
-    $("#chipFilters span").removeClass("bg-dark text-white active-filter");
-    $("#chipFilters span").addClass("border text-muted");
+  const historyData = [
+    {
+      type: "vitals",
+      date: "2025-11-26",
+      title: "Vitals Recorded",
+      icon: "fa fa-stethoscope text-success",
+      html: `
+      <p class="small mb-1">Temp: <span class="badge bg-danger">98.6°F</span> | BP 120/80 | Pulse 72</p>
+      <small class="text-muted">3:00 PM • Nurse Station</small>
+    `,
+    },
+    {
+      type: "prescription",
+      date: "2025-11-26",
+      title: "Prescription",
+      icon: "fas fa-capsules text-primary",
+      html: `<p class="small mb-0">Paracetamol • 5 Days</p>`,
+    },
+    {
+      type: "procedure",
+      date: "2025-11-25",
+      icon: "fas fa-syringe text-info",
+      title: "Procedure Performed",
+      html: `
+      <p class="small mb-1">Wound cleaning & dressing applied.</p>
+      <p class="small mb-1">Status: <span class="badge bg-info text-dark">Completed</span></p>
+      <small class="text-muted">4:15 PM • Nurse Emily • Ward 3B</small>
+    `,
+    },
+    {
+      type: "files",
+      date: "2025-11-22",
+      icon: "fas fa-file text-primary",
+      title: "Uploaded Report",
+      html: `<p class="small mb-0">Blood Test Report.pdf</p>`,
+    },
+    {
+      type: "dental",
+      date: "2025-11-22",
+      icon: "fas fa-tooth text-muted",
+      title: "Dental Procedure",
+      html: `
+      <p class="small mb-1">Root canal performed on tooth 36.</p>
+      <small class="text-muted">1:30 PM • Dr. Miller</small>
+    `,
+    },
+  ];
 
-    // Add active style to clicked chip
+  function formatDateGroupLabel(dateStr) {
+    const today = new Date().toISOString().slice(0, 10);
+    const yesterday = new Date(Date.now() - 86400000)
+      .toISOString()
+      .slice(0, 10);
+
+    if (dateStr === today) return "Today";
+    if (dateStr === yesterday) return "Yesterday";
+
+    const d = new Date(dateStr);
+    return d.toLocaleDateString("en-GB"); // 20-11-2025
+  }
+
+  function renderHistory() {
+    const container = $(".content-area");
+    container.empty();
+
+    // Group by date
+    const grouped = historyData.reduce((acc, item) => {
+      (acc[item.date] = acc[item.date] || []).push(item);
+      return acc;
+    }, {});
+
+    // Sort dates descending
+    const sortedDates = Object.keys(grouped).sort(
+      (a, b) => new Date(b) - new Date(a)
+    );
+
+    sortedDates.forEach((date) => {
+      const label = formatDateGroupLabel(date);
+      container.append(
+        `<h6 class="fw-bold small text-muted mt-3">${label}</h6>`
+      );
+
+      grouped[date].forEach((item) => {
+        container.append(`
+        <div class="rounded-2 mb-2 bg-white filter-item" data-type="${item.type}" data-date="${item.date}">
+          <div class="card-body">
+            <h6 class="fw-meduim text-muted"><i class="${item.icon} mr-2"></i> ${item.title}</h6>
+            ${item.html}
+          </div>
+        </div>
+      `);
+      });
+    });
+  }
+
+  renderHistory();
+
+  function applyFilters() {
+    const activeFilter = $("#chipFilters .active-filter").data("filter");
+    const selectedDate = $("#dateFilter").val();
+
+    $(".filter-item")
+      .hide()
+      .filter(function () {
+        const typeMatch =
+          activeFilter === "all" || $(this).data("type") === activeFilter;
+        const dateMatch =
+          !selectedDate || $(this).data("date") === selectedDate;
+
+        return typeMatch && dateMatch;
+      })
+      .show();
+  }
+
+  // Chip Click
+  function applyFilters() {
+    const activeFilter = $("#chipFilters .active-filter").data("filter");
+    const selectedDate = $("#dateFilter").val();
+
+    $(".filter-item")
+      .hide()
+      .filter(function () {
+        const matchesType =
+          activeFilter === "all" || $(this).data("type") === activeFilter;
+        const matchesDate =
+          !selectedDate || $(this).data("date") === selectedDate;
+        return matchesType && matchesDate;
+      })
+      .show();
+  }
+
+  $("#chipFilters span").click(function () {
+    $("#chipFilters span")
+      .removeClass("bg-dark text-white active-filter")
+      .addClass("border text-muted");
     $(this)
       .removeClass("border text-muted")
       .addClass("bg-dark text-white active-filter");
-
-    const filterValue = $(this).data("filter");
-
-    if (filterValue === "all") {
-      $(".filter-item").show();
-    } else {
-      $(".filter-item").hide().filter(`[data-type="${filterValue}"]`).show();
-    }
+    applyFilters();
   });
 
-  // ------------------- handle prescription preview on the top -------------------------------------
-
-  function updatePreview() {
-    const cards = $("#medList .medicine-card");
-    const count = cards.length;
-
-    if (count === 0) {
-      $("#prescPreview").text("No items yet");
-      return;
-    }
-
-    const names = cards
-      .map(function () {
-        return $(this).val()?.trim();
-      })
-      .get()
-      .filter(Boolean); // remove empty values
-
-    const firstMed = names.join(", ") || "Unnamed";
-
-    if (count === 1) {
-      $("#prescPreview").text(firstMed);
-    } else {
-      $("#prescPreview").text(`${firstMed} + ${count - 1} more`);
-    }
-  }
-
-  $("#addMed").click(function () {
-    const newCard = $(".medicine-card").first().clone();
-    newCard.find("input").val("");
-    $("#medList").append(newCard);
-    updatePreview();
-  });
-
-  $(document).on("click", ".btn-remove-med", function () {
-    $(this).closest(".medicine-card").remove();
-    updatePreview();
-  });
-
-  $(document).on("input", ".med-name", function () {
-    updatePreview();
-  });
-
-  // Initialize preview on load
-  updatePreview();
+  $("#dateFilter").on("change", applyFilters);
 
   // --------------------------------------- procedure -------------------------------------------------
   function updateProcedureTotals() {
@@ -365,18 +447,18 @@ $(function () {
   $("#addDentalProc").on("click", function () {
     const newRow = `
     <tr>
-      <td>
-        <select class="form-control dental-proc">
-          <option value="">SELECT</option>
+      <td class="px-3 py-2">
+        <select class="form-control dental-proc rounded-4 input-style">
+          <option value="">Select procedure</option>
           <option value="Filling">Filling</option>
           <option value="Extraction">Extraction</option>
           <option value="Scaling">Scaling</option>
         </select>
       </td>
-      <td><input type="number" class="form-control dental-qty" value="1"/></td>
-      <td><input type="number" class="form-control dental-price" value="0"/></td>
-      <td class="dental-line-total align-middle">₹0</td>
-      <td><button type="button" class="btn btn-sm btn-danger btn-remove-dental">✖</button></td>
+      <td class="px-3 py-2"><input type="number" class="form-control dental-qty rounded-4 input-style" value="1"/></td>
+      <td class="px-3 py-2"><input type="number" class="form-control dental-price rounded-4 input-style" value="0"/></td>
+      <td class="dental-line-total align-middle px-3 py-2">₹0</td>
+      <td class="px-3 py-2"><button type="button" class="btn btn-sm btn-remove-dental"><i class="fas fa-trash text-danger"></i></button></td>
     </tr>
   `;
 
@@ -452,9 +534,9 @@ $(function () {
 
     teeth.forEach((tooth, index) => {
       const elem = `
-      <span role="button" class="badge badge-light border p-2 d-flex flex-column align-items-center gap-2 tooth-item"
-            data-tooth="${tooth.number}">
-        <img width="20" height="40" src="./Teeth/${tooth.image}" />
+     <span role="button" class="rounded-3 border p-2 d-flex flex-column align-items-center gap-2 tooth-item"
+      data-tooth="${tooth.number}">
+        <img width="30" height="50" src="./Teeth/${tooth.image}" />
         <small>${tooth.number}</small>
       </span>
     `;
@@ -466,6 +548,14 @@ $(function () {
       }
     });
   }
+  $(document).on("click", ".tooth-item", function () {
+    const toothNumber = $(this).data("tooth");
+    console.log("Clicked tooth:", toothNumber);
+
+    // Open modal
+    const modal = new bootstrap.Modal(document.getElementById("toothModal"));
+    modal.show();
+  });
 
   renderTeeth(teeth);
 });
