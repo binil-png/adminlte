@@ -114,6 +114,17 @@
       .text-custom {
         color: #0c0908;
       }
+      .upload-box {
+        border: 1px dashed #6c757d;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: 0.2s;
+      }
+
+      .upload-box:hover {
+        background: #f8f9fa;
+        border-color: #0d6efd;
+      }
     </style>
   </head>
   <body class="hold-transition">
@@ -586,7 +597,7 @@
                           />
                         </div>
                         <div class="form-group col-md-2">
-                          <label class="fw-medium text-custom">BP</label>
+                          <label class="fw-medium text-custom">BP (mmHg)</label>
                           <input
                             type="text"
                             name="bp"
@@ -605,11 +616,11 @@
                         </div>
                       </div>
                       <div class="form-row align-items-end">
-                        <div class="form-group col-md-8">
+                        <div class="form-group col-md-12 col-lg-12">
                           <label class="fw-medium text-custom">Allergies</label>
                           <div id="allergyList" class="mb-2 row">
                             <div
-                              class="input-group mb-2 allergy-row col-md-4 col-lg-4"
+                              class="input-group mb-2 allergy-row col-md-2 col-lg-2"
                             >
                               <input
                                 type="text"
@@ -628,7 +639,9 @@
                           </div>
                         </div>
                       </div>
-                      <div class="form-group text-right d-flex justify-content-between">
+                      <div
+                        class="form-group text-right d-flex justify-content-between"
+                      >
                         <button
                           id="addAllergy"
                           class="btn btn-sm btn-outline-primary rounded-4"
@@ -826,14 +839,21 @@
                 >
                   <div class="card-body">
                     <div class="pb-3 d-flex justify-content-between">
-                      <select
-                        class="form-control proc-name rounded-4 w-25 input-style"
+                      <div
+                        style="width: 50%"
+                        class="quick-badges flex-wrap mb-3 d-flex align-items-center justify-content-stat gap-1"
                       >
-                        <option value="">Select template</option>
-                        <option value="Template 1">Template 1</option>
-                        <option value="Template 2">Template 2</option>
-                        <option value="Template 3">Template 3</option>
-                      </select>
+                        <span class="badge badge-primary">Fever & Cold</span>
+                        <span class="badge badge-primary">Headache</span>
+                        <select
+                          class="form-control proc-name rounded-4 w-25 input-style"
+                        >
+                          <option value="">Select template</option>
+                          <option value="Dental Cleaning">Doctor A</option>
+                          <option value="Root Canal">Doctor B</option>
+                          <option value="X-Ray">Doctor C</option>
+                        </select>
+                      </div>
                       <button
                         type="button"
                         class="btn btn-outline-success btn-sm rounded-4"
@@ -996,59 +1016,60 @@
                   data-parent="#patientAccordion"
                 >
                   <div class="card-body">
-                    <div
-                      class="w-25 px-2 py-3 quick-badges d-flex gap-1 flex-wrap justify-content-start align-items-center"
-                    >
-                      <span class="badge badge-primary">Template A</span>
-                      <span class="badge badge-primary">Template B</span>
-                      <span class="badge badge-primary">Template C</span>
-                      <span class="badge badge-primary">Template C</span>
-                      <span class="badge badge-primary">Template C</span>
-                      <select
-                        class="form-control proc-name rounded-4 w-50 input-style"
+                    <div class="ps-3">
+                      <div
+                        class="w-50 py-3 quick-badges d-flex gap-1 flex-wrap justify-content-start align-items-center"
                       >
-                        <option value="">Select template</option>
-                        <option value="Dental Cleaning">Template 1</option>
-                        <option value="Root Canal">Template 2</option>
-                        <option value="X-Ray">Template 3</option>
-                      </select>
-                    </div>
-                    <div
-                      class="d-flex pb-3 gap-2 justify-content-between align-items-center"
-                    >
-                      <!-- need to change the date format dd-mm-yyyy -->
-                      <div class="d-flex w-50 gap-2">
-                        <div class="col-6">
-                          <input
-                            type="date"
-                            id="dateFilter"
-                            class="form-control rounded-4 input-style"
-                          />
-                        </div>
-                        <div class="col-6">
-                          <select
-                            class="form-control proc-name rounded-4 input-style"
-                          >
-                            <option value="">Select doctor</option>
-                            <option value="Dental Cleaning">Doctor A</option>
-                            <option value="Root Canal">Doctor B</option>
-                            <option value="X-Ray">Doctor C</option>
-                          </select>
-                        </div>
+                        <span class="badge badge-primary">Template A</span>
+                        <span class="badge badge-primary">Template B</span>
+                        <span class="badge badge-primary">Template C</span>
+                        <select
+                          class="form-control proc-name rounded-4 w-25 input-style"
+                        >
+                          <option value="">Select template</option>
+                          <option value="Dental Cleaning">Template 1</option>
+                          <option value="Root Canal">Template 2</option>
+                          <option value="X-Ray">Template 3</option>
+                        </select>
                       </div>
-                      <button
-                        type="button"
-                        class="btn btn-outline-success btn-sm rounded-4"
-                        id="saveVitals"
+                      <div
+                        class="d-flex ps-0 pb-3 gap-2 justify-content-between align-items-center"
                       >
-                        Save as template<i class="fas fa-save ms-2"></i>
-                      </button>
+                        <!-- need to change the date format dd-mm-yyyy -->
+                        <div class="d-flex w-50 gap-2">
+                          <div class="col-6 p-0">
+                            <input
+                              type="date"
+                              id="dateFilter"
+                              class="form-control rounded-4 input-style"
+                            />
+                          </div>
+                          <div class="col-6 p-0">
+                            <select
+                              class="form-control proc-name rounded-4 input-style"
+                            >
+                              <option value="">Select doctor</option>
+                              <option value="Dental Cleaning">Doctor A</option>
+                              <option value="Root Canal">Doctor B</option>
+                              <option value="X-Ray">Doctor C</option>
+                            </select>
+                          </div>
+                        </div>
+                        <button
+                          type="button"
+                          class="btn btn-outline-success btn-sm rounded-4"
+                          id="saveVitals"
+                        >
+                          Save as template<i class="fas fa-save ms-2"></i>
+                        </button>
+                      </div>
                     </div>
+
                     <div id="medList">
                       <!-- Sample Medicine Block -->
                       <div class="medicine-card bg-custom mt-2 rounded-4 p-3">
                         <div>
-                          <h6 class="mb-2">Medicine</h6>
+                          <h6 class="mb-2 ps-1">Medicine</h6>
                         </div>
 
                         <div class="form-row">
@@ -1101,7 +1122,7 @@
                               </select>
                             </div>
                           </div>
-                          <div class="form-group col-md-3 m-0">
+                          <div class="form-group col-md-6 m-0">
                             <input
                               class="form-control rounded-4 input-style"
                               placeholder="Instructions"
@@ -1241,7 +1262,6 @@
               </div>
 
               <!-- Dental procedure -->
-              <!-- on clicking on a tooth show a modal and able to add values -->
               <div class="card mb-2">
                 <div class="card-header" id="headingDental">
                   <div
@@ -1321,9 +1341,25 @@
                         <h5 class="modal-title" id="toothModalLabel">
                           Dental procedure
                         </h5>
+                        <!-- <button  data-dismiss="modal" class="btn btn-sm text-danger rounded-4"><i class="fas fa-times"></i></button> -->
                       </div>
 
                       <div class="px-5 py-3">
+                        <div
+                          class="w-50 py-2 quick-badges d-flex gap-1 flex-wrap justify-content-start align-items-center"
+                        >
+                          <span class="badge badge-primary">Template A</span>
+                          <span class="badge badge-primary">Template B</span>
+                          <span class="badge badge-primary">Template C</span>
+                          <select
+                            class="form-control proc-name rounded-4 w-25 input-style"
+                          >
+                            <option value="">Select template</option>
+                            <option value="Dental Cleaning">Template 1</option>
+                            <option value="Root Canal">Template 2</option>
+                            <option value="X-Ray">Template 3</option>
+                          </select>
+                        </div>
                         <div class="row">
                           <div class="col-md-6 col-lg-6">
                             <div class="form-group">
@@ -1448,9 +1484,16 @@
                       <div class="modal-footer">
                         <button
                           type="button"
-                          class="btn rounded-4 btn-sm btn-primary"
+                          class="btn rounded-4 btn-sm btn-outline-success"
                         >
-                          Save changes
+                          Save <i class="fas fa-save ms-2"></i>
+                        </button>
+                        <button
+                          type="button"
+                          class="btn btn-sm btn-outline-danger rounded-4"
+                          data-dismiss="modal"
+                        >
+                          Close <i class="fas fa-times ms-2"></i>
                         </button>
                       </div>
                     </div>
@@ -1473,7 +1516,6 @@
                       <h6 class="mb-0 fw-semibold text-custom">Files</h6>
                     </button>
 
-                    <!-- Preview Text -->
                     <small class="text-custom" id="clinicalNotesPrev"
                       >No items yet</small
                     >
@@ -1487,18 +1529,37 @@
                 >
                   <div class="card-body">
                     <form id="filesForm">
-                      <div class="form-group">
-                        <label class="fw-medium text-custom"
-                          >Upload Files</label
+                      <!-- Upload Box -->
+                      <input type="file" id="fileInput" hidden />
+                      <div class="upload-box text-center p-4 mb-3">
+                        <label
+                          for="fileInput"
+                          type="button"
+                          id="browseBtn"
+                          class="btn btn-sm btn-outline-primary rounded-4"
                         >
-                        <input
-                          type="file"
-                          class="form-control-file"
-                          id="fileInput"
-                          multiple
-                        />
+                          Browse Files
+                        </label>
+                        <p class="mb-0 mt-2 text-muted small">
+                          Click browse to add file
+                        </p>
                       </div>
-                      <ul id="fileList" class="list-unstyled"></ul>
+
+                      <!-- Text Box Under Border -->
+                      <div class="form-group mb-3">
+                        <label class="fw-medium text-custom"
+                          >File Description</label
+                        >
+                        <textarea
+                          class="form-control input-style rounded-3"
+                          id="fileDescription"
+                          rows="2"
+                          placeholder="Enter description (optional)"
+                        ></textarea>
+                      </div>
+
+                      <ul id="fileList" class="list-unstyled mb-3"></ul>
+
                       <div class="text-right">
                         <button
                           type="button"
@@ -1513,8 +1574,8 @@
                 </div>
               </div>
 
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="d-flex flex-column gap-2 w-25">
+              <div class="row justify-content-start align-items-center">
+                <div class="d-flex flex-column gap-2 col-md-2 col-lg-2">
                   <label class="form-label small text-custom fw-semibold m-0"
                     >Next review date</label
                   >
@@ -1526,7 +1587,7 @@
                 </div>
 
                 <div
-                  class="d-flex justify-content-end align-items-center gap-2 mt-3"
+                  class="d-flex justify-content-end align-items-center gap-2 mt-3 col-md-10"
                 >
                   <button class="btn btn-sm btn-primary rounded-4 save-btn">
                     Generate invoice <i class="fas fa-file-invoice ms-2"></i>

@@ -9,7 +9,7 @@ $(function () {
 
   // Better implementation: use template
   function addAllergyRow(value) {
-    var row = $('<div class="input-group mb-2 allergy-row col-md-4 col-lg-4">')
+    var row = $('<div class="input-group mb-2 allergy-row col-md-2 col-lg-2">')
       .append(
         $(
           '<input type="text" class="form-control rounded-start-4 input-style">'
