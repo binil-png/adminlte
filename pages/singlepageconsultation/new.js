@@ -1,123 +1,4 @@
 $(function () {
-  // Allergy add/remove
-  $("#addAllergy").on("click", function (e) {
-    e.preventDefault();
-    $("#allergyList").append(
-      '<div class="input-group mb-2 allergy-row">< + """>'
-    );
-  });
-
-  // Better implementation: use template
-  function addAllergyRow(value) {
-    var row = $('<div class="input-group mb-2 allergy-row col-md-2 col-lg-2">')
-      .append(
-        $(
-          '<input type="text" class="form-control rounded-start-4 input-style">'
-        ).val(value || "")
-      )
-      .append(
-        $('<div class="input-group-append">').append(
-          $(
-            '<button style="padding: 0px 8px" class="btn btn-outline-danger btn-remove-allergy rounded-end-4" type="button"><i class="fas fa-times"></i></button>'
-          )
-        )
-      );
-    $("#allergyList").append(row);
-  }
-
-  // initialize existing
-  $("#allergyList .allergy-row input").each(function () {
-    /* already exist*/
-  });
-
-  $("#addAllergy")
-    .off("click")
-    .on("click", function (e) {
-      e.preventDefault();
-      addAllergyRow("");
-    });
-
-  $(document).on("click", ".btn-remove-allergy", function () {
-    $(this).closest(".allergy-row").remove();
-  });
-
-  // Procedures: add/remove and calculate
-  function recalcProcedures() {
-    var sum = 0;
-    $("#procTable tbody tr").each(function () {
-      var qty = parseFloat($(this).find(".proc-qty").val() || 0);
-      var price = parseFloat($(this).find(".proc-price").val() || 0);
-      var disc = parseFloat($(this).find(".proc-discount").val() || 0);
-      var line = qty * price * (1 - disc / 100);
-      $(this)
-        .find(".proc-line-total")
-        .text("₹" + line.toFixed(2));
-      sum += line;
-    });
-    $("#procSum").text(sum.toFixed(2));
-    $("#procTotal").text("₹" + sum.toFixed(2));
-  }
-
-  $("#addProc").on("click", function () {
-    var idx = $("#procTable tbody tr").length + 1;
-    var newRow = $("<tr>")
-      .append('<td class="align-middle text-center">' + idx + "</td>")
-      .append(
-        '<td><select class="form-control rounded-4 proc-name input-style align-items-center"><option value="">Select procedure</option><option value="Dental Cleaning">Dental Cleaning</option><option value="General Consultation">General Consultation</option></select></td>'
-      )
-      .append(
-        '<td><input type="number" class="form-control rounded-4 proc-qty input-style" value="1"></td>'
-      )
-      .append(
-        '<td><input type="number" class="form-control rounded-4 proc-price input-style" value="0"></td>'
-      )
-
-      .append(
-        '<td><input type="number" class="form-control rounded-4 proc-discount input-style" value="0"></td>'
-      )
-      .append(
-        `         <td>
-                   <select class="form-control proc-name rounded-4 input-style">
-                              <option value="">Select status</option>
-                              <option value="Planned/Completed">
-                                Planned/Completed
-                              </option>
-                              <option value="Nursing Performed?">
-                                Nursing Performed
-                              </option>
-                              <option value="Send to Radiology">
-                                Send to Radiology
-                              </option>
-                   </select>
-                 </td>`
-      )
-      .append('<td class="proc-line-total align-middle">₹0</td>')
-      .append(
-        '<td><button type="button" class="btn btn-sm btn-remove-proc"><i class="fas fa-trash text-danger"></i></button></td>'
-      );
-    $("#procTable tbody").append(newRow);
-    recalcProcedures();
-  });
-
-  $(document).on("click", ".btn-remove-proc", function () {
-    $(this).closest("tr").remove();
-    // re-index
-    $("#procTable tbody tr").each(function (i) {
-      $(this)
-        .find("td:first")
-        .text(i + 1);
-    });
-    recalcProcedures();
-  });
-
-  $(document).on(
-    "input",
-    ".proc-qty, .proc-price, .proc-discount",
-    function () {
-      recalcProcedures();
-    }
-  );
-  recalcProcedures();
 
   // Files
   $("#fileInput").on("change", function () {
@@ -231,70 +112,30 @@ $(function () {
 
   //---------------------- chip filter function ------------------------------------------------
 
-  const historyData = [
-    {
-      type: "vitals",
-      date: "2025-11-26",
-      title: "Vitals Recorded",
-      icon: "fa fa-stethoscope text-success",
-      html: `
-      <p class="small mb-1">Temp: <span class="badge bg-danger">98.6°F</span> | BP 120/80 | Pulse 72</p>
-      <small class="text-muted">3:00 PM • Nurse Station</small>
-    `,
-    },
-    {
-      type: "prescription",
-      date: "2025-11-26",
-      title: "Prescription",
-      icon: "fas fa-capsules text-primary",
-      html: `<p class="small mb-0">Paracetamol • 5 Days</p>`,
-    },
-    {
-      type: "procedure",
-      date: "2025-11-25",
-      icon: "fas fa-syringe text-info",
-      title: "Procedure Performed",
-      html: `
-      <p class="small mb-1">Wound cleaning & dressing applied.</p>
-      <p class="small mb-1">Status: <span class="badge bg-info text-dark">Completed</span></p>
-      <small class="text-muted">4:15 PM • Nurse Emily • Ward 3B</small>
-    `,
-    },
-    {
-      type: "files",
-      date: "2025-11-22",
-      icon: "fas fa-file text-primary",
-      title: "Uploaded Report",
-      html: `<p class="small mb-0">Blood Test Report.pdf</p>`,
-    },
-    {
-      type: "dental",
-      date: "2025-11-22",
-      icon: "fas fa-tooth text-muted",
-      title: "Dental Procedure",
-      html: `
-      <p class="small mb-1">Root canal performed on tooth 36.</p>
-      <small class="text-muted">1:30 PM • Dr. Miller</small>
-    `,
-    },
-  ];
-
   function formatDateGroupLabel(dateStr) {
-    const today = new Date().toISOString().slice(0, 10);
-    const yesterday = new Date(Date.now() - 86400000)
-      .toISOString()
-      .slice(0, 10);
+    const today = new Date();
+    const date = new Date(dateStr);
 
-    if (dateStr === today) return "Today";
-    if (dateStr === yesterday) return "Yesterday";
+    const isToday = date.toDateString() === today.toDateString();
 
-    const d = new Date(dateStr);
-    return d.toLocaleDateString("en-GB"); // 20-11-2025
+    const yesterday = new Date();
+    yesterday.setDate(today.getDate() - 1);
+
+    const isYesterday = date.toDateString() === yesterday.toDateString();
+
+    if (isToday) return "Today";
+    if (isYesterday) return "Yesterday";
+
+    return dateStr.split("-").reverse().join("-"); // dd-mm-yyyy
   }
-
   function renderHistory() {
     const container = $(".content-area");
     container.empty();
+
+    if (!historyData || historyData.length === 0) {
+      container.append(`<p class="text-muted small">No history found.</p>`);
+      return;
+    }
 
     // Group by date
     const grouped = historyData.reduce((acc, item) => {
@@ -302,23 +143,47 @@ $(function () {
       return acc;
     }, {});
 
-    // Sort dates descending
+    // Sort dates desc
     const sortedDates = Object.keys(grouped).sort(
       (a, b) => new Date(b) - new Date(a)
     );
 
     sortedDates.forEach((date) => {
+      // Convert 2025-11-26 to Today / Yesterday / dd-mm-yyyy
       const label = formatDateGroupLabel(date);
+
       container.append(
-        `<h6 class="fw-bold small text-muted mt-3">${label}</h6>`
+        `<h6 class="fw-bold small text-custom mt-3">${label}</h6>`
       );
 
       grouped[date].forEach((item) => {
+        const iconHtml = item.icon
+          ? `<i class="${item.icon} me-2 text-custom"></i>`
+          : "";
+
+        const extra = item.extra
+          ? `<p class="small mb-1">Status: <span class="badge bg-info text-dark">${item.extra}</span></p>`
+          : "";
+
+        const time = item.time
+          ? `<small class="text-custom">${item.time}</small>`
+          : "";
+
         container.append(`
-        <div class="rounded-2 mb-2 bg-white filter-item" data-type="${item.type}" data-date="${item.date}">
+        <div class="rounded-2 bg-white mb-2 shadow-sm filter-item"
+             data-type="${item.type}"
+             data-date="${item.date}">
+
           <div class="card-body">
-            <h6 class="fw-meduim text-muted"><i class="${item.icon} mr-2"></i> ${item.title}</h6>
-            ${item.html}
+
+            <h6 class="fw-semibold text-custom">
+              ${iconHtml} ${item.title}
+            </h6>
+
+            ${item.html || ""}
+            ${extra}
+            ${time}
+
           </div>
         </div>
       `);
@@ -373,57 +238,6 @@ $(function () {
   });
 
   $("#dateFilter").on("change", applyFilters);
-
-  // --------------------------------------- procedure -------------------------------------------------
-  function updateProcedureTotals() {
-    let total = 0;
-    let procedureNames = [];
-
-    $("#procTable tbody tr").each(function () {
-      const name = $(this).find(".proc-name").val()?.trim();
-      const qty = parseFloat($(this).find(".proc-qty").val()) || 0;
-      const price = parseFloat($(this).find(".proc-price").val()) || 0;
-      const discount = parseFloat($(this).find(".proc-discount").val()) || 0;
-
-      let lineTotal = qty * price;
-      lineTotal -= (lineTotal * discount) / 100;
-
-      if (name) procedureNames.push(name);
-
-      $(this)
-        .find(".proc-line-total")
-        .text(`₹${lineTotal.toFixed(2)}`);
-      total += lineTotal;
-    });
-
-    $("#procSum").text(total.toFixed(2));
-    updateProcedurePreview(procedureNames, total);
-  }
-
-  function updateProcedurePreview(names, total) {
-    const preview = $("#procPreview");
-
-    if (names.length === 0) {
-      preview.text("No procedures added");
-    } else if (names.length === 1) {
-      preview.text(`${names[0]} • ₹${total}`);
-    } else {
-      preview.text(`${names[0]} + ${names.length - 1} more • ₹${total}`);
-    }
-  }
-
-  $(document).on(
-    "input change",
-    ".proc-name, .proc-qty, .proc-price, .proc-discount",
-    updateProcedureTotals
-  );
-
-  $(document).on("click", ".btn-remove-proc", function () {
-    $(this).closest("tr").remove();
-    updateProcedureTotals();
-  });
-
-  updateProcedureTotals();
 
   let selectedTeeth = [];
 
@@ -585,7 +399,9 @@ $(function () {
       <li class="border rounded p-2 mb-2 d-flex justify-content-between align-items-center">
         <div class="d-flex flex-column gap-1">
           <strong>${file.name}</strong>
-          <p class="text-muted mb-0">Description: ${desc || "No description"}</p>
+          <p class="text-muted mb-0">Description: ${
+            desc || "No description"
+          }</p>
         </div>
           <button class="btn btn-outline-danger btn-sm removeFile">
             <i class="fas fa-trash"></i>
