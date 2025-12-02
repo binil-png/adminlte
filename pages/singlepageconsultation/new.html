@@ -486,22 +486,21 @@
                 <!-- Left Section -->
                 <div class="d-flex align-items-center w-auto">
                   <img
-                    src="https://www.nicepng.com/png/detail/186-1866063_dicks-out-for-harambe-sample-avatar.png"
+                    id="pAvatar"
+                    src=""
                     class="rounded-circle border me-4"
                     width="40"
                     height="40"
                   />
                   <div>
-                    <h6 class="mb-1 fw-semibold">John Doe</h6>
-                    <div class="text-custom small">27Y • Male • New York</div>
+                    <h6 id="pName" class="mb-1 fw-semibold"></h6>
+                    <div id="pBasic" class="text-custom small"></div>
                   </div>
                 </div>
 
                 <div class="d-flex align-items-center mt-1 gap-2">
                   <span class="text-custom small me-2">Allergies:</span>
-                  <span class="badge bg-danger rounded-pill px-3 py-1"
-                    >Penicillin</span
-                  >
+                  <div id="pAllergies" class="d-flex gap-2"></div>
                 </div>
 
                 <!-- Right Section -->
@@ -509,28 +508,27 @@
                   <!-- Amount -->
                   <div class="text-center">
                     <div class="text-custom small">Amount Due</div>
-                    <div class="">₹0</div>
+                    <div id="pAmount" class=""></div>
                   </div>
 
                   <!-- Visits -->
                   <div class="text-center">
                     <div class="text-custom small">Visits</div>
-                    <div class="">1</div>
+                    <div id="pVisits" class=""></div>
                   </div>
 
                   <!-- Last Visit -->
                   <div class="text-center">
                     <div class="text-custom small">Last Visit</div>
-                    <div class="">Today</div>
+                    <div id="pLastVisit" class=""></div>
                   </div>
 
                   <!-- Phone -->
                   <div class="d-flex align-items-center">
                     <i class="bi bi-telephone text-secondary me-2"></i>
-                    <span class=""
-                      ><i class="fa fa-mobile mr-2 text-custom"></i>
-                      98712376538</span
-                    >
+                    <span id="pPhone" class="">
+                      <i class="fa fa-mobile mr-2 text-custom"></i>
+                    </span>
                   </div>
                 </div>
               </div>
@@ -771,14 +769,9 @@
                     >
                       <div
                         style="width: 50%"
+                        id="notesTemplates"
                         class="quick-badges flex-wrap mb-3 d-flex align-items-center justify-content-stat gap-1"
                       >
-                        <span class="badge badge-primary p-2 rounded-4"
-                          >Fever & Cold</span
-                        >
-                        <span class="badge badge-primary p-2 rounded-4"
-                          >Headache</span
-                        >
                         <select
                           class="form-control custom-select proc-name rounded-4 w-25 template-select-style"
                         >
@@ -804,6 +797,7 @@
                             >Chief Complaints</label
                           >
                           <textarea
+                            id="chiefComplaints"
                             class="form-control rounded-4"
                             rows="1"
                             placeholder="e.g., fever, cough, infection"
@@ -814,6 +808,7 @@
                             >Medical History</label
                           >
                           <textarea
+                            id="medicalHistory"
                             class="form-control rounded-4"
                             rows="1"
                             placeholder="Previous medical history..."
@@ -827,6 +822,7 @@
                             >Observations</label
                           >
                           <textarea
+                            id="observations"
                             class="form-control rounded-4"
                             rows="1"
                           ></textarea>
@@ -836,6 +832,7 @@
                             >Investigations</label
                           >
                           <textarea
+                            id="investigations"
                             class="form-control rounded-4"
                             rows="1"
                           ></textarea>
@@ -846,6 +843,7 @@
                         <div class="form-group col-md-6">
                           <label class="fw-medium text-custom">Diagnosis</label>
                           <textarea
+                            id="diagnosis"
                             class="form-control rounded-4"
                             rows="1"
                           ></textarea>
@@ -853,6 +851,7 @@
                         <div class="form-group col-md-6">
                           <label class="fw-medium text-custom">Treatment</label>
                           <textarea
+                            id="treatment"
                             class="form-control rounded-4"
                             rows="1"
                           ></textarea>
@@ -862,6 +861,7 @@
                       <div class="form-group">
                         <label class="fw-medium text-custom">Advice</label>
                         <textarea
+                          id="advice"
                           class="form-control rounded-4"
                           rows="1"
                         ></textarea>
@@ -923,12 +923,20 @@
                         style="width: 50%"
                         class="quick-badges flex-wrap mb-3 d-flex align-items-center justify-content-stat gap-1"
                       >
-                        <span class="badge badge-primary p-2 rounded-4"
-                          >Fever & Cold</span
+                        <span
+                          class="badge badge-primary p-2 rounded-4 proc-template"
+                          role="button"
+                          data-procs='[{"name":"Root Canal","qty":1,"price":2500,"discount":10,"status":"Planned/Completed"}]'
                         >
-                        <span class="badge badge-primary p-2 rounded-4"
-                          >Headache</span
+                          Root Canal Package
+                        </span>
+                        <span
+                          class="badge badge-primary p-2 rounded-4 proc-template"
+                          role="button"
+                          data-procs='[{"name":"Root Canal 2","qty":1,"price":2500,"discount":10,"status":"Planned/Completed"}]'
                         >
+                          Root Canal Package2
+                        </span>
                         <select
                           class="form-control custom-select proc-name rounded-4 w-25 template-select-style"
                         >
@@ -982,69 +990,7 @@
                           </tr>
                         </thead>
 
-                        <tbody>
-                          <tr>
-                            <td class="align-middle text-center">1</td>
-                            <td class="align-middle">
-                              <select
-                                class="form-control custom-select proc-name rounded-4 input-style"
-                              >
-                                <option value="">Select procedure</option>
-                                <option value="Dental Cleaning">
-                                  Dental Cleaning
-                                </option>
-                                <option value="Root Canal">Root Canal</option>
-                                <option value="X-Ray">X-Ray Imaging</option>
-                              </select>
-                            </td>
-                            <td class="align-middle">
-                              <input
-                                type="number"
-                                class="form-control proc-qty rounded-4 input-style"
-                                value="1"
-                              />
-                            </td>
-                            <td class="align-middle">
-                              <input
-                                type="number"
-                                class="form-control proc-price rounded-4 input-style"
-                                value="0"
-                              />
-                            </td>
-                            <td class="align-middle">
-                              <input
-                                type="number"
-                                class="form-control proc-discount rounded-4 input-style"
-                                value="0"
-                              />
-                            </td>
-                            <td class="align-middle">
-                              <select
-                                class="form-control custom-select proc-name rounded-4 input-style"
-                              >
-                                <option value="">Select status</option>
-                                <option value="Planned/Completed">
-                                  Planned/Completed
-                                </option>
-                                <option value="Nursing Performed?">
-                                  Nursing Performed
-                                </option>
-                                <option value="Send to Radiology">
-                                  Send to Radiology
-                                </option>
-                              </select>
-                            </td>
-                            <td class="proc-line-total align-middle">₹0</td>
-                            <td class="align-middle">
-                              <button
-                                type="button"
-                                class="btn btn-sm btn-remove-proc"
-                              >
-                                <i class="fas fa-trash text-danger"></i>
-                              </button>
-                            </td>
-                          </tr>
-                        </tbody>
+                        <tbody id="procTable"></tbody>
                       </table>
                     </div>
 
@@ -1159,183 +1105,13 @@
 
                     <div id="medList">
                       <!-- Sample Medicine Block -->
-                      <div class="medicine-card bg-custom mt-2 rounded-4 p-3">
-                        <div>
-                          <h6 class="mb-2 ps-1">Medicine</h6>
-                        </div>
 
-                        <div class="form-row">
-                          <div class="form-group col-md-3 m-0">
-                            <input
-                              class="form-control med-name rounded-4 input-style"
-                              placeholder="Medicine Name"
-                            />
-                          </div>
-                          <div class="form-group col-md-9 row m-0">
-                            <div class="form-group col-md-4 d-flex">
-                              <input
-                                class="form-control rounded-start-4 rounded-end-0 border-end-0 input-style"
-                                placeholder="Dosage"
-                              />
-                              <select
-                                class="form-control custom-select text-center rounded-end-4 rounded-start-0 input-style"
-                              >
-                                <option>Unit</option>
-                                <option>mg</option>
-                                <option>ml</option>
-                              </select>
-                            </div>
-
-                            <div class="form-group col-md-4 d-flex">
-                              <input
-                                class="form-control rounded-start-4 rounded-end-0 border-end-0 input-style"
-                                placeholder="Duration"
-                              />
-                              <select
-                                class="form-control custom-select text-center rounded-end-4 rounded-start-0 input-style"
-                              >
-                                <option>Day (s)</option>
-                                <option>Week (s)</option>
-                                <option>Month (s)</option>
-                              </select>
-                            </div>
-
-                            <div class="form-group col-md-4 d-flex">
-                              <input
-                                class="form-control rounded-start-4 rounded-end-0 border-end-0 input-style"
-                                placeholder="Frequency"
-                              />
-                              <select
-                                class="form-control custom-select text-center rounded-end-4 rounded-start-0 input-style"
-                              >
-                                <option>Before food</option>
-                                <option>After food</option>
-                                <option>None</option>
-                              </select>
-                            </div>
-                          </div>
-                          <div class="form-group col-md-6 m-0">
-                            <input
-                              class="form-control rounded-4 input-style"
-                              placeholder="Instructions"
-                            />
-                          </div>
-                          <div class="form-group col-md-3 m-0">
-                            <select
-                              data-placeholder="Select"
-                              class="form-control custom-select rounded-4 input-style"
-                              tabindex="2"
-                              name="musage1"
-                              id="musage1"
-                              data-gtm-form-interact-field-id="0"
-                            >
-                              <option value="">Select usage or route</option>
-                              <option
-                                value=""
-                                disabled=""
-                                class="placeholder-option"
-                              >
-                                -------USAGE-------
-                              </option>
-                              <option value="SOS">SOS</option>
-                              <option value="Now">Now</option>
-                              <option value="STAT">STAT</option>
-                              <option value="1 Hour">1 Hour</option>
-
-                              <option value="1/2 Hourly">1/2 Hourly</option>
-                              <option value="1 Hourly">1 Hourly</option>
-                              <option value="2 Hourly">2 Hourly</option>
-                              <option value="3 Hourly">3 Hourly</option>
-                              <option value="4 Hourly">4 Hourly</option>
-                              <option value="5 Hourly">5 Hourly</option>
-                              <option value="6 Hourly">6 Hourly</option>
-                              <option value="8 Hourly">8 Hourly</option>
-                              <option value="12 hourly">12 hourly</option>
-                              <option value="Morning">Morning</option>
-                              <option value="Afternoon">Afternoon</option>
-                              <option value="Evening">Evening</option>
-                              <option value="Night">Night</option>
-                              <option value="2 Times">2 Times</option>
-                              <option value="3 Times">3 Times</option>
-                              <option value="4 Times">4 Times</option>
-                              <option value="Empty Stomach">
-                                Empty Stomach
-                              </option>
-                              <option value="External Application">
-                                External Application
-                              </option>
-                              <option value="Bed Time">Bed Time</option>
-                              <option value="With Food">With Food</option>
-                              <option value="With Milk">With Milk</option>
-                              <option value="One hour before food">
-                                One hour before food
-                              </option>
-                              <option value="One hour after food">
-                                One hour after food
-                              </option>
-                              <option value="15 minutes before food">
-                                15 minutes before food
-                              </option>
-                              <option value="Pills/Globules (SG)">
-                                Pills/Globules (SG)
-                              </option>
-                              <option value="Powder dose (SL)">
-                                Powder dose (SL)
-                              </option>
-                              <option value="Dry dose (SL)">
-                                Dry dose (SL)
-                              </option>
-                              <option value="Aqua">Aqua</option>
-
-                              <option
-                                value=""
-                                disabled=""
-                                class="placeholder-option"
-                              >
-                                -------ROUTE-------
-                              </option>
-                              <option value="oral">Oral (PO)</option>
-                              <option value="sublingual">
-                                Sublingual (SL)
-                              </option>
-                              <option value="buccal">Buccal</option>
-                              <option value="topical">Topical</option>
-                              <option value="transdermal">Transdermal</option>
-                              <option value="inhalation">Inhalation</option>
-                              <option value="intravenous">
-                                Intravenous (IV)
-                              </option>
-                              <option value="intramuscular">
-                                Intramuscular (IM)
-                              </option>
-                              <option value="subcutaneous">
-                                Subcutaneous (SC)
-                              </option>
-                              <option value="rectal">Rectal (PR)</option>
-                              <option value="vaginal">Vaginal</option>
-                              <option value="ophthalmic">Ophthalmic</option>
-                              <option value="otic">Otic</option>
-                              <option value="nasal">Nasal</option>
-                            </select>
-                          </div>
-                        </div>
-                        <div
-                          class="form-group d-flex justify-content-end align-items-center m-0"
-                        >
-                          <button
-                            class="btn btn-sm btn-sm rounded-4 text-danger btn-remove-med"
-                            type="button"
-                          >
-                            Remove
-                          </button>
-                        </div>
-                      </div>
                     </div>
 
                     <button
                       type="button"
                       class="btn btn-sm btn-link"
-                      id="addMed"
+                      id="addMedicine"
                     >
                       + Add Medicine
                     </button>
@@ -1721,7 +1497,13 @@
     <script src="../../plugins/jquery/jquery.min.js"></script>
     <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../../dist/js/adminlte.min.js"></script>
+    <script src="./data.js"></script>
     <script src="./new.js"></script>
+    <script src="./mockData.js"></script>
+    <script src="./vitals.js"></script>
+    <script src="./clinicalNotes.js"></script>
+    <script src="./procedure.js"></script>
+    <script src="./prescription.js"></script>
     <script src="./collapse.js"></script>
     <script src="./preview.js"></script>
   </body>
