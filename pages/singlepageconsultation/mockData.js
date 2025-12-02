@@ -1,6 +1,6 @@
 $(function () {
   function renderPatientHeader(p) {
-    console.log(p)
+    console.log(p);
     $("#pAvatar").attr("src", p.avatar);
     $("#pName").text(p.name);
     $("#pBasic").text(`${p.age}Y • ${p.gender} • ${p.city}`);

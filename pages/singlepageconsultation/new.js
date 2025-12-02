@@ -1,5 +1,4 @@
 $(function () {
-
   // Files
   $("#fileInput").on("change", function () {
     $("#fileList").empty();

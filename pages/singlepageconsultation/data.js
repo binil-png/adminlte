@@ -179,6 +179,22 @@ const prescriptionTemplates = {
 };
 
 const prescriptions = [
-  { medicine: "Paracetamol 650mg", dosage: "10",dosageUnit:"mg", duration: 5,durationUnit:"2",frequency:"1-0-1", frequencyUnit: "1" },
-  { medicine: "Cetirizine 10mg", dosage: "10",dosageUnit:"mg", duration: 3,durationUnit:"1",frequency:"0-0-1", frequencyUnit: "2" }
+  {
+    medicine: "Paracetamol 650mg",
+    dosage: "10",
+    dosageUnit: "mg",
+    duration: 5,
+    durationUnit: "2",
+    frequency: "1-0-1",
+    frequencyUnit: "1",
+  },
+  {
+    medicine: "Cetirizine 10mg",
+    dosage: "10",
+    dosageUnit: "mg",
+    duration: 3,
+    durationUnit: "1",
+    frequency: "0-0-1",
+    frequencyUnit: "2",
+  },
 ];
