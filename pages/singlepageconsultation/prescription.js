@@ -144,10 +144,9 @@ $(function () {
       const data = getPrescriptions();
       $("#prescPreview").text(data.length + " items added");
     });
-     setPrescriptions(prescriptions)
+    setPrescriptions(prescriptions);
     if ($("#medList .medicine-card").length === 0) {
       addMedicineRow();
     }
-    
   });
 });

@@ -118,7 +118,7 @@ $(function () {
   $(document).on("click", ".proc-template", function () {
     const templateProcs = $(this).data("procs");
     procData = templateProcs;
-    console.log(procData)
+    console.log(procData);
     renderProcTable();
   });
 
