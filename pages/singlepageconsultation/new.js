@@ -437,4 +437,34 @@ $(function () {
       // fetch("/upload-url", { method: "POST", body: formData });
     });
   });
+
+  let showLeft = true;
+
+  $("#toggleAside").on("click", function () {
+    if (showLeft) {
+      $("#asideMenu").removeClass("aside-hidden");
+      $("#asideSideBar").addClass("aside-hidden");
+      $("#asideSideBar").removeClass(
+        "col-md-2 col-lg-2 border border-top-0 border-bottom-0 p-3 sidebar hide-scrollbar"
+      );
+      $("#asideMenu").addClass(
+        "col-md-2 col-lg-2 border border-top-0 border-bottom-0 p-3 sidebar hide-scrollba"
+      );
+    } else {
+      $("#asideSideBar").removeClass("aside-hidden");
+      $("#asideSideBar").addClass(
+        "col-md-2 col-lg-2 border border-top-0 border-bottom-0 p-3 sidebar hide-scrollbar"
+      );
+      $("#asideMenu").removeClass(
+        "col-md-2 col-lg-2 border border-top-0 border-bottom-0 p-3 sidebar hide-scrollbar"
+      );
+      $("#asideMenu").addClass("aside-hidden");
+    }
+
+    showLeft = !showLeft; // flip the switch
+  });
+  $("#asideMenu").addClass("aside-hidden");
+  $("#asideMenu").removeClass(
+    "col-md-2 col-lg-2 border border-top-0 border-bottom-0 p-3 sidebar hide-scrollbar"
+  );
 });
