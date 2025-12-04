@@ -7,19 +7,18 @@ $(function () {
       tbody.append(`
       <tr data-index="${index}">
         <td class="text-center">${index + 1}</td>
-        
         <td>
-          <select class="form-control custom-select proc-name rounded-4 input-style proc-field">
-            <option ${p.name === "" ? "selected" : ""}></option>
-            <option ${
-              p.name === "Dental Cleaning" ? "selected" : ""
-            }>Dental Cleaning</option>
-            <option ${
-              p.name === "Root Canal" ? "selected" : ""
-            }>Root Canal</option>
-            <option ${
-              p.name === "X-Ray" ? "selected" : ""
-            }>X-Ray Imaging</option>
+          <select value=${p.name} class="form-control custom-select proc-name rounded-4 input-style proc-field">
+           <option ${p.name == "Blood Test" ? "selected" : ""} value="Blood Test">Blood Test</option>
+           <option ${p.name == "X-Ray Chest" ? "selected" : ""} value="X-Ray Chest">X-Ray Chest</option>
+           <option ${p.name == "ECG" ? "selected" : ""} value="ECG">ECG</option>
+           <option ${p.name == "Ultrasound Abdomen" ? "selected" : ""} value="Ultrasound Abdomen">Ultrasound Abdomen</option>
+           <option ${p.name == "Wound Dressing" ? "selected" : ""} value="Wound Dressing">Wound Dressing</option>
+           <option ${p.name == "IV Cannula Insertion" ? "selected" : ""} value="IV Cannula Insertion">IV Cannula Insertion</option>
+           <option ${p.name == "Nebulization" ? "selected" : ""} value="Nebulization">Nebulization</option>
+           <option ${p.name == "Fever Panel Test" ? "selected" : ""} value="Fever Panel Test">Fever Panel Test</option>
+           <option ${p.name == "Vaccination (Tetanus)" ? "selected" : ""} value="Vaccination (Tetanus)">Vaccination (Tetanus)</option>
+           <option ${p.name == "CT Scan Brain" ? "selected" : ""} value="CT Scan Brain">CT Scan Brain</option>
           </select>
         </td>
 
