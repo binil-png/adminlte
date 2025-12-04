@@ -408,83 +408,7 @@
             </div>
 
             <!-- Content Area -->
-            <div class="content-area">
-              <!-- ========== GROUP: TODAY ========== -->
-              <h6 class="fw-bold small text-custom mt-3">Today</h6>
-
-              <div
-                class="rounded-2 bg-white mb-2 filter-item"
-                data-type="vitals"
-                data-date="2025-11-26"
-              >
-                <div class="p-2">
-                  <h6 class="fw-semibold text-custom">Vitals Recorded</h6>
-                  <p class="small mb-1">
-                    Temp: <span class="badge bg-danger">98.6°F</span> | BP
-                    120/80 | Pulse 72
-                  </p>
-                  <small class="text-custom">3:00 PM • Nurse Station</small>
-                </div>
-              </div>
-
-              <div
-                class="card mb-2 shadow-sm filter-item"
-                data-type="prescription"
-                data-date="2025-11-26"
-              >
-                <div class="card-body">
-                  <h6 class="fw-semibold">Prescription</h6>
-                  <p class="small mb-0">Paracetamol • 5 Days</p>
-                </div>
-              </div>
-
-              <!-- ========== GROUP: YESTERDAY ========== -->
-              <h6 class="fw-bold small text-custom mt-3">Yesterday</h6>
-
-              <div
-                class="card mb-2 shadow-sm filter-item"
-                data-type="procedure"
-                data-date="2025-11-25"
-              >
-                <div class="card-body">
-                  <h6 class="fw-medium text-custom">Procedure Performed</h6>
-                  <p class="small mb-1">Wound cleaning & dressing applied.</p>
-                  <p class="small mb-1">
-                    Status:
-                    <span class="badge bg-info text-dark">Completed</span>
-                  </p>
-                  <small class="text-custom"
-                    >4:15 PM • Nurse Emily • Ward 3B</small
-                  >
-                </div>
-              </div>
-
-              <!-- ========== GROUP: OLDER ========== -->
-              <h6 class="fw-bold small text-custom mt-3">20-11-2025</h6>
-
-              <div
-                class="card mb-2 shadow-sm filter-item"
-                data-type="files"
-                data-date="2025-11-22"
-              >
-                <div class="card-body">
-                  <h6 class="fw-semibold">Uploaded Report</h6>
-                  <p class="small mb-0">Blood Test Report.pdf</p>
-                </div>
-              </div>
-
-              <div
-                class="card mb-2 shadow-sm filter-item"
-                data-type="dental"
-                data-date="2025-11-22"
-              >
-                <div class="card-body">
-                  <h6 class="fw-semibold mb-1">Dental Procedure</h6>
-                  <p class="small mb-1">Root canal performed on tooth 36.</p>
-                  <small class="text-custom">1:30 PM • Dr. Miller</small>
-                </div>
-              </div>
-            </div>
+            <div class="content-area"></div>
           </aside>
 
           <aside
@@ -1046,7 +970,7 @@
                 </div>
               </div>
 
-              <!-- Procedures & Treatments -->
+              <!-- Procedures & Treatments (no need for dental)-->
               <div class="card mb-2">
                 <div
                   role="button"
@@ -1286,7 +1210,7 @@
                 </div>
               </div>
 
-              <!-- Dental procedure -->
+              <!-- Dental procedure (only for dental doctors) -->
               <div class="card mb-2">
                 <div class="card-header" id="headingDental">
                   <div
