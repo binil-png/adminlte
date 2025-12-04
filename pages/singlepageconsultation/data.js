@@ -13,44 +13,8 @@ const mockPatient = {
   phone: "98712376538",
 };
 
-const patientHistory = [
-  {
-    type: "vitals",
-    date: "2025-11-26",
-    title: "Vitals Recorded",
-    details: "Temp: 98.6°F | BP 120/80 | Pulse 72",
-    time: "3:00 PM • Nurse Station",
-  },
-  {
-    type: "prescription",
-    date: "2025-11-26",
-    title: "Prescription",
-    details: "Paracetamol • 5 Days",
-  },
-  {
-    type: "procedure",
-    date: "2025-11-25",
-    title: "Procedure Performed",
-    details: "Wound cleaning & dressing applied.",
-    extra: "Completed",
-    time: "4:15 PM • Nurse Emily • Ward 3B",
-  },
-  {
-    type: "files",
-    date: "2025-11-22",
-    title: "Uploaded Report",
-    details: "Blood Test Report.pdf",
-  },
-  {
-    type: "dental",
-    date: "2025-11-22",
-    title: "Dental Procedure",
-    details: "Root canal performed on tooth 36.",
-    time: "1:30 PM • Dr. Miller",
-  },
-];
-
 const historyData = [
+  // ================= EXISTING ITEMS ==================
   {
     type: "vitals",
     date: "2025-11-26",
@@ -96,7 +60,149 @@ const historyData = [
       <small class="text-muted">1:30 PM • Dr. Miller</small>
     `,
   },
+
+  // ================= NEW 10 VITALS ==================
+  ...[
+    "Temp: 99°F | BP 118/78 | Pulse 80",
+    "Temp: 100.2°F | BP 130/85 | Pulse 88",
+    "Temp: 97.9°F | BP 110/70 | Pulse 65",
+    "Temp: 98.4°F | BP 125/82 | Pulse 76",
+    "Temp: 101°F | BP 140/90 | Pulse 92",
+    "Temp: 98.1°F | BP 119/79 | Pulse 74",
+    "Temp: 99.5°F | BP 135/88 | Pulse 84",
+    "Temp: 98.7°F | BP 122/81 | Pulse 73",
+    "Temp: 100°F | BP 128/86 | Pulse 89",
+    "Temp: 97.5°F | BP 115/75 | Pulse 68",
+  ].map((v, i) => ({
+    type: "vitals",
+    date: `2025-11-${15 + i}`,
+    title: "Vitals Recorded",
+    icon: "fa fa-stethoscope text-success",
+    html: `
+      <p class="small mb-1">${v}</p>
+      <small class="text-muted">${2 + i}:00 PM • Nurse Station</small>
+    `,
+  })),
+
+  // ================= NEW 10 PRESCRIPTIONS ==================
+  ...[
+    ["Paracetamol 650mg", "Cetirizine 10mg","Amoxicillin 500mg", "Vitamin C 500mg"],
+    ["Amoxicillin 500mg", "Vitamin C 500mg"],
+    ["Azithromycin 250mg", "Pantoprazole 40mg"],
+    ["Ibuprofen 400mg", "Domperidone 10mg"],
+    ["Metformin 500mg", "Glimepiride 1mg"],
+    ["Losartan 50mg", "Aspirin 75mg"],
+    ["Dolo 650", "Rantac 150","ORS Solution", "Zinc 20mg","Multivitamin", "Calcium 500mg"],
+    ["Cough Syrup 10ml", "Steam Inhalation"],
+    ["ORS Solution", "Zinc 20mg"],
+    ["Multivitamin", "Calcium 500mg"],
+  ].map((meds, i) => ({
+    type: "prescription",
+    date: `2025-11-${10 + i}`,
+    title: "Prescription",
+    icon: "fas fa-capsules text-primary",
+    html: `
+      <p class="small mb-1"><b>Medicines:</b></p>
+      <ul class="small mb-1">
+        ${meds.map((m) => `<li>${m}</li>`).join("")}
+      </ul>
+      <small class="text-muted">Duration: ${3 + i} Days</small>
+    `,
+  })),
+
+  // ================= NEW 10 CLINICAL NOTES ==================
+  ...[
+    "Patient reported mild headache.",
+    "Complained of abdominal pain.",
+    "Follow-up for blood pressure.",
+    "Sore throat and cough observed.",
+    "Advised lifestyle modifications.",
+    "No major symptoms today.",
+    "Improved breathing pattern.",
+    "Pain reduced significantly.",
+    "Sleep disturbance noted.",
+    "General checkup completed.",
+  ].map((note, i) => ({
+    type: "notes",
+    date: `2025-11-${12 + i}`,
+    title: "Clinical Notes",
+    icon: "fas fa-notes-medical text-secondary",
+    html: `
+      <p class="small mb-1">${note}</p>
+      <small class="text-muted">${10 + i}:30 AM • Dr. Lisa</small>
+    `,
+  })),
+
+  // ================= NEW 10 PROCEDURES ==================
+  ...[
+    "IV Cannula insertion",
+    "Blood sample collection",
+    "Nebulization therapy",
+    "Ultrasound abdomen",
+    "X-Ray Chest",
+    "CT Scan (Brain)",
+    "ECG Test performed",
+    "Suture removal",
+    "Wound dressing",
+    "Physiotherapy session",
+  ].map((proc, i) => ({
+    type: "procedure",
+    date: `2025-11-${5 + i}`,
+    title: "Procedure Performed",
+    icon: "fas fa-syringe text-info",
+    html: `
+      <p class="small mb-1">${proc}</p>
+      <p class="small mb-1">
+        Status: <span class="badge bg-info text-dark">${i % 2 === 0 ? "Completed" : "Pending"}</span>
+      </p>
+      <small class="text-muted">${9 + i}:00 AM • Nurse Ward</small>
+    `,
+  })),
+
+  // ================= NEW 10 FILES ==================
+  ...[
+    "MRI Brain.pdf",
+    "Liver Function Test.pdf",
+    "Kidney Panel Report.pdf",
+    "CBC Report.pdf",
+    "X-Ray Chest Image.png",
+    "Ultrasound Abdomen.pdf",
+    "ECG Scan.jpg",
+    "Blood Sugar Profile.pdf",
+    "Allergy Test Report.pdf",
+    "Vaccination Certificate.pdf",
+  ].map((file, i) => ({
+    type: "files",
+    date: `2025-11-${1 + i}`,
+    title: "Uploaded Report",
+    icon: "fas fa-file text-primary",
+    html: `<p class="small mb-0">${file}</p>`,
+  })),
+
+  // ================= NEW 10 DENTAL PROCEDURES ==================
+  ...[
+    "Scaling & Polishing",
+    "Tooth extraction – Tooth 14",
+    "Dental filling – Tooth 11",
+    "Crown placement – Tooth 26",
+    "Braces tightening",
+    "Dental cleaning",
+    "Wisdom tooth extraction",
+    "Gum infection treatment",
+    "Tooth whitening session",
+    "Retainer adjustment",
+  ].map((dental, i) => ({
+    type: "dental",
+    date: `2025-11-${3 + i}`,
+    title: "Dental Procedure",
+    icon: "fas fa-tooth text-muted",
+    html: `
+      <p class="small mb-1">${dental}</p>
+      <small class="text-muted">${11 + i}:15 AM • Dr. Miller</small>
+    `,
+  })),
 ];
+
 
 const mockVitals = {
   temperature: "98.6",
