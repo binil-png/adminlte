@@ -13,6 +13,250 @@ const mockPatient = {
   phone: "98712376538",
 };
 
+function generateVitals() {
+  return {
+    temperature: (97 + Math.random() * 3).toFixed(1) + "°F",
+    height: (1.5 + Math.random() * 0.35).toFixed(2) + " m",
+    weight: (50 + Math.random() * 35).toFixed(1) + " kg",
+    bp: `${100 + Math.floor(Math.random() * 30)}/${
+      70 + Math.floor(Math.random() * 20)
+    } mmHg`,
+    glucose: 80 + Math.floor(Math.random() * 70) + " mg/dL",
+    pulse: 60 + Math.floor(Math.random() * 40) + " bpm",
+    cholesterol: 150 + Math.floor(Math.random() * 100) + " mg/dL",
+    spo2: 94 + Math.floor(Math.random() * 5) + "%",
+    respiration: 12 + Math.floor(Math.random() * 10) + " breaths/min",
+    allergies: ["None", "Dust", "Pollen", "Peanuts", "Seafood", "Egg", "Latex"][
+      Math.floor(Math.random() * 7)
+    ],
+  };
+}
+
+const vitalsHistory = Array.from({ length: 10 }).map((_, i) => {
+  const v = generateVitals();
+
+  return {
+    type: "vitals",
+    date: `2025-12-${String(1 + i).padStart(2, "0")}`,
+    title: "Vitals Recorded",
+    icon: "fa fa-stethoscope text-success",
+    html: `
+      <p class="small mb-1">
+        <b>Temperature:</b> ${v.temperature} |
+        <b>Height:</b> ${v.height} |
+        <b>Weight:</b> ${v.weight}
+      </p>
+      <p class="small mb-1">
+        <b>BP:</b> ${v.bp} |
+        <b>Blood Glucose:</b> ${v.glucose} |
+        <b>Pulse:</b> ${v.pulse}
+      </p>
+      <p class="small mb-1">
+        <b>Cholesterol:</b> ${v.cholesterol} |
+        <b>SPO₂:</b> ${v.spo2} |
+        <b>Respiratory Rate:</b> ${v.respiration}
+      </p>
+      <p class="small mb-1">
+        <b>Allergies:</b> ${v.allergies}
+      </p>
+      <small class="text-muted">
+        ${3 + i}:00 PM • Nurse Station
+      </small>
+    `,
+  };
+});
+
+function generatePrescriptionDetails(medicineList, index) {
+  const frequencies = ["1-0-1", "1-1-1", "0-1-1", "1-0-0", "0-0-1"];
+  const routes = ["Oral", "IV", "IM", "Topical", "Nebulization"];
+  const timings = [
+    "After Food",
+    "Before Food",
+    "Morning",
+    "Night",
+    "Every 8 hours",
+    "Every 12 hours",
+  ];
+
+  return medicineList.map((m) => ({
+    name: m,
+    dosage: m.match(/\d+/)?.[0] + (m.includes("ml") ? " ml" : " mg"), // auto extract dosage
+    frequency: frequencies[Math.floor(Math.random() * frequencies.length)],
+    route: routes[Math.floor(Math.random() * routes.length)],
+    timing: timings[Math.floor(Math.random() * timings.length)],
+    duration: `${3 + index} Days`,
+  }));
+}
+
+const prescriptionData = [
+  [
+    "Paracetamol 650mg",
+    "Cetirizine 10mg",
+    "Amoxicillin 500mg",
+    "Vitamin C 500mg",
+  ],
+  ["Amoxicillin 500mg", "Vitamin C 500mg"],
+  ["Azithromycin 250mg", "Pantoprazole 40mg"],
+  ["Ibuprofen 400mg", "Domperidone 10mg"],
+  ["Metformin 500mg", "Glimepiride 1mg"],
+  ["Losartan 50mg", "Aspirin 75mg"],
+  [
+    "Dolo 650",
+    "Rantac 150",
+    "ORS Solution",
+    "Zinc 20mg",
+    "Multivitamin",
+    "Calcium 500mg",
+  ],
+  ["Cough Syrup 10ml", "Steam Inhalation"],
+  ["ORS Solution", "Zinc 20mg"],
+  ["Multivitamin", "Calcium 500mg"],
+].map((meds, i) => {
+  const detailedMeds = generatePrescriptionDetails(meds, i);
+
+  return {
+    type: "prescription",
+    date: `2025-11-${10 + i}`,
+    title: "Prescription",
+    icon: "fas fa-capsules text-primary",
+    html: `
+      <p class="small mb-1"><b>Medicines Prescribed:</b></p>
+      <ul class="small mb-1">
+        ${detailedMeds
+          .map(
+            (m) => `
+          <li>
+            <b>${m.name}</b><br/>
+            Dosage: ${m.dosage}<br/>
+            Frequency: ${m.frequency}<br/>
+            Route: ${m.route}<br/>
+            Timing: ${m.timing}<br/>
+            Duration: ${m.duration}
+          </li>
+        `
+          )
+          .join("")}
+      </ul>
+    `,
+  };
+});
+
+const dentalRecords = [
+  {
+    type: "dental_procedure",
+    date: "2025-11-10",
+    chiefComplaints: "Toothache in upper right molar for 3 days",
+    observations: "Caries observed in tooth #16, tenderness on percussion",
+    medicalHistory: "No known allergies, no systemic illness",
+    advice: "Maintain oral hygiene, avoid hot/cold foods",
+    procedures: [
+      {
+        name: "Dental X-Ray",
+        quantity: 1,
+        price: 300,
+        discount: 0,
+        // status: "completed",
+      },
+      {
+        name: "Root Canal Treatment",
+        quantity: 1,
+        price: 3500,
+        discount: 10,
+        // status: "planned",
+      },
+    ],
+  },
+  {
+    type: "dental_procedure",
+    date: "2025-11-12",
+    chiefComplaints: "Swelling and pain in the lower jaw",
+    observations: "Impacted wisdom tooth #38, swelling present",
+    medicalHistory: "Patient is diabetic (controlled)",
+    advice: "Warm saline gargles, start antibiotics",
+    procedures: [
+      {
+        name: "Extraction of Wisdom Tooth",
+        quantity: 1,
+        price: 4500,
+        discount: 5,
+        status: "planned",
+      },
+      {
+        name: "Scaling and Polishing",
+        quantity: 1,
+        price: 1500,
+        discount: 0,
+        status: "completed",
+      },
+    ],
+  },
+  {
+    type: "dental_procedure",
+    date: "2025-11-14",
+    chiefComplaints: "Bleeding gums and bad breath",
+    observations: "Generalized gingivitis, plaque accumulation",
+    medicalHistory: "Patient smokes occasionally",
+    advice: "Stop smoking, maintain brushing twice daily",
+    procedures: [
+      {
+        name: "Deep Cleaning",
+        quantity: 1,
+        price: 2000,
+        discount: 0,
+        status: "completed",
+      },
+      {
+        name: "Gingival Treatment",
+        quantity: 1,
+        price: 1200,
+        discount: 10,
+        status: "planned",
+      },
+    ],
+  },
+  {
+    type: "dental_procedure",
+    date: "2025-11-16",
+    chiefComplaints: "Loose tooth while chewing",
+    observations: "Mobility grade II in tooth #31, periodontal bone loss",
+    medicalHistory: "Hypertension, on medication",
+    advice: "Soft diet, avoid hard chewing",
+    procedures: [
+      {
+        name: "Periodontal Therapy",
+        quantity: 1,
+        price: 2500,
+        discount: 0,
+        status: "completed",
+      },
+      {
+        name: "Splinting of Teeth",
+        quantity: 1,
+        price: 3000,
+        discount: 5,
+        status: "planned",
+      },
+    ],
+  },
+  {
+    type: "dental_procedure",
+    date: "2025-11-18",
+    chiefComplaints: "Sensitivity to cold food",
+    observations: "Enamel erosion on premolars",
+    medicalHistory: "No major medical history",
+    advice: "Use desensitizing toothpaste",
+    procedures: [
+      {
+        name: "Fluoride Application",
+        quantity: 1,
+        price: 800,
+        discount: 0,
+        status: "completed",
+      },
+    ],
+  },
+];
+
 const historyData = [
   // ================= EXISTING ITEMS ==================
   {
@@ -62,102 +306,282 @@ const historyData = [
   },
 
   // ================= NEW 10 VITALS ==================
-  ...[
-    "Temp: 99°F | BP 118/78 | Pulse 80",
-    "Temp: 100.2°F | BP 130/85 | Pulse 88",
-    "Temp: 97.9°F | BP 110/70 | Pulse 65",
-    "Temp: 98.4°F | BP 125/82 | Pulse 76",
-    "Temp: 101°F | BP 140/90 | Pulse 92",
-    "Temp: 98.1°F | BP 119/79 | Pulse 74",
-    "Temp: 99.5°F | BP 135/88 | Pulse 84",
-    "Temp: 98.7°F | BP 122/81 | Pulse 73",
-    "Temp: 100°F | BP 128/86 | Pulse 89",
-    "Temp: 97.5°F | BP 115/75 | Pulse 68",
-  ].map((v, i) => ({
-    type: "vitals",
-    date: `2025-11-${15 + i}`,
-    title: "Vitals Recorded",
-    icon: "fa fa-stethoscope text-success",
-    html: `
-      <p class="small mb-1">${v}</p>
-      <small class="text-muted">${2 + i}:00 PM • Nurse Station</small>
-    `,
-  })),
-
+  ...vitalsHistory,
   // ================= NEW 10 PRESCRIPTIONS ==================
-  ...[
-    ["Paracetamol 650mg", "Cetirizine 10mg","Amoxicillin 500mg", "Vitamin C 500mg"],
-    ["Amoxicillin 500mg", "Vitamin C 500mg"],
-    ["Azithromycin 250mg", "Pantoprazole 40mg"],
-    ["Ibuprofen 400mg", "Domperidone 10mg"],
-    ["Metformin 500mg", "Glimepiride 1mg"],
-    ["Losartan 50mg", "Aspirin 75mg"],
-    ["Dolo 650", "Rantac 150","ORS Solution", "Zinc 20mg","Multivitamin", "Calcium 500mg"],
-    ["Cough Syrup 10ml", "Steam Inhalation"],
-    ["ORS Solution", "Zinc 20mg"],
-    ["Multivitamin", "Calcium 500mg"],
-  ].map((meds, i) => ({
-    type: "prescription",
-    date: `2025-11-${10 + i}`,
-    title: "Prescription",
-    icon: "fas fa-capsules text-primary",
-    html: `
-      <p class="small mb-1"><b>Medicines:</b></p>
-      <ul class="small mb-1">
-        ${meds.map((m) => `<li>${m}</li>`).join("")}
-      </ul>
-      <small class="text-muted">Duration: ${3 + i} Days</small>
-    `,
-  })),
-
+  ...prescriptionData,
   // ================= NEW 10 CLINICAL NOTES ==================
-  ...[
-    "Patient reported mild headache.",
-    "Complained of abdominal pain.",
-    "Follow-up for blood pressure.",
-    "Sore throat and cough observed.",
-    "Advised lifestyle modifications.",
-    "No major symptoms today.",
-    "Improved breathing pattern.",
-    "Pain reduced significantly.",
-    "Sleep disturbance noted.",
-    "General checkup completed.",
-  ].map((note, i) => ({
+  {
     type: "notes",
-    date: `2025-11-${12 + i}`,
+    date: "2025-12-01",
     title: "Clinical Notes",
-    icon: "fas fa-notes-medical text-secondary",
+    icon: "fas fa-notes-medical text-warning",
     html: `
-      <p class="small mb-1">${note}</p>
-      <small class="text-muted">${10 + i}:30 AM • Dr. Lisa</small>
+      <p class="small mb-1"><b>Chief Complaints:</b> Fever, body ache for 2 days</p>
+      <p class="small mb-1"><b>Medical History:</b> No chronic illness</p>
+      <p class="small mb-1"><b>Observations:</b> Mild dehydration, throat congestion</p>
+      <p class="small mb-1"><b>Investigations:</b> CBC, CRP ordered</p>
+      <p class="small mb-1"><b>Diagnosis:</b> Viral Fever</p>
+      <p class="small mb-1"><b>Treatment:</b> Paracetamol, hydration</p>
+      <p class="small mb-1"><b>Advice:</b> Rest, drink fluids</p>
     `,
-  })),
+  },
+  {
+    type: "notes",
+    date: "2025-12-02",
+    title: "Clinical Notes",
+    icon: "fas fa-notes-medical text-warning",
+    html: `
+      <p class="small mb-1"><b>Chief Complaints:</b> Headache and dizziness</p>
+      <p class="small mb-1"><b>Medical History:</b> Migraines occasionally</p>
+      <p class="small mb-1"><b>Observations:</b> BP slightly elevated</p>
+      <p class="small mb-1"><b>Investigations:</b> BP monitoring</p>
+      <p class="small mb-1"><b>Diagnosis:</b> Migraine Episode</p>
+      <p class="small mb-1"><b>Treatment:</b> Ibuprofen, cold compress</p>
+      <p class="small mb-1"><b>Advice:</b> Avoid stress, rest in dark room</p>
+    `,
+  },
+  {
+    type: "notes",
+    date: "2025-12-03",
+    title: "Clinical Notes",
+    icon: "fas fa-notes-medical text-warning",
+    html: `
+      <p class="small mb-1"><b>Chief Complaints:</b> Stomach pain and nausea</p>
+      <p class="small mb-1"><b>Medical History:</b> Gastric irritation</p>
+      <p class="small mb-1"><b>Observations:</b> Mild tenderness in abdomen</p>
+      <p class="small mb-1"><b>Investigations:</b> LFT, Ultrasound Abdomen</p>
+      <p class="small mb-1"><b>Diagnosis:</b> Gastritis</p>
+      <p class="small mb-1"><b>Treatment:</b> Pantoprazole, antacids</p>
+      <p class="small mb-1"><b>Advice:</b> Avoid spicy food</p>
+    `,
+  },
+  {
+    type: "notes",
+    date: "2025-12-04",
+    title: "Clinical Notes",
+    icon: "fas fa-notes-medical text-warning",
+    html: `
+      <p class="small mb-1"><b>Chief Complaints:</b> Cough and cold</p>
+      <p class="small mb-1"><b>Medical History:</b> Allergic rhinitis</p>
+      <p class="small mb-1"><b>Observations:</b> Nasal congestion</p>
+      <p class="small mb-1"><b>Investigations:</b> None</p>
+      <p class="small mb-1"><b>Diagnosis:</b> Upper Respiratory Infection</p>
+      <p class="small mb-1"><b>Treatment:</b> Antihistamines, steam inhalation</p>
+      <p class="small mb-1"><b>Advice:</b> Increase warm fluids</p>
+    `,
+  },
+  {
+    type: "notes",
+    date: "2025-12-05",
+    title: "Clinical Notes",
+    icon: "fas fa-notes-medical text-warning",
+    html: `
+      <p class="small mb-1"><b>Chief Complaints:</b> Back pain</p>
+      <p class="small mb-1"><b>Medical History:</b> Mild disc bulge</p>
+      <p class="small mb-1"><b>Observations:</b> Limited movement</p>
+      <p class="small mb-1"><b>Investigations:</b> X-ray lumbar spine</p>
+      <p class="small mb-1"><b>Diagnosis:</b> Muscular strain</p>
+      <p class="small mb-1"><b>Treatment:</b> Muscle relaxant, hot fomentation</p>
+      <p class="small mb-1"><b>Advice:</b> Avoid heavy lifting</p>
+    `,
+  },
+  {
+    type: "notes",
+    date: "2025-12-06",
+    title: "Clinical Notes",
+    icon: "fas fa-notes-medical text-warning",
+    html: `
+      <p class="small mb-1"><b>Chief Complaints:</b> Chest discomfort</p>
+      <p class="small mb-1"><b>Medical History:</b> Hypertension</p>
+      <p class="small mb-1"><b>Observations:</b> Slight breathlessness</p>
+      <p class="small mb-1"><b>Investigations:</b> ECG, Chest X-Ray</p>
+      <p class="small mb-1"><b>Diagnosis:</b> Muscular chest pain</p>
+      <p class="small mb-1"><b>Treatment:</b> Analgesics</p>
+      <p class="small mb-1"><b>Advice:</b> Avoid exertion</p>
+    `,
+  },
+  {
+    type: "notes",
+    date: "2025-12-07",
+    title: "Clinical Notes",
+    icon: "fas fa-notes-medical text-warning",
+    html: `
+      <p class="small mb-1"><b>Chief Complaints:</b> Swelling in leg</p>
+      <p class="small mb-1"><b>Medical History:</b> Varicose veins</p>
+      <p class="small mb-1"><b>Observations:</b> Edema noted</p>
+      <p class="small mb-1"><b>Investigations:</b> Doppler Study</p>
+      <p class="small mb-1"><b>Diagnosis:</b> Venous insufficiency</p>
+      <p class="small mb-1"><b>Treatment:</b> Compression stockings</p>
+      <p class="small mb-1"><b>Advice:</b> Elevate legs</p>
+    `,
+  },
+  {
+    type: "notes",
+    date: "2025-12-08",
+    title: "Clinical Notes",
+    icon: "fas fa-notes-medical text-warning",
+    html: `
+      <p class="small mb-1"><b>Chief Complaints:</b> Shortness of breath</p>
+      <p class="small mb-1"><b>Medical History:</b> Asthma</p>
+      <p class="small mb-1"><b>Observations:</b> Wheezing present</p>
+      <p class="small mb-1"><b>Investigations:</b> Peak flow test</p>
+      <p class="small mb-1"><b>Diagnosis:</b> Asthma exacerbation</p>
+      <p class="small mb-1"><b>Treatment:</b> Nebulization</p>
+      <p class="small mb-1"><b>Advice:</b> Avoid triggers</p>
+    `,
+  },
+  {
+    type: "notes",
+    date: "2025-12-09",
+    title: "Clinical Notes",
+    icon: "fas fa-notes-medical text-warning",
+    html: `
+      <p class="small mb-1"><b>Chief Complaints:</b> Knee pain</p>
+      <p class="small mb-1"><b>Medical History:</b> Osteoarthritis</p>
+      <p class="small mb-1"><b>Observations:</b> Crepitus on movement</p>
+      <p class="small mb-1"><b>Investigations:</b> X-ray knee</p>
+      <p class="small mb-1"><b>Diagnosis:</b> OA flare-up</p>
+      <p class="small mb-1"><b>Treatment:</b> NSAIDs</p>
+      <p class="small mb-1"><b>Advice:</b> Physiotherapy</p>
+    `,
+  },
+  {
+    type: "notes",
+    date: "2025-12-10",
+    title: "Clinical Notes",
+    icon: "fas fa-notes-medical text-warning",
+    html: `
+      <p class="small mb-1"><b>Chief Complaints:</b> Fatigue and weakness</p>
+      <p class="small mb-1"><b>Medical History:</b> Iron deficiency</p>
+      <p class="small mb-1"><b>Observations:</b> Pale appearance</p>
+      <p class="small mb-1"><b>Investigations:</b> CBC, Ferritin</p>
+      <p class="small mb-1"><b>Diagnosis:</b> Anemia</p>
+      <p class="small mb-1"><b>Treatment:</b> Iron supplements</p>
+      <p class="small mb-1"><b>Advice:</b> Iron-rich diet</p>
+    `,
+  },
 
   // ================= NEW 10 PROCEDURES ==================
-  ...[
-    "IV Cannula insertion",
-    "Blood sample collection",
-    "Nebulization therapy",
-    "Ultrasound abdomen",
-    "X-Ray Chest",
-    "CT Scan (Brain)",
-    "ECG Test performed",
-    "Suture removal",
-    "Wound dressing",
-    "Physiotherapy session",
-  ].map((proc, i) => ({
+  {
     type: "procedure",
-    date: `2025-11-${5 + i}`,
+    date: "2025-12-01",
     title: "Procedure Performed",
     icon: "fas fa-syringe text-info",
     html: `
-      <p class="small mb-1">${proc}</p>
-      <p class="small mb-1">
-        Status: <span class="badge bg-info text-dark">${i % 2 === 0 ? "Completed" : "Pending"}</span>
-      </p>
-      <small class="text-muted">${9 + i}:00 AM • Nurse Ward</small>
+      <p class="small mb-1"><b>Procedure:</b> IV Cannula Insertion</p>
+      <p class="small mb-1">Qty: 1 | Price: ₹350 | Discount: 0%</p>
+      <p class="small mb-1">Status: <span class="badge bg-warning text-dark">Planned</span></p>
+      <small class="text-muted">Requested by Dr. Thomas</small>
     `,
-  })),
+  },
+  {
+    type: "procedure",
+    date: "2025-12-02",
+    title: "Procedure Performed",
+    icon: "fas fa-syringe text-info",
+    html: `
+      <p class="small mb-1"><b>Procedure:</b> Nebulization</p>
+      <p class="small mb-1">Qty: 1 | Price: ₹250 | Discount: 10%</p>
+      <p class="small mb-1">Status: <span class="badge bg-success">Completed</span></p>
+      <small class="text-muted">Nursing Team • Room 102</small>
+    `,
+  },
+  {
+    type: "procedure",
+    date: "2025-12-03",
+    title: "Procedure Performed",
+    icon: "fas fa-syringe text-info",
+    html: `
+      <p class="small mb-1"><b>Procedure:</b> ECG</p>
+      <p class="small mb-1">Qty: 1 | Price: ₹500 | Discount: 5%</p>
+      <p class="small mb-1">Status: <span class="badge bg-secondary">Sent to Radiology</span></p>
+      <small class="text-muted">Radiology Department</small>
+    `,
+  },
+  {
+    type: "procedure",
+    date: "2025-12-04",
+    title: "Procedure Performed",
+    icon: "fas fa-syringe text-info",
+    html: `
+      <p class="small mb-1"><b>Procedure:</b> Ultrasound Abdomen</p>
+      <p class="small mb-1">Qty: 1 | Price: ₹1200 | Discount: 0%</p>
+      <p class="small mb-1">Status: <span class="badge bg-secondary">Sent to Radiology</span></p>
+      <small class="text-muted">Radiology Unit</small>
+    `,
+  },
+  {
+    type: "procedure",
+    date: "2025-12-05",
+    title: "Procedure Performed",
+    icon: "fas fa-syringe text-info",
+    html: `
+      <p class="small mb-1"><b>Procedure:</b> Dressing Change</p>
+      <p class="small mb-1">Qty: 1 | Price: ₹300 | Discount: 0%</p>
+      <p class="small mb-1">Status: <span class="badge bg-primary">Nursing Performed</span></p>
+      <small class="text-muted">Ward 3A</small>
+    `,
+  },
+  {
+    type: "procedure",
+    date: "2025-12-06",
+    title: "Procedure Performed",
+    icon: "fas fa-syringe text-info",
+    html: `
+      <p class="small mb-1"><b>Procedure:</b> Blood Test (CBC)</p>
+      <p class="small mb-1">Qty: 1 | Price: ₹400 | Discount: 0%</p>
+      <p class="small mb-1">Status: <span class="badge bg-success">Completed</span></p>
+      <small class="text-muted">Lab Technician • Sample Collected</small>
+    `,
+  },
+  {
+    type: "procedure",
+    date: "2025-12-07",
+    title: "Procedure Performed",
+    icon: "fas fa-syringe text-info",
+    html: `
+      <p class="small mb-1"><b>Procedure:</b> X-Ray Chest</p>
+      <p class="small mb-1">Qty: 1 | Price: ₹700 | Discount: 5%</p>
+      <p class="small mb-1">Status: <span class="badge bg-secondary">Sent to Radiology</span></p>
+      <small class="text-muted">Radiology Section</small>
+    `,
+  },
+  {
+    type: "procedure",
+    date: "2025-12-08",
+    title: "Procedure Performed",
+    icon: "fas fa-syringe text-info",
+    html: `
+      <p class="small mb-1"><b>Procedure:</b> Injection (Vitamin B12)</p>
+      <p class="small mb-1">Qty: 1 | Price: ₹150 | Discount: 0%</p>
+      <p class="small mb-1">Status: <span class="badge bg-primary">Nursing Performed</span></p>
+      <small class="text-muted">Administered IM</small>
+    `,
+  },
+  {
+    type: "procedure",
+    date: "2025-12-09",
+    title: "Procedure Performed",
+    icon: "fas fa-syringe text-info",
+    html: `
+      <p class="small mb-1"><b>Procedure:</b> CT Scan Brain</p>
+      <p class="small mb-1">Qty: 1 | Price: ₹3000 | Discount: 10%</p>
+      <p class="small mb-1">Status: <span class="badge bg-secondary">Sent to Radiology</span></p>
+      <small class="text-muted">Radiology - CT Room</small>
+    `,
+  },
+  {
+    type: "procedure",
+    date: "2025-12-10",
+    title: "Procedure Performed",
+    icon: "fas fa-syringe text-info",
+    html: `
+      <p class="small mb-1"><b>Procedure:</b> Nebulization</p>
+      <p class="small mb-1">Qty: 2 | Price: ₹500 | Discount: 0%</p>
+      <p class="small mb-1">Status: <span class="badge bg-success">Completed</span></p>
+      <small class="text-muted">Nursing Team</small>
+    `,
+  },
 
   // ================= NEW 10 FILES ==================
   ...[
@@ -180,29 +604,43 @@ const historyData = [
   })),
 
   // ================= NEW 10 DENTAL PROCEDURES ==================
-  ...[
-    "Scaling & Polishing",
-    "Tooth extraction – Tooth 14",
-    "Dental filling – Tooth 11",
-    "Crown placement – Tooth 26",
-    "Braces tightening",
-    "Dental cleaning",
-    "Wisdom tooth extraction",
-    "Gum infection treatment",
-    "Tooth whitening session",
-    "Retainer adjustment",
-  ].map((dental, i) => ({
-    type: "dental",
-    date: `2025-11-${3 + i}`,
-    title: "Dental Procedure",
-    icon: "fas fa-tooth text-muted",
-    html: `
-      <p class="small mb-1">${dental}</p>
-      <small class="text-muted">${11 + i}:15 AM • Dr. Miller</small>
-    `,
-  })),
-];
+  ...dentalRecords.map((record) => {
+    const procedureList = record.procedures
+      .map(
+        (p) => `
+          <li>
+            <b>${p.name}</b>  
+            (Qty: ${p.quantity}, Price: ₹${p.price}, Discount: ${p.discount}%,  
+            Status: <span class="text-primary">${p.status}</span>)
+          </li>`
+      )
+      .join("");
 
+    return {
+      type: "dental",
+      date: "2025-11-22",
+      icon: "fas fa-tooth text-muted",
+      title: "Dental Procedure",
+      html: `
+      <div class="card shadow-sm mb-3">
+        <div class="card-body">
+          <h6 class="text-primary mb-1"><i class="fas fa-tooth me-2"></i>Dental Procedure</h6>
+          <small class="text-muted">${record.date}</small>
+
+          <div class="mt-2">
+            <p class="mb-1"><b>Chief Complaints:</b> ${record.chiefComplaints}</p>
+            <p class="mb-1"><b>Observations:</b> ${record.observations}</p>
+            <p class="mb-1"><b>Medical History:</b> ${record.medicalHistory}</p>
+            <p class="mb-1"><b>Advice:</b> ${record.advice}</p>
+
+            <p class="mb-1"><b>Procedures:</b></p>
+            <ul class="small mb-1">${procedureList}</ul>
+          </div>
+        </div>
+      </div>`,
+    };
+  }),
+];
 
 const mockVitals = {
   temperature: "98.6",
