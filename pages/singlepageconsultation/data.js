@@ -32,7 +32,7 @@ function generateVitals() {
   };
 }
 
-const vitalsHistory = Array.from({ length: 10 }).map((_, i) => {
+const vitalsHistory = Array.from({ length: 2 }).map((_, i) => {
   const v = generateVitals();
 
   return {
@@ -96,10 +96,10 @@ const prescriptionData = [
     "Vitamin C 500mg",
   ],
   ["Amoxicillin 500mg", "Vitamin C 500mg"],
-  ["Azithromycin 250mg", "Pantoprazole 40mg"],
-  ["Ibuprofen 400mg", "Domperidone 10mg"],
-  ["Metformin 500mg", "Glimepiride 1mg"],
-  ["Losartan 50mg", "Aspirin 75mg"],
+  // ["Azithromycin 250mg", "Pantoprazole 40mg"],
+  // ["Ibuprofen 400mg", "Domperidone 10mg"],
+  // ["Metformin 500mg", "Glimepiride 1mg"],
+  // ["Losartan 50mg", "Aspirin 75mg"],
   [
     "Dolo 650",
     "Rantac 150",
@@ -108,9 +108,9 @@ const prescriptionData = [
     "Multivitamin",
     "Calcium 500mg",
   ],
-  ["Cough Syrup 10ml", "Steam Inhalation"],
-  ["ORS Solution", "Zinc 20mg"],
-  ["Multivitamin", "Calcium 500mg"],
+  // ["Cough Syrup 10ml", "Steam Inhalation"],
+  // ["ORS Solution", "Zinc 20mg"],
+  // ["Multivitamin", "Calcium 500mg"],
 ].map((meds, i) => {
   const detailedMeds = generatePrescriptionDetails(meds, i);
 
@@ -257,54 +257,14 @@ const dentalRecords = [
   },
 ];
 
-const historyData = [
-  // ================= EXISTING ITEMS ==================
-  {
-    type: "vitals",
-    date: "2025-11-26",
-    title: "Vitals Recorded",
-    icon: "fa fa-stethoscope text-success",
-    html: `
-      <p class="small mb-1">Temp: <span class="badge bg-danger">98.6°F</span> | BP 120/80 | Pulse 72</p>
-      <small class="text-muted">3:00 PM • Nurse Station</small>
-    `,
-  },
-  {
-    type: "prescription",
-    date: "2025-11-26",
-    title: "Prescription",
-    icon: "fas fa-capsules text-primary",
-    html: `<p class="small mb-0">Paracetamol • 5 Days</p>`,
-  },
-  {
-    type: "procedure",
-    date: "2025-11-25",
-    icon: "fas fa-syringe text-info",
-    title: "Procedure Performed",
-    html: `
-      <p class="small mb-1">Wound cleaning & dressing applied.</p>
-      <p class="small mb-1">Status: <span class="badge bg-info text-dark">Completed</span></p>
-      <small class="text-muted">4:15 PM • Nurse Emily • Ward 3B</small>
-    `,
-  },
-  {
-    type: "files",
-    date: "2025-11-22",
-    icon: "fas fa-file text-primary",
-    title: "Uploaded Report",
-    html: `<p class="small mb-0">Blood Test Report.pdf</p>`,
-  },
-  {
-    type: "dental",
-    date: "2025-11-22",
-    icon: "fas fa-tooth text-muted",
-    title: "Dental Procedure",
-    html: `
-      <p class="small mb-1">Root canal performed on tooth 36.</p>
-      <small class="text-muted">1:30 PM • Dr. Miller</small>
-    `,
-  },
+const descriptions = {
+  "Vaccination Certificate.pdf":
+    "Official certificate confirming vaccination with date and batch number.",
+  "Allergy Test Report.pdf":
+    "Allergen sensitivity results including IgE levels and reaction severity.",
+};
 
+const historyData = [
   // ================= NEW 10 VITALS ==================
   ...vitalsHistory,
   // ================= NEW 10 PRESCRIPTIONS ==================
@@ -385,81 +345,6 @@ const historyData = [
       <p class="small mb-1"><b>Advice:</b> Avoid heavy lifting</p>
     `,
   },
-  {
-    type: "notes",
-    date: "2025-12-06",
-    title: "Clinical Notes",
-    icon: "fas fa-notes-medical text-warning",
-    html: `
-      <p class="small mb-1"><b>Chief Complaints:</b> Chest discomfort</p>
-      <p class="small mb-1"><b>Medical History:</b> Hypertension</p>
-      <p class="small mb-1"><b>Observations:</b> Slight breathlessness</p>
-      <p class="small mb-1"><b>Investigations:</b> ECG, Chest X-Ray</p>
-      <p class="small mb-1"><b>Diagnosis:</b> Muscular chest pain</p>
-      <p class="small mb-1"><b>Treatment:</b> Analgesics</p>
-      <p class="small mb-1"><b>Advice:</b> Avoid exertion</p>
-    `,
-  },
-  {
-    type: "notes",
-    date: "2025-12-07",
-    title: "Clinical Notes",
-    icon: "fas fa-notes-medical text-warning",
-    html: `
-      <p class="small mb-1"><b>Chief Complaints:</b> Swelling in leg</p>
-      <p class="small mb-1"><b>Medical History:</b> Varicose veins</p>
-      <p class="small mb-1"><b>Observations:</b> Edema noted</p>
-      <p class="small mb-1"><b>Investigations:</b> Doppler Study</p>
-      <p class="small mb-1"><b>Diagnosis:</b> Venous insufficiency</p>
-      <p class="small mb-1"><b>Treatment:</b> Compression stockings</p>
-      <p class="small mb-1"><b>Advice:</b> Elevate legs</p>
-    `,
-  },
-  {
-    type: "notes",
-    date: "2025-12-08",
-    title: "Clinical Notes",
-    icon: "fas fa-notes-medical text-warning",
-    html: `
-      <p class="small mb-1"><b>Chief Complaints:</b> Shortness of breath</p>
-      <p class="small mb-1"><b>Medical History:</b> Asthma</p>
-      <p class="small mb-1"><b>Observations:</b> Wheezing present</p>
-      <p class="small mb-1"><b>Investigations:</b> Peak flow test</p>
-      <p class="small mb-1"><b>Diagnosis:</b> Asthma exacerbation</p>
-      <p class="small mb-1"><b>Treatment:</b> Nebulization</p>
-      <p class="small mb-1"><b>Advice:</b> Avoid triggers</p>
-    `,
-  },
-  {
-    type: "notes",
-    date: "2025-12-09",
-    title: "Clinical Notes",
-    icon: "fas fa-notes-medical text-warning",
-    html: `
-      <p class="small mb-1"><b>Chief Complaints:</b> Knee pain</p>
-      <p class="small mb-1"><b>Medical History:</b> Osteoarthritis</p>
-      <p class="small mb-1"><b>Observations:</b> Crepitus on movement</p>
-      <p class="small mb-1"><b>Investigations:</b> X-ray knee</p>
-      <p class="small mb-1"><b>Diagnosis:</b> OA flare-up</p>
-      <p class="small mb-1"><b>Treatment:</b> NSAIDs</p>
-      <p class="small mb-1"><b>Advice:</b> Physiotherapy</p>
-    `,
-  },
-  {
-    type: "notes",
-    date: "2025-12-10",
-    title: "Clinical Notes",
-    icon: "fas fa-notes-medical text-warning",
-    html: `
-      <p class="small mb-1"><b>Chief Complaints:</b> Fatigue and weakness</p>
-      <p class="small mb-1"><b>Medical History:</b> Iron deficiency</p>
-      <p class="small mb-1"><b>Observations:</b> Pale appearance</p>
-      <p class="small mb-1"><b>Investigations:</b> CBC, Ferritin</p>
-      <p class="small mb-1"><b>Diagnosis:</b> Anemia</p>
-      <p class="small mb-1"><b>Treatment:</b> Iron supplements</p>
-      <p class="small mb-1"><b>Advice:</b> Iron-rich diet</p>
-    `,
-  },
 
   // ================= NEW 10 PROCEDURES ==================
   {
@@ -498,118 +383,29 @@ const historyData = [
       <small class="text-muted">Radiology Department</small>
     `,
   },
-  {
-    type: "procedure",
-    date: "2025-12-04",
-    title: "Procedure Performed",
-    icon: "fas fa-syringe text-info",
-    html: `
-      <p class="small mb-1"><b>Procedure:</b> Ultrasound Abdomen</p>
-      <p class="small mb-1">Qty: 1 | Price: ₹1200 | Discount: 0%</p>
-      <p class="small mb-1">Status: <span class="badge bg-secondary">Sent to Radiology</span></p>
-      <small class="text-muted">Radiology Unit</small>
-    `,
-  },
-  {
-    type: "procedure",
-    date: "2025-12-05",
-    title: "Procedure Performed",
-    icon: "fas fa-syringe text-info",
-    html: `
-      <p class="small mb-1"><b>Procedure:</b> Dressing Change</p>
-      <p class="small mb-1">Qty: 1 | Price: ₹300 | Discount: 0%</p>
-      <p class="small mb-1">Status: <span class="badge bg-primary">Nursing Performed</span></p>
-      <small class="text-muted">Ward 3A</small>
-    `,
-  },
-  {
-    type: "procedure",
-    date: "2025-12-06",
-    title: "Procedure Performed",
-    icon: "fas fa-syringe text-info",
-    html: `
-      <p class="small mb-1"><b>Procedure:</b> Blood Test (CBC)</p>
-      <p class="small mb-1">Qty: 1 | Price: ₹400 | Discount: 0%</p>
-      <p class="small mb-1">Status: <span class="badge bg-success">Completed</span></p>
-      <small class="text-muted">Lab Technician • Sample Collected</small>
-    `,
-  },
-  {
-    type: "procedure",
-    date: "2025-12-07",
-    title: "Procedure Performed",
-    icon: "fas fa-syringe text-info",
-    html: `
-      <p class="small mb-1"><b>Procedure:</b> X-Ray Chest</p>
-      <p class="small mb-1">Qty: 1 | Price: ₹700 | Discount: 5%</p>
-      <p class="small mb-1">Status: <span class="badge bg-secondary">Sent to Radiology</span></p>
-      <small class="text-muted">Radiology Section</small>
-    `,
-  },
-  {
-    type: "procedure",
-    date: "2025-12-08",
-    title: "Procedure Performed",
-    icon: "fas fa-syringe text-info",
-    html: `
-      <p class="small mb-1"><b>Procedure:</b> Injection (Vitamin B12)</p>
-      <p class="small mb-1">Qty: 1 | Price: ₹150 | Discount: 0%</p>
-      <p class="small mb-1">Status: <span class="badge bg-primary">Nursing Performed</span></p>
-      <small class="text-muted">Administered IM</small>
-    `,
-  },
-  {
-    type: "procedure",
-    date: "2025-12-09",
-    title: "Procedure Performed",
-    icon: "fas fa-syringe text-info",
-    html: `
-      <p class="small mb-1"><b>Procedure:</b> CT Scan Brain</p>
-      <p class="small mb-1">Qty: 1 | Price: ₹3000 | Discount: 10%</p>
-      <p class="small mb-1">Status: <span class="badge bg-secondary">Sent to Radiology</span></p>
-      <small class="text-muted">Radiology - CT Room</small>
-    `,
-  },
-  {
-    type: "procedure",
-    date: "2025-12-10",
-    title: "Procedure Performed",
-    icon: "fas fa-syringe text-info",
-    html: `
-      <p class="small mb-1"><b>Procedure:</b> Nebulization</p>
-      <p class="small mb-1">Qty: 2 | Price: ₹500 | Discount: 0%</p>
-      <p class="small mb-1">Status: <span class="badge bg-success">Completed</span></p>
-      <small class="text-muted">Nursing Team</small>
-    `,
-  },
 
   // ================= NEW 10 FILES ==================
-  ...[
-    "MRI Brain.pdf",
-    "Liver Function Test.pdf",
-    "Kidney Panel Report.pdf",
-    "CBC Report.pdf",
-    "X-Ray Chest Image.png",
-    "Ultrasound Abdomen.pdf",
-    "ECG Scan.jpg",
-    "Blood Sugar Profile.pdf",
-    "Allergy Test Report.pdf",
-    "Vaccination Certificate.pdf",
-  ].map((file, i) => ({
-    type: "files",
-    date: `2025-11-${1 + i}`,
-    title: "Uploaded Report",
-    icon: "fas fa-file text-primary",
-    html: `<p class="small mb-0">${file}</p>`,
-  })),
+
+  ...["Allergy Test Report.pdf", "Vaccination Certificate.pdf"].map(
+    (file, i) => ({
+      type: "files",
+      date: `2025-11-${1 + i}`,
+      title: "Uploaded Report",
+      icon: "fas fa-file text-primary",
+      html: `
+      <p class="small mb-1"><b>${file}</b></p>
+      <p class="small text-muted mb-0">${descriptions[file]}</p>
+    `,
+    })
+  ),
 
   // ================= NEW 10 DENTAL PROCEDURES ==================
   ...dentalRecords.map((record) => {
     const procedureList = record.procedures
       .map(
         (p) => `
-          <li>
-            <b>${p.name}</b>  
+          <li class="text-sm">
+            <b class="text-sm">${p.name}</b>  
             (Qty: ${p.quantity}, Price: ₹${p.price}, Discount: ${p.discount}%,  
             Status: <span class="text-primary">${p.status}</span>)
           </li>`
@@ -621,23 +417,15 @@ const historyData = [
       date: "2025-11-22",
       icon: "fas fa-tooth text-muted",
       title: "Dental Procedure",
-      html: `
-      <div class="card shadow-sm mb-3">
-        <div class="card-body">
-          <h6 class="text-primary mb-1"><i class="fas fa-tooth me-2"></i>Dental Procedure</h6>
-          <small class="text-muted">${record.date}</small>
+      html: `<div class="mt-2">
+            <p class="mb-1 text-sm"><b>Chief Complaints:</b> ${record.chiefComplaints}</p>
+            <p class="mb-1 text-sm"><b>Observations:</b> ${record.observations}</p>
+            <p class="mb-1 text-sm"><b>Medical History:</b> ${record.medicalHistory}</p>
+            <p class="mb-1 text-sm"><b>Advice:</b> ${record.advice}</p>
 
-          <div class="mt-2">
-            <p class="mb-1"><b>Chief Complaints:</b> ${record.chiefComplaints}</p>
-            <p class="mb-1"><b>Observations:</b> ${record.observations}</p>
-            <p class="mb-1"><b>Medical History:</b> ${record.medicalHistory}</p>
-            <p class="mb-1"><b>Advice:</b> ${record.advice}</p>
-
-            <p class="mb-1"><b>Procedures:</b></p>
+            <p class="mb-1  text-sm"><b>Procedures:</b></p>
             <ul class="small mb-1">${procedureList}</ul>
-          </div>
-        </div>
-      </div>`,
+          </div>`,
     };
   }),
 ];
