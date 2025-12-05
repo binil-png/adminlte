@@ -134,6 +134,7 @@
       .aside-hidden {
         display: none;
       }
+
     </style>
   </head>
   <body class="hold-transition">
@@ -1559,7 +1560,11 @@
                 <div
                   class="d-flex justify-content-end align-items-center gap-2 mt-3 col-md-10"
                 >
-                  <button class="btn btn-sm btn-primary rounded-4 save-btn">
+                  <button
+                    class="btn btn-sm btn-primary rounded-4 save-btn"
+                    data-toggle="collapse"
+                    data-target="#invoiceSection"
+                  >
                     Generate invoice <i class="fas fa-file-invoice ms-2"></i>
                   </button>
                   <button class="btn btn-sm btn-success save-btn rounded-4">
@@ -1570,6 +1575,162 @@
                   </button>
                 </div>
               </div>
+
+              <section
+                class="collapse mt-4"
+                data-parent="#patientAccordion"
+                 id="invoiceSection"
+              >
+                <div class="card">
+                  <div class="card-body">
+                    <h5>Generate Invoice</h5>
+                    <div class="border rounded-4">
+                      <table
+                        style="border-radius: 10px; overflow: hidden"
+                        class="table table-sm table-borderless"
+                        id="invoiceTable"
+                      >
+                        <thead class="thead-light">
+                          <tr>
+                            <th style="width: 80px">Sr no</th>
+                            <th>Item</th>
+                            <th style="width: 80px">Qty</th>
+                            <th style="width: 80px">Price</th>
+                            <th style="width: 80px">Discount</th>
+                            <th style="width: 80px">Taxes</th>
+                            <th style="width: 80px">Total</th>
+                            <th></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>1</td>
+                            <td>
+                              <input
+                                class="form-control proc-price rounded-4 input-style invoice-service"
+                                value="Dental Cleaning"
+                              />
+                            </td>
+                            <td>
+                              <input
+                                type="number"
+                                class="form-control proc-price rounded-4 input-style invoice-qty"
+                                value="1"
+                              />
+                            </td>
+                            <td>
+                              <input
+                                type="number"
+                                class="form-control proc-price rounded-4 input-style invoice-price"
+                                value="1500"
+                              />
+                            </td>
+                            <td>
+                              <input
+                                type="number"
+                                class="form-control proc-price rounded-4 input-style invoice-discount"
+                                value="0"
+                              />
+                            </td>
+                            <td>
+                              <input
+                                type="number"
+                                class="form-control proc-price rounded-4 input-style invoice-tax"
+                                value="0"
+                              />
+                            </td>
+                            <td class="invoice-line-total">₹1500.00</td>
+                            <td>
+                              <button
+                                type="button"
+                                class="btn btn-sm btn-remove-inv"
+                              >
+                                <i class="fas fa-trash text-danger"></i>
+                              </button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="text-start">
+                      <button class="btn btn-link" id="addInvItem">
+                        + Add Item
+                      </button>
+                    </div>
+
+                    <div class="row mt-4">
+                      <div class="col-md-6">
+                        <h6>Receipt</h6>
+                        <div class="form-group">
+                          <label>PAY NOW (Payment Mode 1)</label>
+                          <div class="input-group">
+                            <input
+                              type="number"
+                              class="form-control border-end-0 rounded-end-0 rounded-4 input-style payment-1"
+                              value="1500"
+                            /><select
+                              class="form-control border-start-1 rounded-start-0 rounded-4 input-style"
+                            >
+                              <option>Cash</option>
+                              <option>Card</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label>PAY NOW (Payment Mode 2 - Optional)</label>
+                          <div class="input-group">
+                            <input
+                              type="number"
+                              class="form-control border-end-0 rounded-end-0 rounded-4 input-style payment-2"
+                              value="0"
+                            /><select
+                              class="form-control border-start-1 rounded-start-0 rounded-4 input-style"
+                            >
+                              <option>--</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <table class="table table-borderless invoice-summary">
+                          <tr>
+                            <td>Total Price</td>
+                            <td class="text-right">
+                              ₹<span id="invPrice">1500.00</span>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Total Discount</td>
+                            <td class="text-right text-danger">
+                              -₹<span id="invDiscount">0.00</span>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Total Tax</td>
+                            <td class="text-right">
+                              +₹<span id="invTax">0.00</span>
+                            </td>
+                          </tr>
+                          <tr class="font-weight-bold">
+                            <td>Grand Total</td>
+                            <td class="text-right">
+                              ₹<span id="invGrand">1500.00</span>
+                            </td>
+                          </tr>
+                        </table>
+                        <div class="text-right">
+                          <button
+                            class="btn btn-sm btn-success save-btn rounded-4"
+                            id="saveInvoice"
+                          >
+                            Save Invoice and Receipt
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
             </div>
           </main>
         </div>
@@ -1587,5 +1748,6 @@
     <script src="./prescription.js"></script>
     <script src="./collapse.js"></script>
     <script src="./preview.js"></script>
+    <script src="./invoice.js"></script>
   </body>
 </html>
