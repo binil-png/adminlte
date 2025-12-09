@@ -25,117 +25,7 @@
 
     <!-- Theme style -->
     <link rel="stylesheet" href="../../dist/css/adminlte.min.css" />
-    <style>
-      /* Lightweight AdminLTE-like layout */
-      body {
-        background: #fafafa;
-      }
-      .page-wrap {
-        display: flex;
-      }
-      .content {
-        /* flex: 1; */
-        padding: 24px 24px;
-      }
-      .timeline-card {
-        background: #fff;
-        border-radius: 6px;
-        padding: 16px;
-        margin-bottom: 16px;
-        box-shadow: 0 1px 0 rgba(0, 0, 0, 0.03);
-      }
-      .small-chip {
-        display: inline-block;
-        padding: 6px 10px;
-        background: #f3f6fb;
-        border-radius: 20px;
-        font-size: 13px;
-        margin-right: 6px;
-      }
-      .accordion .card {
-        border-radius: 8px;
-        overflow: hidden;
-      }
-      .card-header {
-        background: #fff;
-        border-bottom: 1px solid #eee;
-      }
-      .card-body .form-control[readonly] {
-        background: #f7f7f9;
-      }
-      .floating-save {
-        position: fixed;
-        right: 18px;
-        bottom: 18px;
-        z-index: 1200;
-      }
-      .quick-badges .badge {
-        margin-right: 4px;
-      }
-      .invoice-summary td,
-      .invoice-summary th {
-        border-top: none !important;
-      }
-      .save-btn {
-        width: 10vw;
-      }
-      .sidebar {
-        max-height: calc(100vh - 62px);
-        min-height: calc(100vh - 62px);
-        overflow: auto;
-        padding-bottom: 0px;
-        /* background-color: red; */
-      }
-      .hide-scrollbar {
-        -ms-overflow-style: none; /* IE/Edge */
-        scrollbar-width: none; /* Firefox */
-      }
-
-      .hide-scrollbar::-webkit-scrollbar {
-        display: none; /* Chrome/Safari */
-      }
-      .patient-details {
-        max-height: calc(100vh - 150px);
-        overflow: auto;
-      }
-      .input-style {
-        height: 28px;
-        padding: 3px 7px; /* small padding to keep text readable */
-        font-size: 14px;
-        line-height: 1.2;
-      }
-      .bg-custom {
-        background: #fafafa;
-      }
-      .accordion-highlight {
-        color: #0d6efd !important; /* bootstrap primary color */
-        font-weight: 600 !important;
-      }
-      .text-custom {
-        color: #0c0908;
-      }
-      .upload-box {
-        border: 1px dashed #6c757d;
-        border-radius: 10px;
-        cursor: pointer;
-        transition: 0.2s;
-      }
-
-      .upload-box:hover {
-        background: #f8f9fa;
-        border-color: #0d6efd;
-      }
-      .template-select-style {
-        height: 32px;
-        padding: 4px 8px; /* small padding to keep text readable */
-        font-size: 14px;
-        line-height: 1.4;
-      }
-      .aside-hidden {
-        display: none;
-      }
-
-    </style>
+    <link rel="stylesheet" href="./singlepage.css" />
   </head>
   <body class="hold-transition">
     <div class="">
@@ -1000,7 +890,7 @@
                 >
                   <div class="card-body">
                     <div
-                      class="pb-3 d-flex justify-content-between align-items-center"
+                      class="pb-1 d-flex justify-content-between align-items-center"
                     >
                       <div
                         style="width: 50%"
@@ -1037,6 +927,26 @@
                         Save as template<i class="fas fa-save ms-2"></i>
                       </button>
                     </div>
+                    <!-- need to change the date format dd-mm-yyyy -->
+                    <div class="d-flex w-50 gap-2 pb-3">
+                      <div class="col-6 p-0">
+                        <input
+                          type="date"
+                          id="dateFilter"
+                          class="form-control rounded-4 template-select-style"
+                        />
+                      </div>
+                      <div class="col-6 p-0">
+                        <select
+                          class="form-control custom-select proc-name rounded-4 template-select-style"
+                        >
+                          <option value="">Select doctor</option>
+                          <option value="Dental Cleaning">Doctor A</option>
+                          <option value="Root Canal">Doctor B</option>
+                          <option value="X-Ray">Doctor C</option>
+                        </select>
+                      </div>
+                    </div>
                     <div class="border rounded-4">
                       <table
                         style="border-radius: 10px; overflow: hidden"
@@ -1045,31 +955,17 @@
                       >
                         <thead class="thead-light">
                           <tr>
-                            <th
-                              style="width: 70px"
-                              class="text-custom text-center"
-                            >
+                            <th class="text-custom text-center col-sr">
                               Sr No.
                             </th>
-                            <th style="min-width: 150px" class="text-custom">
-                              Procedure
-                            </th>
-                            <th style="width: 150px" class="text-custom">
-                              Qty
-                            </th>
-                            <th style="width: 150px" class="text-custom">
-                              Price
-                            </th>
-                            <th style="width: 150px" class="text-custom">
-                              Discount (%)
-                            </th>
-                            <th style="width: 150px" class="text-custom">
-                              Status
-                            </th>
-                            <th style="width: 150px" class="text-custom">
-                              Total
-                            </th>
-                            <th style="width: 150px" class="text-custom"></th>
+                            <th class="text-custom col-proc">Procedure</th>
+                            <th class="text-custom col-proc">Instruction </th>
+                            <th class="text-custom col-fixed">Qty</th>
+                            <th class="text-custom col-fixed">Price</th>
+                            <th class="text-custom col-fixed">Disc (%)</th>
+                            <th class="text-custom col-status">Status</th>
+                            <th class="text-custom col-fixed">Total</th>
+                            <th class="col-action"></th>
                           </tr>
                         </thead>
 
@@ -1133,48 +1029,28 @@
                   <div class="card-body">
                     <div class="ps-3">
                       <div
-                        class="w-50 py-3 quick-badges d-flex gap-1 flex-wrap justify-content-start align-items-center"
-                      >
-                        <span class="badge badge-primary p-2 rounded-4"
-                          >Template A</span
-                        >
-                        <span class="badge badge-primary p-2 rounded-4"
-                          >Template B</span
-                        >
-                        <span class="badge badge-primary p-2 rounded-4"
-                          >Template C</span
-                        >
-                        <select
-                          class="form-control custom-select proc-name rounded-4 w-25 input-style"
-                        >
-                          <option value="">Select template</option>
-                          <option value="Dental Cleaning">Template 1</option>
-                          <option value="Root Canal">Template 2</option>
-                          <option value="X-Ray">Template 3</option>
-                        </select>
-                      </div>
-                      <div
                         class="d-flex ps-0 pb-3 gap-2 justify-content-between align-items-center"
                       >
-                        <!-- need to change the date format dd-mm-yyyy -->
-                        <div class="d-flex w-50 gap-2">
-                          <div class="col-6 p-0">
-                            <input
-                              type="date"
-                              id="dateFilter"
-                              class="form-control rounded-4 template-select-style"
-                            />
-                          </div>
-                          <div class="col-6 p-0">
-                            <select
-                              class="form-control custom-select proc-name rounded-4 template-select-style"
-                            >
-                              <option value="">Select doctor</option>
-                              <option value="Dental Cleaning">Doctor A</option>
-                              <option value="Root Canal">Doctor B</option>
-                              <option value="X-Ray">Doctor C</option>
-                            </select>
-                          </div>
+                        <div
+                          class="w-50 py-3 quick-badges d-flex gap-1 flex-wrap justify-content-start align-items-center"
+                        >
+                          <span class="badge badge-primary p-2 rounded-4"
+                            >Template A</span
+                          >
+                          <span class="badge badge-primary p-2 rounded-4"
+                            >Template B</span
+                          >
+                          <span class="badge badge-primary p-2 rounded-4"
+                            >Template C</span
+                          >
+                          <select
+                            class="form-control custom-select proc-name rounded-4 w-25 input-style"
+                          >
+                            <option value="">Select template</option>
+                            <option value="Dental Cleaning">Template 1</option>
+                            <option value="Root Canal">Template 2</option>
+                            <option value="X-Ray">Template 3</option>
+                          </select>
                         </div>
                         <button
                           type="button"
@@ -1295,6 +1171,77 @@
                       </div>
 
                       <div class="px-5 py-3">
+                        <div class="row">
+                          <div class="col-12 text-center p-4">
+                            <h6 class="text-custom fw-bold mb-3">
+                              Mark Affected Surfaces
+                            </h6>
+
+                            <div class="tooth-map-container mx-auto">
+                              <small
+                                class="text-muted"
+                                style="
+                                  position: absolute;
+                                  top: -25px;
+                                  left: 50%;
+                                  transform: translateX(-50%);
+                                  font-size: 10px;
+                                "
+                                >BUCCAL (Cheek)</small
+                              >
+
+                              <div
+                                class="surface buccal"
+                                data-surface="Buccal"
+                                title="Buccal"
+                              ></div>
+                              <div
+                                class="surface mesial"
+                                data-surface="Mesial"
+                                title="Mesial"
+                              ></div>
+                              <div
+                                class="surface occlusal"
+                                data-surface="Occlusal"
+                                title="Occlusal"
+                              ></div>
+                              <div
+                                class="surface distal"
+                                data-surface="Distal"
+                                title="Distal"
+                              ></div>
+                              <div
+                                class="surface lingual"
+                                data-surface="Lingual"
+                                title="Lingual"
+                              ></div>
+
+                              <small
+                                class="text-muted"
+                                style="
+                                  position: absolute;
+                                  bottom: -25px;
+                                  left: 50%;
+                                  transform: translateX(-50%);
+                                  font-size: 10px;
+                                "
+                                >LINGUAL (Tongue)</small
+                              >
+                            </div>
+
+                            <div class="mt-4">
+                              <p class="small text-muted mb-1">
+                                Marked Surfaces:
+                              </p>
+                              <h5
+                                id="selectedSurfacesText"
+                                class="text-danger fw-bold"
+                              >
+                                —
+                              </h5>
+                            </div>
+                          </div>
+                        </div>
                         <div
                           class="w-50 py-2 quick-badges d-flex gap-1 flex-wrap justify-content-start align-items-center"
                         >
@@ -1368,16 +1315,16 @@
                           >
                             <thead class="thead-light">
                               <tr>
-                                <th>Procedure</th>
-                                <th>Qty</th>
-                                <th>Price</th>
-                                <th>Total</th>
-                                <th></th>
+                                <th class="col-proc">Procedure</th>
+                                <th class="col-fixed">Qty</th>
+                                <th class="col-fixed">Price</th>
+                                <th class="col-fixed">Total</th>
+                                <th class="col-fixed"></th>
                               </tr>
                             </thead>
                             <tbody>
                               <tr>
-                                <td class="px-3 py-2">
+                                <td>
                                   <select
                                     class="form-control custom-select dental-proc rounded-4 input-style"
                                   >
@@ -1389,14 +1336,14 @@
                                     <option value="Scaling">Scaling</option>
                                   </select>
                                 </td>
-                                <td class="px-3 py-2" style="width: 150px">
+                                <td>
                                   <input
                                     type="number"
                                     class="form-control dental-qty rounded-4 input-style"
                                     value="1"
                                   />
                                 </td>
-                                <td class="px-3 py-2" style="width: 150px">
+                                <td>
                                   <input
                                     type="number"
                                     class="form-control dental-price rounded-4 input-style"
@@ -1404,12 +1351,11 @@
                                   />
                                 </td>
                                 <td
-                                  style="width: 150px"
                                   class="dental-line-total align-middle px-3 py-2"
                                 >
                                   ₹0
                                 </td>
-                                <td class="px-3 py-2" style="width: 150px">
+                                <td>
                                   <button
                                     type="button"
                                     class="btn btn-sm btn-remove-dental"
@@ -1579,7 +1525,7 @@
               <section
                 class="collapse mt-4"
                 data-parent="#patientAccordion"
-                 id="invoiceSection"
+                id="invoiceSection"
               >
                 <div class="card">
                   <div class="card-body">
@@ -1743,6 +1689,7 @@
     <script src="./new.js"></script>
     <script src="./mockData.js"></script>
     <script src="./vitals.js"></script>
+    <script src="./dental.js"></script>
     <script src="./clinicalNotes.js"></script>
     <script src="./procedure.js"></script>
     <script src="./prescription.js"></script>

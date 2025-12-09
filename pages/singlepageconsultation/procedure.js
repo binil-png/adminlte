@@ -8,7 +8,7 @@ $(function () {
       <tr data-index="${index}">
         <td class="text-center">${index + 1}</td>
         <td>
-          <select value=${p.name} class="form-control custom-select proc-name rounded-4 input-style proc-field">
+          <select class="form-control custom-select proc-name rounded-4 input-style proc-field">
            <option ${p.name == "Blood Test" ? "selected" : ""} value="Blood Test">Blood Test</option>
            <option ${p.name == "X-Ray Chest" ? "selected" : ""} value="X-Ray Chest">X-Ray Chest</option>
            <option ${p.name == "ECG" ? "selected" : ""} value="ECG">ECG</option>
@@ -22,6 +22,9 @@ $(function () {
           </select>
         </td>
 
+        <td>
+          <textarea row="1" class="form-control proc-qty rounded-4 input-style proc-field" value="${p.qty}"> </textarea>
+        </td>
         <td>
           <input type="number" class="form-control proc-qty rounded-4 input-style proc-field" value="${
             p.qty
