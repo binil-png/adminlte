@@ -23,6 +23,9 @@ $(function () {
         </td>
 
         <td>
+          <textarea row="1" class="form-control proc-qty rounded-4 input-style proc-field" value="${p.qty}"> </textarea>
+        </td>
+        <td>
           <input type="number" class="form-control proc-qty rounded-4 input-style proc-field" value="${
             p.qty
           }">
