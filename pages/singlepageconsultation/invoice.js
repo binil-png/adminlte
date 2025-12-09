@@ -67,12 +67,12 @@ $(function () {
     recalcInvoice
   );
 
-  $("#openInvoice").on("click", function () {
-    $("#invoiceSection").toggle();
-    $("html,body").animate(
-      { scrollTop: $("#invoiceSection").offset().top - 20 },
-      400
-    );
+  $("#invoiceBtn").on("click", function () {
+    location = "./invoice.html"
+    recalcInvoice();
+  });
+  $("#btnbacktospc").on("click", function () {
+    location = "./new.html"
     recalcInvoice();
   });
 

@@ -401,31 +401,42 @@ const historyData = [
 
   // ================= NEW 10 DENTAL PROCEDURES ==================
   ...dentalRecords.map((record) => {
+    // Extract Tooth Number using a Regular Expression
+    const toothMatch = record.observations.match(/tooth #(\d+)/i);
+    const toothNumber = toothMatch ? toothMatch[1] : "N/A";
+
+    // Map Procedures to HTML, calculating final cost but displaying only the result
     const procedureList = record.procedures
-      .map(
-        (p) => `
+      .map((p) => {
+        // Calculate the discounted price
+        const finalPrice = p.price * p.quantity * (1 - p.discount / 100);
+        const status = p.status || "N/A";
+
+        // Output format excludes original price and discount percentage
+        return `
           <li class="text-sm">
-            <b class="text-sm">${p.name}</b>  
-            (Qty: ${p.quantity}, Price: ₹${p.price}, Discount: ${p.discount}%,  
-            Status: <span class="text-primary">${p.status}</span>)
-          </li>`
-      )
+            <b class="text-sm">${p.name}</b>  
+            (Qty: ${p.quantity}, <b class="text-danger">Total Cost: ₹${finalPrice}</b>,  
+            Status: <span class="text-primary">${status}</span>)
+          </li>`;
+      })
       .join("");
 
     return {
       type: "dental",
-      date: "2025-11-22",
+      date: record.date, // Use actual record date
       icon: "fas fa-tooth text-muted",
       title: "Dental Procedure",
       html: `<div class="mt-2">
-            <p class="mb-1 text-sm"><b>Chief Complaints:</b> ${record.chiefComplaints}</p>
-            <p class="mb-1 text-sm"><b>Observations:</b> ${record.observations}</p>
-            <p class="mb-1 text-sm"><b>Medical History:</b> ${record.medicalHistory}</p>
-            <p class="mb-1 text-sm"><b>Advice:</b> ${record.advice}</p>
+                <p class="mb-1 text-sm"><b>Tooth Number:</b> ${toothNumber}</p> 
+                <p class="mb-1 text-sm"><b>Chief Complaints:</b> ${record.chiefComplaints}</p>
+                <p class="mb-1 text-sm"><b>Observations:</b> ${record.observations}</p>
+                <p class="mb-1 text-sm"><b>Medical History:</b> ${record.medicalHistory}</p>
+                <p class="mb-1 text-sm"><b>Advice:</b> ${record.advice}</p>
 
-            <p class="mb-1  text-sm"><b>Procedures:</b></p>
-            <ul class="small mb-1">${procedureList}</ul>
-          </div>`,
+                <p class="mb-1 text-sm"><b>Procedures:</b></p>
+                <ul class="small mb-1">${procedureList}</ul>
+              </div>`,
     };
   }),
 ];
