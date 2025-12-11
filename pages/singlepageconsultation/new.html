@@ -961,7 +961,7 @@
                               Sr No.
                             </th>
                             <th class="text-custom col-proc">Procedure</th>
-                            <th class="text-custom col-proc">Instruction </th>
+                            <th class="text-custom col-proc">Instruction</th>
                             <th class="text-custom col-fixed">Qty</th>
                             <th class="text-custom col-fixed">Price</th>
                             <th class="text-custom col-fixed">Disc (%)</th>
@@ -1173,77 +1173,6 @@
                       </div>
 
                       <div class="px-5 py-3">
-                        <div class="row">
-                          <div class="col-12 text-center p-4">
-                            <h6 class="text-custom fw-bold mb-3">
-                              Mark Affected Surfaces
-                            </h6>
-
-                            <div class="tooth-map-container mx-auto">
-                              <small
-                                class="text-muted"
-                                style="
-                                  position: absolute;
-                                  top: -25px;
-                                  left: 50%;
-                                  transform: translateX(-50%);
-                                  font-size: 10px;
-                                "
-                                >BUCCAL (Cheek)</small
-                              >
-
-                              <div
-                                class="surface buccal"
-                                data-surface="Buccal"
-                                title="Buccal"
-                              ></div>
-                              <div
-                                class="surface mesial"
-                                data-surface="Mesial"
-                                title="Mesial"
-                              ></div>
-                              <div
-                                class="surface occlusal"
-                                data-surface="Occlusal"
-                                title="Occlusal"
-                              ></div>
-                              <div
-                                class="surface distal"
-                                data-surface="Distal"
-                                title="Distal"
-                              ></div>
-                              <div
-                                class="surface lingual"
-                                data-surface="Lingual"
-                                title="Lingual"
-                              ></div>
-
-                              <small
-                                class="text-muted"
-                                style="
-                                  position: absolute;
-                                  bottom: -25px;
-                                  left: 50%;
-                                  transform: translateX(-50%);
-                                  font-size: 10px;
-                                "
-                                >LINGUAL (Tongue)</small
-                              >
-                            </div>
-
-                            <div class="mt-4">
-                              <p class="small text-muted mb-1">
-                                Marked Surfaces:
-                              </p>
-                              <h5
-                                id="selectedSurfacesText"
-                                class="text-danger fw-bold"
-                              >
-                                —
-                              </h5>
-                            </div>
-                          </div>
-                        </div>
                         <div
                           class="w-50 py-2 quick-badges d-flex gap-1 flex-wrap justify-content-start align-items-center"
                         >
@@ -1259,52 +1188,119 @@
                             <option value="X-Ray">Template 3</option>
                           </select>
                         </div>
-                        <div class="row">
+                        <div class="row py-3">
                           <div class="col-md-6 col-lg-6">
-                            <div class="form-group">
+                            <div class="row border rounded">
+                              <div class="col-12 text-center p-4">
+                                <h6 class="text-custom fw-bold mb-3">
+                                  Mark Affected Surfaces
+                                </h6>
+
+                                <div class="tooth-map-container mx-auto">
+                                  <small
+                                    class="text-muted"
+                                    style="
+                                      position: absolute;
+                                      top: -25px;
+                                      left: 50%;
+                                      transform: translateX(-50%);
+                                      font-size: 10px;
+                                    "
+                                    >BUCCAL (Cheek)</small
+                                  >
+
+                                  <div
+                                    class="surface buccal"
+                                    data-surface="Buccal"
+                                    title="Buccal"
+                                  ></div>
+                                  <div
+                                    class="surface mesial"
+                                    data-surface="Mesial"
+                                    title="Mesial"
+                                  ></div>
+                                  <div
+                                    class="surface occlusal"
+                                    data-surface="Occlusal"
+                                    title="Occlusal"
+                                  ></div>
+                                  <div
+                                    class="surface distal"
+                                    data-surface="Distal"
+                                    title="Distal"
+                                  ></div>
+                                  <div
+                                    class="surface lingual"
+                                    data-surface="Lingual"
+                                    title="Lingual"
+                                  ></div>
+
+                                  <small
+                                    class="text-muted"
+                                    style="
+                                      position: absolute;
+                                      bottom: -25px;
+                                      left: 50%;
+                                      transform: translateX(-50%);
+                                      font-size: 10px;
+                                    "
+                                    >LINGUAL (Tongue)</small
+                                  >
+                                </div>
+
+                                <div class="mt-4">
+                                  <p class="small text-muted mb-1">
+                                    Marked Surfaces:
+                                  </p>
+                                  <h5
+                                    id="selectedSurfacesText"
+                                    class="text-danger fw-bold"
+                                  >
+                                    —
+                                  </h5>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-6 col-lg-6 gap-2">
+                            <div class="">
                               <label class="fw-medium text-custom"
                                 >Cheif complaints</label
                               >
                               <textarea
                                 class="form-control rounded-4"
                                 id="dentalNotes"
-                                rows="2"
+                                rows="1"
                               ></textarea>
                             </div>
-                          </div>
-                          <div class="col-md-6 col-lg-6">
-                            <div class="form-group">
+                            <div class="">
                               <label class="fw-medium text-custom"
                                 >Observations</label
                               >
                               <textarea
                                 class="form-control rounded-4"
                                 id="dentalNotes"
-                                rows="2"
+                                rows="1"
                               ></textarea>
                             </div>
-                          </div>
-                          <div class="col-md-6 col-lg-6">
-                            <div class="form-group">
+                            <div class="">
                               <label class="fw-medium text-custom"
                                 >Medical history</label
                               >
                               <textarea
                                 class="form-control rounded-4"
                                 id="dentalNotes"
-                                rows="2"
+                                rows="1"
                               ></textarea>
                             </div>
-                          </div>
-                          <div class="col-md-6 col-lg-6">
-                            <div class="form-group">
+                            <div class="">
                               <label class="fw-medium text-custom"
                                 >Advice</label
                               >
                               <textarea
                                 class="form-control rounded-4"
                                 id="dentalNotes"
-                                rows="2"
+                                rows="1"
                               ></textarea>
                             </div>
                           </div>
@@ -1679,7 +1675,6 @@
                   </div>
                 </div>
               </section>
-              
             </div>
           </main>
         </div>
