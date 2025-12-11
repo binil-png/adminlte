@@ -32,12 +32,12 @@ function generateVitals() {
   };
 }
 
-const vitalsHistory = Array.from({ length: 2 }).map((_, i) => {
+const vitalsHistory = Array.from({ length: 5 }).map((_, i) => {
   const v = generateVitals();
 
   return {
     type: "vitals",
-    date: `2025-12-${String(1 + i).padStart(2, "0")}`,
+    date: `${String(1 + i).padStart(2, "0")}/12/2025`,
     title: "Vitals Recorded",
     icon: "fa fa-stethoscope text-success",
     trendData: {

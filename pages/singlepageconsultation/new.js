@@ -42,7 +42,6 @@ $(function () {
       renderVitalsTable(container, vitalsData);
       container.append('<hr class="my-4">');
     }
-    attachVitalsHoverEvents()
     renderOtherHistory(container, otherHistoryData);
   }
 

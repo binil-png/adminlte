@@ -154,20 +154,20 @@ function renderVitalsTrendCharts(containerElement, graphData) {
     return;
   }
   const metricDefinitions = {
-    temperature: { title: "Temperature Trend", unit: " °C", color: "#ffc107" },
-    weight: { title: "Weight Trend", unit: " kg", color: "#17a2b8" },
+    temperature: { title: "Temperature", unit: " °C", color: "#ffc107" },
+    weight: { title: "Weight", unit: " kg", color: "#17a2b8" },
     bloodSugar: {
-      title: "Blood Sugar Trend",
+      title: "Blood Sugar",
       unit: " mg/dL",
       color: "#dc3545",
     },
     bp: {
-      title: "BP Trend (Systolic/Diastolic)",
+      title: "BP (Systolic/Diastolic)",
       unit: " mmHg",
       color: "#007bff",
     },
     cholesterol: {
-      title: "Cholesterol Trend",
+      title: "Cholesterol",
       unit: " mg/dL",
       color: "#28a745",
     },
@@ -325,218 +325,12 @@ function formatDateGroupLabel(dateStr) {
   return dateStr.split("-").reverse().join("-"); // dd-mm-yyyy
 }
 
-function attachVitalsHoverEvents() {
-  // We are now targeting the main vitals card wrapper (.filter-item)
-  const $vitalsItems = $('.filter-item[data-type="vitals"]');
-
-  // Define properties for each metric, crucial for creating separate graphs
-  const metricDefinitions = {
-    // ID must match the key in graphData
-    temperature: {
-      title: "Temperature Trend",
-      unit: " °C",
-      color: "#ffc107", // Yellow
-    },
-    weight: {
-      title: "Weight Trend",
-      unit: " kg",
-      color: "#17a2b8", // Cyan
-    },
-    bloodSugar: {
-      title: "Blood Sugar Trend",
-      unit: " mg/dL",
-      color: "#dc3545", // Red
-    },
-    bp: {
-      title: "BP Trend (Systolic/Diastolic)",
-      unit: " mmHg",
-      color: "#007bff", // Blue
-    },
-    cholesterol: {
-      title: "Cholesterol Trend",
-      unit: " mg/dL",
-      color: "#28a745", // Green
-    },
-  };
-
-  $vitalsItems.on({
-    // 1. Mouse Enter (Show FIVE Separate Graphs)
-    mouseenter: function () {
-      const $this = $(this);
-
-      try {
-        // MOCK DATA: Using hardcoded data
-        const graphData = $vitalsItems.first().data("graph-record");
-        const cardOffset = $this.offset();
-        const cardWidth = $this.outerWidth();
-        const chartSpacing = 10;
-        let currentLeft = cardOffset.left + cardWidth + chartSpacing;
-        $("body").find(".vitals-popover-single").remove();
-        Object.keys(metricDefinitions).forEach((key, index) => {
-          const def = metricDefinitions[key];
-          const data = graphData[key];
-          let seriesConfig = [];
-
-          // --- Handle Multi-Series Data (BP & Cholesterol) ---
-          if (key === "bp") {
-            const systolicData = data.map((point) => point[0]);
-            const diastolicData = data.map((point) => point[1]);
-            seriesConfig.push(
-              {
-                name: "Systolic",
-                data: systolicData,
-                color: def.color,
-                type: "line",
-                dashStyle: "Solid",
-              },
-              {
-                name: "Diastolic",
-                data: diastolicData,
-                color: def.color,
-                type: "line",
-                dashStyle: "Dot",
-              }
-            );
-          } else if (key === "cholesterol") {
-            const totalData = data.map((point) => point[0]);
-            const ldlData = data.map((point) => point[1]);
-            const hdlData = data.map((point) => point[2]);
-            seriesConfig.push(
-              {
-                name: "Total",
-                data: totalData,
-                color: "#28a745",
-                type: "line",
-                dashStyle: "Solid",
-              },
-              {
-                name: "LDL",
-                data: ldlData,
-                color: "#dc3545",
-                type: "line",
-                dashStyle: "Dash",
-              },
-              {
-                name: "HDL",
-                data: hdlData,
-                color: "#007bff",
-                type: "line",
-                dashStyle: "Dot",
-              }
-            );
-          } else {
-            seriesConfig.push({
-              name: def.title.replace(" Trend", ""),
-              data: data,
-              color: def.color,
-            });
-          }
-          const popoverId = "vitals-popover-single-" + key;
-          const $popover = $(
-            `<div id="${popoverId}" class="vitals-popover-single"></div>`
-          );
-          const chartWidth = 250;
-          const chartHeight = 200;
-
-          $popover.css({
-            position: "absolute",
-            top: cardOffset.top, // Align with the top of the card
-            left: currentLeft, // Position next to the previous chart/card
-            zIndex: 1000,
-            width: chartWidth + "px",
-            height: chartHeight + "px",
-            backgroundColor: "#fff",
-            border: "1px solid " + def.color, // Use metric color for border
-            boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
-            padding: "10px",
-          });
-
-          $("body").append($popover);
-          currentLeft += chartWidth + chartSpacing;
-          Highcharts.chart($popover[0], {
-            chart: {
-              type: "line",
-              margin: [40, 10, 30, 40],
-              height: chartHeight - 20,
-              width: chartWidth - 20,
-              backgroundColor: null,
-            },
-
-            title: {
-              text: def.title,
-              align: "center",
-              style: {
-                fontSize: "11px",
-                fontWeight: "bold",
-                color: def.color,
-              },
-              y: 10,
-            },
-
-            credits: { enabled: false },
-            yAxis: {
-              title: {
-                text: def.unit.trim(),
-                style: { color: def.color, fontSize: "9px" },
-              },
-              labels: {
-                format: `{value}${def.unit}`,
-                style: { color: def.color, fontSize: "9px" },
-              },
-              visible: true,
-              opposite: false,
-            },
-            xAxis: {
-              visible: true,
-              labels: { enabled: false },
-              gridLineWidth: 0,
-            },
-            legend: {
-              enabled: key === "bp" || key === "cholesterol",
-              align: "center",
-              verticalAlign: "top",
-              layout: "horizontal",
-              y: 20,
-              itemStyle: { fontSize: "9px" },
-            },
-
-            tooltip: {
-              enabled: true,
-              shared: false,
-              formatter: function () {
-                return `<b>${this.series.name}:</b> ${this.y} ${def.unit}`;
-              },
-            },
-
-            plotOptions: {
-              series: {
-                marker: { enabled: true, radius: 2 },
-                lineWidth: 1.5,
-                enableMouseTracking: true,
-              },
-            },
-            series: seriesConfig,
-          });
-        });
-      } catch (e) {
-        console.error("Error creating separate vital charts:", e);
-        $("body").find(".vitals-popover-single").remove();
-      }
-    },
-    mouseleave: function () {
-      $("body").find(".vitals-popover-single").remove();
-    },
-  });
-}
-
 function renderInlineSparkline(containerId, data, color, unit) {
-  if (!data || data.length === 0) return;
+  if (!data || data.length === 0) return; // Use a minimal, fixed height/width for sparklines
 
-  // Use a minimal, fixed height/width for sparklines
   const sparklineHeight = 30;
-  const sparklineWidth = 80;
+  const sparklineWidth = 80; // Ensure data is flat (not nested arrays like BP/Cholesterol)
 
-  // Ensure data is flat (not nested arrays like BP/Cholesterol)
   const flatData = Array.isArray(data[0])
     ? data.map((point) => point[0])
     : data;
@@ -572,8 +366,7 @@ function renderInlineSparkline(containerId, data, color, unit) {
       enabled: true, // Keep tooltip for detail on hover
       headerFormat: "", // Hide header
       pointFormat: `{point.y}${unit}`, // Show only value + unit
-      valueDecimals: 1,
-      // Position the tooltip to prevent disruption
+      valueDecimals: 1, // Position the tooltip to prevent disruption
       positioner: function (w, h, point) {
         return { x: point.plotX + 10, y: point.plotY - 10 };
       },
@@ -605,9 +398,8 @@ function renderMultiSeriesSparkline(containerId, data, definitions) {
   const unit = definitions.unit;
 
   let seriesConfig = [];
-  let tooltipFormat = "";
+  let tooltipFormat = ""; // BP: Systolic (0) and Diastolic (1)
 
-  // BP: Systolic (0) and Diastolic (1)
   if (containerId.includes("bp")) {
     seriesConfig.push(
       {
@@ -624,8 +416,7 @@ function renderMultiSeriesSparkline(containerId, data, definitions) {
       }
     );
     tooltipFormat = "<b>S:</b> {point.y:.0f} | <b>D:</b> {point.y:.0f}";
-  }
-  // Cholesterol: Total (0), LDL (1), HDL (2)
+  } // Cholesterol: Total (0), LDL (1), HDL (2)
   else if (containerId.includes("cholesterol")) {
     seriesConfig.push(
       {
@@ -700,15 +491,12 @@ function renderMultiSeriesSparkline(containerId, data, definitions) {
   });
 }
 
-// --- MODIFIED renderVitalsTable ---
 function renderVitalsTable(container, vitals) {
   const consolidatedVitals = vitals.map((item) => {
     const v = item.vitalData;
-    const time = "";
-
     return {
       date: item.date,
-      time: time,
+      time: "", // Assuming time is not strictly needed for this pivot view
       Temperature: v.temperature,
       Height: v.height,
       Weight: v.weight,
@@ -722,105 +510,115 @@ function renderVitalsTable(container, vitals) {
     };
   });
 
-  const tableData = consolidatedVitals.sort(
+  // 1. Sort the data by date (most recent first)
+  const sortedData = consolidatedVitals.sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
   );
 
-  let tableRows = "";
-  const metricOrder = [
-    "Temperature",
-    "Height",
-    "Weight",
-    "Sugar",
-    "Cholesterol",
-    "BP",
-    "Pulse",
-    "SpO2",
-    "Respiratory Rate",
-  ];
+  // 2. Define Metrics and Mapping for display/rendering
   const metricDefinitions = {
-    Temperature: { unit: " °C", color: "#ffc107" },
-    Weight: { unit: " kg", color: "#17a2b8" },
-    "Blood Sugar": { unit: " mg/dL", color: "#dc3545" }, // Note: Mapped to "Sugar" key
-    Sugar: { unit: " mg/dL", color: "#dc3545" },
-    Cholesterol: { unit: " mg/dL", color: "#28a745" },
-    BP: { unit: " mmHg", color: "#007bff" },
-    Pulse: { unit: " bpm", color: "#f8684d" },
-    SpO2: { unit: " %", color: "#00bfa5" },
-    "Respiratory Rate": { unit: " /min", color: "#546e7a" },
-    Height: { unit: " m", color: "#9933cc" },
+    Temperature: {
+      unit: " °C",
+      color: "#ffc107",
+      key: "temperature",
+      header: "Temp °C",
+    },
+    Height: { unit: " m", color: "#9933cc", key: "height", header: "Height m" },
+    Weight: {
+      unit: " kg",
+      color: "#17a2b8",
+      key: "weight",
+      header: "Weight kg",
+    },
+    Sugar: {
+      unit: " mg/dL",
+      color: "#dc3545",
+      key: "bloodSugar",
+      header: "Sugar",
+    },
+    Cholesterol: {
+      unit: " mg/dL",
+      color: "#28a745",
+      key: "cholesterol",
+      header: "Chol.",
+    },
+    BP: { unit: " mmHg", color: "#007bff", key: "bp", header: "BP" },
+    Pulse: { unit: " bpm", color: "#f8684d", key: "pulse", header: "Pulse" },
+    SpO2: { unit: " %", color: "#00bfa5", key: "spo2", header: "SpO2" },
+    "Respiratory Rate": {
+      unit: " /min",
+      color: "#546e7a",
+      key: "respiratoryrate",
+      header: "RR",
+    },
   };
-  const totalColumns = metricOrder.length + 1;
+  const metricOrder = Object.keys(metricDefinitions);
 
-  // We only need the latest trend data, which is associated with the latest record (tableData[0])
-  const latestTrendData = tableData.length > 0 ? tableData[0].trendData : {};
+  if (sortedData.length === 0) {
+    // Handle no data case
+    const noDataHtml = `<h6 class="fw-bold small text-custom mt-3">Vitals History Summary</h6>
+                            <div class="rounded-2 bg-white mb-2 shadow-sm filter-item p-2">
+                                <p class="text-center text-muted mb-0">No Vitals Records Found.</p>
+                            </div>`;
+    if (container && container.append) {
+      container.append(noDataHtml);
+    }
+    return;
+  }
 
-  tableData.forEach((record, rowIndex) => {
-    let rowData = "";
-    rowData += `
-                <td class="small text-muted text-nowrap">
-                    <span class="fw-semibold">${formatDateGroupLabel(
-                      record.date
-                    )}</span>
-                    <div class="text-xs">${record.time}</div>
-                </td>
-            `;
+  // 3. Generate Table Headers (Dates)
+  const dateHeaders = sortedData
+    .map(
+      (record) => `
+        <th scope="col" class="text-center text-nowrap">
+            ${formatDateGroupLabel(record.date)}
+        </th>
+    `
+    )
+    .join("");
 
-    metricOrder.forEach((metricKey) => {
+  const totalColumns = 1 + sortedData.length + 1;
+  let tableRows = "";
+  const latestTrendData = sortedData[0].trendData;
+
+  metricOrder.forEach((metricKey) => {
+    const def = metricDefinitions[metricKey];
+    const metricDataKey = def.key;
+    let rowData = `<th scope="row" class="text-start text-custom fw-semibold text-nowrap">${def.header}</th>`;
+    sortedData.forEach((record, dateIndex) => {
       const value = String(record[metricKey] || "-").trim();
-      const metricKeyForData =
-        metricKey === "Sugar"
-          ? "bloodSugar"
-          : metricKey.toLowerCase().replace(/ /g, "");
-      const def = metricDefinitions[metricKey];
-      const dataExists =
-        latestTrendData[metricKeyForData] &&
-        latestTrendData[metricKeyForData].length > 0;
-
-      let chartDiv = "";
-      // Only add the chart container to the latest row (rowIndex === 0)
-      if (rowIndex === 0 && dataExists) {
-        chartDiv = `<div id="sparkline-${metricKeyForData}" 
-                                   style="display: inline-block; vertical-align: middle;"></div>`;
-      }
-
-      rowData += `<td class="text-center fw-medium text-nowrap">
-                            ${value} 
-                            ${chartDiv}
-                        </td>`;
+      rowData += `<td class="text-center fw-medium text-nowrap">${value}</td>`;
     });
-    tableRows += `<tr>${rowData}</tr>`;
-  });
+    const dataExists =
+      latestTrendData[metricDataKey] &&
+      latestTrendData[metricDataKey].length > 0;
+    let trendCell = `<td class="text-center"></td>`;
 
-  // Removed graphDataAttr and the separate Vitals Trend Graphs section
-  // because the charts are now embedded.
+    if (dataExists) {
+      const chartDiv = `<div id="sparkline-${metricDataKey}" 
+                                   style="display: inline-block; vertical-align: middle;"></div>`;
+      trendCell = `<td class="text-center">${chartDiv}</td>`;
+    }
+
+    tableRows += `<tr>${rowData}${trendCell}</tr>`;
+  });
   const vitalsTableHtml = `
-        <h6 class="fw-bold small text-custom mt-3">Vitals History Summary</h6>
+        <h6 class="fw-bold small text-custom mt-3">Vitals History (Date Columns)</h6>
         <div class="rounded-2 bg-white mb-2 shadow-sm filter-item" 
              data-type="vitals" 
-             id="vitals-summary-table">
+             id="vitals-summary-table-pivot">
             <div class="card-body p-2">
-                <div class="table-responsive">
-                    <table class="table table-sm table-striped mb-0 small">
+                <div class="table-responsive rounded">
+                    <table class="table rounded table-sm table-striped mb-0 small">
                         <thead>
                             <tr class="text-custom">
-                                <th scope="col" class="text-start">Date</th>
-                                <th scope="col" class="text-center">Temp °C</th>
-                                <th scope="col" class="text-center">Height m</th>
-                                <th scope="col" class="text-center">Weight kg</th>
-                                <th scope="col" class="text-center">Sugar </th>
-                                <th scope="col" class="text-center">Chol.</th>
-                                <th scope="col" class="text-center">BP</th>
-                                <th scope="col" class="text-center">Pulse</th>
-                                <th scope="col" class="text-center">SpO2</th>
-                                <th scope="col" class="text-center">RR</th>
+                                <th scope="col" class="text-start">Metric</th>
+                                ${dateHeaders}
+                                <th scope="col" class="text-center"></th>
                             </tr>
                         </thead>
                         <tbody>
-                            ${
-                              tableRows ||
-                              `<tr><td colspan="${totalColumns}" class="text-center text-muted">No Vitals Records Found.</td></tr>`
-                            }
+                            ${tableRows}
                         </tbody>
                     </table>
                 </div>
@@ -828,34 +626,27 @@ function renderVitalsTable(container, vitals) {
         </div>
     `;
 
+  // 6. Append and Render Charts
   if (container && container.append) {
     container.append(vitalsTableHtml);
 
     // --- SPARKLINES RENDERING LOOP ---
-    if (tableData.length > 0) {
-      const trendData = tableData[0].trendData;
+    // Charts use the latestTrendData which corresponds to the first date column.
+    Object.keys(latestTrendData).forEach((key) => {
+      const data = latestTrendData[key];
 
-      Object.keys(trendData).forEach((key) => {
-        const data = trendData[key];
+      // Find the definition for color/unit
+      const def = Object.values(metricDefinitions).find((d) => d.key === key);
+      const containerId = `sparkline-${key}`;
 
-        // Map the data key back to the metric definitions for unit/color
-        let defKey = key;
-        if (key === "bloodSugar") defKey = "Sugar";
-
-        const def =
-          metricDefinitions[defKey.charAt(0).toUpperCase() + defKey.slice(1)];
-        const containerId = `sparkline-${key}`;
-
-        if (data && data.length > 0 && def) {
-          if (key === "bp" || key === "cholesterol") {
-            renderMultiSeriesSparkline(containerId, data, def);
-          } else {
-            renderInlineSparkline(containerId, data, def.color, def.unit);
-          }
+      if (data && data.length > 0 && def) {
+        if (key === "bp" || key === "cholesterol") {
+          renderMultiSeriesSparkline(containerId, data, def);
+        } else {
+          renderInlineSparkline(containerId, data, def.color, def.unit);
         }
-      });
-    }
-    // Removed attachVitalsHoverEvents()
+      }
+    });
   } else {
     console.error("Container element is invalid or missing 'append' method.");
   }
