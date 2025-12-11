@@ -15,17 +15,17 @@ const mockPatient = {
 
 function generateVitals() {
   return {
-    temperature: (97 + Math.random() * 3).toFixed(1) + "°F",
-    height: (1.5 + Math.random() * 0.35).toFixed(2) + " m",
-    weight: (50 + Math.random() * 35).toFixed(1) + " kg",
+    temperature: (40 + Math.random() * 3).toFixed(1) + "",
+    height: (1.5 + Math.random() * 0.35).toFixed(2) + " ",
+    weight: (50 + Math.random() * 35).toFixed(1) + "",
     bp: `${100 + Math.floor(Math.random() * 30)}/${
       70 + Math.floor(Math.random() * 20)
-    } mmHg`,
-    glucose: 80 + Math.floor(Math.random() * 70) + " mg/dL",
-    pulse: 60 + Math.floor(Math.random() * 40) + " bpm",
-    cholesterol: 150 + Math.floor(Math.random() * 100) + " mg/dL",
-    spo2: 94 + Math.floor(Math.random() * 5) + "%",
-    respiration: 12 + Math.floor(Math.random() * 10) + " breaths/min",
+    }`,
+    glucose: 80 + Math.floor(Math.random() * 70) + "",
+    pulse: 60 + Math.floor(Math.random() * 40) + "",
+    cholesterol: 150 + Math.floor(Math.random() * 100) + "",
+    spo2: 94 + Math.floor(Math.random() * 5) + "",
+    respiration: 12 + Math.floor(Math.random() * 10) + "",
     allergies: ["None", "Dust", "Pollen", "Peanuts", "Seafood", "Egg", "Latex"][
       Math.floor(Math.random() * 7)
     ],
@@ -40,29 +40,30 @@ const vitalsHistory = Array.from({ length: 2 }).map((_, i) => {
     date: `2025-12-${String(1 + i).padStart(2, "0")}`,
     title: "Vitals Recorded",
     icon: "fa fa-stethoscope text-success",
-    html: `
-      <p class="small mb-1">
-        <b>Temperature:</b> ${v.temperature} |
-        <b>Height:</b> ${v.height} |
-        <b>Weight:</b> ${v.weight}
-      </p>
-      <p class="small mb-1">
-        <b>BP:</b> ${v.bp} |
-        <b>Blood Glucose:</b> ${v.glucose} |
-        <b>Pulse:</b> ${v.pulse}
-      </p>
-      <p class="small mb-1">
-        <b>Cholesterol:</b> ${v.cholesterol} |
-        <b>SPO₂:</b> ${v.spo2} |
-        <b>Respiratory Rate:</b> ${v.respiration}
-      </p>
-      <p class="small mb-1">
-        <b>Allergies:</b> ${v.allergies}
-      </p>
-      <small class="text-muted">
-        ${3 + i}:00 PM • Nurse Station
-      </small>
-    `,
+    trendData: {
+      temperature: [40, 44, 39, 38, 37, 38, 36],
+      weight: [80, 78.9, 77, 74, 70, 69.4, 67],
+      bloodSugar: [95, 98, 92, 105, 110, 100, 99],
+      bp: [
+        [120, 80],
+        [122, 82],
+        [118, 78],
+        [125, 85],
+        [120, 80],
+        [130, 90],
+        [128, 88],
+      ],
+      cholesterol: [
+        [190, 110, 45],
+        [195, 115, 48],
+        [188, 105, 42],
+        [192, 112, 44],
+        [185, 108, 40],
+        [180, 100, 45],
+        [182, 102, 46],
+      ],
+    },
+    vitalData:v,
   };
 });
 

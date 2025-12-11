@@ -26,6 +26,8 @@
     <!-- Theme style -->
     <link rel="stylesheet" href="../../dist/css/adminlte.min.css" />
     <link rel="stylesheet" href="./singlepage.css" />
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
   </head>
   <body class="hold-transition">
     <div class="">
@@ -226,7 +228,7 @@
           <!-- Sidebar -->
           <aside
             id="asideSideBar"
-            class="col-md-2 col-lg-2 border border-top-0 border-bottom-0 p-3 sidebar hide-scrollbar"
+            class="col-md-4 col-lg-4 border border-top-0 border-bottom-0 p-3 sidebar hide-scrollbar"
           >
             <input
               class="form-control mb-3 rounded-4"
@@ -452,7 +454,7 @@
           </aside>
 
           <!-- Main Content -->
-          <main class="col-md-10 col-lg-10 p-0">
+          <main class="col-md-8 col-lg-8 p-0">
             <!-- Patient Header -->
             <div class="card border-0 border-bottom rounded-0 bg-white p-3">
               <div class="d-flex justify-content-between align-items-center">
@@ -510,7 +512,7 @@
             <!-- Accordion Sections -->
             <div
               id="patientAccordion"
-              class="accordion p-5 patient-details hide-scrollbar"
+              class="accordion py-5 px-3 patient-details hide-scrollbar"
             >
               <!-- Vitals -->
               <div class="card mb-2">
@@ -1677,6 +1679,7 @@
                   </div>
                 </div>
               </section>
+              
             </div>
           </main>
         </div>
@@ -1696,5 +1699,6 @@
     <script src="./collapse.js"></script>
     <script src="./preview.js"></script>
     <script src="./invoice.js"></script>
+    <script src="./chart.js"></script>
   </body>
 </html>
