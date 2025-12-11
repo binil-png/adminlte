@@ -529,6 +529,178 @@ function attachVitalsHoverEvents() {
   });
 }
 
+function renderInlineSparkline(containerId, data, color, unit) {
+  if (!data || data.length === 0) return;
+
+  // Use a minimal, fixed height/width for sparklines
+  const sparklineHeight = 30;
+  const sparklineWidth = 80;
+
+  // Ensure data is flat (not nested arrays like BP/Cholesterol)
+  const flatData = Array.isArray(data[0])
+    ? data.map((point) => point[0])
+    : data;
+
+  Highcharts.chart(containerId, {
+    chart: {
+      type: "line",
+      margin: [2, 0, 2, 0], // Minimal margin
+      height: sparklineHeight,
+      width: sparklineWidth,
+      backgroundColor: null,
+      style: { overflow: "visible" },
+    },
+    title: { text: null }, // No title
+    credits: { enabled: false }, // No credits
+    legend: { enabled: false }, // No legend
+    exporting: { enabled: false }, // No exporting button
+
+    xAxis: {
+      visible: false, // Hide X axis
+      labels: { enabled: false },
+      gridLineWidth: 0,
+      lineWidth: 0,
+      tickLength: 0,
+    },
+    yAxis: {
+      visible: false, // Hide Y axis
+      labels: { enabled: false },
+      title: { text: null },
+      gridLineWidth: 0,
+    },
+    tooltip: {
+      enabled: true, // Keep tooltip for detail on hover
+      headerFormat: "", // Hide header
+      pointFormat: `{point.y}${unit}`, // Show only value + unit
+      valueDecimals: 1,
+      // Position the tooltip to prevent disruption
+      positioner: function (w, h, point) {
+        return { x: point.plotX + 10, y: point.plotY - 10 };
+      },
+    },
+    plotOptions: {
+      series: {
+        marker: { enabled: false }, // Hide markers
+        lineWidth: 1, // Thin line
+        enableMouseTracking: true,
+        states: { hover: { lineWidth: 1.5 } },
+      },
+    },
+    series: [
+      {
+        data: flatData,
+        color: color,
+        name: containerId.split("-")[1], // Generic name for tooltip fallback
+        zIndex: 1,
+      },
+    ],
+  });
+}
+
+function renderMultiSeriesSparkline(containerId, data, definitions) {
+  if (!data || data.length === 0) return;
+
+  const sparklineHeight = 30;
+  const sparklineWidth = 80;
+  const unit = definitions.unit;
+
+  let seriesConfig = [];
+  let tooltipFormat = "";
+
+  // BP: Systolic (0) and Diastolic (1)
+  if (containerId.includes("bp")) {
+    seriesConfig.push(
+      {
+        name: "Systolic",
+        data: data.map((point) => point[0]),
+        color: definitions.color,
+        dashStyle: "Solid",
+      },
+      {
+        name: "Diastolic",
+        data: data.map((point) => point[1]),
+        color: "#4d94ff",
+        dashStyle: "Dot",
+      }
+    );
+    tooltipFormat = "<b>S:</b> {point.y:.0f} | <b>D:</b> {point.y:.0f}";
+  }
+  // Cholesterol: Total (0), LDL (1), HDL (2)
+  else if (containerId.includes("cholesterol")) {
+    seriesConfig.push(
+      {
+        name: "Total",
+        data: data.map((point) => point[0]),
+        color: "#28a745",
+        dashStyle: "Solid",
+      },
+      {
+        name: "LDL",
+        data: data.map((point) => point[1]),
+        color: "#dc3545",
+        dashStyle: "Dash",
+      },
+      {
+        name: "HDL",
+        data: data.map((point) => point[2]),
+        color: "#007bff",
+        dashStyle: "Dot",
+      }
+    );
+    tooltipFormat = "<b>{series.name}:</b> {point.y:.0f}";
+  } else {
+    return;
+  }
+
+  Highcharts.chart(containerId, {
+    chart: {
+      type: "line",
+      margin: [2, 0, 2, 0],
+      height: sparklineHeight,
+      width: sparklineWidth,
+      backgroundColor: null,
+      style: { overflow: "visible" },
+    },
+    title: { text: null },
+    credits: { enabled: false },
+    legend: { enabled: false },
+    exporting: { enabled: false },
+    xAxis: {
+      visible: false,
+      labels: { enabled: false },
+      gridLineWidth: 0,
+      lineWidth: 0,
+      tickLength: 0,
+    },
+    yAxis: {
+      visible: false,
+      labels: { enabled: false },
+      title: { text: null },
+      gridLineWidth: 0,
+    },
+    tooltip: {
+      enabled: true,
+      shared: true, // Important for showing all series data
+      headerFormat: '<span style="font-size: 8px">Latest:</span><br/>',
+      pointFormat: tooltipFormat + unit + "<br/>",
+      valueDecimals: 0,
+      positioner: function (w, h, point) {
+        return { x: point.plotX + 10, y: point.plotY - 10 };
+      },
+    },
+    plotOptions: {
+      series: {
+        marker: { enabled: false },
+        lineWidth: 1,
+        enableMouseTracking: true,
+        states: { hover: { lineWidth: 1.5 } },
+      },
+    },
+    series: seriesConfig,
+  });
+}
+
+// --- MODIFIED renderVitalsTable ---
 function renderVitalsTable(container, vitals) {
   const consolidatedVitals = vitals.map((item) => {
     const v = item.vitalData;
@@ -566,9 +738,24 @@ function renderVitalsTable(container, vitals) {
     "SpO2",
     "Respiratory Rate",
   ];
+  const metricDefinitions = {
+    Temperature: { unit: " °C", color: "#ffc107" },
+    Weight: { unit: " kg", color: "#17a2b8" },
+    "Blood Sugar": { unit: " mg/dL", color: "#dc3545" }, // Note: Mapped to "Sugar" key
+    Sugar: { unit: " mg/dL", color: "#dc3545" },
+    Cholesterol: { unit: " mg/dL", color: "#28a745" },
+    BP: { unit: " mmHg", color: "#007bff" },
+    Pulse: { unit: " bpm", color: "#f8684d" },
+    SpO2: { unit: " %", color: "#00bfa5" },
+    "Respiratory Rate": { unit: " /min", color: "#546e7a" },
+    Height: { unit: " m", color: "#9933cc" },
+  };
   const totalColumns = metricOrder.length + 1;
 
-  tableData.forEach((record) => {
+  // We only need the latest trend data, which is associated with the latest record (tableData[0])
+  const latestTrendData = tableData.length > 0 ? tableData[0].trendData : {};
+
+  tableData.forEach((record, rowIndex) => {
     let rowData = "";
     rowData += `
                 <td class="small text-muted text-nowrap">
@@ -578,21 +765,39 @@ function renderVitalsTable(container, vitals) {
                     <div class="text-xs">${record.time}</div>
                 </td>
             `;
+
     metricOrder.forEach((metricKey) => {
       const value = String(record[metricKey] || "-").trim();
-      rowData += `<td class="text-center fw-medium">${value}</td>`;
+      const metricKeyForData =
+        metricKey === "Sugar"
+          ? "bloodSugar"
+          : metricKey.toLowerCase().replace(/ /g, "");
+      const def = metricDefinitions[metricKey];
+      const dataExists =
+        latestTrendData[metricKeyForData] &&
+        latestTrendData[metricKeyForData].length > 0;
+
+      let chartDiv = "";
+      // Only add the chart container to the latest row (rowIndex === 0)
+      if (rowIndex === 0 && dataExists) {
+        chartDiv = `<div id="sparkline-${metricKeyForData}" 
+                                   style="display: inline-block; vertical-align: middle;"></div>`;
+      }
+
+      rowData += `<td class="text-center fw-medium text-nowrap">
+                            ${value} 
+                            ${chartDiv}
+                        </td>`;
     });
     tableRows += `<tr>${rowData}</tr>`;
   });
-  const combinedTrendData = tableData.length > 0 ? tableData[0].trendData : {};
-  const graphDataAttr = `data-graph-record='${JSON.stringify(
-    combinedTrendData
-  )}'`;
+
+  // Removed graphDataAttr and the separate Vitals Trend Graphs section
+  // because the charts are now embedded.
   const vitalsTableHtml = `
         <h6 class="fw-bold small text-custom mt-3">Vitals History Summary</h6>
         <div class="rounded-2 bg-white mb-2 shadow-sm filter-item" 
              data-type="vitals" 
-             ${graphDataAttr} 
              id="vitals-summary-table">
             <div class="card-body p-2">
                 <div class="table-responsive">
@@ -621,15 +826,36 @@ function renderVitalsTable(container, vitals) {
                 </div>
             </div>
         </div>
-        
-        <h6 class="fw-bold small text-custom mt-3">Vitals Trend Graphs</h6>
-        <div id="vitals-trend-charts-container" class="d-flex flex-wrap justify-content-start gap-3">
-        </div>
     `;
 
   if (container && container.append) {
     container.append(vitalsTableHtml);
-    attachVitalsHoverEvents();
+
+    // --- SPARKLINES RENDERING LOOP ---
+    if (tableData.length > 0) {
+      const trendData = tableData[0].trendData;
+
+      Object.keys(trendData).forEach((key) => {
+        const data = trendData[key];
+
+        // Map the data key back to the metric definitions for unit/color
+        let defKey = key;
+        if (key === "bloodSugar") defKey = "Sugar";
+
+        const def =
+          metricDefinitions[defKey.charAt(0).toUpperCase() + defKey.slice(1)];
+        const containerId = `sparkline-${key}`;
+
+        if (data && data.length > 0 && def) {
+          if (key === "bp" || key === "cholesterol") {
+            renderMultiSeriesSparkline(containerId, data, def);
+          } else {
+            renderInlineSparkline(containerId, data, def.color, def.unit);
+          }
+        }
+      });
+    }
+    // Removed attachVitalsHoverEvents()
   } else {
     console.error("Container element is invalid or missing 'append' method.");
   }
