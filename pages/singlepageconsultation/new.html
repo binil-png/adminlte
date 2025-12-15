@@ -291,13 +291,12 @@
             <!-- Date Filter -->
             <div class="mb-3">
               <label class="form-label small text-custom fw-semibold"
-                >Filter by Date</label
+                >Filter by Date (Select Multiple)</label
               >
-              <input
-                type="date"
+              <select
                 id="dateFilter"
-                class="form-control rounded-4"
-              />
+                class="form-control rounded-4 custom-select input-style"
+              ></select>
             </div>
 
             <!-- Content Area -->
@@ -824,7 +823,9 @@
                           ></textarea>
                         </div>
                         <div class="form-group col-md-6">
-                          <label class="fw-medium text-custom">Treatment</label>
+                          <label class="fw-medium text-custom"
+                            >Treatment recommendation</label
+                          >
                           <textarea
                             id="treatment"
                             class="form-control rounded-4"
@@ -833,13 +834,23 @@
                         </div>
                       </div>
 
-                      <div class="form-group">
-                        <label class="fw-medium text-custom">Advice</label>
-                        <textarea
-                          id="advice"
-                          class="form-control rounded-4"
-                          rows="1"
-                        ></textarea>
+                      <div class="form-row">
+                        <div class="form-group col-md-6">
+                          <label class="fw-medium text-custom">Advice</label>
+                          <textarea
+                            id="advice"
+                            class="form-control rounded-4"
+                            rows="1"
+                          ></textarea>
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label class="fw-medium text-custom">Notes</label>
+                          <textarea
+                            id="notes"
+                            class="form-control rounded-4"
+                            rows="1"
+                          ></textarea>
+                        </div>
                       </div>
 
                       <div class="text-right">
@@ -949,35 +960,16 @@
                         </select>
                       </div>
                     </div>
-                    <div class="border rounded-4">
-                      <table
-                        style="border-radius: 10px; overflow: hidden"
-                        class="table table-sm table-borderless"
-                        id="procTable"
-                      >
-                        <thead class="thead-light">
-                          <tr>
-                            <th class="text-custom text-center col-sr">
-                              Sr No.
-                            </th>
-                            <th class="text-custom col-proc">Procedure</th>
-                            <th class="text-custom col-proc">Instruction</th>
-                            <th class="text-custom col-fixed">Qty</th>
-                            <th class="text-custom col-fixed">Price</th>
-                            <th class="text-custom col-fixed">Disc (%)</th>
-                            <th class="text-custom col-status">Status</th>
-                            <th class="text-custom col-fixed">Total</th>
-                            <th class="col-action"></th>
-                          </tr>
-                        </thead>
-
-                        <tbody id="procTable"></tbody>
-                      </table>
+                    <div class="">
+                      <div
+                        id="procContainer"
+                        class="d-flex flex-column gap-2"
+                      ></div>
                     </div>
 
                     <div class="d-flex justify-content-between p-2">
                       <button
-                        id="addProc"
+                        id="addProcedureBtn"
                         class="btn btn-sm text-primary rounded-4"
                       >
                         + Add procedure
@@ -1697,3 +1689,5 @@
     <script src="./chart.js"></script>
   </body>
 </html>
+
+

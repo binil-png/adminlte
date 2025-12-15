@@ -44,21 +44,22 @@ $(function () {
 
         <div class="form-row">
 
-          <div class="form-group col-md-3 m-0">
-            <input class="form-control med-name rounded-4 input-style" placeholder="Medicine Name">
+          <div class="form-group col-md-5 m-0 d-flex">
+            <input class="form-control med-name border-end-0 rounded-end-0 rounded-4 input-style" placeholder="Medicine Name">
+            <input class="form-control med-brand rounded-start-0 rounded-4 input-style" placeholder="Medicine Generic Name">
           </div>
 
-          <div class="form-group col-md-9 row m-0">
-            <div class="form-group col-md-4 d-flex">
-              <input class="form-control dosage-value rounded-start-4 rounded-end-0 border-end-0 input-style" placeholder="Dosage">
+          <div class="form-group col-md-7 row m-0">
+            <div class="form-group col-md-3 d-flex">
+              <input style="width:50px" class="form-control dosage-value rounded-start-4 rounded-end-0 border-end-0 input-style" placeholder="Dosage">
               <select class="form-control dosage-unit custom-select text-center rounded-end-4 rounded-start-0 input-style">
                 <option>mg</option>
                 <option>ml</option>
               </select>
             </div>
 
-            <div class="form-group col-md-4 d-flex">
-              <input class="form-control duration-value rounded-start-4 rounded-end-0 border-end-0 input-style" placeholder="Duration">
+            <div class="form-group col-md-3 d-flex">
+              <input style="width:50px" class="form-control duration-value rounded-start-4 rounded-end-0 border-end-0 input-style" placeholder="Duration">
               <select class="form-control duration-unit custom-select text-center rounded-end-4 rounded-start-0 input-style">
                 <option value="1">Day (s)</option>
                 <option value="2">Week (s)</option>
@@ -66,12 +67,28 @@ $(function () {
               </select>
             </div>
 
-            <div class="form-group col-md-4 d-flex">
-              <input class="form-control freq-value rounded-start-4 rounded-end-0 border-end-0 input-style" placeholder="Frequency">
-              <select class="form-control freq-unit custom-select text-center rounded-end-4 rounded-start-0 input-style">
+            <div class="form-group col-md-3 d-flex">
+              <input style="width:50px" class="form-control freq-value rounded-start-4 rounded-end-0 border-end-0 input-style" placeholder="Frequency">
+              <select class="form-control freq-unit custom-select text-left rounded-end-4 rounded-start-0 input-style">
                 <option value="1">Before food</option>
                 <option value="2">After food</option>
                 <option value="3">None</option>
+              </select>
+            </div>
+
+            <div class="form-group col-md-3 d-flex">
+              <input style="width:80px" class="form-control dispense-value rounded-start-4 rounded-end-0 border-end-0 input-style" placeholder="Dispensing quantity">
+              <select class="form-control dispense-unit custom-select text-center rounded-end-4 rounded-start-0 input-style">
+                  <option value="1">Nos (Number of items/tablets)</option>
+                  <option value="2">Bottle</option>
+                  <option value="3">Strip</option>
+                  <option value="4">Tube</option>
+                  <option value="5">Sachet</option>
+                  <option value="6">Pouch</option>
+                  <option value="7">Can</option>
+                  <option value="8">Pack</option>
+                  <option value="9">Vial</option>
+                  <option value="10">Ampoule</option>
               </select>
             </div>
           </div>
@@ -103,6 +120,7 @@ $(function () {
 
       // Pre-fill values
       if (data.medicine) row.find(".med-name").val(data.medicine);
+      if (data.brand) row.find(".med-brand").val(data.brand);
       if (data.dosage) {
         row.find(".dosage-value").val(data.dosage);
         row.find(".dosage-unit").val(data.dosageUnit);
@@ -114,6 +132,10 @@ $(function () {
       if (data.frequency) {
         row.find(".freq-value").val(data.frequency);
         row.find(".freq-unit").val(data.frequencyUnit);
+      }
+      if (data.frequency) {
+        row.find(".dispense-value").val(data.dispenseValue);
+        row.find(".dispense-unit").val(data.dispenseUnit);
       }
       if (data.instructions) row.find(".instructions").val(data.instructions);
       if (data.usage) row.find(".usage-select").val(data.usage);

@@ -105,17 +105,40 @@ $(function () {
 
   renderHistory();
 
+  function getUniqueDates() {
+        if (typeof historyData === "undefined" || historyData.length === 0) {
+            return [];
+        }
+        const uniqueDates = [...new Set(historyData.map(item => item.date))];
+        return uniqueDates.sort((a, b) => new Date(b) - new Date(a));
+    }
+    function populateDateFilter() {
+        const $select = $("#dateFilter");
+        $select.empty();
+        $select.append(`<option value="all">-- Select All Dates --</option>`);
+        const uniqueDates = getUniqueDates();
+        uniqueDates.forEach(dateString => {
+            const displayLabel = formatDateGroupLabel(dateString);
+            $select.append(`<option value="${dateString}">${displayLabel}</option>`);
+        });
+    }
+    renderHistory();
+    populateDateFilter();
+
   function applyFilters() {
     const activeFilter = $("#chipFilters .active-filter").data("filter");
-    const selectedDate = $("#dateFilter").val();
+    const selectedDates = $("#dateFilter").val() || [];
+    const filterAllDates =
+      selectedDates.includes("all") || selectedDates.length === 0;
 
     $(".filter-item")
       .hide()
       .filter(function () {
         const typeMatch =
           activeFilter === "all" || $(this).data("type") === activeFilter;
-        const dateMatch =
-          !selectedDate || $(this).data("date") === selectedDate;
+
+        const itemDate = $(this).data("date");
+        const dateMatch = filterAllDates || selectedDates.includes(itemDate);
 
         return typeMatch && dateMatch;
       })

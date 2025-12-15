@@ -37,7 +37,7 @@ const vitalsHistory = Array.from({ length: 5 }).map((_, i) => {
 
   return {
     type: "vitals",
-    date: `${String(1 + i).padStart(2, "0")}/12/2025`,
+    date: `${String(1 + i).padStart(2, "0")}/12/25`,
     title: "Vitals Recorded",
     icon: "fa fa-stethoscope text-success",
     trendData: {
@@ -584,94 +584,126 @@ const prescriptionTemplates = {
 };
 
 const prescriptions = [
-  {
-    medicine: "Amoxicillin 500mg",
-    dosage: "1",
-    dosageUnit: "mg",
-    duration: 7,
-    durationUnit: "1", // Days
-    frequency: "1-0-1",
-    frequencyUnit: "2", // After food
-  },
-  {
-    medicine: "Ibuprofen 400mg",
-    dosage: "1",
-    dosageUnit: "mg",
-    duration: 5,
-    durationUnit: "1",
-    frequency: "1-1-1",
-    frequencyUnit: "1", // Before food
-  },
-  {
-    medicine: "Azithromycin 250mg",
-    dosage: "1",
-    dosageUnit: "mg",
-    duration: 3,
-    durationUnit: "1",
-    frequency: "1-0-0",
-    frequencyUnit: "2",
-  },
-  {
-    medicine: "Pantoprazole 40mg",
-    dosage: "1",
-    dosageUnit: "mg",
-    duration: 10,
-    durationUnit: "1",
-    frequency: "0-0-1",
-    frequencyUnit: "1",
-  },
-  {
-    medicine: "Metformin 500mg",
-    dosage: "1",
-    dosageUnit: "mg",
-    duration: 30,
-    durationUnit: "3", // Months
-    frequency: "1-0-1",
-    frequencyUnit: "3", // None
-  },
-  {
-    medicine: "Vitamin D3 60k IU",
-    dosage: "1",
-    dosageUnit: "mg",
-    duration: 8,
-    durationUnit: "2", // Weeks
-    frequency: "0-0-1",
-    frequencyUnit: "2",
-  },
-  {
-    medicine: "Cough Syrup 5ml",
-    dosage: "5",
-    dosageUnit: "ml",
-    duration: 7,
-    durationUnit: "1",
-    frequency: "1-1-1",
-    frequencyUnit: "3",
-  },
-  {
-    medicine: "ORS Solution 200ml",
-    dosage: "200",
-    dosageUnit: "ml",
-    duration: 2,
-    durationUnit: "1",
-    frequency: "2-2-2",
-    frequencyUnit: "3",
-  },
-  {
-    medicine: "Aspirin 75mg",
-    dosage: "1",
-    dosageUnit: "mg",
-    duration: 30,
-    durationUnit: "3",
-    frequency: "1-0-0",
-    frequencyUnit: "2",
-  },
-  {
-    medicine: "Loratadine 10mg",
-    dosage: "10",
-    dosageUnit: "mg",
-    duration: 7,
-    durationUnit: "1",
-    frequency: "0-0-1",
-    frequencyUnit: "3",
-  },
+    {
+        medicine: "Amoxicillin 500mg",
+        brand: "Amoxil", // Example Brand
+        dosage: "1",
+        dosageUnit: "mg",
+        duration: 7,
+        durationUnit: "1", // Days
+        frequency: "1-0-1",
+        frequencyUnit: "2", // After food
+        dispenseValue: 14, // 2 times a day * 7 days = 14 tablets
+        dispenseUnit: "Nos", // Can also be 'Strip' (e.g., 2 strips of 10)
+    },
+    {
+        medicine: "Ibuprofen 400mg",
+        brand: "Advil", // Example Brand
+        dosage: "1",
+        dosageUnit: "mg",
+        duration: 5,
+        durationUnit: "1",
+        frequency: "1-1-1",
+        frequencyUnit: "1", // Before food
+        dispenseValue: 15, // 3 times a day * 5 days = 15 tablets
+        dispenseUnit: "Strip",
+    },
+    {
+        medicine: "Azithromycin 250mg",
+        brand: "Zithromax", // Example Brand
+        dosage: "1",
+        dosageUnit: "mg",
+        duration: 3,
+        durationUnit: "1",
+        frequency: "1-0-0",
+        frequencyUnit: "2",
+        dispenseValue: 3, // 1 time a day * 3 days = 3 tablets (often packaged this way)
+        dispenseUnit: "Nos",
+    },
+    {
+        medicine: "Pantoprazole 40mg",
+        brand: "Protonix", // Example Brand
+        dosage: "1",
+        dosageUnit: "mg",
+        duration: 10,
+        durationUnit: "1",
+        frequency: "0-0-1",
+        frequencyUnit: "1",
+        dispenseValue: 10, // 1 time a day * 10 days = 10 tablets
+        dispenseUnit: "Strip",
+    },
+    {
+        medicine: "Metformin 500mg",
+        brand: "Glucophage", // Example Brand
+        dosage: "1",
+        dosageUnit: "mg",
+        duration: 30,
+        durationUnit: "3", // Months (90 days)
+        frequency: "1-0-1", // 2 times a day
+        frequencyUnit: "3", // None
+        dispenseValue: 180, // 2 times a day * 90 days = 180 tablets
+        dispenseUnit: "Nos",
+    },
+    {
+        medicine: "Vitamin D3 60k IU",
+        brand: "D-Rise", // Example Brand
+        dosage: "1",
+        dosageUnit: "mg",
+        duration: 8,
+        durationUnit: "2", // Weeks (8 capsules for 8 weeks)
+        frequency: "0-0-1", // Assumed once weekly
+        frequencyUnit: "2",
+        dispenseValue: 8,
+        dispenseUnit: "Capsules",
+    },
+    {
+        medicine: "Cough Syrup 5ml",
+        brand: "Ascoril", // Example Brand
+        dosage: "5",
+        dosageUnit: "ml",
+        duration: 7,
+        durationUnit: "1",
+        frequency: "1-1-1", // 3 times a day (total 15ml/day)
+        frequencyUnit: "3",
+        // Total required: 15ml/day * 7 days = 105ml. Dispense a 100ml bottle.
+        dispenseValue: 100, 
+        dispenseUnit: "ml Bottle",
+    },
+    {
+        medicine: "ORS Solution 200ml",
+        brand: "Electral", // Example Brand
+        dosage: "200",
+        dosageUnit: "ml",
+        duration: 2,
+        durationUnit: "1",
+        frequency: "2-2-2", // 6 times a day (total 1200ml/day)
+        frequencyUnit: "3",
+        // Total required: 1200ml/day * 2 days = 2400ml. Dispense 12 sachets (200ml each).
+        dispenseValue: 12,
+        dispenseUnit: "Sachets",
+    },
+    {
+        medicine: "Aspirin 75mg",
+        brand: "Ecosprin", // Example Brand
+        dosage: "1",
+        dosageUnit: "mg",
+        duration: 30,
+        durationUnit: "3", // Months (90 days)
+        frequency: "1-0-0", // 1 time a day
+        frequencyUnit: "2",
+        dispenseValue: 90, // 1 time a day * 90 days = 90 tablets
+        dispenseUnit: "Nos",
+    },
+    {
+        medicine: "Loratadine 10mg",
+        brand: "Claritin", // Example Brand
+        dosage: "10",
+        dosageUnit: "mg",
+        duration: 7,
+        durationUnit: "1",
+        frequency: "0-0-1", // 1 time a day
+        frequencyUnit: "3",
+        dispenseValue: 7, // 1 time a day * 7 days = 7 tablets
+        dispenseUnit: "Strip",
+    },
 ];

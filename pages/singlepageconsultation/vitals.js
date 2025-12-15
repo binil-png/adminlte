@@ -521,35 +521,45 @@ function renderVitalsTable(container, vitals) {
       unit: " °C",
       color: "#ffc107",
       key: "temperature",
-      header: "Temp °C",
+      header: "Temp (°C)",
     },
-    Height: { unit: " m", color: "#9933cc", key: "height", header: "Height m" },
+    Height: {
+      unit: " m",
+      color: "#9933cc",
+      key: "height",
+      header: "Height (m)",
+    },
     Weight: {
       unit: " kg",
       color: "#17a2b8",
       key: "weight",
-      header: "Weight kg",
+      header: "Weight (kg)",
     },
     Sugar: {
       unit: " mg/dL",
       color: "#dc3545",
       key: "bloodSugar",
-      header: "Sugar",
+      header: "Sugar (mg/dL)",
     },
     Cholesterol: {
       unit: " mg/dL",
       color: "#28a745",
       key: "cholesterol",
-      header: "Chol.",
+      header: "Chol. (mg/dL)",
     },
-    BP: { unit: " mmHg", color: "#007bff", key: "bp", header: "BP" },
-    Pulse: { unit: " bpm", color: "#f8684d", key: "pulse", header: "Pulse" },
-    SpO2: { unit: " %", color: "#00bfa5", key: "spo2", header: "SpO2" },
+    BP: { unit: " mmHg", color: "#007bff", key: "bp", header: "BP (mmHg)" },
+    Pulse: {
+      unit: " bpm",
+      color: "#f8684d",
+      key: "pulse",
+      header: "Pulse (bpm)",
+    },
+    SpO2: { unit: " %", color: "#00bfa5", key: "spo2", header: "SpO2 (%)" },
     "Respiratory Rate": {
       unit: " /min",
       color: "#546e7a",
       key: "respiratoryrate",
-      header: "RR",
+      header: "RR (/min)",
     },
   };
   const metricOrder = Object.keys(metricDefinitions);
@@ -609,7 +619,7 @@ function renderVitalsTable(container, vitals) {
              id="vitals-summary-table-pivot">
             <div class="card-body p-2">
                 <div class="table-responsive rounded">
-                    <table class="table rounded table-sm table-striped mb-0 small">
+                    <table class="table rounded table-sm mb-0 small">
                         <thead>
                             <tr class="text-custom">
                                 <th scope="col" class="text-start">Metric</th>
@@ -621,6 +631,24 @@ function renderVitalsTable(container, vitals) {
                             ${tableRows}
                         </tbody>
                     </table>
+                </div>
+                 <div class="d-flex justify-content-end align-items-center pt-2">
+                      <nav aria-label="Page navigation with arrows">
+                          <ul class="pagination pagination-sm m-0">
+                            <li  class="page-item disabled">
+                              <a style="padding:0px 8px;" class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span> 
+                              </a>
+                            </li>
+                            
+                            <li class="page-item"><a style="padding:0px 8px;" class="page-link" href="#">1</a></li>
+                            <li class="page-item">
+                              <a style="padding:0px 8px;" class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                              </a>
+                            </li>
+                          </ul>
+                      </nav>
                 </div>
             </div>
         </div>
