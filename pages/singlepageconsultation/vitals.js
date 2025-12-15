@@ -580,7 +580,7 @@ function renderVitalsTable(container, vitals) {
   const dateHeaders = sortedData
     .map(
       (record) => `
-        <th scope="col" class="text-center text-nowrap">
+        <th scope="col" class="text-start text-nowrap">
             ${formatDateGroupLabel(record.date)}
         </th>
     `
@@ -594,20 +594,20 @@ function renderVitalsTable(container, vitals) {
   metricOrder.forEach((metricKey) => {
     const def = metricDefinitions[metricKey];
     const metricDataKey = def.key;
-    let rowData = `<th scope="row" class="text-start text-custom fw-semibold text-nowrap">${def.header}</th>`;
+    let rowData = `<th scope="row" class="text-custom fw-semibold text-nowrap">${def.header}</th>`;
     sortedData.forEach((record, dateIndex) => {
       const value = String(record[metricKey] || "-").trim();
-      rowData += `<td class="text-center fw-medium text-nowrap">${value}</td>`;
+      rowData += `<td class="text-start fw-medium text-nowrap">${value}</td>`;
     });
     const dataExists =
       latestTrendData[metricDataKey] &&
       latestTrendData[metricDataKey].length > 0;
-    let trendCell = `<td class="text-center"></td>`;
+    let trendCell = `<td></td>`;
 
     if (dataExists) {
       const chartDiv = `<div id="sparkline-${metricDataKey}" 
                                    style="display: inline-block; vertical-align: middle;"></div>`;
-      trendCell = `<td class="text-center">${chartDiv}</td>`;
+      trendCell = `<td>${chartDiv}</td>`;
     }
 
     tableRows += `<tr>${rowData}${trendCell}</tr>`;
@@ -624,7 +624,7 @@ function renderVitalsTable(container, vitals) {
                             <tr class="text-custom">
                                 <th scope="col" class="text-start">Metric</th>
                                 ${dateHeaders}
-                                <th scope="col" class="text-center"></th>
+                                <th scope="col" class=""></th>
                             </tr>
                         </thead>
                         <tbody>

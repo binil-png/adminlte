@@ -43,13 +43,13 @@ $(function () {
         'Show more';
 
       container.append(`
-        <div class="bg-custom rounded-4 proc-box" data-index="${index}">
+             <div class="bg-custom rounded-4 proc-box" data-index="${index}">
             <div class="p-2">
                 <div class="row g-2 align-items-end">
                     <div class="col-6 row">
                       <div class="col-1 text-center pe-0">
                             <label class="form-label small text-muted mb-0 d-none d-md-block">Sr</label>
-                            <span class="d-block mt-1 pt-1 font-weight-bold">${
+                            <span class="d-block mt-1 pt-1">${
                               index + 1
                             }</span>
                       </div>
@@ -92,21 +92,22 @@ $(function () {
                       </div>  
                     </div>
 
-                    <div class="col-1 px-1">
+                 <div class="col-6 row">
+                   <div class="col-3 px-1">
                         <label class="form-label small text-muted mb-0">Qty</label>
                         <input type="number" class="form-control form-control-sm proc-qty rounded-3 input-style proc-field text-center rounded-4" value="${
                           p.qty
                         }">
-                    </div>
+                   </div>
 
-                    <div class="col-1 px-1">
+                    <div class="col-3 px-1">
                         <label class="form-label small text-muted mb-0">Price</label>
                         <input type="number" class="form-control form-control-sm proc-price rounded-3 input-style proc-field rounded-4" value="${
                           p.price
                         }">
                     </div>
                     
-                    <div class="col-1 px-1">
+                    <div class="col-3 px-1">
                         <label class="form-label small text-muted mb-0">Disc</label>
                         <div class="d-flex">
                         <input type="number" class="form-control rounded-4 border-end-0 rounded-end-0 form-control-sm input-style text-center" value="${
@@ -119,22 +120,18 @@ $(function () {
                         </div>
                     </div>
                     
-                    <div class="col-3 ps-1 d-flex align-items-center justify-content-between">
-                        <div>
+                    <div class="col-3 ps-1 d-flex align-items-center justify-content-end">
+                        <div class="text-right">
                         <label class="form-label small text-muted mb-0 d-none d-md-block">Total</label>
-                        <strong class="d-block h6 text-success proc-line-total">₹${lineTotal}</strong>
+                        <strong class="d-block text-sm text-success proc-line-total">₹${lineTotal}</strong>
                         </div>
-                        <div>
-                         <button type="button" class="btn btn-xs btn-link p-0 text-decoration-none btn-toggle-fields text-primary" data-target="#${boxId}">
-                            ${initialButtonHtml}
-                        </button>
-                        </div>
+                    </div>
                     </div>
                 </div>
                 
-                          <div id="${boxId}" class="${initialDisplayClass} mt-2 pt-2 border-top">
-                              <div class="row g-2 mb-3">
-                                <div class="col-3 ms-5">
+                <div id="${boxId}" class="${initialDisplayClass} mt-2 pt-2 border-top">
+                   <div class="row g-2 mb-3 align-items-center">
+                       <div class="col-4">
                                   <label class="form-label small text-muted mb-0">Status</label>
                                   <select
                                     class="form-control form-control-sm custom-select proc-status rounded-3 input-style proc-field rounded-4"
@@ -145,85 +142,63 @@ $(function () {
                                             <option ${p.status === "Planned/Completed" ? "selected" : ""}>Ongoing</option>
                                    
                                   </select>
-                                </div>
+                       </div>
 
-                                <div class="col-2">
-                                  <label class="form-label small text-muted mb-0">Date</label>
+                            <div class="col-4">
+                                  <label class="form-label small text-muted mb-0">Date/Time</label>
                                   <div class="input-group">
                                     <input
                                       type="date"
-                                      class="form-control form-control-sm proc-date rounded-4 input-style proc-field"
+                                      class="form-control form-control-sm proc-date rounded-4 rounded-end-0 input-style proc-field"
                                       placeholder="dd-mm-yyyy"
                                       value=""
                                     />
-                                  </div>
-                                </div>
-
-                                <div class="col-2">
-                                  <label class="form-label small text-muted mb-0">Time</label>
-                                  <div class="input-group">
-                                    <input
+                                      <input
                                       type="time"
-                                      class="form-control form-control-sm proc-time rounded-4 input-style proc-field"
+                                      class="form-control form-control-sm proc-time rounded-0 input-style proc-field"
                                       placeholder="--:--"
                                       value=""
                                     />
-                                   
-                                  </div>
-                                </div>
-
-                                <div class="col-2 d-flex align-items-end">
-                                  <button
+                                      <button
                                     type="button"
-                                    class="btn btn-primary btn-sm rounded-4 w-100"
+                                    class="btn btn-primary btn-sm rounded-4 rounded-start-0"
                                     style="height: calc(1.5em + 0.5rem + 2px)"
                                   >
                                     Fixed
                                   </button>
-                                </div>
-                              </div>
-
-                              <div class="row px-5 g-2">
-                                <div class="col-6">
+                                  </div>
+                      </div>
+                        <div class="col-4">
                                   <label class="form-label small text-muted mb-0">Internal Notes</label>
                                   <textarea
-                                    rows="2"
                                     class="form-control form-control-sm proc-internal-notes rounded-3 input-style proc-field rounded-4"
-                                    placeholder="Add internal notes here..."
-                                  ></textarea>
+                                    placeholder="Add internal notes here..."></textarea>
                                 </div>
-
-                                <div class="col-6">
-                                  <label class="form-label small text-muted mb-0"
-                                    >Patient Instructions</label
-                                  >
+                         </div>
+                              <div class="row g-2">
+                                <div class="col-4">
+                                  <label class="form-label small text-muted mb-0">Patient Instructions</label>
                                   <textarea
-                                    rows="2"
                                     class="form-control form-control-sm proc-patient-instructions rounded-3 input-style proc-field rounded-4"
                                     placeholder="Add patient instructions here..."
-                                  >
-                            ${p.instruction || ""}</textarea
-                                  >
+                                  >${p.instruction || ""}</textarea>
                                 </div>
                               </div>
-                      </div>
-
                 </div>
 
-                <div class="row pt-2 align-items-center">
-                    <div class="col-6">
-                       
-                    </div>
-                    
-                    <div class="col-6 text-end">
-                        <button type="button" class="btn btn-sm text-danger btn-remove-proc rounded-4">
-                            <i style="font-size:.7rem;" class="fas fa-trash me-1"></i> Remove
-                        </button>
-                    </div>
-                </div>
-                
             </div>
-        </div>
+            <div class="row pt-2 align-items-center">
+               <div class="col-6"></div>
+               <div class="col-6 text-end">
+                   <button type="button" class="btn btn-xs p-0 text-decoration-none text-semibold btn-toggle-fields" data-target="#${boxId}">
+                        ${initialButtonHtml}
+                   </button>
+                    <button type="button" class="btn btn-sm text-danger btn-remove-proc rounded-4">
+                        <i style="font-size:.7rem;" class="fas fa-trash me-1"></i>
+                    </button>
+              </div>
+            </div>  
+     </div>
       `);
     });
 

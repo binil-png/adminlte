@@ -265,6 +265,9 @@ const descriptions = {
     "Allergen sensitivity results including IgE levels and reaction severity.",
 };
 
+const notestText = "mb-1"
+const notestStyle = "font-size:.9rem"
+
 const historyData = [
   // ================= NEW 10 VITALS ==================
   ...vitalsHistory,
@@ -277,13 +280,13 @@ const historyData = [
     title: "Clinical Notes",
     icon: "fas fa-notes-medical text-warning",
     html: `
-      <p class="small mb-1"><b>Chief Complaints:</b> Fever, body ache for 2 days</p>
-      <p class="small mb-1"><b>Medical History:</b> No chronic illness</p>
-      <p class="small mb-1"><b>Observations:</b> Mild dehydration, throat congestion</p>
-      <p class="small mb-1"><b>Investigations:</b> CBC, CRP ordered</p>
-      <p class="small mb-1"><b>Diagnosis:</b> Viral Fever</p>
-      <p class="small mb-1"><b>Treatment:</b> Paracetamol, hydration</p>
-      <p class="small mb-1"><b>Advice:</b> Rest, drink fluids</p>
+      <p style="${notestStyle}" class="${notestText}"><b>Chief Complaints:</b> Fever, body ache for 2 days</p>
+      <p style="${notestStyle}" class="${notestText}"><b>Medical History:</b> No chronic illness</p>
+      <p style="${notestStyle}" class="${notestText}"><b>Observations:</b> Mild dehydration, throat congestion</p>
+      <p style="${notestStyle}" class="${notestText}"><b>Investigations:</b> CBC, CRP ordered</p>
+      <p style="${notestStyle}" class="${notestText}"><b>Diagnosis:</b> Viral Fever</p>
+      <p style="${notestStyle}" class="${notestText}"><b>Treatment:</b> Paracetamol, hydration</p>
+      <p style="${notestStyle}" class="${notestText}"><b>Advice:</b> Rest, drink fluids</p>
     `,
   },
   {
@@ -292,13 +295,13 @@ const historyData = [
     title: "Clinical Notes",
     icon: "fas fa-notes-medical text-warning",
     html: `
-      <p class="small mb-1"><b>Chief Complaints:</b> Headache and dizziness</p>
-      <p class="small mb-1"><b>Medical History:</b> Migraines occasionally</p>
-      <p class="small mb-1"><b>Observations:</b> BP slightly elevated</p>
-      <p class="small mb-1"><b>Investigations:</b> BP monitoring</p>
-      <p class="small mb-1"><b>Diagnosis:</b> Migraine Episode</p>
-      <p class="small mb-1"><b>Treatment:</b> Ibuprofen, cold compress</p>
-      <p class="small mb-1"><b>Advice:</b> Avoid stress, rest in dark room</p>
+      <p style="${notestStyle}" class="${notestText}"><b>Chief Complaints:</b> Headache and dizziness</p>
+      <p style="${notestStyle}" class="${notestText}"><b>Medical History:</b> Migraines occasionally</p>
+      <p style="${notestStyle}" class="${notestText}"><b>Observations:</b> BP slightly elevated</p>
+      <p style="${notestStyle}" class="${notestText}"><b>Investigations:</b> BP monitoring</p>
+      <p style="${notestStyle}" class="${notestText}"><b>Diagnosis:</b> Migraine Episode</p>
+      <p style="${notestStyle}" class="${notestText}"><b>Treatment:</b> Ibuprofen, cold compress</p>
+      <p style="${notestStyle}" class="${notestText}"><b>Advice:</b> Avoid stress, rest in dark room</p>
     `,
   },
   {
@@ -307,13 +310,13 @@ const historyData = [
     title: "Clinical Notes",
     icon: "fas fa-notes-medical text-warning",
     html: `
-      <p class="small mb-1"><b>Chief Complaints:</b> Stomach pain and nausea</p>
-      <p class="small mb-1"><b>Medical History:</b> Gastric irritation</p>
-      <p class="small mb-1"><b>Observations:</b> Mild tenderness in abdomen</p>
-      <p class="small mb-1"><b>Investigations:</b> LFT, Ultrasound Abdomen</p>
-      <p class="small mb-1"><b>Diagnosis:</b> Gastritis</p>
-      <p class="small mb-1"><b>Treatment:</b> Pantoprazole, antacids</p>
-      <p class="small mb-1"><b>Advice:</b> Avoid spicy food</p>
+      <p style="${notestStyle}" class="${notestText}"><b>Chief Complaints:</b> Stomach pain and nausea</p>
+      <p style="${notestStyle}" class="${notestText}"><b>Medical History:</b> Gastric irritation</p>
+      <p style="${notestStyle}" class="${notestText}"><b>Observations:</b> Mild tenderness in abdomen</p>
+      <p style="${notestStyle}" class="${notestText}"><b>Investigations:</b> LFT, Ultrasound Abdomen</p>
+      <p style="${notestStyle}" class="${notestText}"><b>Diagnosis:</b> Gastritis</p>
+      <p style="${notestStyle}" class="${notestText}"><b>Treatment:</b> Pantoprazole, antacids</p>
+      <p style="${notestStyle}" class="${notestText}"><b>Advice:</b> Avoid spicy food</p>
     `,
   },
   {
@@ -322,13 +325,13 @@ const historyData = [
     title: "Clinical Notes",
     icon: "fas fa-notes-medical text-warning",
     html: `
-      <p class="small mb-1"><b>Chief Complaints:</b> Cough and cold</p>
-      <p class="small mb-1"><b>Medical History:</b> Allergic rhinitis</p>
-      <p class="small mb-1"><b>Observations:</b> Nasal congestion</p>
-      <p class="small mb-1"><b>Investigations:</b> None</p>
-      <p class="small mb-1"><b>Diagnosis:</b> Upper Respiratory Infection</p>
-      <p class="small mb-1"><b>Treatment:</b> Antihistamines, steam inhalation</p>
-      <p class="small mb-1"><b>Advice:</b> Increase warm fluids</p>
+      <p style="${notestStyle}" class="${notestText}"><b>Chief Complaints:</b> Cough and cold</p>
+      <p style="${notestStyle}" class="${notestText}"><b>Medical History:</b> Allergic rhinitis</p>
+      <p style="${notestStyle}" class="${notestText}"><b>Observations:</b> Nasal congestion</p>
+      <p style="${notestStyle}" class="${notestText}"><b>Investigations:</b> None</p>
+      <p style="${notestStyle}" class="${notestText}"><b>Diagnosis:</b> Upper Respiratory Infection</p>
+      <p style="${notestStyle}" class="${notestText}"><b>Treatment:</b> Antihistamines, steam inhalation</p>
+      <p style="${notestStyle}" class="${notestText}"><b>Advice:</b> Increase warm fluids</p>
     `,
   },
   {
@@ -337,13 +340,13 @@ const historyData = [
     title: "Clinical Notes",
     icon: "fas fa-notes-medical text-warning",
     html: `
-      <p class="small mb-1"><b>Chief Complaints:</b> Back pain</p>
-      <p class="small mb-1"><b>Medical History:</b> Mild disc bulge</p>
-      <p class="small mb-1"><b>Observations:</b> Limited movement</p>
-      <p class="small mb-1"><b>Investigations:</b> X-ray lumbar spine</p>
-      <p class="small mb-1"><b>Diagnosis:</b> Muscular strain</p>
-      <p class="small mb-1"><b>Treatment:</b> Muscle relaxant, hot fomentation</p>
-      <p class="small mb-1"><b>Advice:</b> Avoid heavy lifting</p>
+      <p style="${notestStyle}" class="${notestText}"><b>Chief Complaints:</b> Back pain</p>
+      <p style="${notestStyle}" class="${notestText}"><b>Medical History:</b> Mild disc bulge</p>
+      <p style="${notestStyle}" class="${notestText}"><b>Observations:</b> Limited movement</p>
+      <p style="${notestStyle}" class="${notestText}"><b>Investigations:</b> X-ray lumbar spine</p>
+      <p style="${notestStyle}" class="${notestText}"><b>Diagnosis:</b> Muscular strain</p>
+      <p style="${notestStyle}" class="${notestText}"><b>Treatment:</b> Muscle relaxant, hot fomentation</p>
+      <p style="${notestStyle}" class="${notestText}"><b>Advice:</b> Avoid heavy lifting</p>
     `,
   },
 
@@ -354,9 +357,12 @@ const historyData = [
     title: "Procedure Performed",
     icon: "fas fa-syringe text-info",
     html: `
-      <p class="small mb-1"><b>Procedure:</b> IV Cannula Insertion</p>
-      <p class="small mb-1">Qty: 1 | Price: ₹350 | Discount: 0%</p>
-      <p class="small mb-1">Status: <span class="badge bg-warning text-dark">Planned</span></p>
+          <div class="d-flex justify-content-start ailgn-items-center gap-2">
+             <p class="small mb-1"><b>Procedure:</b> IV Cannula Insertion</p>
+             <p class="small mb-1"><span class="badge bg-warning text-dark">Planned</span></p>
+          </div>
+          <p class="small mb-1"><b>Internal Notes:</b> Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p>
+          <p class="small mb-1"><b>Patient Notes:</b> Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p>
       <small class="text-muted">Requested by Dr. Thomas</small>
     `,
   },
@@ -366,9 +372,12 @@ const historyData = [
     title: "Procedure Performed",
     icon: "fas fa-syringe text-info",
     html: `
-      <p class="small mb-1"><b>Procedure:</b> Nebulization</p>
-      <p class="small mb-1">Qty: 1 | Price: ₹250 | Discount: 10%</p>
-      <p class="small mb-1">Status: <span class="badge bg-success">Completed</span></p>
+         <div class="d-flex justify-content-start ailgn-items-center gap-2">
+            <p class="small mb-1"><b>Procedure:</b> Nebulization</p>
+            <p class="small mb-1"> <span class="badge bg-success">Completed</span></p>
+          </div>
+          <p class="small mb-1"><b>Internal Notes:</b> Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p>
+          <p class="small mb-1"><b>Patient Notes:</b> Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p>
       <small class="text-muted">Nursing Team • Room 102</small>
     `,
   },
@@ -378,9 +387,12 @@ const historyData = [
     title: "Procedure Performed",
     icon: "fas fa-syringe text-info",
     html: `
-      <p class="small mb-1"><b>Procedure:</b> ECG</p>
-      <p class="small mb-1">Qty: 1 | Price: ₹500 | Discount: 5%</p>
-      <p class="small mb-1">Status: <span class="badge bg-secondary">Sent to Radiology</span></p>
+      <div class="d-flex justify-content-start ailgn-items-center gap-2">
+          <p class="small mb-1"><b>Procedure:</b> ECG</p>
+          <p class="small mb-1"> <span class="badge bg-secondary">Sent to Radiology</span></p>
+      </div>
+          <p class="small mb-1"><b>Internal Notes:</b> Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p>
+          <p class="small mb-1"><b>Patient Notes:</b> Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p>
       <small class="text-muted">Radiology Department</small>
     `,
   },
