@@ -29,7 +29,6 @@ $(function () {
     }
     const vitalsData = [];
     const otherHistoryData = [];
-
     historyData.forEach((item) => {
       if (item.type === "vitals") {
         vitalsData.push(item);
@@ -42,6 +41,10 @@ $(function () {
       renderVitalsTable(container, vitalsData);
       container.append('<hr class="my-4">');
     }
+    if (notesList.length > 0) {
+      renderNotesComparisonTable(container, notesList);
+    }
+
     renderOtherHistory(container, otherHistoryData);
   }
 

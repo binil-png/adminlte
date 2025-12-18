@@ -280,8 +280,7 @@ const descriptions = {
 
 const notestText = "mb-1";
 const notestStyle = "font-size:.9rem";
-
-const notestData = [
+const notesList = [
   {
     date: "2025-12-01",
     title: "Clinical Notes 10",
@@ -337,7 +336,8 @@ const notestData = [
     treatment: "Muscle relaxant, hot fomentation",
     advice: "Avoid heavy lifting",
   },
-].map((item) => {
+]
+const notestData = notesList.map((item) => {
   return {
     type: "notes",
     date: item.date,

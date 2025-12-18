@@ -58,8 +58,8 @@ $(function () {
               </select>
             </div>
 
-            <div class="form-group col-md-3 d-flex">
-              <input style="width:50px" class="form-control duration-value rounded-start-4 rounded-end-0 border-end-0 input-style" placeholder="Duration">
+            <div class="form-group col-md-3 d-flex p-0">
+              <input style="width:40px" class="form-control duration-value rounded-start-4 rounded-end-0 border-end-0 input-style" placeholder="Duration">
               <select class="form-control duration-unit custom-select text-center rounded-end-4 rounded-start-0 input-style">
                 <option value="1">Day (s)</option>
                 <option value="2">Week (s)</option>
@@ -67,7 +67,7 @@ $(function () {
               </select>
             </div>
 
-            <div class="form-group col-md-3 d-flex">
+            <div class="form-group col-md-3 d-flex p-0">
               <input style="width:50px" class="form-control freq-value rounded-start-4 rounded-end-0 border-end-0 input-style" placeholder="Frequency">
               <select class="form-control freq-unit custom-select text-left rounded-end-4 rounded-start-0 input-style">
                 <option value="1">Before food</option>

@@ -115,3 +115,54 @@ $(function () {
     renderClinicalChips();
   });
 });
+
+function formatDate(dateStr) {
+  return new Date(dateStr).toLocaleDateString("en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  });
+}
+
+function renderNotesComparisonTable(container, notesData) {
+  const noteFields = [
+    { key: "complaints", label: "Complaints" },
+    { key: "history", label: "History" },
+    { key: "observations", label: "Observations" },
+    { key: "investigations", label: "Investigations" },
+    { key: "diagnosis", label: "Diagnosis" },
+    { key: "treatment", label: "Treatment" },
+    { key: "advice", label: "Advice" },
+  ];
+
+    let table = `
+      <div class="table-responsive rounded-2 bg-white mb-2 shadow-sm filter-item">
+        <table class="table table-bordered table-sm align-middle bg-white mb-0">
+          <thead class="bg-white">
+            <tr>
+              <th style="min-width:60px; font-size:.8rem" class="bg-white">Parameter</th>
+              ${notesData
+                .map((n) => `<th style="font-size:.8rem" class="text-center bg-white">${formatDate(n.date)}</th>`)
+                .join("")}
+            </tr>
+          </thead>
+          <tbody class="bg-white">
+    `;
+
+  noteFields.forEach((field) => {
+    table += `
+      <tr>
+        <th style="min-width:60px; font-size:.8rem" class="fw-semibold">${field.label}</th>
+        ${notesData.map((n) => `<td style="font-size:.8rem">${n[field.key] || "-"}</td>`).join("")}
+      </tr>
+    `;
+  });
+
+  table += `
+        </tbody>
+      </table>
+    </div>
+  `;
+
+  container.append(table);
+}
