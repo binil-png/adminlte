@@ -344,17 +344,38 @@ const notestData = notesList.map((item) => {
     title: item.title,
     icon: "fas fa-notes-medical text-warning",
     html: `
-      <table class="table table-sm">
-        <tbody>
-          <tr><th style="width:100px; font-size:.9rem">Chief Complaints</th><td style="font-size:.9rem">${item.complaints}</td></tr>
-          <tr><th style="width:100px; font-size:.9rem">Medical History</th><td style="font-size:.9rem">${item.history}</td></tr>
-          <tr><th style="width:100px; font-size:.9rem">Observations</th><td style="font-size:.9rem">${item.observations}</td></tr>
-          <tr><th style="width:100px; font-size:.9rem">Investigations</th><td style="font-size:.9rem">${item.investigations}</td></tr>
-          <tr><th style="width:100px; font-size:.9rem">Diagnosis</th><td style="font-size:.9rem">${item.diagnosis}</td></tr>
-          <tr><th style="width:100px; font-size:.9rem">Treatment</th><td style="font-size:.9rem">${item.treatment}</td></tr>
-          <tr><th style="width:100px; font-size:.9rem">Advice</th><td style="font-size:.9rem">${item.advice}</td></tr>
-        </tbody>
-      </table>
+    <table class="table table-sm border-0">
+          <tbody>
+            <tr>
+              <th class="border-0 p-0" style="width:110px; font-size:.8rem">Chief Complaints</th>
+              <td class="border-0 p-0" style="font-size:.9rem">: ${item.complaints}</td>
+            </tr>
+            <tr>
+              <th class="border-0 p-0" style="width:110px; font-size:.8rem">Medical History</th>
+              <td class="border-0 p-0" style="font-size:.9rem">: ${item.history}</td>
+            </tr>
+            <tr>
+              <th class="border-0 p-0" style="width:110px; font-size:.8rem">Observations</th>
+              <td class="border-0 p-0" style="font-size:.9rem">: ${item.observations}</td>
+            </tr>
+            <tr>
+              <th class="border-0 p-0" style="width:110px; font-size:.8rem">Investigations</th>
+              <td class="border-0 p-0" style="font-size:.9rem">: ${item.investigations}</td>
+            </tr>
+            <tr>
+              <th class="border-0 p-0" style="width:110px; font-size:.8rem">Diagnosis</th>
+              <td class="border-0 p-0" style="font-size:.9rem">: ${item.diagnosis}</td>
+            </tr>
+            <tr>
+              <th class="border-0 p-0" style="width:110px; font-size:.8rem">Treatment</th>
+              <td class="border-0 p-0" style="font-size:.9rem">: ${item.treatment}</td>
+            </tr>
+            <tr>
+              <th class="border-0 p-0" style="width:110px; font-size:.8rem">Advice</th>
+              <td class="border-0 p-0" style="font-size:.9rem">: ${item.advice}</td>
+            </tr>
+          </tbody>
+   </table>
     `,
     card: `<p style="font-size:.9rem" class="small mb-1"><b>Chief Complaints:</b> ${item.complaints}</p>
       <p style="font-size:.9rem" class="small mb-1"><b>Medical History:</b> ${item.history}</p>

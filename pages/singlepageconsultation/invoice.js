@@ -67,14 +67,9 @@ $(function () {
     recalcInvoice
   );
 
-  $("#openInvoice").on("click", function () {
-    $("#invoiceSection").toggle();
-    $("html,body").animate(
-      { scrollTop: $("#invoiceSection").offset().top - 20 },
-      400
-    );
-    recalcInvoice();
-  });
+ $("#invoiceBtn").on("click",function (){
+     window.location = "./invoice.html"
+ })
 
   $("#saveInvoice").on("click", function () {
     alert("Invoice saved. Grand Total: ₹" + $("#invGrand").text());

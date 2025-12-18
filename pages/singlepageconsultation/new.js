@@ -42,12 +42,12 @@ $(function () {
       container.append('<hr class="my-4">');
     }
     if (notesList.length > 0) {
-      renderNotesComparisonTable(container, notesList);
+      renderNotesComparisonTable(container, notesList.slice(0, 3));
     }
 
     renderOtherHistory(container, otherHistoryData);
   }
-
+  let clinicalNotesToggle = true;
   function renderOtherHistory(container, historyItems) {
     // Group by date
     const grouped = historyItems.reduce((acc, item) => {
@@ -80,7 +80,11 @@ $(function () {
           : "";
 
         container.append(`
-                <div class="rounded-2 bg-white mb-2 shadow-sm filter-item"
+                <div class="${
+                  item.type == "notes"
+                    ? "rounded-2 bg-white mb-2 shadow-sm filter-item clinical-notes-container"
+                    : "rounded-2 bg-white mb-2 shadow-sm filter-item"
+                }"
                     data-type="${item.type}"
                     data-date="${item.date}"> 
                     <div class="card-body">
@@ -107,29 +111,30 @@ $(function () {
                     </div>
                 </div>
             `);
+
         container
           .off("click", ".toggle-view-btn")
           .on("click", ".toggle-view-btn", function () {
-            const $btn = $(this);
-            const $icon = $btn.find("i");
-            const $container = $btn
-              .closest(".card-body")
-              .find(".content-container");
+            console.log("clicked");
+            // const $btn = $(this);
+            // const $icon = $btn.find("i");
+            const $tableView = $(".clinical-notes-tables");
+            const $cardView = $(".clinical-notes-container");
 
-            const $htmlView = $container.find(".html-view");
-            const $cardView = $container.find(".card-view");
-
-            if ($icon.hasClass("fa-table")) {
-              $icon.removeClass("fa-table").addClass("fa-list-alt");
-
-              $htmlView.addClass("d-none");
-              $cardView.removeClass("d-none");
-            } else {
-              $icon.removeClass("fa-list-alt").addClass("fa-table");
-
+            if (clinicalNotesToggle) {
+              console.log("condition 1");
+              // $icon.removeClass("fa-table").addClass("fa-list-alt");
               $cardView.addClass("d-none");
-              $htmlView.removeClass("d-none");
+              $tableView.removeClass("d-none");
+            } else {
+              console.log("condition 2");
+              // $icon.removeClass("fa-list-alt").addClass("fa-table");
+              $tableView.addClass("d-none");
+              $cardView.removeClass("d-none");
             }
+            console.log("before = ", clinicalNotesToggle);
+            clinicalNotesToggle = !clinicalNotesToggle;
+            console.log("after = ", clinicalNotesToggle);
           });
       });
     });

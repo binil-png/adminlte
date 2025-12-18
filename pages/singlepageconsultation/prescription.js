@@ -39,83 +39,97 @@ $(function () {
     // ---------- 3. ADD MEDICINE ROW ----------
     function addMedicineRow(data = {}) {
       const row = $(`
-      <div class="medicine-card bg-custom mt-2 rounded-4 p-3">
-        <div><h6 class="mb-2 ps-1">Medicine</h6></div>
+       <div class="medicine-card bg-custom mt-2 rounded-4 p-3">
+      <h6 class="mb-3 ps-1">Medicine</h6>
 
-        <div class="form-row">
+      <div class="row g-2">
 
-          <div class="form-group col-md-5 m-0 d-flex">
-            <input class="form-control med-name border-end-0 rounded-end-0 rounded-4 input-style" placeholder="Medicine Name">
-            <input class="form-control med-brand rounded-start-0 rounded-4 input-style" placeholder="Medicine Generic Name">
-          </div>
+        <!-- Medicine name -->
+        <div class="col-md-4">
+          <input class="form-control rounded-4 input-style" placeholder="Medicine Name">
+        </div>
 
-          <div class="form-group col-md-7 row m-0">
-            <div class="form-group col-md-3 d-flex">
-              <input style="width:50px" class="form-control dosage-value rounded-start-4 rounded-end-0 border-end-0 input-style" placeholder="Dosage">
-              <select class="form-control dosage-unit custom-select text-center rounded-end-4 rounded-start-0 input-style">
-                <option>mg</option>
-                <option>ml</option>
-              </select>
-            </div>
+        <!-- Generic name -->
+        <div class="col-md-4">
+          <input class="form-control rounded-4 input-style" placeholder="Medicine Generic Name">
+        </div>
 
-            <div class="form-group col-md-3 d-flex p-0">
-              <input style="width:40px" class="form-control duration-value rounded-start-4 rounded-end-0 border-end-0 input-style" placeholder="Duration">
-              <select class="form-control duration-unit custom-select text-center rounded-end-4 rounded-start-0 input-style">
-                <option value="1">Day (s)</option>
-                <option value="2">Week (s)</option>
-                <option value="3">Month (s)</option>
-              </select>
-            </div>
-
-            <div class="form-group col-md-3 d-flex p-0">
-              <input style="width:50px" class="form-control freq-value rounded-start-4 rounded-end-0 border-end-0 input-style" placeholder="Frequency">
-              <select class="form-control freq-unit custom-select text-left rounded-end-4 rounded-start-0 input-style">
-                <option value="1">Before food</option>
-                <option value="2">After food</option>
-                <option value="3">None</option>
-              </select>
-            </div>
-
-            <div class="form-group col-md-3 d-flex">
-              <input style="width:80px" class="form-control dispense-value rounded-start-4 rounded-end-0 border-end-0 input-style" placeholder="Dispensing quantity">
-              <select class="form-control dispense-unit custom-select text-center rounded-end-4 rounded-start-0 input-style">
-                  <option value="1">Nos (Number of items/tablets)</option>
-                  <option value="2">Bottle</option>
-                  <option value="3">Strip</option>
-                  <option value="4">Tube</option>
-                  <option value="5">Sachet</option>
-                  <option value="6">Pouch</option>
-                  <option value="7">Can</option>
-                  <option value="8">Pack</option>
-                  <option value="9">Vial</option>
-                  <option value="10">Ampoule</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="form-group col-md-6 m-0">
-            <input class="form-control instructions rounded-4 input-style" placeholder="Instructions">
-          </div>
-
-          <div class="form-group col-md-3 m-0">
-            <select class="form-control usage-select custom-select rounded-4 input-style">
-              <option value="">Select usage or route</option>
-              <option>SOS</option>
-              <option>Now</option>
-              <option>STAT</option>
-              <option>Morning</option>
-              <option>Afternoon</option>
-              <option>Night</option>
-              <option>Oral (PO)</option>
-              <option>Intravenous (IV)</option>
+        <!-- Dosage -->
+        <div class="col-md-4">
+          <div class="input-group">
+            <input class="form-control rounded-start-4 input-style" placeholder="Dosage">
+            <select class="form-select rounded-end-4 input-style">
+              <option>mg</option>
+              <option>ml</option>
             </select>
           </div>
         </div>
 
-        <div class="form-group d-flex justify-content-end m-0">
-          <button class="btn btn-sm text-danger btn-remove-med" type="button">Remove</button>
+        <!-- Duration -->
+        <div class="col-md-4">
+          <div class="input-group">
+            <input class="form-control rounded-start-4 input-style" placeholder="Duration">
+            <select class="form-select rounded-end-4 input-style">
+              <option>Day(s)</option>
+              <option>Week(s)</option>
+              <option>Month(s)</option>
+            </select>
+          </div>
         </div>
+
+        <!-- Frequency -->
+        <div class="col-md-4">
+          <div class="input-group">
+            <input class="form-control rounded-start-4 input-style" placeholder="Frequency">
+            <select class="form-select rounded-end-4 input-style">
+              <option>Before food</option>
+              <option>After food</option>
+              <option>None</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Dispense -->
+        <div class="col-md-4">
+          <div class="input-group">
+            <input class="form-control rounded-start-4 input-style" placeholder="Dispensing quantity">
+            <select class="form-select rounded-end-4 input-style">
+              <option>Nos</option>
+              <option>Bottle</option>
+              <option>Strip</option>
+              <option>Tube</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Instructions -->
+        <div class="col-md-4">
+          <input class="form-control rounded-4 input-style" placeholder="Instructions">
+        </div>
+
+        <!-- Usage -->
+        <div class="col-md-4">
+          <select class="form-select rounded-4 input-style">
+            <option value="">Select usage / route</option>
+            <option>SOS</option>
+            <option>Now</option>
+            <option>STAT</option>
+            <option>Morning</option>
+            <option>Night</option>
+            <option>Oral (PO)</option>
+            <option>IV</option>
+          </select>
+        </div>
+
+        <!-- Remove -->
+        <div class="col-md-4 d-flex align-items-end justify-content-end">
+          <button class="btn btn-sm text-danger btn-remove-med" type="button">
+            Remove
+          </button>
+        </div>
+
       </div>
+    </div>
     `);
 
       // Pre-fill values
