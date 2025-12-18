@@ -63,7 +63,7 @@ const vitalsHistory = Array.from({ length: 5 }).map((_, i) => {
         [182, 102, 46],
       ],
     },
-    vitalData:v,
+    vitalData: v,
   };
 });
 
@@ -114,30 +114,34 @@ const prescriptionData = [
   // ["Multivitamin", "Calcium 500mg"],
 ].map((meds, i) => {
   const detailedMeds = generatePrescriptionDetails(meds, i);
-
   return {
     type: "prescription",
     date: `2025-11-${10 + i}`,
     title: "Prescription",
     icon: "fas fa-capsules text-primary",
     html: `
-      <p class="small mb-1"><b>Medicines Prescribed:</b></p>
-      <ul class="small mb-1">
-        ${detailedMeds
-          .map(
-            (m) => `
-          <li>
-            <b>${m.name}</b><br/>
-            Dosage: ${m.dosage}<br/>
-            Frequency: ${m.frequency}<br/>
-            Route: ${m.route}<br/>
-            Timing: ${m.timing}<br/>
-            Duration: ${m.duration}
-          </li>
-        `
-          )
-          .join("")}
-      </ul>
+      <div class="">
+       <table class="table table-sm">
+      <tbody>
+      ${detailedMeds
+        .map(
+          (m, i) => `
+          <tr>
+            <td>${i + 1}</td>
+            <td class="text-sm">
+            ${m.name ? m.name : ""} | ${m.dosage ? m.dosage : ""} | ${
+            m.frequency ? m.frequency : ""
+          } | ${m.route ? m.route : ""} | ${m.timing ? m.timing : ""} | ${
+            m.duration ? m.duration : ""
+          }
+            </td>
+          </tr>
+      `
+        )
+        .join("")}
+      </tbody>
+      </table>
+      </div>
     `,
   };
 });
@@ -156,14 +160,16 @@ const dentalRecords = [
         quantity: 1,
         price: 300,
         discount: 0,
-        // status: "completed",
+        toothNo: 21,
+        status: "completed",
       },
       {
         name: "Root Canal Treatment",
         quantity: 1,
         price: 3500,
         discount: 10,
-        // status: "planned",
+        toothNo: 18,
+        status: "planned",
       },
     ],
   },
@@ -181,6 +187,7 @@ const dentalRecords = [
         price: 4500,
         discount: 5,
         status: "planned",
+        toothNo: 38,
       },
       {
         name: "Scaling and Polishing",
@@ -188,6 +195,7 @@ const dentalRecords = [
         price: 1500,
         discount: 0,
         status: "completed",
+        toothNo: 37,
       },
     ],
   },
@@ -205,6 +213,7 @@ const dentalRecords = [
         price: 2000,
         discount: 0,
         status: "completed",
+        toothNo: 18,
       },
       {
         name: "Gingival Treatment",
@@ -212,6 +221,7 @@ const dentalRecords = [
         price: 1200,
         discount: 10,
         status: "planned",
+        toothNo: 18,
       },
     ],
   },
@@ -229,6 +239,7 @@ const dentalRecords = [
         price: 2500,
         discount: 0,
         status: "completed",
+        toothNo: 19,
       },
       {
         name: "Splinting of Teeth",
@@ -236,6 +247,7 @@ const dentalRecords = [
         price: 3000,
         discount: 5,
         status: "planned",
+        toothNo: 19,
       },
     ],
   },
@@ -253,6 +265,7 @@ const dentalRecords = [
         price: 800,
         discount: 0,
         status: "completed",
+        toothNo: 20,
       },
     ],
   },
@@ -265,8 +278,93 @@ const descriptions = {
     "Allergen sensitivity results including IgE levels and reaction severity.",
 };
 
-const notestText = "mb-1"
-const notestStyle = "font-size:.9rem"
+const notestText = "mb-1";
+const notestStyle = "font-size:.9rem";
+
+const notestData = [
+  {
+    date: "2025-12-01",
+    title: "Clinical Notes 10",
+    complaints: "Fever, body ache for 2 days",
+    history: "No chronic illness",
+    observations: "Mild dehydration, throat congestion",
+    investigations: "CBC, CRP ordered",
+    diagnosis: "Viral Fever",
+    treatment: "Paracetamol, hydration",
+    advice: "Rest, drink fluids",
+  },
+  {
+    date: "2025-12-02",
+    title: "Clinical Notes",
+    complaints: "Headache and dizziness",
+    history: "Migraines occasionally",
+    observations: "BP slightly elevated",
+    investigations: "BP monitoring",
+    diagnosis: "Migraine Episode",
+    treatment: "Ibuprofen, cold compress",
+    advice: "Avoid stress, rest in dark room",
+  },
+  {
+    date: "2025-12-03",
+    title: "Clinical Notes",
+    complaints: "Stomach pain and nausea",
+    history: "Gastric irritation",
+    observations: "Mild tenderness in abdomen",
+    investigations: "LFT, Ultrasound Abdomen",
+    diagnosis: "Gastritis",
+    treatment: "Pantoprazole, antacids",
+    advice: "Avoid spicy food",
+  },
+  {
+    date: "2025-12-04",
+    title: "Clinical Notes",
+    complaints: "Cough and cold",
+    history: "Allergic rhinitis",
+    observations: "Nasal congestion",
+    investigations: "None",
+    diagnosis: "Upper Respiratory Infection",
+    treatment: "Antihistamines, steam inhalation",
+    advice: "Increase warm fluids",
+  },
+  {
+    date: "2025-12-05",
+    title: "Clinical Notes",
+    complaints: "Back pain",
+    history: "Mild disc bulge",
+    observations: "Limited movement",
+    investigations: "X-ray lumbar spine",
+    diagnosis: "Muscular strain",
+    treatment: "Muscle relaxant, hot fomentation",
+    advice: "Avoid heavy lifting",
+  },
+].map((item) => {
+  return {
+    type: "notes",
+    date: item.date,
+    title: item.title,
+    icon: "fas fa-notes-medical text-warning",
+    html: `
+      <table class="table table-sm">
+        <tbody>
+          <tr><th style="width:100px; font-size:.9rem">Chief Complaints</th><td style="font-size:.9rem">${item.complaints}</td></tr>
+          <tr><th style="width:100px; font-size:.9rem">Medical History</th><td style="font-size:.9rem">${item.history}</td></tr>
+          <tr><th style="width:100px; font-size:.9rem">Observations</th><td style="font-size:.9rem">${item.observations}</td></tr>
+          <tr><th style="width:100px; font-size:.9rem">Investigations</th><td style="font-size:.9rem">${item.investigations}</td></tr>
+          <tr><th style="width:100px; font-size:.9rem">Diagnosis</th><td style="font-size:.9rem">${item.diagnosis}</td></tr>
+          <tr><th style="width:100px; font-size:.9rem">Treatment</th><td style="font-size:.9rem">${item.treatment}</td></tr>
+          <tr><th style="width:100px; font-size:.9rem">Advice</th><td style="font-size:.9rem">${item.advice}</td></tr>
+        </tbody>
+      </table>
+    `,
+    card: `<p style="font-size:.9rem" class="small mb-1"><b>Chief Complaints:</b> ${item.complaints}</p>
+      <p style="font-size:.9rem" class="small mb-1"><b>Medical History:</b> ${item.history}</p>
+      <p style="font-size:.9rem" class="small mb-1"><b>Observations:</b> ${item.observations}</p>
+      <p style="font-size:.9rem" class="small mb-1"><b>Investigations:</b> ${item.investigations}</p>
+      <p style="font-size:.9rem" class="small mb-1"><b>Diagnosis:</b> ${item.diagnosis}</p>
+      <p style="font-size:.9rem" class="small mb-1"><b>Treatment:</b> ${item.treatment}</p>
+      <p style="font-size:.9rem" class="small mb-1"><b>Advice:</b> ${item.advice}</p>`,
+  };
+});
 
 const historyData = [
   // ================= NEW 10 VITALS ==================
@@ -274,82 +372,7 @@ const historyData = [
   // ================= NEW 10 PRESCRIPTIONS ==================
   ...prescriptionData,
   // ================= NEW 10 CLINICAL NOTES ==================
-  {
-    type: "notes",
-    date: "2025-12-01",
-    title: "Clinical Notes",
-    icon: "fas fa-notes-medical text-warning",
-    html: `
-      <p style="${notestStyle}" class="${notestText}"><b>Chief Complaints:</b> Fever, body ache for 2 days</p>
-      <p style="${notestStyle}" class="${notestText}"><b>Medical History:</b> No chronic illness</p>
-      <p style="${notestStyle}" class="${notestText}"><b>Observations:</b> Mild dehydration, throat congestion</p>
-      <p style="${notestStyle}" class="${notestText}"><b>Investigations:</b> CBC, CRP ordered</p>
-      <p style="${notestStyle}" class="${notestText}"><b>Diagnosis:</b> Viral Fever</p>
-      <p style="${notestStyle}" class="${notestText}"><b>Treatment:</b> Paracetamol, hydration</p>
-      <p style="${notestStyle}" class="${notestText}"><b>Advice:</b> Rest, drink fluids</p>
-    `,
-  },
-  {
-    type: "notes",
-    date: "2025-12-02",
-    title: "Clinical Notes",
-    icon: "fas fa-notes-medical text-warning",
-    html: `
-      <p style="${notestStyle}" class="${notestText}"><b>Chief Complaints:</b> Headache and dizziness</p>
-      <p style="${notestStyle}" class="${notestText}"><b>Medical History:</b> Migraines occasionally</p>
-      <p style="${notestStyle}" class="${notestText}"><b>Observations:</b> BP slightly elevated</p>
-      <p style="${notestStyle}" class="${notestText}"><b>Investigations:</b> BP monitoring</p>
-      <p style="${notestStyle}" class="${notestText}"><b>Diagnosis:</b> Migraine Episode</p>
-      <p style="${notestStyle}" class="${notestText}"><b>Treatment:</b> Ibuprofen, cold compress</p>
-      <p style="${notestStyle}" class="${notestText}"><b>Advice:</b> Avoid stress, rest in dark room</p>
-    `,
-  },
-  {
-    type: "notes",
-    date: "2025-12-03",
-    title: "Clinical Notes",
-    icon: "fas fa-notes-medical text-warning",
-    html: `
-      <p style="${notestStyle}" class="${notestText}"><b>Chief Complaints:</b> Stomach pain and nausea</p>
-      <p style="${notestStyle}" class="${notestText}"><b>Medical History:</b> Gastric irritation</p>
-      <p style="${notestStyle}" class="${notestText}"><b>Observations:</b> Mild tenderness in abdomen</p>
-      <p style="${notestStyle}" class="${notestText}"><b>Investigations:</b> LFT, Ultrasound Abdomen</p>
-      <p style="${notestStyle}" class="${notestText}"><b>Diagnosis:</b> Gastritis</p>
-      <p style="${notestStyle}" class="${notestText}"><b>Treatment:</b> Pantoprazole, antacids</p>
-      <p style="${notestStyle}" class="${notestText}"><b>Advice:</b> Avoid spicy food</p>
-    `,
-  },
-  {
-    type: "notes",
-    date: "2025-12-04",
-    title: "Clinical Notes",
-    icon: "fas fa-notes-medical text-warning",
-    html: `
-      <p style="${notestStyle}" class="${notestText}"><b>Chief Complaints:</b> Cough and cold</p>
-      <p style="${notestStyle}" class="${notestText}"><b>Medical History:</b> Allergic rhinitis</p>
-      <p style="${notestStyle}" class="${notestText}"><b>Observations:</b> Nasal congestion</p>
-      <p style="${notestStyle}" class="${notestText}"><b>Investigations:</b> None</p>
-      <p style="${notestStyle}" class="${notestText}"><b>Diagnosis:</b> Upper Respiratory Infection</p>
-      <p style="${notestStyle}" class="${notestText}"><b>Treatment:</b> Antihistamines, steam inhalation</p>
-      <p style="${notestStyle}" class="${notestText}"><b>Advice:</b> Increase warm fluids</p>
-    `,
-  },
-  {
-    type: "notes",
-    date: "2025-12-05",
-    title: "Clinical Notes",
-    icon: "fas fa-notes-medical text-warning",
-    html: `
-      <p style="${notestStyle}" class="${notestText}"><b>Chief Complaints:</b> Back pain</p>
-      <p style="${notestStyle}" class="${notestText}"><b>Medical History:</b> Mild disc bulge</p>
-      <p style="${notestStyle}" class="${notestText}"><b>Observations:</b> Limited movement</p>
-      <p style="${notestStyle}" class="${notestText}"><b>Investigations:</b> X-ray lumbar spine</p>
-      <p style="${notestStyle}" class="${notestText}"><b>Diagnosis:</b> Muscular strain</p>
-      <p style="${notestStyle}" class="${notestText}"><b>Treatment:</b> Muscle relaxant, hot fomentation</p>
-      <p style="${notestStyle}" class="${notestText}"><b>Advice:</b> Avoid heavy lifting</p>
-    `,
-  },
-
+  ...notestData,
   // ================= NEW 10 PROCEDURES ==================
   {
     type: "procedure",
@@ -418,8 +441,7 @@ const historyData = [
       .map(
         (p) => `
           <li class="text-sm">
-            <b class="text-sm">${p.name}</b>  
-            (Qty: ${p.quantity}, Price: ₹${p.price}, Discount: ${p.discount}%,  
+            <span class="text-sm">Tooth no# ${p.toothNo} | ${p.name} | </span>  
             Status: <span class="text-primary">${p.status}</span>)
           </li>`
       )
@@ -596,126 +618,126 @@ const prescriptionTemplates = {
 };
 
 const prescriptions = [
-    {
-        medicine: "Amoxicillin 500mg",
-        brand: "Amoxil", // Example Brand
-        dosage: "1",
-        dosageUnit: "mg",
-        duration: 7,
-        durationUnit: "1", // Days
-        frequency: "1-0-1",
-        frequencyUnit: "2", // After food
-        dispenseValue: 14, // 2 times a day * 7 days = 14 tablets
-        dispenseUnit: "Nos", // Can also be 'Strip' (e.g., 2 strips of 10)
-    },
-    {
-        medicine: "Ibuprofen 400mg",
-        brand: "Advil", // Example Brand
-        dosage: "1",
-        dosageUnit: "mg",
-        duration: 5,
-        durationUnit: "1",
-        frequency: "1-1-1",
-        frequencyUnit: "1", // Before food
-        dispenseValue: 15, // 3 times a day * 5 days = 15 tablets
-        dispenseUnit: "Strip",
-    },
-    {
-        medicine: "Azithromycin 250mg",
-        brand: "Zithromax", // Example Brand
-        dosage: "1",
-        dosageUnit: "mg",
-        duration: 3,
-        durationUnit: "1",
-        frequency: "1-0-0",
-        frequencyUnit: "2",
-        dispenseValue: 3, // 1 time a day * 3 days = 3 tablets (often packaged this way)
-        dispenseUnit: "Nos",
-    },
-    {
-        medicine: "Pantoprazole 40mg",
-        brand: "Protonix", // Example Brand
-        dosage: "1",
-        dosageUnit: "mg",
-        duration: 10,
-        durationUnit: "1",
-        frequency: "0-0-1",
-        frequencyUnit: "1",
-        dispenseValue: 10, // 1 time a day * 10 days = 10 tablets
-        dispenseUnit: "Strip",
-    },
-    {
-        medicine: "Metformin 500mg",
-        brand: "Glucophage", // Example Brand
-        dosage: "1",
-        dosageUnit: "mg",
-        duration: 30,
-        durationUnit: "3", // Months (90 days)
-        frequency: "1-0-1", // 2 times a day
-        frequencyUnit: "3", // None
-        dispenseValue: 180, // 2 times a day * 90 days = 180 tablets
-        dispenseUnit: "Nos",
-    },
-    {
-        medicine: "Vitamin D3 60k IU",
-        brand: "D-Rise", // Example Brand
-        dosage: "1",
-        dosageUnit: "mg",
-        duration: 8,
-        durationUnit: "2", // Weeks (8 capsules for 8 weeks)
-        frequency: "0-0-1", // Assumed once weekly
-        frequencyUnit: "2",
-        dispenseValue: 8,
-        dispenseUnit: "Capsules",
-    },
-    {
-        medicine: "Cough Syrup 5ml",
-        brand: "Ascoril", // Example Brand
-        dosage: "5",
-        dosageUnit: "ml",
-        duration: 7,
-        durationUnit: "1",
-        frequency: "1-1-1", // 3 times a day (total 15ml/day)
-        frequencyUnit: "3",
-        // Total required: 15ml/day * 7 days = 105ml. Dispense a 100ml bottle.
-        dispenseValue: 100, 
-        dispenseUnit: "ml Bottle",
-    },
-    {
-        medicine: "ORS Solution 200ml",
-        brand: "Electral", // Example Brand
-        dosage: "200",
-        dosageUnit: "ml",
-        duration: 2,
-        durationUnit: "1",
-        frequency: "2-2-2", // 6 times a day (total 1200ml/day)
-        frequencyUnit: "3",
-        // Total required: 1200ml/day * 2 days = 2400ml. Dispense 12 sachets (200ml each).
-        dispenseValue: 12,
-        dispenseUnit: "Sachets",
-    },
-    {
-        medicine: "Aspirin 75mg",
-        brand: "Ecosprin", // Example Brand
-        dosage: "1",
-        dosageUnit: "mg",
-        duration: 30,
-        durationUnit: "3", // Months (90 days)
-        frequency: "1-0-0", // 1 time a day
-        frequencyUnit: "2",
-        dispenseValue: 90, // 1 time a day * 90 days = 90 tablets
-        dispenseUnit: "Nos",
-    },
-    {
-        medicine: "Loratadine 10mg",
-        brand: "Claritin", // Example Brand
-        dosage: "10",
-        dosageUnit: "mg",
-        duration: 7,
-        durationUnit: "1",
-        frequency: "0-0-1", // 1 time a day
-        frequencyUnit: "3",
-        dispenseValue: 7, // 1 time a day * 7 days = 7 tablets
-        dispenseUnit: "Strip",
-    },
+  {
+    medicine: "Amoxicillin 500mg",
+    brand: "Amoxil", // Example Brand
+    dosage: "1",
+    dosageUnit: "mg",
+    duration: 7,
+    durationUnit: "1", // Days
+    frequency: "1-0-1",
+    frequencyUnit: "2", // After food
+    dispenseValue: 14, // 2 times a day * 7 days = 14 tablets
+    dispenseUnit: "Nos", // Can also be 'Strip' (e.g., 2 strips of 10)
+  },
+  {
+    medicine: "Ibuprofen 400mg",
+    brand: "Advil", // Example Brand
+    dosage: "1",
+    dosageUnit: "mg",
+    duration: 5,
+    durationUnit: "1",
+    frequency: "1-1-1",
+    frequencyUnit: "1", // Before food
+    dispenseValue: 15, // 3 times a day * 5 days = 15 tablets
+    dispenseUnit: "Strip",
+  },
+  {
+    medicine: "Azithromycin 250mg",
+    brand: "Zithromax", // Example Brand
+    dosage: "1",
+    dosageUnit: "mg",
+    duration: 3,
+    durationUnit: "1",
+    frequency: "1-0-0",
+    frequencyUnit: "2",
+    dispenseValue: 3, // 1 time a day * 3 days = 3 tablets (often packaged this way)
+    dispenseUnit: "Nos",
+  },
+  {
+    medicine: "Pantoprazole 40mg",
+    brand: "Protonix", // Example Brand
+    dosage: "1",
+    dosageUnit: "mg",
+    duration: 10,
+    durationUnit: "1",
+    frequency: "0-0-1",
+    frequencyUnit: "1",
+    dispenseValue: 10, // 1 time a day * 10 days = 10 tablets
+    dispenseUnit: "Strip",
+  },
+  {
+    medicine: "Metformin 500mg",
+    brand: "Glucophage", // Example Brand
+    dosage: "1",
+    dosageUnit: "mg",
+    duration: 30,
+    durationUnit: "3", // Months (90 days)
+    frequency: "1-0-1", // 2 times a day
+    frequencyUnit: "3", // None
+    dispenseValue: 180, // 2 times a day * 90 days = 180 tablets
+    dispenseUnit: "Nos",
+  },
+  {
+    medicine: "Vitamin D3 60k IU",
+    brand: "D-Rise", // Example Brand
+    dosage: "1",
+    dosageUnit: "mg",
+    duration: 8,
+    durationUnit: "2", // Weeks (8 capsules for 8 weeks)
+    frequency: "0-0-1", // Assumed once weekly
+    frequencyUnit: "2",
+    dispenseValue: 8,
+    dispenseUnit: "Capsules",
+  },
+  {
+    medicine: "Cough Syrup 5ml",
+    brand: "Ascoril", // Example Brand
+    dosage: "5",
+    dosageUnit: "ml",
+    duration: 7,
+    durationUnit: "1",
+    frequency: "1-1-1", // 3 times a day (total 15ml/day)
+    frequencyUnit: "3",
+    // Total required: 15ml/day * 7 days = 105ml. Dispense a 100ml bottle.
+    dispenseValue: 100,
+    dispenseUnit: "ml Bottle",
+  },
+  {
+    medicine: "ORS Solution 200ml",
+    brand: "Electral", // Example Brand
+    dosage: "200",
+    dosageUnit: "ml",
+    duration: 2,
+    durationUnit: "1",
+    frequency: "2-2-2", // 6 times a day (total 1200ml/day)
+    frequencyUnit: "3",
+    // Total required: 1200ml/day * 2 days = 2400ml. Dispense 12 sachets (200ml each).
+    dispenseValue: 12,
+    dispenseUnit: "Sachets",
+  },
+  {
+    medicine: "Aspirin 75mg",
+    brand: "Ecosprin", // Example Brand
+    dosage: "1",
+    dosageUnit: "mg",
+    duration: 30,
+    durationUnit: "3", // Months (90 days)
+    frequency: "1-0-0", // 1 time a day
+    frequencyUnit: "2",
+    dispenseValue: 90, // 1 time a day * 90 days = 90 tablets
+    dispenseUnit: "Nos",
+  },
+  {
+    medicine: "Loratadine 10mg",
+    brand: "Claritin", // Example Brand
+    dosage: "10",
+    dosageUnit: "mg",
+    duration: 7,
+    durationUnit: "1",
+    frequency: "0-0-1", // 1 time a day
+    frequencyUnit: "3",
+    dispenseValue: 7, // 1 time a day * 7 days = 7 tablets
+    dispenseUnit: "Strip",
+  },
 ];

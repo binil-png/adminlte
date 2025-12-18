@@ -113,7 +113,7 @@ $(function () {
                         <input type="number" class="form-control rounded-4 border-end-0 rounded-end-0 form-control-sm input-style text-center" value="${
                           p.discount
                         }">
-                        <select class="form-control rounded-4 border-start-1 rounded-start-0 form-control-sm input-style text-center">
+                        <select style="width:30px" class="form-control rounded-4 border-start-1 rounded-start-0 form-control-sm input-style text-center">
                             <option value="per">%</option>
                             <option value="rs">₹</option>
                         </select>

@@ -63,7 +63,7 @@ $(function () {
         `<h6 class="fw-bold small text-custom mt-3">${label}</h6>`
       );
 
-      grouped[date].forEach((item) => {
+      grouped[date].forEach((item, i) => {
         const iconHtml = item.icon
           ? `<i class="${item.icon} me-2 text-custom"></i>`
           : "";
@@ -81,15 +81,53 @@ $(function () {
                     data-type="${item.type}"
                     data-date="${item.date}"> 
                     <div class="card-body">
-                        <h6 class="fw-semibold text-custom">
-                            ${iconHtml} ${item.title}
-                        </h6>
-                        ${item.html || ""}
+                    <div class="d-flex justify-content-between align-item-center pb-2">
+                          <h6 class="fw-semibold text-custom">
+                              ${iconHtml} ${item.title}
+                          </h6>
+                          ${
+                            item.type == "notes"
+                              ? `<button  class="btn text-success btn-sm toggle-view-btn" id="table-toggle-btn${i}"><i class="fas fa-table"></i></button>`
+                              : ""
+                          }
+                    </div>
+                          <div class="content-container">
+                            <div class="html-view">
+                               ${item.html || ""}
+                            </div>
+                            <div class="card-view d-none">
+                              ${item.card || ""}
+                            </div>
+                          </div>
                         ${extra}
                         ${time}
                     </div>
                 </div>
             `);
+        container
+          .off("click", ".toggle-view-btn")
+          .on("click", ".toggle-view-btn", function () {
+            const $btn = $(this);
+            const $icon = $btn.find("i");
+            const $container = $btn
+              .closest(".card-body")
+              .find(".content-container");
+
+            const $htmlView = $container.find(".html-view");
+            const $cardView = $container.find(".card-view");
+
+            if ($icon.hasClass("fa-table")) {
+              $icon.removeClass("fa-table").addClass("fa-list-alt");
+
+              $htmlView.addClass("d-none");
+              $cardView.removeClass("d-none");
+            } else {
+              $icon.removeClass("fa-list-alt").addClass("fa-table");
+
+              $cardView.addClass("d-none");
+              $htmlView.removeClass("d-none");
+            }
+          });
       });
     });
   }
@@ -106,24 +144,24 @@ $(function () {
   renderHistory();
 
   function getUniqueDates() {
-        if (typeof historyData === "undefined" || historyData.length === 0) {
-            return [];
-        }
-        const uniqueDates = [...new Set(historyData.map(item => item.date))];
-        return uniqueDates.sort((a, b) => new Date(b) - new Date(a));
+    if (typeof historyData === "undefined" || historyData.length === 0) {
+      return [];
     }
-    function populateDateFilter() {
-        const $select = $("#dateFilter");
-        $select.empty();
-        $select.append(`<option value="all">-- Select All Dates --</option>`);
-        const uniqueDates = getUniqueDates();
-        uniqueDates.forEach(dateString => {
-            const displayLabel = formatDateGroupLabel(dateString);
-            $select.append(`<option value="${dateString}">${displayLabel}</option>`);
-        });
-    }
-    renderHistory();
-    populateDateFilter();
+    const uniqueDates = [...new Set(historyData.map((item) => item.date))];
+    return uniqueDates.sort((a, b) => new Date(b) - new Date(a));
+  }
+  function populateDateFilter() {
+    const $select = $("#dateFilter");
+    $select.empty();
+    $select.append(`<option value="all">-- Select All Dates --</option>`);
+    const uniqueDates = getUniqueDates();
+    uniqueDates.forEach((dateString) => {
+      const displayLabel = formatDateGroupLabel(dateString);
+      $select.append(`<option value="${dateString}">${displayLabel}</option>`);
+    });
+  }
+  renderHistory();
+  populateDateFilter();
 
   function applyFilters() {
     const activeFilter = $("#chipFilters .active-filter").data("filter");
