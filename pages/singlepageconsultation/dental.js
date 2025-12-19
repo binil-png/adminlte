@@ -1,179 +1,196 @@
+// unifiedDentalProcedure.js
 $(function () {
-  // Add new dental row
-  $("#addDentalProc").on("click", function () {
-    const newRow = `
-                              <tr>
-                                <td>
-                                  <select
-                                    class="form-control custom-select dental-proc rounded-4 input-style"
-                                  >
-                                    <option value="">Select procedure</option>
-                                    <option value="Filling">Filling</option>
-                                    <option value="Extraction">
-                                      Extraction
-                                    </option>
-                                    <option value="Scaling">Scaling</option>
-                                  </select>
-                                </td>
-                                <td>
-                                  <input
-                                    type="number"
-                                    class="form-control dental-qty rounded-4 input-style"
-                                    value="1"
-                                  />
-                                </td>
-                                <td>
-                                  <input
-                                    type="number"
-                                    class="form-control dental-price rounded-4 input-style"
-                                    value="0"
-                                  />
-                                </td>
-                                <td
-                                  class="dental-line-total align-middle px-3 py-2"
-                                >
-                                  ₹0
-                                </td>
-                                <td>
-                                  <button
-                                    type="button"
-                                    class="btn btn-sm btn-remove-dental"
-                                  >
-                                    <i class="fas fa-trash text-danger"></i>
-                                  </button>
-                                </td>
-                              </tr>
-  `;
+  // 1. Data Structure
+  let dentalDataList = [{ name: "", qty: 1, price: 0, toothInfo: "", notes: "", total: 0 }];
+  let currentActiveToothIndex = null; // Tracks which box the modal is updating
 
-    $("#dentalProcTable tbody").append(newRow);
-  });
+  function generateDentalBoxId(index) {
+    return `dental-box-${index}-extra-fields`;
+  }
 
-  // Calculate totals
-  $(document).on("input change", ".dental-qty, .dental-price", function () {
+  // 2. Procedures Rendering
+  function renderDentalTable(dentalData) {
+    const container = $("#dentalContainer");
+    container.empty();
+     
+    dentalData.forEach((p, index) => {
+      const boxId = generateDentalBoxId(index);
+      const lineTotal = (parseFloat(p.qty) || 0) * (parseFloat(p.price) || 0);
+
+      container.append(`
+        <div class="bg-custom rounded-4 dental-box mb-3 border p-2" data-index="${index}">
+            <div class="row g-2 align-items-end">
+                <div class="col-md-1 text-center pe-0">
+                    <label class="form-label small text-muted mb-0 d-none d-md-block">Sr</label>
+                    <span class="d-block mt-1 pt-1">${index + 1}</span>
+                </div>
+                <div class="col-md-5">
+                    <label class="form-label small text-muted mb-0">Dental Procedure</label>
+                    <select class="form-control form-control-sm dental-field dental-name rounded-4 input-style">
+                        <option value="">Select procedure</option>
+                        <option value="Filling" ${p.name === 'Filling' ? 'selected' : ''}>Filling</option>
+                        <option value="Extraction" ${p.name === 'Extraction' ? 'selected' : ''}>Extraction</option>
+                        <option value="Scaling" ${p.name === 'Scaling' ? 'selected' : ''}>Scaling</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small text-muted mb-0">Qty</label>
+                    <input type="number" class="form-control form-control-sm dental-field dental-qty rounded-4 input-style text-center" value="${p.qty}">
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small text-muted mb-0">Price</label>
+                    <input type="number" class="form-control form-control-sm dental-field dental-price rounded-4 input-style" value="${p.price}">
+                </div>
+                <div class="col-md-2 text-end">
+                    <label class="form-label small text-muted mb-0 d-none d-md-block">Total</label>
+                    <strong class="d-block text-success dental-line-total">₹${lineTotal.toFixed(2)}</strong>
+                </div>
+            </div>
+
+            <div id="${boxId}" class="d-none mt-2 pt-2 border-top">
+                 <div class="row g-2 mb-3 align-items-center">
+                                    <div class="col-4">
+                                      <label class="form-label small text-muted mb-0">Status</label>
+                                      <select
+                                        class="form-control form-control-sm custom-select proc-status rounded-3 input-style proc-field rounded-4"
+                                      >
+                                        <option></option>
+                                        <option>Planned</option>
+                                        <option>Completed</option>
+                                        <option>Ongoing</option>
+                                      </select>
+                                    </div>
+
+                                    <div class="col-4">
+                                      <label class="form-label small text-muted mb-0">Date/Time</label>
+                                      <div class="input-group">
+                                        <input
+                                          type="date"
+                                          class="form-control form-control-sm proc-date rounded-4 rounded-end-0 input-style proc-field"
+                                          placeholder="dd-mm-yyyy"
+                                          value=""
+                                        />
+                                        <input
+                                          type="time"
+                                          class="form-control form-control-sm proc-time rounded-0 input-style proc-field"
+                                          placeholder="--:--"
+                                          value=""
+                                        />
+                                        <button
+                                          type="button"
+                                          class="btn btn-primary btn-sm rounded-4 rounded-start-0"
+                                          style="height: calc(1.5em + 0.5rem + 2px)"
+                                        >
+                                          Fixed
+                                        </button>
+                                      </div>
+                                    </div>
+                                    <div class="col-4">
+                                      <label class="form-label small text-muted mb-0">Internal Notes</label>
+                                      <textarea
+                                        class="form-control form-control-sm proc-internal-notes rounded-3 input-style proc-field rounded-4"
+                                        placeholder="Add internal notes here..."
+                                      ></textarea>
+                                    </div>
+                                  </div>
+                                  <div class="row g-2">
+                                    <div class="col-4">
+                                      <label class="form-label small text-muted mb-0"
+                                        >Patient Instructions</label
+                                      >
+                                      <textarea
+                                        class="form-control form-control-sm proc-patient-instructions rounded-3 input-style proc-field rounded-4"
+                                        placeholder="Add patient instructions here..."
+                                      ></textarea
+                                      >
+                                    </div>
+                    </div>
+                 </div>
+
+            <div class="row pt-2">
+                <div class="col-12 text-end">
+                    <button type="button" class="btn btn-xs p-0 text-decoration-none btn-toggle-dental-fields" data-target="#${boxId}">
+                        Show more
+                    </button>
+                    <button type="button" class="btn btn-sm text-danger btn-remove-dental ms-2">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+      `);
+    });
     updateDentalTotals();
+  }
+
+  // 3. Tooth UI Rendering Logic
+  function renderTeethUI(teethArray) {
+    const row1 = document.getElementById("teethSelector1");
+    const row2 = document.getElementById("teethSelector2");
+    if(!row1 || !row2) return;
+    
+    row1.innerHTML = ""; row2.innerHTML = "";
+
+    teethArray.forEach((tooth, index) => {
+      const isUpper = index < 16;
+      const elem = `
+        <span role="button" class="rounded-3 border p-2 d-flex flex-column align-items-center gap-2 tooth-item" data-tooth="${tooth.number}">
+          ${isUpper ? '' : `<small>${tooth.number}</small>`}
+          ${isUpper ? `<img width="30" height="50" src="./Teeth/${tooth.image}" />` : `<img width="30" height="30" src="./Teeth/${tooth.surface}" />`}
+          ${isUpper ? `<img width="30" height="30" src="./Teeth/${tooth.surface}" />` : `<img width="30" height="50" src="./Teeth/${tooth.image}" />`}
+          ${isUpper ? `<small>${tooth.number}</small>` : ''}
+        </span>`;
+      
+      (isUpper ? row1 : row2).insertAdjacentHTML("beforeend", elem);
+    });
+  }
+
+  // 4. Interaction Handlers
+  $(document).on("click", "#addDentalProc", function () {
+    console.log("add btn clicked")
+    dentalDataList.push({ name: "", qty: 1, price: 0, toothInfo: "", notes: "", total: 0 });
+    renderDentalTable(dentalDataList);
   });
 
   $(document).on("click", ".btn-remove-dental", function () {
-    $(this).closest("tr").remove();
+    const index = $(this).closest(".dental-box").data("index");
+    if (confirm("Remove dental procedure?")) {
+      dentalDataList.splice(index, 1);
+      renderDentalTable(dentalDataList);
+    }
+  });
+
+  $(document).on("change input", ".dental-field", function () {
+    const $box = $(this).closest(".dental-box");
+    const index = $box.data("index");
+    
+    if($(this).hasClass('dental-name')) dentalDataList[index].name = $(this).val();
+    if($(this).hasClass('dental-qty')) dentalDataList[index].qty = parseFloat($(this).val()) || 0;
+    if($(this).hasClass('dental-price')) dentalDataList[index].price = parseFloat($(this).val()) || 0;
+    if($(this).hasClass('dental-tooth-info')) dentalDataList[index].toothInfo = $(this).val();
+    if($(this).hasClass('dental-notes')) dentalDataList[index].notes = $(this).val();
+
+    dentalDataList[index].total = dentalDataList[index].qty * dentalDataList[index].price;
+    $box.find(".dental-line-total").text(`₹${dentalDataList[index].total.toFixed(2)}`);
     updateDentalTotals();
   });
-
-  function updateDentalTotals() {
-    let total = 0;
-
-    $("#dentalProcTable tbody tr").each(function () {
-      const qty = parseFloat($(this).find(".dental-qty").val()) || 0;
-      const price = parseFloat($(this).find(".dental-price").val()) || 0;
-      const lineTotal = qty * price;
-      $(this)
-        .find(".dental-line-total")
-        .text("₹" + lineTotal);
-      total += lineTotal;
+$(document).on("click", ".btn-toggle-dental-fields", function (e) {
+    e.preventDefault();
+    const $button = $(this);
+    const targetSelector = $button.attr("data-target");
+    const $target = $(targetSelector);
+    if ($target.hasClass('d-none')) {
+        $target.hide().removeClass('d-none');
+    }
+    $target.slideToggle(200, function () {
+        const isVisible = $target.is(":visible");
+        $button.text(isVisible ? 'Show less' : 'Show more');
     });
-
-    $("#dentalSum").text(total);
-  }
-
-  const teeth = [
-    // uppder jaw
-    { number: 18, image: "18_28.png", surface: "18_28C.png" },
-    { number: 17, image: "17_27.png", surface: "17_27C.png" },
-    { number: 16, image: "16_26.png", surface: "16_26C.png" },
-    { number: 15, image: "15_25.png", surface: "15_25C.png" },
-    { number: 14, image: "14_24.png", surface: "14_24C.png" },
-    { number: 13, image: "13_23.png", surface: "13_23C.png" },
-    { number: 12, image: "12_22.png", surface: "12_22C.png" },
-    { number: 11, image: "11_21.png", surface: "11_21C.png" },
-    { number: 21, image: "11_21.png", surface: "11_21C.png" },
-    { number: 22, image: "12_22.png", surface: "12_22C.png" },
-    { number: 23, image: "13_23.png", surface: "13_23C.png" },
-    { number: 24, image: "14_24.png", surface: "14_24C.png" },
-    { number: 25, image: "15_25.png", surface: "15_25C.png" },
-    { number: 26, image: "16_26.png", surface: "16_26C.png" },
-    { number: 27, image: "17_27.png", surface: "17_27C.png" },
-    { number: 28, image: "18_28.png", surface: "18_28C.png" },
-    // lower jaw
-    { number: 48, image: "38_48.png", surface: "38_48C.png" },
-    { number: 47, image: "47_37.png", surface: "47_37C.png" },
-    { number: 46, image: "46_36.png", surface: "46_36C.png" },
-    { number: 45, image: "45_35.png", surface: "45_35C.png" },
-    { number: 44, image: "34_44.png", surface: "34_44C.png" },
-    { number: 43, image: "43_33.png", surface: "43_33C.png" },
-    { number: 42, image: "32_42.png", surface: "32_42C.png" },
-    { number: 41, image: "41_31.png", surface: "41_31C.png" },
-    { number: 31, image: "41_31.png", surface: "41_31C.png" },
-    { number: 32, image: "32_42.png", surface: "32_42C.png" },
-    { number: 33, image: "43_33.png", surface: "43_33C.png" },
-    { number: 34, image: "34_44.png", surface: "34_44C.png" },
-    { number: 35, image: "45_35.png", surface: "45_35C.png" },
-    { number: 36, image: "46_36.png", surface: "46_36C.png" },
-    { number: 37, image: "47_37.png", surface: "47_37C.png" },
-    { number: 38, image: "38_48.png", surface: "38_48C.png" },
-  ];
-
-  function renderTeeth(teeth) {
-    const row1 = document.getElementById("teethSelector1");
-    const row2 = document.getElementById("teethSelector2");
-
-    teeth.forEach((tooth, index) => {
-      const elem =
-        index < 16
-          ? `
-     <span role="button" class="rounded-3 border p-2 d-flex flex-column align-items-center gap-2 tooth-item"
-      data-tooth="${tooth.number}">
-      <img width="30" height="50" src="./Teeth/${tooth.image}" />
-      <img width="30" height="30" src="./Teeth/${tooth.surface}" />
-        <small>${tooth.number}</small>
-      </span> 
-    `
-          : `
-     <span role="button" class="rounded-3 border p-2 d-flex flex-column align-items-center gap-2 tooth-item"
-      data-tooth="${tooth.number}">
-       <small>${tooth.number}</small>
-        <img width="30" height="30" src="./Teeth/${tooth.surface}" />
-        <img width="30" height="50" src="./Teeth/${tooth.image}" />
-      </span> 
-    `;
-
-      if (index < 16) {
-        row1.insertAdjacentHTML("beforeend", elem);
-      } else {
-        row2.insertAdjacentHTML("beforeend", elem);
-      }
-    });
-  }
-  $(document).on("click", ".tooth-item", function () {
-    const toothNumber = $(this).data("tooth");
-    console.log("Clicked tooth:", toothNumber);
-
-    // Open modal
-    const modal = new bootstrap.Modal(document.getElementById("toothModal"));
-    modal.show();
-  });
-
-  renderTeeth(teeth);
-
+});
   let selectedSurfaces = [];
 
-  // Handle surface clicking
-  $(document).on("click", ".surface", function () {
-    $(this).toggleClass("active");
-    const surfaceName = $(this).data("surface");
-
-    if ($(this).hasClass("active")) {
-      selectedSurfaces.push(surfaceName);
-    } else {
-      selectedSurfaces = selectedSurfaces.filter((s) => s !== surfaceName);
-    }
-
-    $("#selectedSurfacesText").text(selectedSurfaces.join(", "));
-  });
-
-  // Reset surfaces when opening modal for a specific tooth
   $(document).on("click", ".tooth-item", function () {
     const toothNumber = $(this).data("tooth");
-
-    // Reset modal state
     $(".surface").removeClass("active");
     selectedSurfaces = [];
     $("#selectedSurfacesText").text("");
@@ -182,4 +199,68 @@ $(function () {
     const modal = new bootstrap.Modal(document.getElementById("toothModal"));
     modal.show();
   });
+
+  $(document).on("click", ".surface", function () {
+    $(this).toggleClass("active");
+    const surfaceName = $(this).data("surface");
+    if ($(this).hasClass("active")) {
+      selectedSurfaces.push(surfaceName);
+    } else {
+      selectedSurfaces = selectedSurfaces.filter((s) => s !== surfaceName);
+    }
+    $("#selectedSurfacesText").text(selectedSurfaces.join(", "));
+  });
+
+  function updateDentalTotals() {
+    const sum = dentalDataList.reduce((a, b) => a + (b.total || 0), 0);
+    $("#dentalSum").text(sum.toFixed(2));
+  }
+  function renderChildTeethUI(teethArray) {
+    const row1 = document.getElementById("childTeethSelector1");
+    const row2 = document.getElementById("childTeethSelector2");
+    if (!row1 || !row2) return;
+
+    row1.innerHTML = "";
+    row2.innerHTML = "";
+
+    teethArray.forEach((tooth, index) => {
+      const isUpper = index < 10;
+      const elem = `
+        <span role="button" class="rounded-3 border p-2 d-flex flex-column align-items-center gap-2 tooth-item" data-tooth="${tooth.number}">
+          ${isUpper ? "" : `<small>${tooth.number}</small>`}
+          ${
+            isUpper
+              ? `<img width="30" height="50" src="./Teeth/${tooth.image}" />`
+              : `<img width="30" height="30" src="./Teeth/${tooth.surface}" />`
+          }
+          ${
+            isUpper
+              ? `<img width="30" height="30" src="./Teeth/${tooth.surface}" />`
+              : `<img width="30" height="50" src="./Teeth/${tooth.image}" />`
+          }
+          ${isUpper ? `<small>${tooth.number}</small>` : ""}
+        </span>`;
+
+      (isUpper ? row1 : row2).insertAdjacentHTML("beforeend", elem);
+    });
+  }
+  renderChildTeethUI(childTeeth);
+  renderTeethUI(teeth);
+  renderDentalTable(dentalDataList);
+
+    const $toggleBtn = $("#dentalToothToggle");
+  let isAdult = true;
+  $toggleBtn.on("click", function () {
+    isAdult = !isAdult;
+    if (isAdult) {
+      $(this).html('<i class="fas fa-child"></i> Change to child');
+      $("#adultTooth").removeClass("d-none").addClass("d-block");
+      $("#childTooth").removeClass("d-block").addClass("d-none");
+    } else {
+      $(this).html('<i class="fas fa-male"></i> Change to adult');
+      $("#childTooth").removeClass("d-none").addClass("d-block");
+      $("#adultTooth").removeClass("d-block").addClass("d-none");
+    }
+  });
+
 });

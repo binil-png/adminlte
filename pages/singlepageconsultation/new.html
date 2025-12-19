@@ -886,12 +886,15 @@
                   <button
                     class="btn btn-sm btn-link collapsed text-decoration-none p-0"
                   >
-                    <span style="width: 60px;" class="mb-0 fw-semibold text-custom text-nowrap">
+                    <span
+                      style="width: 60px"
+                      class="mb-0 fw-semibold text-custom text-nowrap"
+                    >
                       Procedures & Treatments
                     </span>
                   </button>
 
-                  <small  class="text-custom" id="procPreview"
+                  <small class="text-custom" id="procPreview"
                     >No procedures added</small
                   >
                 </div>
@@ -1097,8 +1100,6 @@
                         Dental Notes & Procedure
                       </span>
                     </button>
-
-                    <!-- Preview Text -->
                     <small class="text-custom ml-2">
                       • Teeth: <span id="selectedTeethPreview">None</span>
                     </small>
@@ -1111,26 +1112,40 @@
                   data-parent="#patientAccordion"
                 >
                   <div class="card-body">
-                    <!-- Tooth Selection -->
-                    <label class="font-weight-bold text-custom"
-                      >Select Teeth</label
-                    >
                     <div
-                      class="d-flex flex-wrap gap-2 mb-3 justify-content-center"
-                      id="teethSelector1"
+                      class="d-flex justify-content-between align-items-center"
                     >
-                      <!-- Tooth first row render here -->
+                      <label class="font-weight-bold text-custom"
+                        >Select Teeth</label
+                      >
+                      <button
+                        id="dentalToothToggle"
+                        class="btn btn-sm text-success"
+                      >
+                        Change to child <i class="fa fa-child"></i>
+                      </button>
                     </div>
-                    <div
-                      class="d-flex flex-wrap gap-2 mb-3 justify-content-center"
-                      id="teethSelector2"
-                    >
-                      <!-- Tooth second row render here -->
+                    <div id="adultTooth">
+                      <div
+                        class="d-flex flex-wrap gap-2 mb-3 justify-content-center"
+                        id="teethSelector1"
+                      ></div>
+                      <div
+                        class="d-flex flex-wrap gap-2 mb-3 justify-content-center"
+                        id="teethSelector2"
+                      ></div>
                     </div>
 
-                    <!-- Notes Section -->
-
-                    <!-- Procedure Table -->
+                    <div class="d-none" id="childTooth">
+                      <div
+                        class="d-flex flex-wrap gap-2 mb-3 justify-content-center"
+                        id="childTeethSelector1"
+                      ></div>
+                      <div
+                        class="d-flex flex-wrap gap-2 mb-3 justify-content-center"
+                        id="childTeethSelector2"
+                      ></div>
+                    </div>
 
                     <div class="mt-2 ms-3 font-weight-bold text-custom">
                       Total: ₹ <span id="dentalSum">0</span>
@@ -1164,7 +1179,14 @@
                         <!-- <button  data-dismiss="modal" class="btn btn-sm text-danger rounded-4"><i class="fas fa-times"></i></button> -->
                       </div>
 
-                      <div class="px-5 py-3">
+                      <div
+                        style="
+                          min-height: 70dvh;
+                          max-height: 70dvh;
+                          overflow-y: auto;
+                        "
+                        class="px-5 py-3"
+                      >
                         <div
                           class="w-50 py-2 quick-badges d-flex gap-1 flex-wrap justify-content-start align-items-center"
                         >
@@ -1297,89 +1319,299 @@
                             </div>
                           </div>
                         </div>
-                        <div class="border rounded-4">
-                          <table
-                            style="border-radius: 10px; overflow: hidden"
-                            class="table table-sm table-borderless rounded-4"
-                            id="dentalProcTable"
-                          >
-                            <thead class="thead-light">
-                              <tr>
-                                <th class="col-proc">Procedure</th>
-                                <th class="col-fixed">Qty</th>
-                                <th class="col-fixed">Price</th>
-                                <th class="col-fixed">Total</th>
-                                <th class="col-fixed"></th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <td>
-                                  <select
-                                    class="form-control custom-select dental-proc rounded-4 input-style"
-                                  >
-                                    <option value="">Select procedure</option>
-                                    <option value="Filling">Filling</option>
-                                    <option value="Extraction">
-                                      Extraction
-                                    </option>
-                                    <option value="Scaling">Scaling</option>
-                                  </select>
-                                </td>
-                                <td>
-                                  <input
-                                    type="number"
-                                    class="form-control dental-qty rounded-4 input-style"
-                                    value="1"
-                                  />
-                                </td>
-                                <td>
-                                  <input
-                                    type="number"
-                                    class="form-control dental-price rounded-4 input-style"
-                                    value="0"
-                                  />
-                                </td>
-                                <td
-                                  class="dental-line-total align-middle px-3 py-2"
-                                >
-                                  ₹0
-                                </td>
-                                <td>
-                                  <button
-                                    type="button"
-                                    class="btn btn-sm btn-remove-dental"
-                                  >
-                                    <i class="fas fa-trash text-danger"></i>
-                                  </button>
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
+                        <div class="">
+                          <div id="dentalContainer"></div>
+                        </div>
+                      </div>
 
+                      <div
+                        class="modal-footer d-flex justify-content-between align-items-center"
+                      >
+                        <button
+                          type="button"
+                          class="btn btn-sm btn-link"
+                          id="addDentalProc"
+                        >
+                          + ADD NEW
+                        </button>
+                        <div
+                          class="d-flex justify-content-end align-items-center gap-2"
+                        >
                           <button
                             type="button"
-                            class="btn btn-sm btn-link"
-                            id="addDentalProc"
+                            class="btn rounded-4 btn-sm btn-outline-success"
                           >
-                            + ADD NEW
+                            Save <i class="fas fa-save ms-2"></i>
                           </button>
+                          <button
+                            type="button"
+                            class="btn btn-sm btn-outline-danger rounded-4"
+                            data-dismiss="modal"
+                          >
+                            Close <i class="fas fa-times ms-2"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Dental procedure lab (only for dental doctors) -->
+              <div class="card mb-2">
+                <div class="card-header" id="headingDental">
+                  <div
+                    role="button"
+                    data-toggle="collapse"
+                    data-target="#collapseDentalLab"
+                    class="d-flex gap-2 justify-content-between align-items-center"
+                  >
+                    <button
+                      class="btn btn-sm collapsed text-decoration-none p-0"
+                    >
+                      <span class="mb-0 fw-semibold text-custom">
+                        Dental Lab
+                      </span>
+                    </button>
+                    <small class="text-custom ml-2">
+                      • Teeth: <span id="selectedTeethPreview">None</span>
+                    </small>
+                  </div>
+                </div>
+
+                <div
+                  id="collapseDentalLab"
+                  class="collapse"
+                  data-parent="#patientAccordion"
+                >
+                  <div class="card-body">
+                    <div
+                      class="d-flex justify-content-between align-items-center"
+                    >
+                      <button
+                        class="btn btn-sm text-primary rounded-4"
+                        id="tooth-lab"
+                      >
+                        Select tooth <i class="fas fa-tooth"></i>
+                      </button>
+                    </div>
+
+                    <div
+                      id="selectedLabContainer"
+                      class="d-flex flex-wrap justify-content-start p-3 border rounded-2 mt-2 gap-1"
+                    ></div>
+
+                    <div class="row">
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label small fw-bold">Lab Name</label>
+                        <select
+                          class="form-select form-select-sm rounded-4"
+                          id="labName"
+                        >
+                          <option selected disabled>Choose Lab...</option>
+                          <option value="Lab 1">Lab 1</option>
+                          <option value="Lab 2">Lab 2</option>
+                          <option value="Lab 3">Lab 3</option>
+                        </select>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label small fw-bold">Brand</label>
+                        <select
+                          class="form-select form-select-sm rounded-4"
+                          id="brand"
+                        >
+                          <option selected disabled>Choose Brand...</option>
+                          <option value="Brand 1">Brand 1</option>
+                          <option value="Brand 2">Brand 2</option>
+                          <option value="Brand 3">Brand 3</option>
+                        </select>
+                      </div>
+
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label small fw-bold"
+                          >Type of Work</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control form-control-sm rounded-4"
+                          id="workType"
+                          placeholder="e.g. Crown, Bridge"
+                        />
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label small fw-bold">Remarks</label>
+                        <input
+                          type="text"
+                          class="form-control form-control-sm rounded-4"
+                          id="remarks"
+                          placeholder="Additional notes"
+                        />
+                      </div>
+
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label small fw-bold"
+                          >Invoice Amount</label
+                        >
+                        <input
+                          type="number"
+                          class="form-control form-control-sm rounded-4"
+                          id="invoiceAmount"
+                          placeholder="0.00"
+                        />
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label small fw-bold"
+                          >Amount Given to Lab</label
+                        >
+                        <input
+                          type="number"
+                          class="form-control form-control-sm rounded-4"
+                          id="labAmount"
+                          placeholder="0.00"
+                        />
+                      </div>
+
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label small fw-bold"
+                          >Assigned Executive Name</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control form-control-sm rounded-4"
+                          id="executiveName"
+                        />
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label small fw-bold"
+                          >Delivery Status</label
+                        >
+                        <select
+                          class="form-select form-select-sm rounded-4"
+                          id="deliveryStatus"
+                        >
+                          <option value="pending">Pending</option>
+                          <option value="in_progress">In Progress</option>
+                          <option value="ready">Ready</option>
+                          <option value="delivered">Delivered</option>
+                        </select>
+                      </div>
+                      <div
+                        class="col-md-6 mb-3 d-flex justify-content-end align-items-center gap-2"
+                      >
+                        <div class="w-50">
+                          <label class="form-label small fw-bold"
+                            >Expected Delivery Date</label
+                          >
+                          <input
+                            type="date"
+                            class="form-control form-control-sm rounded-4"
+                            id="deliveryDate"
+                          />
+                        </div>
+                        <div class="w-50">
+                          <label class="form-label small fw-bold"
+                            >Given on Date</label
+                          >
+                          <input
+                            type="date"
+                            class="form-control form-control-sm rounded-4"
+                            id="givenDate"
+                          />
+                        </div>
+                      </div>
+                      <div
+                        class="col-md-6 mb-3 d-flex justify-content-end align-items-end"
+                      >
+                        <button
+                          type="button"
+                          class="btn btn-sm btn-primary rounded-4"
+                          id="saveDental"
+                        >
+                          Add order <i class="fas fa-save ms-2"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="modal fade"
+                  id="toothLabModal"
+                  tabindex="-1"
+                  aria-labelledby="toothModalLabelLab"
+                  aria-hidden="true"
+                >
+                  <div class="modal-dialog modal-dialog-centered modal-xl">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="toothModalLabelLab">
+                          Dental Lab
+                        </h5>
+                        <button
+                          type="button"
+                          class="btn-close btn-sm"
+                          data-bs-dismiss="modal"
+                          aria-label="Close"
+                          data-dismiss="modal"
+                        ></button>
+                      </div>
+
+                      <div
+                        class="modal-body px-5 py-3"
+                        style="
+                          min-height: 60dvh;
+                          max-height: 60dvh;
+                          overflow-y: auto;
+                        "
+                      >
+                        <div
+                          class="d-flex justify-content-between align-items-center py-2 mb-3"
+                        >
+                          <button
+                            type="button"
+                            id="selectAllBtn"
+                            class="btn btn-sm text-primary"
+                          >
+                            Select all
+                          </button>
+                          <button
+                            type="button"
+                            id="labToothToggle"
+                            class="btn btn-sm text-success"
+                          >
+                            Change to child <i class="fa fa-child"></i>
+                          </button>
+                        </div>
+
+                        <div id="adultToothLab">
+                          <div
+                            class="d-flex flex-wrap gap-2 mb-3 justify-content-center"
+                            id="dentalUpperLab"
+                          ></div>
+                          <div
+                            class="d-flex flex-wrap gap-2 mb-3 justify-content-center"
+                            id="dentalLowerLab"
+                          ></div>
+                        </div>
+
+                        <div class="d-none" id="childToothLab">
+                          <div
+                            class="d-flex flex-wrap gap-2 mb-3 justify-content-center"
+                            id="childDentalUpperLab"
+                          ></div>
+                          <div
+                            class="d-flex flex-wrap gap-2 mb-3 justify-content-center"
+                            id="childDentalLowerLab"
+                          ></div>
                         </div>
                       </div>
 
                       <div class="modal-footer">
                         <button
                           type="button"
-                          class="btn rounded-4 btn-sm btn-outline-success"
-                        >
-                          Save <i class="fas fa-save ms-2"></i>
-                        </button>
-                        <button
-                          type="button"
-                          class="btn btn-sm btn-outline-danger rounded-4"
+                          class="btn btn-sm btn-success rounded-4 px-4"
                           data-dismiss="modal"
                         >
-                          Close <i class="fas fa-times ms-2"></i>
+                          Confirm
                         </button>
                       </div>
                     </div>
@@ -1505,12 +1737,110 @@
                   <button class="btn btn-sm btn-success save-btn rounded-4">
                     Save <i class="fas fa-save ms-2"></i>
                   </button>
-                  <button class="btn btn-sm btn-success save-btn rounded-4">
+                  <button
+                    class="btn btn-sm btn-success save-btn save-btn-share rounded-4"
+                  >
                     Save and share <i class="fas fa-share-alt ms-2"></i>
                   </button>
+                  <div id="share-popover-content" class="d-none">
+                    <div class="p-1" style="width: fit-content">
+                      <div class="row g-2 mb-3">
+                        <div class="col-6">
+                          <label class="x-small text-muted mb-1">From</label>
+                          <input
+                            type="date"
+                            id="share-from-date"
+                            class="form-control form-control-sm rounded-3"
+                          />
+                        </div>
+                        <div class="col-6">
+                          <label class="x-small text-muted mb-1">To</label>
+                          <input
+                            type="date"
+                            id="share-to-date"
+                            class="form-control form-control-sm rounded-3"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="bg-light p-2 rounded-3 mb-3">
+                        <div class="form-check mb-1">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            id="check-notes"
+                            checked
+                          />
+                          <label
+                            class="form-check-label small"
+                            for="check-notes"
+                            >Clinical Notes</label
+                          >
+                        </div>
+                        <div class="form-check mb-1">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            id="check-rx"
+                            checked
+                          />
+                          <label class="form-check-label small" for="check-rx"
+                            >Prescription</label
+                          >
+                        </div>
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            id="check-proc"
+                            checked
+                          />
+                          <label class="form-check-label small" for="check-proc"
+                            >Procedure</label
+                          >
+                        </div>
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            id="check-proc"
+                            checked
+                          />
+                          <label class="form-check-label small" for="check-proc"
+                            >File</label
+                          >
+                        </div>
+                      </div>
+
+                      <div
+                        class="d-flex justify-content-between border-top pt-2"
+                      >
+                        <button
+                          class="btn btn-sm btn-outline-success border-0 share-action"
+                          data-share-type="WhatsApp"
+                          title="WhatsApp"
+                        >
+                          <i class="fab fa-whatsapp fa-lg"></i>
+                        </button>
+                        <button
+                          class="btn btn-sm btn-outline-primary border-0 share-action"
+                          data-share-type="Email"
+                          title="Email"
+                        >
+                          <i class="fas fa-envelope fa-lg"></i>
+                        </button>
+                        <button
+                          class="btn btn-sm btn-outline-dark border-0 share-action"
+                          data-share-type="Print"
+                          title="Print"
+                        >
+                          <i class="fas fa-print fa-lg"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-
             </div>
           </main>
         </div>
@@ -1524,6 +1854,7 @@
     <script src="./mockData.js"></script>
     <script src="./vitals.js"></script>
     <script src="./dental.js"></script>
+    <script src="./dentalLab.js"></script>
     <script src="./clinicalNotes.js"></script>
     <script src="./procedure.js"></script>
     <script src="./prescription.js"></script>
@@ -1533,5 +1864,3 @@
     <script src="./chart.js"></script>
   </body>
 </html>
-
-

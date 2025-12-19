@@ -316,4 +316,52 @@ $(function () {
   $("#asideMenu").removeClass(
     "col-md-2 col-lg-2 border border-top-0 border-bottom-0 p-3 sidebar hide-scrollbar"
   );
+
+  // Initialize Save and Share Popover
+  const shareBtn = document.querySelector(".save-btn-share");
+  if (shareBtn) {
+    const popover = new bootstrap.Popover(shareBtn, {
+      html: true,
+      title: "Sharing Options",
+      content: function () {
+        return $("#share-popover-content").html();
+      },
+      placement: "right",
+      trigger: "click",
+      sanitize: false, // Required to render inputs/buttons inside popover
+    });
+
+    // Close popover when clicking outside
+    $("body").on("click", function (e) {
+      if (
+        !$(shareBtn).is(e.target) &&
+        $(shareBtn).has(e.target).length === 0 &&
+        $(".popover").has(e.target).length === 0
+      ) {
+        popover.hide();
+      }
+    });
+
+    // Handle button clicks inside the popover (using delegation)
+    $(document).on("click", ".share-action", function () {
+      const type = $(this).attr("title");
+
+      // Example: Gather data before sharing
+      const data = {
+        from: $("#share-from-date").val(),
+        to: $("#share-to-date").val(),
+        notes: $("#check-notes").is(":checked"),
+        rx: $("#check-rx").is(":checked"),
+        proc: $("#check-proc").is(":checked"),
+      };
+
+      console.log("Sharing via " + type, data);
+
+      if (type === "Print") {
+        window.print();
+      } else {
+        alert(`Preparing ${type} share for selected dates...`);
+      }
+    });
+  }
 });

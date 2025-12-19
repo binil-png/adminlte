@@ -39,35 +39,27 @@ $(function () {
     // ---------- 3. ADD MEDICINE ROW ----------
     function addMedicineRow(data = {}) {
       const row = $(`
-       <div class="medicine-card bg-custom mt-2 rounded-4 p-3">
+       <div class="medicine-card bg-custom mt-2 rounded-4 py-3 ps-2">
       <h6 class="mb-3 ps-1">Medicine</h6>
 
-      <div class="row g-2">
+      <div class="row g-1">
 
         <!-- Medicine name -->
-        <div class="col-md-4">
-          <input class="form-control rounded-4 input-style" placeholder="Medicine Name">
-        </div>
-
-        <!-- Generic name -->
-        <div class="col-md-4">
-          <input class="form-control rounded-4 input-style" placeholder="Medicine Generic Name">
+        <div class="col-md-5 d-flex pe-1">
+          <input class="form-control rounded-start-4 rounded-end-0 border-end-0 input-style" placeholder="Medicine Name">
+          <input class="form-control rounded-end-4 rounded-start-0 input-style" placeholder="Medicine Generic Name">
         </div>
 
         <!-- Dosage -->
-        <div class="col-md-4">
-          <div class="input-group">
-            <input class="form-control rounded-start-4 input-style" placeholder="Dosage">
-            <select class="form-select rounded-end-4 input-style">
+        <div class="col-md-7 row align-items-center">
+          <div class="input-group col-3 p-1">
+            <input style="width:20px;" class="form-control rounded-start-4 input-style" placeholder="Dosage">
+            <select style="width:30px;" class="form-select rounded-end-4 input-style">
               <option>mg</option>
               <option>ml</option>
             </select>
           </div>
-        </div>
-
-        <!-- Duration -->
-        <div class="col-md-4">
-          <div class="input-group">
+            <div class="input-group col-4 p-1">
             <input class="form-control rounded-start-4 input-style" placeholder="Duration">
             <select class="form-select rounded-end-4 input-style">
               <option>Day(s)</option>
@@ -75,11 +67,7 @@ $(function () {
               <option>Month(s)</option>
             </select>
           </div>
-        </div>
-
-        <!-- Frequency -->
-        <div class="col-md-4">
-          <div class="input-group">
+          <div class="input-group col-5 p-1">
             <input class="form-control rounded-start-4 input-style" placeholder="Frequency">
             <select class="form-select rounded-end-4 input-style">
               <option>Before food</option>
@@ -89,10 +77,12 @@ $(function () {
           </div>
         </div>
 
+      
+
         <!-- Dispense -->
-        <div class="col-md-4">
+        <div class="col-md-3">
           <div class="input-group">
-            <input class="form-control rounded-start-4 input-style" placeholder="Dispensing quantity">
+            <input class="form-control rounded-start-4 input-style" placeholder="Dispensing qty">
             <select class="form-select rounded-end-4 input-style">
               <option>Nos</option>
               <option>Bottle</option>
@@ -103,12 +93,12 @@ $(function () {
         </div>
 
         <!-- Instructions -->
-        <div class="col-md-4">
+        <div class="col-md-3">
           <input class="form-control rounded-4 input-style" placeholder="Instructions">
         </div>
 
         <!-- Usage -->
-        <div class="col-md-4">
+        <div class="col-md-3">
           <select class="form-select rounded-4 input-style">
             <option value="">Select usage / route</option>
             <option>SOS</option>
@@ -122,7 +112,7 @@ $(function () {
         </div>
 
         <!-- Remove -->
-        <div class="col-md-4 d-flex align-items-end justify-content-end">
+        <div class="col-md-12 d-flex align-items-end justify-content-end">
           <button class="btn btn-sm text-danger btn-remove-med" type="button">
             Remove
           </button>

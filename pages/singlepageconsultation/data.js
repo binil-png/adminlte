@@ -1,4 +1,65 @@
 const allergies = ["Penicillin"];
+
+const teeth = [
+    // upper jaw
+    { number: 18, image: "18_28.png", surface: "18_28C.png" },
+    { number: 17, image: "17_27.png", surface: "17_27C.png" },
+    { number: 16, image: "16_26.png", surface: "16_26C.png" },
+    { number: 15, image: "15_25.png", surface: "15_25C.png" },
+    { number: 14, image: "14_24.png", surface: "14_24C.png" },
+    { number: 13, image: "13_23.png", surface: "13_23C.png" },
+    { number: 12, image: "12_22.png", surface: "12_22C.png" },
+    { number: 11, image: "11_21.png", surface: "11_21C.png" },
+    { number: 21, image: "11_21.png", surface: "11_21C.png" },
+    { number: 22, image: "12_22.png", surface: "12_22C.png" },
+    { number: 23, image: "13_23.png", surface: "13_23C.png" },
+    { number: 24, image: "14_24.png", surface: "14_24C.png" },
+    { number: 25, image: "15_25.png", surface: "15_25C.png" },
+    { number: 26, image: "16_26.png", surface: "16_26C.png" },
+    { number: 27, image: "17_27.png", surface: "17_27C.png" },
+    { number: 28, image: "18_28.png", surface: "18_28C.png" },
+    // lower jaw
+    { number: 48, image: "38_48.png", surface: "38_48C.png" },
+    { number: 47, image: "47_37.png", surface: "47_37C.png" },
+    { number: 46, image: "46_36.png", surface: "46_36C.png" },
+    { number: 45, image: "45_35.png", surface: "45_35C.png" },
+    { number: 44, image: "34_44.png", surface: "34_44C.png" },
+    { number: 43, image: "43_33.png", surface: "43_33C.png" },
+    { number: 42, image: "32_42.png", surface: "32_42C.png" },
+    { number: 41, image: "41_31.png", surface: "41_31C.png" },
+    { number: 31, image: "41_31.png", surface: "41_31C.png" },
+    { number: 32, image: "32_42.png", surface: "32_42C.png" },
+    { number: 33, image: "43_33.png", surface: "43_33C.png" },
+    { number: 34, image: "34_44.png", surface: "34_44C.png" },
+    { number: 35, image: "45_35.png", surface: "45_35C.png" },
+    { number: 36, image: "46_36.png", surface: "46_36C.png" },
+    { number: 37, image: "47_37.png", surface: "47_37C.png" },
+    { number: 38, image: "38_48.png", surface: "38_48C.png" },
+  ];
+
+const childTeeth = [
+  { number: 55, image: "childTeeth/F51.gif", surface: "childTeeth/O51.gif" },
+  { number: 54, image: "childTeeth/F52.gif", surface: "childTeeth/O52.gif" },
+  { number: 53, image: "childTeeth/F53.gif", surface: "childTeeth/O53.gif" },
+  { number: 52, image: "childTeeth/F54.gif", surface: "childTeeth/O54.gif" },
+  { number: 51, image: "childTeeth/F55.gif", surface: "childTeeth/O55.gif" },
+  { number: 61, image: "childTeeth/F61.gif", surface: "childTeeth/O61.gif" },
+  { number: 62, image: "childTeeth/F62.gif", surface: "childTeeth/O62.gif" },
+  { number: 63, image: "childTeeth/F63.gif", surface: "childTeeth/O63.gif" },
+  { number: 64, image: "childTeeth/F64.gif", surface: "childTeeth/O64.gif" },
+  { number: 65, image: "childTeeth/F65.gif", surface: "childTeeth/O65.gif" },
+  { number: 85, image: "childTeeth/F71.gif", surface: "childTeeth/O71.gif" },
+  { number: 84, image: "childTeeth/F72.gif", surface: "childTeeth/O72.gif" },
+  { number: 83, image: "childTeeth/F73.gif", surface: "childTeeth/O73.gif" },
+  { number: 82, image: "childTeeth/F74.gif", surface: "childTeeth/O74.gif" },
+  { number: 81, image: "childTeeth/F75.gif", surface: "childTeeth/O75.gif" },
+  { number: 71, image: "childTeeth/F81.gif", surface: "childTeeth/O81.gif" },
+  { number: 72, image: "childTeeth/F82.gif", surface: "childTeeth/O82.gif" },
+  { number: 73, image: "childTeeth/F83.gif", surface: "childTeeth/O83.gif" },
+  { number: 74, image: "childTeeth/F84.gif", surface: "childTeeth/O84.gif" },
+  { number: 75, image: "childTeeth/F85.gif", surface: "childTeeth/O85.gif" },
+]
+
 const mockPatient = {
   avatar:
     "https://www.nicepng.com/png/detail/186-1866063_dicks-out-for-harambe-sample-avatar.png",

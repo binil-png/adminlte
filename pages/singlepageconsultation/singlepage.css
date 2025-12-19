@@ -229,3 +229,9 @@ body {
 .cursor-pointer {
   cursor: pointer;
 }
+
+.lab-tooth-selected {
+    background-color: #e7f1ff !important; /* Light blue */
+    border-color: #0d6efd !important;     /* Solid primary blue border */
+    color: #084298;                        /* Dark blue text */
+}
