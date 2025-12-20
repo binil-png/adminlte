@@ -19,22 +19,6 @@ $(function () {
 
   //---------------------- chip filter function ------------------------------------------------
 
-  function formatDateGroupLabel(dateStr) {
-    const today = new Date();
-    const date = new Date(dateStr);
-
-    const isToday = date.toDateString() === today.toDateString();
-
-    const yesterday = new Date();
-    yesterday.setDate(today.getDate() - 1);
-
-    const isYesterday = date.toDateString() === yesterday.toDateString();
-
-    if (isToday) return "Today";
-    if (isYesterday) return "Yesterday";
-
-    return dateStr.split("-").reverse().join("-"); // dd-mm-yyyy
-  }
   function renderHistory() {
     const container = $(".content-area");
     container.empty();
@@ -43,27 +27,46 @@ $(function () {
       container.append(`<p class="text-muted small">No history found.</p>`);
       return;
     }
+    const vitalsData = [];
+    const otherHistoryData = [];
+    historyData.forEach((item) => {
+      if (item.type === "vitals") {
+        vitalsData.push(item);
+      } else {
+        otherHistoryData.push(item);
+      }
+    });
 
+    if (vitalsData.length > 0) {
+      renderVitalsTable(container, vitalsData);
+      container.append('<hr class="my-4">');
+    }
+    if (notesList.length > 0) {
+      renderNotesComparisonTable(container, notesList.slice(0, 3));
+    }
+
+    renderOtherHistory(container, otherHistoryData);
+  }
+  let clinicalNotesToggle = true;
+  function renderOtherHistory(container, historyItems) {
     // Group by date
-    const grouped = historyData.reduce((acc, item) => {
+    const grouped = historyItems.reduce((acc, item) => {
       (acc[item.date] = acc[item.date] || []).push(item);
       return acc;
     }, {});
 
-    // Sort dates desc
     const sortedDates = Object.keys(grouped).sort(
       (a, b) => new Date(b) - new Date(a)
     );
 
     sortedDates.forEach((date) => {
-      // Convert 2025-11-26 to Today / Yesterday / dd-mm-yyyy
       const label = formatDateGroupLabel(date);
 
       container.append(
         `<h6 class="fw-bold small text-custom mt-3">${label}</h6>`
       );
 
-      grouped[date].forEach((item) => {
+      grouped[date].forEach((item, i) => {
         const iconHtml = item.icon
           ? `<i class="${item.icon} me-2 text-custom"></i>`
           : "";
@@ -77,59 +80,113 @@ $(function () {
           : "";
 
         container.append(`
-        <div class="rounded-2 bg-white mb-2 shadow-sm filter-item"
-             data-type="${item.type}"
-             data-date="${item.date}">
+                <div class="${
+                  item.type == "notes"
+                    ? "rounded-2 bg-white mb-2 shadow-sm filter-item clinical-notes-container"
+                    : "rounded-2 bg-white mb-2 shadow-sm filter-item"
+                }"
+                    data-type="${item.type}"
+                    data-date="${item.date}"> 
+                    <div class="card-body">
+                    <div class="d-flex justify-content-between align-item-center pb-2">
+                          <h6 class="fw-semibold text-custom">
+                              ${iconHtml} ${item.title}
+                          </h6>
+                          ${
+                            item.type == "notes"
+                              ? `<button  class="btn text-success btn-sm toggle-view-btn" id="table-toggle-btn${i}"><i class="fas fa-table"></i></button>`
+                              : ""
+                          }
+                    </div>
+                          <div class="content-container">
+                            <div class="html-view">
+                               ${item.html || ""}
+                            </div>
+                            <div class="card-view d-none">
+                              ${item.card || ""}
+                            </div>
+                          </div>
+                        ${extra}
+                        ${time}
+                    </div>
+                </div>
+            `);
 
-          <div class="card-body">
+        container
+          .off("click", ".toggle-view-btn")
+          .on("click", ".toggle-view-btn", function () {
+            console.log("clicked");
+            // const $btn = $(this);
+            // const $icon = $btn.find("i");
+            const $tableView = $(".clinical-notes-tables");
+            const $cardView = $(".clinical-notes-container");
 
-            <h6 class="fw-semibold text-custom">
-              ${iconHtml} ${item.title}
-            </h6>
-
-            ${item.html || ""}
-            ${extra}
-            ${time}
-
-          </div>
-        </div>
-      `);
+            if (clinicalNotesToggle) {
+              console.log("condition 1");
+              // $icon.removeClass("fa-table").addClass("fa-list-alt");
+              $cardView.addClass("d-none");
+              $tableView.removeClass("d-none");
+            } else {
+              console.log("condition 2");
+              // $icon.removeClass("fa-list-alt").addClass("fa-table");
+              $tableView.addClass("d-none");
+              $cardView.removeClass("d-none");
+            }
+            console.log("before = ", clinicalNotesToggle);
+            clinicalNotesToggle = !clinicalNotesToggle;
+            console.log("after = ", clinicalNotesToggle);
+          });
       });
+    });
+  }
+
+  function formatDateGroupLabel(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", {
+      month: "short",
+      day: "2-digit",
+      year: "numeric",
     });
   }
 
   renderHistory();
 
+  function getUniqueDates() {
+    if (typeof historyData === "undefined" || historyData.length === 0) {
+      return [];
+    }
+    const uniqueDates = [...new Set(historyData.map((item) => item.date))];
+    return uniqueDates.sort((a, b) => new Date(b) - new Date(a));
+  }
+  function populateDateFilter() {
+    const $select = $("#dateFilter");
+    $select.empty();
+    $select.append(`<option value="all">-- Select All Dates --</option>`);
+    const uniqueDates = getUniqueDates();
+    uniqueDates.forEach((dateString) => {
+      const displayLabel = formatDateGroupLabel(dateString);
+      $select.append(`<option value="${dateString}">${displayLabel}</option>`);
+    });
+  }
+  renderHistory();
+  populateDateFilter();
+
   function applyFilters() {
     const activeFilter = $("#chipFilters .active-filter").data("filter");
-    const selectedDate = $("#dateFilter").val();
+    const selectedDates = $("#dateFilter").val() || [];
+    const filterAllDates =
+      selectedDates.includes("all") || selectedDates.length === 0;
 
     $(".filter-item")
       .hide()
       .filter(function () {
         const typeMatch =
           activeFilter === "all" || $(this).data("type") === activeFilter;
-        const dateMatch =
-          !selectedDate || $(this).data("date") === selectedDate;
+
+        const itemDate = $(this).data("date");
+        const dateMatch = filterAllDates || selectedDates.includes(itemDate);
 
         return typeMatch && dateMatch;
-      })
-      .show();
-  }
-
-  // Chip Click
-  function applyFilters() {
-    const activeFilter = $("#chipFilters .active-filter").data("filter");
-    const selectedDate = $("#dateFilter").val();
-
-    $(".filter-item")
-      .hide()
-      .filter(function () {
-        const matchesType =
-          activeFilter === "all" || $(this).data("type") === activeFilter;
-        const matchesDate =
-          !selectedDate || $(this).data("date") === selectedDate;
-        return matchesType && matchesDate;
       })
       .show();
   }
@@ -259,4 +316,86 @@ $(function () {
   $("#asideMenu").removeClass(
     "col-md-2 col-lg-2 border border-top-0 border-bottom-0 p-3 sidebar hide-scrollbar"
   );
+
+  // Initialize Save and Share Popover
+const shareBtn = document.querySelector(".save-btn-share");
+let popoverInstance = null;
+
+const renderPopover = () => {
+  if (!shareBtn) return;
+
+  popoverInstance = new bootstrap.Popover(shareBtn, {
+    html: true,
+    title: `
+      <div class="d-flex justify-content-between align-items-center">
+        <span>Sharing Options</span>
+        <button type="button" id="close-popover" class="btn-close btn-sm"></button>
+      </div>
+    `,
+    content: () => document.querySelector("#share-popover-content").innerHTML,
+    placement: "right",
+    trigger: "manual", // IMPORTANT
+    sanitize: false,
+  });
+
+  // Toggle popover
+  shareBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    popoverInstance.toggle();
+  });
+
+  // Close when clicking outside
+  document.addEventListener("click", (e) => {
+    const popoverEl = document.querySelector(".popover");
+
+    if (
+      popoverEl &&
+      !popoverEl.contains(e.target) &&
+      e.target !== shareBtn
+    ) {
+      popoverInstance.hide();
+    }
+  });
+
+  // Stop clicks inside popover from bubbling
+  document.addEventListener("click", (e) => {
+    if (e.target.closest(".popover")) {
+      e.stopPropagation();
+    }
+  });
+
+  // Close button
+  document.addEventListener("click", (e) => {
+    if (e.target.id === "close-popover") {
+      popoverInstance.hide();
+    }
+  });
+
+  // Share actions
+  document.addEventListener("click", (e) => {
+    if (!e.target.classList.contains("share-action")) return;
+
+    const type = e.target.getAttribute("title");
+
+    const data = {
+      from: document.getElementById("share-from-date")?.value,
+      to: document.getElementById("share-to-date")?.value,
+      notes: document.getElementById("check-notes")?.checked,
+      rx: document.getElementById("check-rx")?.checked,
+      proc: document.getElementById("check-proc")?.checked,
+    };
+
+    console.log("Sharing via", type, data);
+
+    popoverInstance.hide();
+
+    if (type === "Print") {
+      window.print();
+    } else {
+      alert(`Preparing ${type} share...`);
+    }
+  });
+};
+
+renderPopover();
 });
