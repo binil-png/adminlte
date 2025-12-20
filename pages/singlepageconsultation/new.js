@@ -318,50 +318,84 @@ $(function () {
   );
 
   // Initialize Save and Share Popover
-  const shareBtn = document.querySelector(".save-btn-share");
-  if (shareBtn) {
-    const popover = new bootstrap.Popover(shareBtn, {
-      html: true,
-      title: "Sharing Options",
-      content: function () {
-        return $("#share-popover-content").html();
-      },
-      placement: "right",
-      trigger: "click",
-      sanitize: false, // Required to render inputs/buttons inside popover
-    });
+const shareBtn = document.querySelector(".save-btn-share");
+let popoverInstance = null;
 
-    // Close popover when clicking outside
-    $("body").on("click", function (e) {
-      if (
-        !$(shareBtn).is(e.target) &&
-        $(shareBtn).has(e.target).length === 0 &&
-        $(".popover").has(e.target).length === 0
-      ) {
-        popover.hide();
-      }
-    });
+const renderPopover = () => {
+  if (!shareBtn) return;
 
-    // Handle button clicks inside the popover (using delegation)
-    $(document).on("click", ".share-action", function () {
-      const type = $(this).attr("title");
+  popoverInstance = new bootstrap.Popover(shareBtn, {
+    html: true,
+    title: `
+      <div class="d-flex justify-content-between align-items-center">
+        <span>Sharing Options</span>
+        <button type="button" id="close-popover" class="btn-close btn-sm"></button>
+      </div>
+    `,
+    content: () => document.querySelector("#share-popover-content").innerHTML,
+    placement: "right",
+    trigger: "manual", // IMPORTANT
+    sanitize: false,
+  });
 
-      // Example: Gather data before sharing
-      const data = {
-        from: $("#share-from-date").val(),
-        to: $("#share-to-date").val(),
-        notes: $("#check-notes").is(":checked"),
-        rx: $("#check-rx").is(":checked"),
-        proc: $("#check-proc").is(":checked"),
-      };
+  // Toggle popover
+  shareBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    popoverInstance.toggle();
+  });
 
-      console.log("Sharing via " + type, data);
+  // Close when clicking outside
+  document.addEventListener("click", (e) => {
+    const popoverEl = document.querySelector(".popover");
 
-      if (type === "Print") {
-        window.print();
-      } else {
-        alert(`Preparing ${type} share for selected dates...`);
-      }
-    });
-  }
+    if (
+      popoverEl &&
+      !popoverEl.contains(e.target) &&
+      e.target !== shareBtn
+    ) {
+      popoverInstance.hide();
+    }
+  });
+
+  // Stop clicks inside popover from bubbling
+  document.addEventListener("click", (e) => {
+    if (e.target.closest(".popover")) {
+      e.stopPropagation();
+    }
+  });
+
+  // Close button
+  document.addEventListener("click", (e) => {
+    if (e.target.id === "close-popover") {
+      popoverInstance.hide();
+    }
+  });
+
+  // Share actions
+  document.addEventListener("click", (e) => {
+    if (!e.target.classList.contains("share-action")) return;
+
+    const type = e.target.getAttribute("title");
+
+    const data = {
+      from: document.getElementById("share-from-date")?.value,
+      to: document.getElementById("share-to-date")?.value,
+      notes: document.getElementById("check-notes")?.checked,
+      rx: document.getElementById("check-rx")?.checked,
+      proc: document.getElementById("check-proc")?.checked,
+    };
+
+    console.log("Sharing via", type, data);
+
+    popoverInstance.hide();
+
+    if (type === "Print") {
+      window.print();
+    } else {
+      alert(`Preparing ${type} share...`);
+    }
+  });
+};
+
+renderPopover();
 });
