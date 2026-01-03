@@ -130,7 +130,7 @@ $(function () {
                 </div>
                 
                 <div id="${boxId}" class="${initialDisplayClass} mt-2 pt-2 border-top">
-                   <div class="row g-2 mb-3 align-items-center">
+                   <div class="row g-2 mb-1 align-items-center">
                        <div class="col-4">
                                   <label class="form-label small text-muted mb-0">Status</label>
                                   <select

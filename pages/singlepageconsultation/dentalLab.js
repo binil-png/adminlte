@@ -17,11 +17,7 @@ $(function () {
     teethArray.forEach((tooth, index) => {
       const isUpper = index < 16;
       const elem = `
-        <span role="button" class="${
-          selectedTooth[tooth.number]
-            ? "rounded-3 border p-2 d-flex flex-column align-items-center gap-2 lab-tooth-selected lab-tooth"
-            : "rounded-3 border p-2 d-flex flex-column align-items-center gap-2 lab-tooth"
-        }" data-tooth="${tooth.number}">
+        <span role="button" id="lab-dental-tooth-${tooth.number}" class="rounded-3 border p-2 d-flex flex-column align-items-center gap-2 lab-tooth" data-tooth="${tooth.number}">
           ${isUpper ? "" : `<small>${tooth.number}</small>`}
           ${
             isUpper
@@ -51,11 +47,7 @@ $(function () {
     teethArray.forEach((tooth, index) => {
       const isUpper = index < 10;
       const elem = `
-        <span role="button" class="${
-          selectedTooth[tooth.number]
-            ? "rounded-3 border p-2 d-flex flex-column align-items-center gap-2 lab-tooth-selected lab-tooth"
-            : "rounded-3 border p-2 d-flex flex-column align-items-center gap-2 lab-tooth"
-        }" data-tooth="${tooth.number}">
+        <span role="button" id="lab-dental-tooth-${tooth.number}" class="rounded-3 border p-2 d-flex flex-column align-items-center gap-2 lab-tooth" data-tooth="${tooth.number}">
           ${isUpper ? "" : `<small>${tooth.number}</small>`}
           ${
             isUpper
@@ -94,14 +86,12 @@ $(function () {
     const toothNo = $(this).data("tooth");
     if (selectedTooth[toothNo]) {
       delete selectedTooth[toothNo];
+      $(`#lab-dental-tooth-${toothNo}`).removeClass("lab-tooth-selected")
     } else {
       selectedTooth[toothNo] = toothNo;
+      $(`#lab-dental-tooth-${toothNo}`).addClass("lab-tooth-selected")
     }
-    if (parseInt(toothNo) > 50) {
-      renderChildTeethUI(childTeeth);
-    } else {
-      renderTeethUI(teeth);
-    }
+     
     renderSelectedTooth();
   });
 

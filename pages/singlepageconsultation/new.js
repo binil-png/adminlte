@@ -1,5 +1,170 @@
 $(function () {
-  // Files
+  let isEdit = false;
+  let patientDataGlobal = null;
+  $(document).ready(function () {
+    const modal = new bootstrap.Modal(document.getElementById("confirmPopup"));
+
+    const excludedIds = ":not(.ignore-edit)";
+    $(document).on(
+      "input change",
+      `input${excludedIds}, select${excludedIds}, textarea${excludedIds}`,
+      function () {
+        if (!isEdit) {
+          isEdit = true;
+          console.log("Global Edit Detected: Form Element");
+        }
+      }
+    );
+    $(document).on("click", `.dropdown-item${excludedIds}`, function () {
+      if (!isEdit) {
+        isEdit = true;
+        console.log("Global Edit Detected: Custom Dropdown Selection");
+      }
+    });
+    $("form").on("submit", function () {
+      isEdit = false;
+    });
+
+    const patients = [
+      {
+        id: "P-101",
+        name: "John Doe",
+        phone: "555-0101",
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnCl1OBS1ZNiCOAsWamNsbJT96c0JJPqUylg&s",
+      },
+      {
+        id: "P-102",
+        name: "Jane Smith",
+        phone: "555-0102",
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnCl1OBS1ZNiCOAsWamNsbJT96c0JJPqUylg&s",
+      },
+      {
+        id: "P-103",
+        name: "Robert Brown",
+        phone: "555-0103",
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnCl1OBS1ZNiCOAsWamNsbJT96c0JJPqUylg&s",
+      },
+      {
+        id: "P-104",
+        name: "Alice Wilson",
+        phone: "555-0104",
+        img: "https://icon0.com/free/static2/preview2/stock-photo-avatar-woman-people-icon-character-cartoon-32608.jpg",
+      },
+    ];
+
+    const $container = $("#items-container");
+    const $searchInput = $("#searchpreviousPatients");
+    const $selectedText = $("#selected-item");
+    const $noResults = $("#no-results");
+    function populateList(filter = "") {
+      $container.empty();
+      const query = filter.toLowerCase();
+
+      const filteredPatients = patients.filter(
+        (p) =>
+          p.name.toLowerCase().includes(query) ||
+          p.id.toLowerCase().includes(query)
+      );
+
+      if (filteredPatients.length > 0) {
+        $noResults.addClass("d-none");
+        filteredPatients.forEach((patient) => {
+          const itemHtml = `
+          <button class="dropdown-item py-2 border-bottom ignore-edit" type="button">
+            <div class="d-flex align-items-center">
+              <img src="${patient.img}" class="rounded-circle me-3" width="25" height="25" alt="avatar">
+              <div class="flex-grow-1">
+                <div class="d-flex justify-content-between">
+                  <strong class="mb-0 text-dark">${patient.name}</strong>
+                  <small class="text-primary fw-bold">${patient.id}</small>
+                </div>
+                <div class="text-muted small">${patient.phone}</div>
+              </div>
+            </div>
+          </button>`;
+
+          const $item = $(itemHtml);
+          $item.on("click", function () {
+            if (isEdit) {
+              modal.show();
+              patientDataGlobal = patient;
+            } else {
+              $selectedText.html(
+                `<strong>${patient.name}</strong> <small class="ms-2">(${patient.id})</small>`
+              );
+              updatePatientCard(patient);
+              $searchInput.val("");
+              populateList("");
+            }
+          });
+
+          $container.append($item);
+        });
+      } else {
+        $noResults.removeClass("d-none");
+      }
+    }
+
+    populateList();
+    $searchInput.on("input", function (e) {
+      if (isEdit) {
+        modal.show();
+      } else {
+        populateList($(this).val());
+      }
+    });
+
+    $(".close-confirm-popup").on("click", function () {
+      console.log($(this).attr("id"));
+      if ($(this).attr("id") === "confirmSwitchBtn") {
+        if (isEdit) {
+          updatePatientCard(patientDataGlobal);
+        }
+      }
+      isEdit = false;
+      modal.hide();
+    });
+
+    $searchInput.on("click", function (e) {
+      e.stopPropagation();
+    });
+
+    $("#patient-autocomplete").on("shown.bs.dropdown", function () {
+      $searchInput.focus();
+    });
+
+    function updatePatientCard(patient) {
+      // Update Left Section
+      $("#pAvatar").attr("src", patient.img);
+      $("#pName").text(patient.name);
+      $(".text-sm:contains('#')").text(`# ${patient.id}`); // Updates the ID span
+      $("#pPhone").html(
+        `<i class="fa fa-mobile mr-2 text-custom"></i> ${patient.phone}`
+      );
+
+      // Update Stats (using placeholder data if not in your object)
+      $("#pAmount").text(patient.amount || "$0.00");
+      $("#pVisits").text(patient.visits || "0");
+      $("#pLastVisit").text(patient.lastVisit || "N/A");
+
+      // Clear and update Allergies
+      const $allergyContainer = $("#pAllergies");
+      $allergyContainer.empty();
+      if (patient.allergies) {
+        patient.allergies.forEach((allergy) => {
+          $allergyContainer.append(
+            `<span class="badge bg-danger-subtle text-danger small">${allergy}</span>`
+          );
+        });
+      } else {
+        $allergyContainer.append(`<span class="text-muted small">None</span>`);
+      }
+    }
+  });
+
+  $("#globalSave").on("click", () => {
+    isEdit = false;
+  });
   $("#fileInput").on("change", function () {
     $("#fileList").empty();
     Array.from(this.files).forEach(function (f, i) {
@@ -227,6 +392,11 @@ $(function () {
     // Show input area
     $("#showFileArea").click(function () {
       $("#fileInputArea").removeClass("d-none");
+      $("#showFileArea").addClass("d-none");
+    });
+    $("#closeFileToList").click(function () {
+      $("#fileInputArea").addClass("d-none");
+      $("#showFileArea").removeClass("d-none");
     });
 
     // Add file + description
@@ -261,6 +431,7 @@ $(function () {
       $("#singleFile").val("");
       $("#singleDescription").val("");
       $("#fileInputArea").addClass("d-none");
+      $("#showFileArea").removeClass("d-none");
     });
 
     // Remove a file box
@@ -318,84 +489,86 @@ $(function () {
   );
 
   // Initialize Save and Share Popover
-const shareBtn = document.querySelector(".save-btn-share");
-let popoverInstance = null;
+  const shareBtn = document.querySelector(".save-btn-share");
+  let popoverInstance = null;
 
-const renderPopover = () => {
-  if (!shareBtn) return;
+  const renderPopover = () => {
+    if (!shareBtn) return;
 
-  popoverInstance = new bootstrap.Popover(shareBtn, {
-    html: true,
-    title: `
+    popoverInstance = new bootstrap.Popover(shareBtn, {
+      html: true,
+      title: `
       <div class="d-flex justify-content-between align-items-center">
         <span>Sharing Options</span>
         <button type="button" id="close-popover" class="btn-close btn-sm"></button>
       </div>
     `,
-    content: () => document.querySelector("#share-popover-content").innerHTML,
-    placement: "right",
-    trigger: "manual", // IMPORTANT
-    sanitize: false,
-  });
+      content: () => document.querySelector("#share-popover-content").innerHTML,
+      placement: "right",
+      trigger: "manual", // IMPORTANT
+      sanitize: false,
+    });
 
-  // Toggle popover
-  shareBtn.addEventListener("click", (e) => {
-    e.stopPropagation();
-    popoverInstance.toggle();
-  });
-
-  // Close when clicking outside
-  document.addEventListener("click", (e) => {
-    const popoverEl = document.querySelector(".popover");
-
-    if (
-      popoverEl &&
-      !popoverEl.contains(e.target) &&
-      e.target !== shareBtn
-    ) {
-      popoverInstance.hide();
-    }
-  });
-
-  // Stop clicks inside popover from bubbling
-  document.addEventListener("click", (e) => {
-    if (e.target.closest(".popover")) {
+    // Toggle popover
+    shareBtn.addEventListener("click", (e) => {
       e.stopPropagation();
-    }
-  });
+      popoverInstance.toggle();
+    });
 
-  // Close button
-  document.addEventListener("click", (e) => {
-    if (e.target.id === "close-popover") {
+    // Close when clicking outside
+    document.addEventListener("click", (e) => {
+      const popoverEl = document.querySelector(".popover");
+
+      if (popoverEl && !popoverEl.contains(e.target) && e.target !== shareBtn) {
+        popoverInstance.hide();
+      }
+    });
+
+    // Stop clicks inside popover from bubbling
+    document.addEventListener("click", (e) => {
+      if (e.target.closest(".popover")) {
+        e.stopPropagation();
+      }
+    });
+
+    // Close button
+    document.addEventListener("click", (e) => {
+      if (e.target.id === "close-popover") {
+        popoverInstance.hide();
+      }
+    });
+
+    // Share actions
+    document.addEventListener("click", (e) => {
+      if (!e.target.classList.contains("share-action")) return;
+
+      const type = e.target.getAttribute("title");
+
+      const data = {
+        from: document.getElementById("share-from-date")?.value,
+        to: document.getElementById("share-to-date")?.value,
+        notes: document.getElementById("check-notes")?.checked,
+        rx: document.getElementById("check-rx")?.checked,
+        proc: document.getElementById("check-proc")?.checked,
+      };
+
+      console.log("Sharing via", type, data);
+
       popoverInstance.hide();
-    }
+
+      if (type === "Print") {
+        window.print();
+      } else {
+        alert(`Preparing ${type} share...`);
+      }
+    });
+  };
+  renderPopover();
+
+  $(document).on("click", ".appointment-item", function () {
+    const name = $(this).find(".fw-semibold").text();
+    const info = $(this).find("small").text();
+
+    $("#selectedText").text(`${name} — ${info}`);
   });
-
-  // Share actions
-  document.addEventListener("click", (e) => {
-    if (!e.target.classList.contains("share-action")) return;
-
-    const type = e.target.getAttribute("title");
-
-    const data = {
-      from: document.getElementById("share-from-date")?.value,
-      to: document.getElementById("share-to-date")?.value,
-      notes: document.getElementById("check-notes")?.checked,
-      rx: document.getElementById("check-rx")?.checked,
-      proc: document.getElementById("check-proc")?.checked,
-    };
-
-    console.log("Sharing via", type, data);
-
-    popoverInstance.hide();
-
-    if (type === "Print") {
-      window.print();
-    } else {
-      alert(`Preparing ${type} share...`);
-    }
-  });
-};
-
-renderPopover();
 });
