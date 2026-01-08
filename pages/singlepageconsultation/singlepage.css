@@ -277,3 +277,10 @@ label{
   word-break: break-word;    /* break long words */
 }
 /* custom dropdown */
+.chip-input {
+    border: none !important;       /* Removes the standard border */
+    outline: none !important;      /* Removes the blue/orange focus ring */
+    box-shadow: none !important;   /* Removes Bootstrap's default focus shadow */
+    background: transparent;       /* Blends with the parent container */
+    padding: 0;                    /* Prevents extra spacing inside the container */
+}

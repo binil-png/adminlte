@@ -285,7 +285,10 @@
 
                 <ul class="dropdown-menu w-100 p-1">
                   <li>
-                    <a class="dropdown-item ignore-edit appointment-item" href="#">
+                    <a
+                      class="dropdown-item ignore-edit appointment-item"
+                      href="#"
+                    >
                       <div
                         class="d-flex justify-content-between align-items-start"
                       >
@@ -305,7 +308,10 @@
                   </li>
 
                   <li>
-                    <a class="dropdown-item ignore-edit appointment-item" href="#">
+                    <a
+                      class="dropdown-item ignore-edit appointment-item"
+                      href="#"
+                    >
                       <div class="d-flex justify-content-between">
                         <div>
                           <div class="fw-semibold">
@@ -321,7 +327,10 @@
                   </li>
 
                   <li>
-                    <a class="dropdown-item ignore-edit appointment-item" href="#">
+                    <a
+                      class="dropdown-item ignore-edit appointment-item"
+                      href="#"
+                    >
                       <div class="d-flex justify-content-between">
                         <div>
                           <div class="fw-semibold">
@@ -619,10 +628,31 @@
               </div>
             </div>
 
+            <div
+              class="pb-4 px-4 d-flex justify-content-end align-items-center"
+            >
+              <input
+                style="width: 10vw"
+                type="date"
+                id="dateFilter"
+                class="form-control rounded-start-4 rounded-end-0 input-style p-3"
+                aria-label="Date"
+              />
+              <select
+                style="width: 10vw"
+                class="form-control custom-select border-start-0 rounded-start-0 rounded-4 template-select-style"
+              >
+                <option value="">Select Doctor</option>
+                <option value="Dental Cleaning">Doctor A</option>
+                <option value="Root Canal">Doctor B</option>
+                <option value="X-Ray">Doctor C</option>
+              </select>
+            </div>
+
             <!-- Accordion Sections -->
             <div
               id="patientAccordion"
-              class="accordion py-5 px-3 patient-details hide-scrollbar"
+              class="accordion pb-5 px-3 patient-details hide-scrollbar"
             >
               <!-- Vitals -->
               <div class="card mb-2">
@@ -978,6 +1008,148 @@
                         </div>
                       </div>
 
+                      <div class="dropdown py-2 pt-0" id="custom-autocomplete">
+                        <label class="fw-medium text-custom mb-1 ms-1"
+                          >Select protocol</label
+                        >
+                        <button
+                          class="btn btn-outline-secondary dropdown-toggle w-100 text-start d-flex justify-content-between align-items-center rounded-4 border"
+                          id="protocolDropdown"
+                          data-bs-toggle="dropdown"
+                          aria-expanded="false"
+                        >
+                          <span id="protocolNameDisplay">&nbsp</span>
+                        </button>
+
+                        <div
+                          class="dropdown-menu w-100 shadow"
+                          aria-labelledby="protocolDropdown"
+                        >
+                          <div class="px-3 py-2">
+                            <input
+                              type="text"
+                              class="form-control ignore-edit"
+                              id="searchProtocol"
+                              placeholder="Search options..."
+                              autofocus
+                            />
+                          </div>
+                          <div
+                            id="protocol-container"
+                            style="max-height: 200px; overflow-y: auto"
+                          ></div>
+                          <div
+                            id="no-protocols"
+                            class="px-3 py-2 d-none text-muted"
+                          >
+                            No results found
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-6">
+                          <div
+                            class="dropdown py-2 pt-0"
+                            id="custom-autocomplete"
+                          >
+                            <label class="fw-medium text-custom mb-1 ms-1"
+                              >Lab investigations</label
+                            >
+                            <button
+                              class="w-100 text-start d-flex justify-content-start align-items-center rounded-4 border py-1"
+                              id="labInvestigation"
+                              data-bs-toggle="dropdown"
+                              aria-expanded="false"
+                            >
+                              <span>&nbsp;</span>
+                              <span
+                                class="d-flex gap-2 flex-wrap"
+                                id="labselectedItems"
+                              >
+                                &nbsp;
+                              </span>
+                            </button>
+
+                            <div
+                              class="dropdown-menu w-100 shadow"
+                              aria-labelledby="labInvestigation"
+                            >
+                              <div class="px-3 py-2">
+                                <input
+                                  type="text"
+                                  class="form-control ignore-edit"
+                                  id="searchlabinstruction"
+                                  placeholder="Search options..."
+                                  autofocus
+                                />
+                              </div>
+                              <div
+                                id="labinsvestigation-container"
+                                style="max-height: 200px; overflow-y: auto"
+                              ></div>
+                              <div
+                                id="no-labins"
+                                class="px-3 py-2 d-none text-muted"
+                              >
+                                No results found
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-6">
+                          <div
+                            class="dropdown py-2 pt-0"
+                            id="custom-autocomplete"
+                          >
+                            <label class="fw-medium text-custom mb-1 ms-1"
+                              >Procedures / Radiology
+                              <input type="checkbox" /> Send to
+                              Radiology?</label
+                            >
+                            <button
+                              class="w-100 text-start d-flex justify-content-start align-items-center rounded-4 border py-1"
+                              id="procedure-radiology"
+                              data-bs-toggle="dropdown"
+                              aria-expanded="false"
+                            >
+                              <span>&nbsp;</span>
+                              <span
+                                class="d-flex gap-2 flex-wrap"
+                                id="procedure-radiology-item"
+                              >
+                                &nbsp;
+                              </span>
+                            </button>
+
+                            <div
+                              class="dropdown-menu w-100 shadow"
+                              aria-labelledby="procedure-radiology"
+                            >
+                              <div class="px-3 py-2">
+                                <input
+                                  type="text"
+                                  class="form-control ignore-edit"
+                                  id="procedure-radiology-input"
+                                  placeholder="Search options..."
+                                  autofocus
+                                />
+                              </div>
+                              <div
+                                id="procedure-radiology-container"
+                                style="max-height: 200px; overflow-y: auto"
+                              ></div>
+                              <div
+                                id="no-procedure-radiology"
+                                class="px-3 py-2 d-none text-muted"
+                              >
+                                No results found
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
                       <div class="text-right">
                         <button
                           type="button"
@@ -1055,9 +1227,9 @@
                           class="form-control custom-select proc-name rounded-4 w-25 template-select-style"
                         >
                           <option value="">Select template</option>
-                          <option value="Dental Cleaning">Doctor A</option>
-                          <option value="Root Canal">Doctor B</option>
-                          <option value="X-Ray">Doctor C</option>
+                          <option value="Dental Cleaning">Template A</option>
+                          <option value="Root Canal">Template B</option>
+                          <option value="X-Ray">Template C</option>
                         </select>
                       </div>
                       <button
@@ -2103,6 +2275,7 @@
     <script src="../../dist/js/adminlte.min.js"></script>
     <script src="./data.js"></script>
     <script src="./new.js"></script>
+    <script src="./customdropdown.js"></script>
     <script src="./mockData.js"></script>
     <script src="./vitals.js"></script>
     <script src="./dental.js"></script>
@@ -2114,5 +2287,6 @@
     <script src="./preview.js"></script>
     <script src="./invoice.js"></script>
     <script src="./chart.js"></script>
+
   </body>
 </html>
