@@ -2,8 +2,8 @@
 body {
   background: #fafafa;
 }
-label{
-  font-size: .9rem;
+label {
+  font-size: 0.9rem;
 }
 .page-wrap {
   display: flex;
@@ -70,7 +70,7 @@ label{
   display: none; /* Chrome/Safari */
 }
 .patient-details {
-  max-height: calc(100vh - 150px);
+  max-height: calc(100vh - 230px);
   overflow: auto;
 }
 .input-style {
@@ -256,7 +256,7 @@ label{
 .appointment-item {
   padding: 10px 12px;
   border-radius: 8px;
-   white-space: normal; 
+  white-space: normal;
 }
 
 .appointment-item:hover {
@@ -268,19 +268,59 @@ label{
 }
 .name-row {
   display: flex;
-  flex-wrap: wrap;           /* allow line break */
+  flex-wrap: wrap; /* allow line break */
   gap: 6px;
 }
 
 .name-row .fw-semibold {
   max-width: 100%;
-  word-break: break-word;    /* break long words */
+  word-break: break-word; /* break long words */
 }
 /* custom dropdown */
 .chip-input {
-    border: none !important;       /* Removes the standard border */
-    outline: none !important;      /* Removes the blue/orange focus ring */
-    box-shadow: none !important;   /* Removes Bootstrap's default focus shadow */
-    background: transparent;       /* Blends with the parent container */
-    padding: 0;                    /* Prevents extra spacing inside the container */
+  border: none !important; /* Removes the standard border */
+  outline: none !important; /* Removes the blue/orange focus ring */
+  box-shadow: none !important; /* Removes Bootstrap's default focus shadow */
+  background: transparent; /* Blends with the parent container */
+  padding: 0; /* Prevents extra spacing inside the container */
+}
+
+/* Drawer styling */
+.custom-drawer {
+  position: fixed;
+  top: 0;
+  right: 0; /* Changed from left: 0 */
+  width: 25vw;
+  height: 100%;
+  background-color: #fff;
+  z-index: 1050;
+  transition: transform 0.3s ease-in-out;
+  transform: translateX(
+    100%
+  ); /* Changed from -100% to push it off the right edge */
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1); /* Shadow flipped to the left side */
+}
+
+/* Class to show the drawer */
+.custom-drawer.open {
+  transform: translateX(0);
+}
+
+/* Dimmed background overlay */
+.drawer-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1040;
+  display: none; /* Hidden by default */
+}
+
+/* Ensure links look good */
+.list-group-item a {
+  text-decoration: none;
+  color: #333;
+  display: block;
 }

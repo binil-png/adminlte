@@ -190,6 +190,8 @@ $(function () {
           label: "item 2",
         },
       ],
+      patientNotes: "Test patient notes for ACTV",
+      doctorNotes: "Test doctor notes for ACTV",
     },
     4: {
       lab: [
@@ -212,6 +214,8 @@ $(function () {
           label: "item 3",
         },
       ],
+      patientNotes: "Test patient notes for Cough",
+      doctorNotes: "Test doctor notes for Cough",
     },
   };
 
@@ -226,7 +230,19 @@ $(function () {
             </div>`);
     });
   }
-
+  let isShowProtocol = false
+  const $protocolShowBtn = $("#protocol-show-btn")
+  $protocolShowBtn.on("click",function(){
+    isShowProtocol = !isShowProtocol
+    console.log(isShowProtocol)
+    if(isShowProtocol){
+      $("#protocolArea").removeClass("d-none")
+      $protocolShowBtn.text("Show less")
+    }else{
+      $("#protocolArea").addClass("d-none")
+      $protocolShowBtn.text("Show more")
+    }
+  })
   const $container = $("#protocol-container");
   const $searchProtocol = $("#searchProtocol");
   const $noProtocols = $("#no-protocols");
@@ -250,13 +266,25 @@ $(function () {
           </button>`;
 
         const $item = $(itemHtml);
+        const $notesContainer = $(".notescontainer");
         $item.on("click", function () {
           $protocolNameDisplay.text(p.label);
           if (protocolList[p.id]) {
-            console.log(protocolList[p.id].lab)
-            renderchips(protocolList[p.id].lab?.length ? protocolList[p.id].lab : [], $labselectedItems);
-            renderchips(protocolList[p.id].radPros.length ? protocolList[p.id].radPros : [], $procedureRadiologyItems);
-          }else{
+            $notesContainer.removeClass("d-none");
+            $("#doctor-notes").text(protocolList[p.id]?.doctorNotes || "");
+            $("#patient-notes").text(protocolList[p.id]?.patientNotes|| "");
+            renderchips(
+              protocolList[p.id].lab?.length ? protocolList[p.id].lab : [],
+              $labselectedItems
+            );
+            renderchips(
+              protocolList[p.id].radPros.length
+                ? protocolList[p.id].radPros
+                : [],
+              $procedureRadiologyItems
+            );
+          } else {
+            $notesContainer.addClass("d-none");
             renderchips([], $labselectedItems);
             renderchips([], $procedureRadiologyItems);
           }
@@ -399,7 +427,6 @@ $(function () {
         $procedureRadiology.append($item);
       });
     } else {
-
       filteredPatients.push({
         id: Date.now(),
         label: filter,

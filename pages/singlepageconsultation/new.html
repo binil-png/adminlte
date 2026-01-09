@@ -568,6 +568,18 @@
           <!-- Main Content -->
           <main class="col-md-8 col-lg-8 p-0">
             <!-- Patient Header -->
+            <div id="drawerOverlay" class="drawer-overlay"></div>
+
+            <div id="customDrawer" class="custom-drawer">
+              <div
+                class="drawer-header d-flex justify-content-between align-items-center p-3 border-bottom"
+              >
+                <h5 class="mb-0" id="drawerHeader"></h5>
+                <button id="closeDrawer" class="btn-close"></button>
+              </div>
+              <div id="drawerContent"></div>
+            </div>
+
             <div class="card border-0 border-bottom rounded-0 bg-white p-3">
               <div class="d-flex justify-content-between align-items-center">
                 <!-- Left Section -->
@@ -620,10 +632,31 @@
                     <div class="text-custom small">Last Visit</div>
                     <div id="pLastVisit" class=""></div>
                   </div>
+                  <div class="d-flex flex-column gap-2">
+                    <button
+                      style="height: 25px"
+                      class="btn btn-sm btn-outline-primary flex-grow-1 px-2 py-0"
+                    >
+                      Fix Appointment
+                    </button>
 
-                  <button class="btn btn-sm btn-outline-primary py-0 px-1">
-                    Fix appointment
-                  </button>
+                    <div class="d-flex gap-2">
+                      <button
+                        style="height: 25px; padding: 0px"
+                        class="btn btn-sm btn-outline-dark flex-grow-1 openDrawer"
+                        data-drawertype="ip"
+                      >
+                        <i class="fas fa-hospital"></i> IP
+                      </button>
+                      <button
+                        style="height: 25px; padding: 0px"
+                        class="btn btn-sm btn-outline-dark flex-grow-1 openDrawer"
+                        data-drawertype="op"
+                      >
+                        <i class="far fa-hospital"></i> OP
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -896,7 +929,7 @@
                         class="quick-badges flex-wrap mb-3 d-flex align-items-center justify-content-stat gap-1"
                       >
                         <select
-                          class="form-control custom-select proc-name rounded-4 w-25 template-select-style"
+                          class="form-control custom-select proc-name rounded-4 w-50 template-select-style"
                         >
                           <option value="">Select template</option>
                           <option value="Dental Cleaning">Template A</option>
@@ -907,8 +940,9 @@
 
                       <button
                         type="button"
-                        class="btn btn-outline-success btn-sm rounded-4"
+                        class="btn btn-outline-success btn-sm rounded-4 saveastemplete"
                         id="saveVitals"
+                        data-templatefor="Clinical notes"
                       >
                         Save as template<i class="fas fa-save ms-2"></i>
                       </button>
@@ -1008,142 +1042,192 @@
                         </div>
                       </div>
 
-                      <div class="dropdown py-2 pt-0" id="custom-autocomplete">
-                        <label class="fw-medium text-custom mb-1 ms-1"
-                          >Select protocol</label
-                        >
+                      <div
+                        class="d-flex justify-content-end align-items-center py-2"
+                      >
                         <button
-                          class="btn btn-outline-secondary dropdown-toggle w-100 text-start d-flex justify-content-between align-items-center rounded-4 border"
-                          id="protocolDropdown"
-                          data-bs-toggle="dropdown"
-                          aria-expanded="false"
+                          id="protocol-show-btn"
+                          type="button"
+                          class="btn btn-sm"
                         >
-                          <span id="protocolNameDisplay">&nbsp</span>
+                          Show more
                         </button>
-
-                        <div
-                          class="dropdown-menu w-100 shadow"
-                          aria-labelledby="protocolDropdown"
-                        >
-                          <div class="px-3 py-2">
-                            <input
-                              type="text"
-                              class="form-control ignore-edit"
-                              id="searchProtocol"
-                              placeholder="Search options..."
-                              autofocus
-                            />
-                          </div>
-                          <div
-                            id="protocol-container"
-                            style="max-height: 200px; overflow-y: auto"
-                          ></div>
-                          <div
-                            id="no-protocols"
-                            class="px-3 py-2 d-none text-muted"
-                          >
-                            No results found
-                          </div>
-                        </div>
                       </div>
-
-                      <div class="row">
-                        <div class="col-6">
-                          <div
-                            class="dropdown py-2 pt-0"
-                            id="custom-autocomplete"
+                      <div id="protocolArea" class="d-none">
+                        <div
+                          class="dropdown py-2 pt-0 mt-0"
+                          id="custom-autocomplete"
+                        >
+                          <label class="fw-medium text-custom mb-1 ms-1"
+                            >Select protocol</label
                           >
-                            <label class="fw-medium text-custom mb-1 ms-1"
-                              >Lab investigations</label
-                            >
-                            <button
-                              class="w-100 text-start d-flex justify-content-start align-items-center rounded-4 border py-1"
-                              id="labInvestigation"
-                              data-bs-toggle="dropdown"
-                              aria-expanded="false"
-                            >
-                              <span>&nbsp;</span>
-                              <span
-                                class="d-flex gap-2 flex-wrap"
-                                id="labselectedItems"
-                              >
-                                &nbsp;
-                              </span>
-                            </button>
+                          <button
+                            class="btn btn-outline-secondary dropdown-toggle w-100 text-start d-flex justify-content-between align-items-center rounded-4 border"
+                            id="protocolDropdown"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                          >
+                            <span id="protocolNameDisplay">&nbsp</span>
+                          </button>
 
+                          <div
+                            class="dropdown-menu w-100 shadow"
+                            aria-labelledby="protocolDropdown"
+                          >
+                            <div class="px-3 py-2">
+                              <input
+                                type="text"
+                                class="form-control ignore-edit"
+                                id="searchProtocol"
+                                placeholder="Search options..."
+                                autofocus
+                              />
+                            </div>
                             <div
-                              class="dropdown-menu w-100 shadow"
-                              aria-labelledby="labInvestigation"
+                              id="protocol-container"
+                              style="max-height: 200px; overflow-y: auto"
+                            ></div>
+                            <div
+                              id="no-protocols"
+                              class="px-3 py-2 d-none text-muted"
                             >
-                              <div class="px-3 py-2">
-                                <input
-                                  type="text"
-                                  class="form-control ignore-edit"
-                                  id="searchlabinstruction"
-                                  placeholder="Search options..."
-                                  autofocus
-                                />
-                              </div>
-                              <div
-                                id="labinsvestigation-container"
-                                style="max-height: 200px; overflow-y: auto"
-                              ></div>
-                              <div
-                                id="no-labins"
-                                class="px-3 py-2 d-none text-muted"
-                              >
-                                No results found
-                              </div>
+                              No results found
                             </div>
                           </div>
                         </div>
-                        <div class="col-6">
-                          <div
-                            class="dropdown py-2 pt-0"
-                            id="custom-autocomplete"
-                          >
-                            <label class="fw-medium text-custom mb-1 ms-1"
-                              >Procedures / Radiology
-                              <input type="checkbox" /> Send to
-                              Radiology?</label
-                            >
-                            <button
-                              class="w-100 text-start d-flex justify-content-start align-items-center rounded-4 border py-1"
-                              id="procedure-radiology"
-                              data-bs-toggle="dropdown"
-                              aria-expanded="false"
-                            >
-                              <span>&nbsp;</span>
-                              <span
-                                class="d-flex gap-2 flex-wrap"
-                                id="procedure-radiology-item"
-                              >
-                                &nbsp;
-                              </span>
-                            </button>
 
-                            <div
-                              class="dropdown-menu w-100 shadow"
-                              aria-labelledby="procedure-radiology"
-                            >
-                              <div class="px-3 py-2">
-                                <input
-                                  type="text"
-                                  class="form-control ignore-edit"
-                                  id="procedure-radiology-input"
-                                  placeholder="Search options..."
-                                  autofocus
-                                />
-                              </div>
+                        <div class="row">
+                          <div class="col-6 notescontainer d-none">
+                            <div class="border rounded-2 h-100 shadow-sm">
                               <div
-                                id="procedure-radiology-container"
-                                style="max-height: 200px; overflow-y: auto"
-                              ></div>
-                              <div
-                                id="no-procedure-radiology"
-                                class="px-3 py-2 d-none text-muted"
+                                class="border-bottom p-2 bg-light small fw-bold text-secondary text-uppercase"
                               >
-                                No results found
+                                <i class="fas fa-user-md me-1"></i> Notes to the
+                                Doctor
+                              </div>
+                              <div class="p-2">
+                                <p
+                                  id="doctor-notes"
+                                  class="mb-0 small text-muted"
+                                ></p>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="col-6 notescontainer d-none">
+                            <div class="border rounded-2 h-100 shadow-sm">
+                              <div
+                                class="border-bottom p-2 bg-light small fw-bold text-secondary text-uppercase"
+                              >
+                                <i class="fas fa-user me-1"></i> Notes to the
+                                Patient
+                              </div>
+                              <div class="p-2">
+                                <p
+                                  id="patient-notes"
+                                  class="mb-0 small text-muted"
+                                ></p>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="col-6">
+                            <div
+                              class="dropdown py-2 pt-0"
+                              id="custom-autocomplete"
+                            >
+                              <label class="fw-medium text-custom mb-1 ms-1"
+                                >Lab investigations</label
+                              >
+                              <button
+                                class="w-100 text-start d-flex justify-content-start align-items-center rounded-4 border py-1"
+                                id="labInvestigation"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                              >
+                                <span>&nbsp;</span>
+                                <span
+                                  class="d-flex gap-2 flex-wrap"
+                                  id="labselectedItems"
+                                >
+                                  &nbsp;
+                                </span>
+                              </button>
+
+                              <div
+                                class="dropdown-menu w-100 shadow"
+                                aria-labelledby="labInvestigation"
+                              >
+                                <div class="px-3 py-2">
+                                  <input
+                                    type="text"
+                                    class="form-control ignore-edit"
+                                    id="searchlabinstruction"
+                                    placeholder="Search options..."
+                                    autofocus
+                                  />
+                                </div>
+                                <div
+                                  id="labinsvestigation-container"
+                                  style="max-height: 200px; overflow-y: auto"
+                                ></div>
+                                <div
+                                  id="no-labins"
+                                  class="px-3 py-2 d-none text-muted"
+                                >
+                                  No results found
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-6">
+                            <div
+                              class="dropdown py-2 pt-0"
+                              id="custom-autocomplete"
+                            >
+                              <label class="fw-medium text-custom mb-1 ms-1"
+                                >Procedures / Radiology
+                                <input type="checkbox" /> Send to
+                                Radiology?</label
+                              >
+                              <button
+                                class="w-100 text-start d-flex justify-content-start align-items-center rounded-4 border py-1"
+                                id="procedure-radiology"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                              >
+                                <span>&nbsp;</span>
+                                <span
+                                  class="d-flex gap-2 flex-wrap"
+                                  id="procedure-radiology-item"
+                                >
+                                  &nbsp;
+                                </span>
+                              </button>
+
+                              <div
+                                class="dropdown-menu w-100 shadow"
+                                aria-labelledby="procedure-radiology"
+                              >
+                                <div class="px-3 py-2">
+                                  <input
+                                    type="text"
+                                    class="form-control ignore-edit"
+                                    id="procedure-radiology-input"
+                                    placeholder="Search options..."
+                                    autofocus
+                                  />
+                                </div>
+                                <div
+                                  id="procedure-radiology-container"
+                                  style="max-height: 200px; overflow-y: auto"
+                                ></div>
+                                <div
+                                  id="no-procedure-radiology"
+                                  class="px-3 py-2 d-none text-muted"
+                                >
+                                  No results found
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -1234,8 +1318,9 @@
                       </div>
                       <button
                         type="button"
-                        class="btn btn-outline-success btn-sm rounded-4"
+                        class="btn btn-outline-success btn-sm rounded-4 saveastemplete"
                         id="saveVitals"
+                        data-templatefor="Procedures & Treatments"
                       >
                         Save as template<i class="fas fa-save ms-2"></i>
                       </button>
@@ -1338,7 +1423,8 @@
                             >Template C</span
                           >
                           <select
-                            class="form-control custom-select proc-name rounded-4 w-25 input-style"
+                            style="width: 180px"
+                            class="form-control custom-select proc-name rounded-4 input-style"
                           >
                             <option value="">Select template</option>
                             <option value="Dental Cleaning">Template 1</option>
@@ -1348,8 +1434,9 @@
                         </div>
                         <button
                           type="button"
-                          class="btn btn-outline-success btn-sm rounded-4"
+                          class="btn btn-outline-success btn-sm rounded-4 saveastemplete"
                           id="saveVitals"
+                          data-templatefor="Prescription"
                         >
                           Save as template<i class="fas fa-save ms-2"></i>
                         </button>
@@ -2270,11 +2357,13 @@
         </div>
       </div>
     </div>
+
     <script src="../../plugins/jquery/jquery.min.js"></script>
     <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../../dist/js/adminlte.min.js"></script>
     <script src="./data.js"></script>
     <script src="./new.js"></script>
+    <script src="./drawer.js"></script>
     <script src="./customdropdown.js"></script>
     <script src="./mockData.js"></script>
     <script src="./vitals.js"></script>
@@ -2287,6 +2376,5 @@
     <script src="./preview.js"></script>
     <script src="./invoice.js"></script>
     <script src="./chart.js"></script>
-
   </body>
 </html>

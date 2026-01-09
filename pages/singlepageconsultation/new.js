@@ -571,4 +571,12 @@ $(function () {
 
     $("#selectedText").text(`${name} — ${info}`);
   });
+  const $templatePopup = $(".saveastemplete")
+  $templatePopup.on("click",function(){
+    const clickedBtn = $(this).data("templatefor")
+    let selectedTemplate = prompt(`Please enter a template name`, "");
+    if (selectedTemplate !== null && selectedTemplate !== "") {
+        alert(`${selectedTemplate} template added in ${clickedBtn}`);
+    }
+  })
 });
