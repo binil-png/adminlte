@@ -11,8 +11,10 @@ $(function () {
       `<i class="fa fa-mobile mr-2 text-custom"></i> ${p.phone}`
     );
     let allergyHtml = "";
-    p.allergies.forEach((a) => {
-      allergyHtml += `<span class="badge bg-danger rounded-pill px-3 py-1">${a}</span>`;
+    p.allergies.forEach((a, i) => {
+      allergyHtml += `<span class="text-danger text-sm">${a}${
+        i < p.allergies.length - 1 ? "," : ""
+      } </span>`;
     });
     $("#pAllergies").html(allergyHtml);
   }

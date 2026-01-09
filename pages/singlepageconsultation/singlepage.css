@@ -290,7 +290,7 @@ label {
   position: fixed;
   top: 0;
   right: 0; /* Changed from left: 0 */
-  width: 25vw;
+  width: 28vw;
   height: 100%;
   background-color: #fff;
   z-index: 1050;

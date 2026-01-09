@@ -152,8 +152,13 @@ $(function () {
       $allergyContainer.empty();
       if (patient.allergies) {
         patient.allergies.forEach((allergy) => {
+          // $allergyContainer.append(
+          //   `<span class="badge bg-danger-subtle text-danger small">${allergy}</span>`
+          // );
           $allergyContainer.append(
-            `<span class="badge bg-danger-subtle text-danger small">${allergy}</span>`
+            `<span class="text-danger text-sm">${allergy}${
+              i < patient.allergies.length - 1 ? "," : ""
+            } </span>`
           );
         });
       } else {
@@ -571,12 +576,19 @@ $(function () {
 
     $("#selectedText").text(`${name} — ${info}`);
   });
-  const $templatePopup = $(".saveastemplete")
-  $templatePopup.on("click",function(){
-    const clickedBtn = $(this).data("templatefor")
+  const $templatePopup = $(".saveastemplete");
+  $templatePopup.on("click", function () {
+    const clickedBtn = $(this).data("templatefor");
     let selectedTemplate = prompt(`Please enter a template name`, "");
     if (selectedTemplate !== null && selectedTemplate !== "") {
-        alert(`${selectedTemplate} template added in ${clickedBtn}`);
+      alert(`${selectedTemplate} template added in ${clickedBtn}`);
     }
-  })
+  });
+
+  $("#openAllergyModal").on("click", function () {
+    let allergyModal = new bootstrap.Modal(
+      document.getElementById("allergyModal")
+    );
+    allergyModal.show();
+  });
 });

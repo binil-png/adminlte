@@ -609,8 +609,81 @@
                 </div>
 
                 <div class="d-flex align-items-center mt-1 gap-2">
-                  <span class="text-custom small me-2">Allergies:</span>
+                  <span class="text-custom small me-2"
+                    >Allergies
+                    <button
+                      class="btn btn-sm text-primary py-0"
+                      type="button"
+                      id="openAllergyModal"
+                    >
+                      <i class="fas fa-plus"></i>
+                    </button>
+                    :</span
+                  >
                   <div id="pAllergies" class="d-flex gap-2"></div>
+                </div>
+
+                <div
+                  class="modal fade"
+                  id="allergyModal"
+                  tabindex="-1"
+                  aria-hidden="true"
+                >
+                  <div
+                    class="modal-dialog modal-dialog-centered"
+                    style="width: 50vw; max-width: 50vw"
+                  >
+                    <div class="modal-content shadow-lg border-0">
+                      <div class="modal-header bg-light">
+                        <h5 class="modal-title fw-bold" id="allergyModalLabel">
+                          Add Allergy
+                        </h5>
+                      </div>
+                      <div class="modal-body p-4">
+                        <div id="allergyList" class="row g-3">
+                          <div class="col-md-3 allergy-row">
+                            <div class="input-group">
+                              <input
+                                type="text"
+                                class="form-control rounded-start-4 shadow-sm"
+                                placeholder="Enter allergy..."
+                              />
+                              <button
+                                class="btn btn-outline-danger btn-remove-allergy rounded-end-4"
+                                type="button"
+                              >
+                                <i class="fas fa-times"></i>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="mt-4 d-flex justify-content-end align-items-center">
+                          <button
+                            id="addAllergy"
+                            class="btn btn-sm btn-outline-primary rounded-4 px-3"
+                          >
+                            <i class="fas fa-plus me-1"></i> Add Allergy
+                          </button>
+                        </div>
+                      </div>
+                      <div class="modal-footer border-0 bg-light">
+                        <button
+                          type="button"
+                          class="btn btn-sm btn-success rounded-4 px-4"
+                        >
+                          Save changes
+                        </button>
+                        <button
+                          type="button"
+                          class="btn btn-sm btn-danger rounded-4 px-4"
+                          data-dismiss="modal"
+                        >
+                          Close
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
                 <!-- Right Section -->
@@ -841,41 +914,10 @@
                           />
                         </div>
                       </div>
-                      <div class="form-row align-items-end">
-                        <div class="form-group col-md-12 col-lg-12">
-                          <label class="fw-medium text-custom mb-1 ms-1"
-                            >Allergies</label
-                          >
-                          <div id="allergyList" class="mb-2 row">
-                            <div
-                              class="input-group mb-2 allergy-row col-md-2 col-lg-2"
-                            >
-                              <input
-                                type="text"
-                                class="form-control rounded-start-4 input-style"
-                              />
-                              <div class="input-group-append">
-                                <button
-                                  style="padding: 0px 8px"
-                                  class="btn btn-outline-danger btn-remove-allergy rounded-end-4"
-                                  type="button"
-                                >
-                                  <i class="fas fa-times"></i>
-                                </button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+
                       <div
-                        class="form-group text-right d-flex justify-content-between"
+                        class="form-group text-right d-flex justify-content-end"
                       >
-                        <button
-                          id="addAllergy"
-                          class="btn btn-sm btn-outline-primary rounded-4"
-                        >
-                          + Add Allergy
-                        </button>
                         <button
                           type="button"
                           class="btn btn-success btn-sm rounded-4"

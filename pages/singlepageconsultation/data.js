@@ -1,4 +1,4 @@
-const allergies = ["Penicillin"];
+const allergies = ["Penicillin","Food allergy"];
 
 const teeth = [
     // upper jaw

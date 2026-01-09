@@ -28,7 +28,7 @@ $(function () {
               class="btn btn-sm btn-outline-dark rounded-3 w-100 d-flex flex-column align-items-center justify-content-center py-3"
             >
               <i class="far fa-hospital mb-1"></i>
-              <span style="font-size: 10px">Convert to IP</span>
+              <span style="font-size: 14px">Convert to IP</span>
             </a>
           </div>
           <div class="col-4">
@@ -36,7 +36,7 @@ $(function () {
               class="btn btn-sm btn-outline-dark rounded-3 w-100 d-flex flex-column align-items-center justify-content-center py-3"
             >
               <i class="fas fa-bed mb-1"></i>
-              <span style="font-size: 10px">Edit Bed</span>
+              <span style="font-size: 14px">Edit Bed</span>
             </a>
           </div>
           <div class="col-4">
@@ -44,7 +44,7 @@ $(function () {
               class="btn btn-sm btn-outline-dark rounded-3 w-100 d-flex flex-column align-items-center justify-content-center py-3"
             >
               <i class="fas fa-file-invoice mb-1"></i>
-              <span style="font-size: 10px">IP Billing</span>
+              <span style="font-size: 14px">IP Billing</span>
             </a>
           </div>
           <div class="col-4">
@@ -52,7 +52,7 @@ $(function () {
               class="btn btn-sm btn-outline-dark rounded-3 w-100 d-flex flex-column align-items-center justify-content-center py-3"
             >
               <i class="fas fa-user-md mb-1"></i>
-              <span style="font-size: 10px">Consultation</span>
+              <span style="font-size: 14px">Consultation</span>
             </a>
           </div>
 
@@ -61,7 +61,7 @@ $(function () {
               class="btn btn-sm btn-outline-dark rounded-3 w-100 d-flex flex-column align-items-center justify-content-center py-3"
             >
               <i class="far fa-file-alt"></i>
-              <span style="font-size: 10px"
+              <span style="font-size: 14px"
                 >Discharge summary / Case sheet</span
               >
             </a>
@@ -72,16 +72,16 @@ $(function () {
               class="btn btn-sm btn-outline-dark rounded-3 w-100 d-flex flex-column align-items-center justify-content-center py-3"
             >
               <i class="fas fa-user-nurse mb-1"></i>
-              <span style="font-size: 10px">Nursing</span>
+              <span style="font-size: 14px">Nursing</span>
             </a>
           </div>
 
           <div class="col-4">
             <a
-              class="btn btn-sm btn-outline-danger rounded-3 w-100 d-flex flex-column align-items-center justify-content-center py-3 text-danger"
+              class="btn btn-sm btn-outline-danger rounded-3 w-100 d-flex flex-column align-items-center justify-content-center py-3"
             >
               <i class="fas fa-sign-out-alt mb-1"></i>
-              <span style="font-size: 10px">Discharge</span>
+              <span style="font-size: 14px">Discharge</span>
             </a>
           </div>
         </div>
@@ -90,14 +90,14 @@ $(function () {
     } else {
       $drawerHeader.text("OP Actions");
       $drawerContent.append(`
-                               <div class="container-fluid pt-3">
+                                  <div class="container-fluid pt-3">
       <div class="row g-2">
         <div style="height: 60px" class="col-4 d-flex">
           <a
             class="btn btn-sm btn-outline-dark rounded-3 w-100 d-flex flex-column align-items-center justify-content-center py-3"
           >
             <i class="fas fa-print"></i>
-            <span style="font-size: 10px">Print id</span>
+            <span style="font-size: 14px">Print id</span>
           </a>
         </div>
         <div style="height: 60px" class="col-4 d-flex">
@@ -105,7 +105,7 @@ $(function () {
             class="btn btn-sm btn-outline-dark rounded-3 w-100 d-flex flex-column align-items-center justify-content-center py-3"
           >
             <i class="fab fa-google"></i>
-            <span style="font-size: 10px">Google meeting</span>
+            <span style="font-size: 14px">Google meeting</span>
           </a>
         </div>
         <div style="height: 60px" class="col-4 d-flex">
@@ -113,7 +113,7 @@ $(function () {
             class="btn btn-sm btn-outline-dark rounded-3 w-100 d-flex flex-column align-items-center justify-content-center py-3"
           >
             <i class="fas fa-video"></i>
-            <span style="font-size: 10px">Zoom meeting</span>
+            <span style="font-size: 14px">Zoom meeting</span>
           </a>
         </div>
         <div style="height: 60px" class="col-4 d-flex">
@@ -121,7 +121,7 @@ $(function () {
             class="btn btn-sm btn-outline-dark rounded-3 w-100 d-flex flex-column align-items-center justify-content-center py-3"
           >
             <i class="fab fa-wpforms"></i>
-            <span style="font-size: 10px">Consent form</span>
+            <span style="font-size: 14px">Consent form</span>
           </a>
         </div>
         <div style="height: 60px" class="col-4 d-flex">
@@ -129,7 +129,7 @@ $(function () {
             class="btn btn-sm btn-outline-dark rounded-3 w-100 d-flex flex-column align-items-center justify-content-center py-3"
           >
             <i class="fab fa-wpforms"></i>
-            <span style="font-size: 10px">Medical certificate</span>
+            <span style="font-size: 14px">Medical certificate</span>
           </a>
         </div>
         <div style="height: 60px" class="col-4 d-flex">
@@ -137,38 +137,36 @@ $(function () {
             class="btn btn-sm btn-outline-dark rounded-3 w-100 d-flex flex-column align-items-center justify-content-center py-3"
           >
             <i class="fab fa-google"></i>
-            <span style="font-size: 10px">Request google review</span>
+            <span style="font-size: 14px">Request google review</span>
           </a>
         </div>
       </div>
       <div>
-        <div class="p-2 mt-3 border-top border-bottom">
-          <h6 class="font-weight-bold">Blank prescription</h6>
+        <div class="p-2 mt-3">
+          <h6 class="font-weight-bold p-0 m-0">Blank prescription</h6>
         </div>
         <div class="row g-2 py-3">
-      <div style="height: 60px" class="col-4 d-flex">
-          <a
-            class="btn btn-sm btn-outline-dark rounded-3 w-100 d-flex flex-column align-items-center justify-content-center py-3"
-          >
-            <i class="fas fa-print"></i>
-            <span style="font-size: 10px">With Header</span>
-          </a>
-        </div>
-        <div style="height: 60px" class="col-4 d-flex">
-          <a
-            class="btn btn-sm btn-outline-dark rounded-3 w-100 d-flex flex-column align-items-center justify-content-center py-3"
-          >
-            <i class="fas fa-print"></i>
-            <span style="font-size: 10px"
-              >Without Header</span
+          <div style="height: 60px" class="col-4 d-flex">
+            <a
+              class="btn btn-sm btn-outline-dark rounded-3 w-100 d-flex flex-column align-items-center justify-content-center py-3"
             >
-          </a>
-        </div>
+              <i class="fas fa-print"></i>
+              <span style="font-size: 14px">With Header</span>
+            </a>
+          </div>
+          <div style="height: 60px" class="col-4 d-flex">
+            <a
+              class="btn btn-sm btn-outline-dark rounded-3 w-100 d-flex flex-column align-items-center justify-content-center py-3"
+            >
+              <i class="fas fa-print"></i>
+              <span style="font-size: 14px">Without Header</span>
+            </a>
+          </div>
         </div>
       </div>
       <div>
-        <div class="p-2 mt-3 border-top border-bottom">
-          <h6 class="font-weight-bold">Immunisation chart</h6>
+        <div class="p-2 mt-3">
+          <h6 class="font-weight-bold p-0 m-0">Charts</h6>
         </div>
         <div class="row g-2 py-3">
           <div style="height: 60px" class="col-4 d-flex">
@@ -176,7 +174,7 @@ $(function () {
               class="btn btn-sm btn-outline-dark rounded-3 w-100 d-flex flex-column align-items-center justify-content-center py-3"
             >
               <i class="far fa-list-alt"></i>
-              <span style="font-size: 10px">Chart x</span>
+              <span style="font-size: 14px">Health assessment </span>
             </a>
           </div>
           <div style="height: 60px" class="col-4 d-flex">
@@ -184,7 +182,7 @@ $(function () {
               class="btn btn-sm btn-outline-dark rounded-3 w-100 d-flex flex-column align-items-center justify-content-center py-3"
             >
               <i class="far fa-list-alt"></i>
-              <span style="font-size: 10px">Chart y</span>
+              <span style="font-size: 14px">Immunisation chart</span>
             </a>
           </div>
           <div style="height: 60px" class="col-4 d-flex">
@@ -192,7 +190,23 @@ $(function () {
               class="btn btn-sm btn-outline-dark rounded-3 w-100 d-flex flex-column align-items-center justify-content-center py-3"
             >
               <i class="far fa-list-alt"></i>
-              <span style="font-size: 10px">Chart z</span>
+              <span style="font-size: 14px">Chart x</span>
+            </a>
+          </div>
+          <div style="height: 60px" class="col-4 d-flex">
+            <a
+              class="btn btn-sm btn-outline-dark rounded-3 w-100 d-flex flex-column align-items-center justify-content-center py-3"
+            >
+              <i class="far fa-list-alt"></i>
+              <span style="font-size: 14px">Chart y</span>
+            </a>
+          </div>
+          <div style="height: 60px" class="col-4 d-flex">
+            <a
+              class="btn btn-sm btn-outline-dark rounded-3 w-100 d-flex flex-column align-items-center justify-content-center py-3"
+            >
+              <i class="far fa-list-alt"></i>
+              <span style="font-size: 14px">Chart z</span>
             </a>
           </div>
         </div>
