@@ -218,6 +218,98 @@ $(function () {
     $("#drawerOverlay").fadeIn();
   });
 
+  $(".openPatientDetails").on("click", function () {
+    console.log("clicked");
+    $drawerContent.empty();
+    $drawerHeader.text("Patient Details");
+    $drawerContent.append(`
+            <div class="px-3">
+      <div class="d-flex justify-content-between align-items-center mb-4 px-2">
+      </div>
+
+      <div class="d-flex gap-2 mb-4">
+        <button
+          class="btn btn-sm btn-outline-dark flex-fill rounded-3 py-2"
+          id="editPatient"
+        >
+          <i class="far fa-edit me-1"></i> Edit Patient
+        </button>
+        <button
+          class="btn btn-sm btn-danger flex-fill rounded-3"
+          id="deletePatient"
+        >
+          <i class="fas fa-trash-alt me-1"></i> Delete
+        </button>
+      </div>
+
+      <div class="px-2 overflow-auto" style="max-height: 90dvh">
+        <div class="mb-3">
+          <label class="text-muted small fw-bold text-uppercase">Name</label>
+          <div class="fw-normal">John Doe</div>
+        </div>
+        <div class="mb-3">
+          <label class="text-muted small fw-bold text-uppercase"
+            >Patient ID</label
+          >
+          <div class="fw-normal">RKSA5142</div>
+        </div>
+        <div class="mb-3">
+          <label class="text-muted small fw-bold text-uppercase">Gender</label>
+          <div class="fw-normal">Male</div>
+        </div>
+        <div class="mb-3">
+          <label class="text-muted small fw-bold text-uppercase"
+            >Date of Birth</label
+          >
+          <div class="fw-normal">15-06-1997</div>
+        </div>
+        <div class="mb-3">
+          <label class="text-muted small fw-bold text-uppercase"
+            >Admission Date</label
+          >
+          <div class="fw-normal">08-01-2026</div>
+        </div>
+        <div class="mb-4">
+          <label class="text-muted small fw-bold text-uppercase"
+            >Card Expiry Date</label
+          >
+          <div class="fw-normal">18-01-2026</div>
+        </div>
+
+        <hr class="text-muted opacity-25" />
+
+        <h6 class="fw-bold text-uppercase mb-3 mt-4" style="font-size: 0.85rem">
+          Contact Details
+        </h6>
+
+        <div class="mb-3">
+          <label class="text-muted small fw-bold text-uppercase">Mobile</label>
+          <div class="d-flex align-items-center gap-2">
+            <span>+91 9871237653</span>
+            <div
+              role="button"
+              class="bg-light px-2 py-1 rounded-4 text-xs border"
+              style="width: fit-content; font-size: 0.75rem"
+            >
+              WhatsApp
+            </div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label class="text-muted small fw-bold text-uppercase">Email</label>
+          <div class="fw-normal">email@gmail.com</div>
+        </div>
+        <div class="mb-3">
+          <label class="text-muted small fw-bold text-uppercase">Address</label>
+          <div class="fw-normal">TS</div>
+        </div>
+      </div>
+    </div>     
+      `);
+    $customDrawer.addClass("open");
+    $("#drawerOverlay").fadeIn();
+  });
+
   $("#closeDrawer, #drawerOverlay").on("click", function () {
     $customDrawer.removeClass("open");
     $("#drawerOverlay").fadeOut();

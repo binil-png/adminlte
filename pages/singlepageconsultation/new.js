@@ -267,6 +267,11 @@ $(function () {
                               ? `<button  class="btn text-success btn-sm toggle-view-btn" id="table-toggle-btn${i}"><i class="fas fa-table"></i></button>`
                               : ""
                           }
+                          ${
+                            item.type == "procedure"
+                              ? `<button  class="btn text-primary btn-sm openAddProcedure"><i class="fas fa-file-medical"></i></button>`
+                              : ""
+                          }
                     </div>
                           <div class="content-container">
                             <div class="html-view">
@@ -590,5 +595,99 @@ $(function () {
       document.getElementById("allergyModal")
     );
     allergyModal.show();
+  });
+  $(".openAddProcedure").on("click", function () {
+    let visitingNotesModal = new bootstrap.Modal(
+      document.getElementById("visitingNotesModal")
+    );
+    visitingNotesModal.show();
+  });
+
+  var $patientAccordion = $("#patientAccordion");
+
+  $("#collapseVitals").on("shown.bs.collapse", function () {
+    var card = $(this).closest(".card");
+
+    $patientAccordion.animate(
+      {
+        scrollTop:
+          card.offset().top -
+          $patientAccordion.offset().top +
+          $patientAccordion.scrollTop() -
+          20,
+      },
+      100
+    );
+    $(this).find("input").first().focus();
+  });
+  $("#collapseNotes").on("shown.bs.collapse", function () {
+    var card = $(this).closest(".card");
+    $patientAccordion.animate(
+      {
+        scrollTop:
+          card.offset().top -
+          $patientAccordion.offset().top +
+          $patientAccordion.scrollTop() -
+          20,
+      },
+      100
+    );
+    $(this).find("input").first().focus();
+  });
+  $("#labArea").on("shown.bs.collapse", function () {
+    var card = $(this).closest(".card");
+    $patientAccordion.animate(
+      {
+        scrollTop:
+          card.offset().top -
+          $patientAccordion.offset().top +
+          $patientAccordion.scrollTop() -
+          20,
+      },
+      100
+    );
+    $(this).find("input").first().focus();
+  });
+  $("#collapseProcedure").on("shown.bs.collapse", function () {
+    var card = $(this).closest(".card");
+    $patientAccordion.animate(
+      {
+        scrollTop:
+          card.offset().top -
+          $patientAccordion.offset().top +
+          $patientAccordion.scrollTop() -
+          20,
+      },
+      100
+    );
+    $(this).find("input").first().focus();
+  });
+  $("#collapsePresc").on("shown.bs.collapse", function () {
+    var card = $(this).closest(".card");
+    $patientAccordion.animate(
+      {
+        scrollTop:
+          card.offset().top -
+          $patientAccordion.offset().top +
+          $patientAccordion.scrollTop() -
+          20,
+      },
+      100
+    );
+    $(this).find("input").first().focus();
+  });
+  $("#collapseDental").on("shown.bs.collapse", function () {
+    var card = $(this).closest(".card");
+    $patientAccordion.animate(
+      {
+        scrollTop:
+          card.offset().top -
+          $patientAccordion.offset().top +
+          $patientAccordion.scrollTop() -
+          20,
+      },
+      100
+    );
+    $(this).find("input").first().focus();
   });
 });

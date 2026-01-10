@@ -1,41 +1,41 @@
-const allergies = ["Penicillin","Food allergy"];
+const allergies = ["Penicillin", "Food allergy"];
 
 const teeth = [
-    // upper jaw
-    { number: 18, image: "18_28.png", surface: "18_28C.png" },
-    { number: 17, image: "17_27.png", surface: "17_27C.png" },
-    { number: 16, image: "16_26.png", surface: "16_26C.png" },
-    { number: 15, image: "15_25.png", surface: "15_25C.png" },
-    { number: 14, image: "14_24.png", surface: "14_24C.png" },
-    { number: 13, image: "13_23.png", surface: "13_23C.png" },
-    { number: 12, image: "12_22.png", surface: "12_22C.png" },
-    { number: 11, image: "11_21.png", surface: "11_21C.png" },
-    { number: 21, image: "11_21.png", surface: "11_21C.png" },
-    { number: 22, image: "12_22.png", surface: "12_22C.png" },
-    { number: 23, image: "13_23.png", surface: "13_23C.png" },
-    { number: 24, image: "14_24.png", surface: "14_24C.png" },
-    { number: 25, image: "15_25.png", surface: "15_25C.png" },
-    { number: 26, image: "16_26.png", surface: "16_26C.png" },
-    { number: 27, image: "17_27.png", surface: "17_27C.png" },
-    { number: 28, image: "18_28.png", surface: "18_28C.png" },
-    // lower jaw
-    { number: 48, image: "38_48.png", surface: "38_48C.png" },
-    { number: 47, image: "47_37.png", surface: "47_37C.png" },
-    { number: 46, image: "46_36.png", surface: "46_36C.png" },
-    { number: 45, image: "45_35.png", surface: "45_35C.png" },
-    { number: 44, image: "34_44.png", surface: "34_44C.png" },
-    { number: 43, image: "43_33.png", surface: "43_33C.png" },
-    { number: 42, image: "32_42.png", surface: "32_42C.png" },
-    { number: 41, image: "41_31.png", surface: "41_31C.png" },
-    { number: 31, image: "41_31.png", surface: "41_31C.png" },
-    { number: 32, image: "32_42.png", surface: "32_42C.png" },
-    { number: 33, image: "43_33.png", surface: "43_33C.png" },
-    { number: 34, image: "34_44.png", surface: "34_44C.png" },
-    { number: 35, image: "45_35.png", surface: "45_35C.png" },
-    { number: 36, image: "46_36.png", surface: "46_36C.png" },
-    { number: 37, image: "47_37.png", surface: "47_37C.png" },
-    { number: 38, image: "38_48.png", surface: "38_48C.png" },
-  ];
+  // upper jaw
+  { number: 18, image: "18_28.png", surface: "18_28C.png" },
+  { number: 17, image: "17_27.png", surface: "17_27C.png" },
+  { number: 16, image: "16_26.png", surface: "16_26C.png" },
+  { number: 15, image: "15_25.png", surface: "15_25C.png" },
+  { number: 14, image: "14_24.png", surface: "14_24C.png" },
+  { number: 13, image: "13_23.png", surface: "13_23C.png" },
+  { number: 12, image: "12_22.png", surface: "12_22C.png" },
+  { number: 11, image: "11_21.png", surface: "11_21C.png" },
+  { number: 21, image: "11_21.png", surface: "11_21C.png" },
+  { number: 22, image: "12_22.png", surface: "12_22C.png" },
+  { number: 23, image: "13_23.png", surface: "13_23C.png" },
+  { number: 24, image: "14_24.png", surface: "14_24C.png" },
+  { number: 25, image: "15_25.png", surface: "15_25C.png" },
+  { number: 26, image: "16_26.png", surface: "16_26C.png" },
+  { number: 27, image: "17_27.png", surface: "17_27C.png" },
+  { number: 28, image: "18_28.png", surface: "18_28C.png" },
+  // lower jaw
+  { number: 48, image: "38_48.png", surface: "38_48C.png" },
+  { number: 47, image: "47_37.png", surface: "47_37C.png" },
+  { number: 46, image: "46_36.png", surface: "46_36C.png" },
+  { number: 45, image: "45_35.png", surface: "45_35C.png" },
+  { number: 44, image: "34_44.png", surface: "34_44C.png" },
+  { number: 43, image: "43_33.png", surface: "43_33C.png" },
+  { number: 42, image: "32_42.png", surface: "32_42C.png" },
+  { number: 41, image: "41_31.png", surface: "41_31C.png" },
+  { number: 31, image: "41_31.png", surface: "41_31C.png" },
+  { number: 32, image: "32_42.png", surface: "32_42C.png" },
+  { number: 33, image: "43_33.png", surface: "43_33C.png" },
+  { number: 34, image: "34_44.png", surface: "34_44C.png" },
+  { number: 35, image: "45_35.png", surface: "45_35C.png" },
+  { number: 36, image: "46_36.png", surface: "46_36C.png" },
+  { number: 37, image: "47_37.png", surface: "47_37C.png" },
+  { number: 38, image: "38_48.png", surface: "38_48C.png" },
+];
 
 const childTeeth = [
   { number: 55, image: "childTeeth/F51.gif", surface: "childTeeth/O51.gif" },
@@ -58,7 +58,7 @@ const childTeeth = [
   { number: 73, image: "childTeeth/F83.gif", surface: "childTeeth/O83.gif" },
   { number: 74, image: "childTeeth/F84.gif", surface: "childTeeth/O84.gif" },
   { number: 75, image: "childTeeth/F85.gif", surface: "childTeeth/O85.gif" },
-]
+];
 
 const mockPatient = {
   avatar:
@@ -397,7 +397,7 @@ const notesList = [
     treatment: "Muscle relaxant, hot fomentation",
     advice: "Avoid heavy lifting",
   },
-]
+];
 const notestData = notesList.map((item) => {
   return {
     type: "notes",
@@ -823,3 +823,68 @@ const prescriptions = [
     dispenseUnit: "Strip",
   },
 ];
+
+const labTests = [
+  { id: 1, label: "Complete Blood Count (CBC)", price: 350 },
+  { id: 2, label: "Liver Function Test (LFT)", price: 750 },
+  { id: 3, label: "Kidney Function Test (KFT)", price: 600 },
+  { id: 4, label: "HbA1c (Diabetes Screen)", price: 450 },
+  { id: 5, label: "Lipid Profile (Cholesterol)", price: 500 },
+  { id: 6, label: "Thyroid Stimulating Hormone (TSH)", price: 300 },
+  { id: 7, label: "Vitamin D (25-OH)", price: 1200 },
+  { id: 8, label: "Urinalysis", price: 150 },
+  { id: 9, label: "Blood Glucose (Fasting)", price: 100 },
+  { id: 10, label: "C-Reactive Protein (CRP)", price: 400 },
+];
+
+const testCategories = [
+  { id: 101, label: "Hematology", price: 800 },
+  { id: 102, label: "Biochemistry", price: 1100 },
+  { id: 103, label: "Diabetes Care", price: 500 },
+  { id: 104, label: "Cardiology", price: 1500 },
+  { id: 105, label: "Thyroid Profile", price: 650 },
+  { id: 106, label: "Vitamins & Minerals", price: 1800 },
+  { id: 107, label: "Kidney Care", price: 900 },
+  { id: 108, label: "Liver Care", price: 850 },
+  { id: 109, label: "Hormone Tests", price: 1400 },
+  { id: 110, label: "Immunology", price: 1250 },
+];
+
+const labPackages = [
+  { id: 201, label: "Basic Health Checkup", testCount: 4, price: 1800 },
+  { id: 202, label: "Comprehensive Health Checkup", testCount: 7, price: 4200 },
+  { id: 203, label: "Cardiac Checkup", testCount: 4, price: 2700 },
+  { id: 204, label: "Senior Citizen Male", testCount: 12, price: 5500 },
+  { id: 205, label: "Senior Citizen Female", testCount: 13, price: 5500 },
+  { id: 206, label: "Full Body Screening", testCount: 15, price: 7000 },
+  { id: 207, label: "Diabetes Essential Package", testCount: 5, price: 2200 },
+  { id: 208, label: "Executive Health Profile", testCount: 10, price: 4800 },
+  { id: 209, label: "Women Wellness Package", testCount: 8, price: 3500 },
+  { id: 210, label: "Post-Viral Recovery Check", testCount: 6, price: 2900 },
+];
+
+const categoryTestsMap = {
+  101: labTests.filter(t => [1].includes(t.id)),
+  102: labTests.filter(t => [2, 3, 5, 10].includes(t.id)),
+  103: labTests.filter(t => [4, 9].includes(t.id)),
+  104: labTests.filter(t => [5, 10].includes(t.id)),
+  105: labTests.filter(t => [6].includes(t.id)),
+  106: labTests.filter(t => [7].includes(t.id)),
+  107: labTests.filter(t => [3, 8].includes(t.id)),
+  108: labTests.filter(t => [2].includes(t.id)),
+  109: labTests.filter(t => [6].includes(t.id)),
+  110: labTests.filter(t => [10].includes(t.id))
+};
+
+const packageTestsMap = {
+  201: labTests.filter(t => [1, 4, 8, 9].includes(t.id)),
+  202: labTests.filter(t => [1, 2, 3, 4, 5, 6, 8].includes(t.id)),
+  203: labTests.filter(t => [1, 5, 10, 9].includes(t.id)),
+  204: labTests.filter(t => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(t.id)),
+  205: labTests.filter(t => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(t.id)),
+  206: labTests.filter(t => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(t.id)),
+  207: labTests.filter(t => [4, 9, 3, 8, 1].includes(t.id)),
+  208: labTests.filter(t => [1, 2, 3, 5, 6, 10].includes(t.id)),
+  209: labTests.filter(t => [1, 4, 6, 7, 8].includes(t.id)),
+  210: labTests.filter(t => [1, 10, 2, 3].includes(t.id))
+};

@@ -416,6 +416,88 @@
             <div class="content-area"></div>
           </aside>
 
+          <div
+            class="modal fade"
+            id="visitingNotesModal"
+            tabindex="-1"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                  <h6 class="modal-title fw-bold">Add Visiting Notes</h6>
+                  <button
+                    type="button"
+                    class="btn-close btn-sm"
+                    data-dismiss="modal"
+                  ></button>
+                </div>
+
+                <!-- Modal Body -->
+                <div class="modal-body">
+                  <form id="visitingNotesForm">
+                    <!-- Status -->
+                    <div class="mb-3">
+                      <label class="form-label">Status</label>
+                      <!-- <input
+                        type="text"
+                        class="form-control rounded-4"
+                        placeholder="e.g., Completed, In Progress"
+                      /> -->
+                      <select class="form-control rounded-4 custom-select">
+                        <option value="">Select status</option>
+                        <option value="">Completed</option>
+                        <option value="">In progress</option>
+                      </select>
+                    </div>
+
+                    <!-- Date & Time -->
+                    <div class="row">
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label">Date</label>
+                        <input type="date" class="form-control rounded-4" />
+                      </div>
+
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label">Time</label>
+                        <input type="time" class="form-control rounded-4" />
+                      </div>
+                    </div>
+
+                    <!-- Notes -->
+                    <div class="mb-3">
+                      <label class="form-label">Notes</label>
+                      <textarea
+                        class="form-control rounded-4"
+                        rows="4"
+                        placeholder="Enter visiting notes"
+                      ></textarea>
+                    </div>
+                  </form>
+                </div>
+
+                <!-- Modal Footer -->
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-success rounded-4"
+                    id="saveNotes"
+                  >
+                    Save
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline-secondary rounded-4"
+                    data-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <aside
             id="asideMenu"
             class="col-md-2 col-lg-2 border border-top-0 border-bottom-0 p-3 sidebar hide-scrollbar"
@@ -584,17 +666,21 @@
               <div class="d-flex justify-content-between align-items-center">
                 <!-- Left Section -->
                 <div class="d-flex align-items-center w-auto">
-                  <img
-                    id="pAvatar"
-                    src=""
-                    class="rounded-circle border me-4"
-                    width="40"
-                    height="40"
-                  />
+                  <a role="button" class="openPatientDetails">
+                    <img
+                      id="pAvatar"
+                      src=""
+                      class="rounded-circle border me-4"
+                      width="40"
+                      height="40"
+                    />
+                  </a>
                   <div>
                     <div class="d-flex gap-2">
-                      <h6 id="pName" class="mb-1 fw-semibold"></h6>
-                      <span class="text-sm"># 123456</span>
+                      <a role="button" class="openPatientDetails">
+                        <h6 id="pName" class="mb-1 fw-semibold"></h6>
+                      </a>
+                      <span class="text-sm"># 123456 (VIP)</span>
                     </div>
                     <div class="d-flex gap-2">
                       <div id="pBasic" class="text-custom small"></div>
@@ -658,7 +744,9 @@
                           </div>
                         </div>
 
-                        <div class="mt-4 d-flex justify-content-end align-items-center">
+                        <div
+                          class="mt-4 d-flex justify-content-end align-items-center"
+                        >
                           <button
                             id="addAllergy"
                             class="btn btn-sm btn-outline-primary rounded-4 px-3"
@@ -705,7 +793,7 @@
                     <div class="text-custom small">Last Visit</div>
                     <div id="pLastVisit" class=""></div>
                   </div>
-                  <div class="d-flex flex-column gap-2">
+                  <div class="d-flex flex-column gap-1">
                     <button
                       style="height: 25px"
                       class="btn btn-sm btn-outline-primary flex-grow-1 px-2 py-0"
@@ -1227,7 +1315,8 @@
                               class="dropdown py-2 pt-0"
                               id="custom-autocomplete"
                             >
-                              <label class="fw-medium text-custom mb-1 ms-1"
+                              <label
+                                class="d-flex justify-content-start align-items-center text-custom mb-1 ms-1"
                                 >Procedures / Radiology
                                 <input type="checkbox" /> Send to
                                 Radiology?</label
@@ -1293,6 +1382,141 @@
                         </button>
                       </div>
                     </form>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Lab -->
+              <div class="card mb-2">
+                <div class="card-header" id="headingClinicalNotes">
+                  <div
+                    role="button"
+                    class="d-flex justify-content-between align-items-center"
+                    data-toggle="collapse"
+                    data-target="#labArea"
+                    aria-expanded="true"
+                  >
+                    <button
+                      class="btn btn-sm collapsed text-decoration-none p-0"
+                    >
+                      <span class="mb-0 fw-semibold text-custom"> Lab </span>
+                    </button>
+
+                    <!-- Preview Text -->
+                    <small class="text-custom" id="clinicalNotesPrev"
+                      >No items yet</small
+                    >
+                  </div>
+                </div>
+
+                <div
+                  id="labArea"
+                  class="collapse"
+                  data-parent="#patientAccordion"
+                >
+                  <div class="p-3">
+                    <div class="row g-3">
+                      <div class="col-md-4 p-0 mt-3 mx-0">
+                        <div class="border rounded-3 h-100">
+                          <div class="card-header bg-white py-2">
+                            <small class="fw-bold"
+                              >Selected (<b id="selectedCount">0</b>)</small
+                            >
+                          </div>
+
+                          <div
+                            class="card-body p-0"
+                            style="
+                              max-height: 300px;
+                              min-height: 300px;
+                              overflow-y: auto;
+                            "
+                          >
+                            <ul
+                              id="selectedTestArea"
+                              class="list-group list-group-flush"
+                            ></ul>
+                          </div>
+
+                          <div class="card-footer bg-white border-top-0 pt-0">
+                            <hr class="my-2 text-muted" />
+                            <div class="d-flex justify-content-between mb-3">
+                              <span class="fw-bold small">Total:</span>
+                              <span id="labpricearea" class="fw-bold small"
+                                >₹0</span
+                              >
+                            </div>
+                            <div class="d-flex gap-2">
+                              <button
+                                class="btn btn-outline-secondary btn-sm flex-fill rounded-4"
+                              >
+                                <i class="bi bi-printer"></i> Print
+                              </button>
+                              <button
+                                class="btn btn-primary btn-sm flex-fill rounded-4"
+                              >
+                                <i class="bi bi-send"></i> Send to Lab
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-md-8">
+                        <div class="h-100">
+                          <div class="input-group">
+                            <input
+                              type="text"
+                              class="form-control form-control-sm rounded-4"
+                              placeholder="Search..."
+                            />
+                            <div class="btn-group btn-group-sm ms-2">
+                              <button
+                                id="changetotest"
+                                class="btn btn-outline-secondary active rounded-start-4"
+                              >
+                                Tests
+                              </button>
+                              <button
+                                id="changetopackage"
+                                class="btn btn-outline-secondary rounded-end-4"
+                              >
+                                Packages
+                              </button>
+                            </div>
+                          </div>
+                          <div
+                            id="categoryArea"
+                            class="d-flex flex-wrap justify-content-start align-items-center gap-1 py-2"
+                          ></div>
+                          <div
+                            id="allTestArea"
+                            style="
+                              max-height: 320px;
+                              min-height: 320px;
+                              overflow-y: auto;
+                            "
+                            class="list-group list-group-flush border rounded"
+                          ></div>
+                          <div
+                            class="d-flex justify-content-end align-items-center py-2"
+                          >
+                            <div class="btn-group btn-group-sm ms-2">
+                              <button
+                                class="btn btn-sm py-0 px-2 m-0 btn-outline-secondary rounded-start-4"
+                              >
+                                Prev
+                              </button>
+                              <button
+                                class="btn btn-sm py-0 px-2 m-0 btn-outline-secondary rounded-end-4 active"
+                              >
+                                Next
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -2405,6 +2629,7 @@
     <script src="../../dist/js/adminlte.min.js"></script>
     <script src="./data.js"></script>
     <script src="./new.js"></script>
+    <script src="./lab.js"></script>
     <script src="./drawer.js"></script>
     <script src="./customdropdown.js"></script>
     <script src="./mockData.js"></script>
