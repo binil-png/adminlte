@@ -207,6 +207,78 @@ const prescriptionData = [
   };
 });
 
+const labTestData = [
+  ["Complete Blood Count (CBC)", "HbA1c", "Lipid Profile"],
+  ["Thyroid Profile (T3, T4, TSH)", "Vitamin D3"],
+  [
+    "Liver Function Test (LFT)",
+    "Kidney Function Test (KFT)",
+    "Urine Routine",
+    "Blood Sugar (Fast & PP)",
+    "Uric Acid"
+  ]
+].map((tests, i) => {
+  // Assuming you have or will create a similar helper function for lab details
+  const detailedTests = generateLabDetails(tests, i); 
+  
+  return {
+    type: "lab_report",
+    date: `2025-11-${12 + i}`,
+    title: "Lab Investigation",
+    icon: "fas fa-microscope text-info",
+    html: `
+      <div class="table-responsive">
+        <table class="table table-sm table-hover mb-0">
+          <thead  class="bg-light">
+            <tr style="font-size: 0.7rem;" class="text-muted">
+              <th style="border:0px;" class="fw-bold">#</th>
+              <th style="border:0px;" class="fw-bold">TEST NAME</th>
+              <th style="border:0px;" class="fw-bold">RESULT</th>
+              <th style="border:0px;" class="fw-bold">REFERENCE</th>
+              <th style="border:0px;" class="fw-bold text-end">STATUS</th>
+            </tr>
+          </thead>
+          <tbody style="font-size: 0.75rem;">
+            ${detailedTests
+              .map(
+                (t, idx) => `
+                <tr>
+                  <td style="border:0px;" class="text-muted">${idx + 1}</td>
+                  <td style="border:0px;" class="fw-bold text-dark">${t.name || ""}</td>
+                  <td style="border:0px;" class="${t.isAbnormal ? 'text-danger fw-bold' : ''}">
+                    ${t.result || "--"} <small>${t.unit || ""}</small>
+                  </td>
+                  <td style="border:0px;" class="text-muted small">${t.referenceRange || ""}</td>
+                  <td style="border:0px;" class="text-end">
+                    <span class="badge ${t.isAbnormal ? 'bg-danger-subtle text-danger' : 'bg-success-subtle text-success'}" style="font-size: 0.6rem;">
+                      ${t.status || "Final"}
+                    </span>
+                  </td>
+                </tr>
+            `
+              )
+              .join("")}
+          </tbody>
+        </table>
+      </div>
+    `,
+  };
+});
+
+/**
+ * Example helper to generate mock data for the lab rows
+ */
+function generateLabDetails(testNames, index) {
+  return testNames.map(name => ({
+    name: name,
+    result: (Math.random() * 100).toFixed(1),
+    unit: "mg/dL",
+    referenceRange: "70-110",
+    isAbnormal: Math.random() > 0.8, // Randomly flag some as abnormal
+    status: "Completed"
+  }));
+}
+
 const dentalRecords = [
   {
     type: "dental_procedure",
@@ -455,6 +527,7 @@ const historyData = [
   ...prescriptionData,
   // ================= NEW 10 CLINICAL NOTES ==================
   ...notestData,
+  ...labTestData,
   // ================= NEW 10 PROCEDURES ==================
   {
     type: "procedure",

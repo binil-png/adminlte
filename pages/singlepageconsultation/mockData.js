@@ -10,13 +10,6 @@ $(function () {
     $("#pPhone").html(
       `<i class="fa fa-mobile mr-2 text-custom"></i> ${p.phone}`
     );
-    let allergyHtml = "";
-    p.allergies.forEach((a, i) => {
-      allergyHtml += `<span class="text-danger text-sm">${a}${
-        i < p.allergies.length - 1 ? "," : ""
-      } </span>`;
-    });
-    $("#pAllergies").html(allergyHtml);
   }
   renderPatientHeader(mockPatient);
 });

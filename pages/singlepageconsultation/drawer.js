@@ -97,14 +97,14 @@ $(function () {
             class="btn btn-sm btn-outline-dark rounded-3 w-100 d-flex flex-column align-items-center justify-content-center py-3"
           >
             <i class="fas fa-print"></i>
-            <span style="font-size: 14px">Print id</span>
+            <span style="font-size: 14px">Print ID</span>
           </a>
         </div>
         <div style="height: 60px" class="col-4 d-flex">
           <a
             class="btn btn-sm btn-outline-dark rounded-3 w-100 d-flex flex-column align-items-center justify-content-center py-3"
           >
-            <i class="fab fa-google"></i>
+            <i class="fas fa-video"></i>
             <span style="font-size: 14px">Google meeting</span>
           </a>
         </div>

@@ -234,6 +234,7 @@
               <div class="col-6 pe-0">
                 <div class="dropdown" id="custom-autocomplete">
                   <button
+                    style="background-color: white"
                     class="btn btn-outline-secondary dropdown-toggle w-100 text-start d-flex justify-content-between align-items-center rounded-start-4 border-end-0 rounded-end-0 border"
                     type="button"
                     id="dropdownMenuButton"
@@ -243,6 +244,7 @@
                     <span
                       id="selected-item"
                       class="text-wrap d-inline-block text-start"
+                      style="color: #495057; font-size: 14px"
                       >Search patient...</span
                     >
                   </button>
@@ -272,12 +274,15 @@
               </div>
               <div class="dropdown col-6 ps-0">
                 <button
+                  style="background-color: white"
                   class="btn btn-light dropdown-toggle w-100 d-flex justify-content-between align-items-center border rounded-start-0 rounded-end-4"
                   type="button"
+                  id="selectAppointmenBtn"
                   data-bs-toggle="dropdown"
                 >
                   <span
                     id="selectedText"
+                    style="color: #495057; font-size: 14px"
                     class="text-wrap d-inline-block text-start"
                     >Select Appointment</span
                   >
@@ -359,42 +364,57 @@
             >
               <span
                 role="button"
-                class="badge rounded-4 bg-dark text-white p-2 active-filter"
+                style="color: #495057; background-color: white;"
+                class="badge rounded-4 bg-dark text-white p-2 text-custom active-filter"
                 data-filter="all"
                 >All</span
               >
               <span
                 role="button"
+                style="color: #495057; background-color: white;"
                 class="badge rounded-4 p-2 border text-custom"
                 data-filter="vitals"
                 >Vitals</span
               >
               <span
                 role="button"
+                style="color: #495057; background-color: white;"
                 class="badge rounded-4 p-2 border text-custom"
                 data-filter="notes"
                 >Notes</span
               >
               <span
                 role="button"
+                style="color: #495057; background-color: white;"
                 class="badge rounded-4 p-2 border text-custom"
                 data-filter="prescription"
                 >Prescription</span
               >
               <span
                 role="button"
+                style="color: #495057; background-color: white"
                 class="badge rounded-4 p-2 border text-custom"
                 data-filter="procedure"
                 >Procedure</span
               >
+
               <span
                 role="button"
+                style="color: #495057; background-color: white;"
                 class="badge rounded-4 p-2 border text-custom"
                 data-filter="dental"
                 >Dental</span
               >
               <span
                 role="button"
+                style="color: #495057; background-color: white;"
+                class="badge rounded-4 p-2 border text-custom"
+                data-filter="lab_report"
+                >Lab</span
+              >
+              <span
+                role="button"
+                style="color: #495057; background-color: white;"
                 class="badge rounded-4 p-2 border text-custom"
                 data-filter="files"
                 >Files</span
@@ -422,7 +442,10 @@
             tabindex="-1"
             aria-hidden="true"
           >
-            <div class="modal-dialog modal-dialog-centered">
+            <div
+              class="modal-dialog modal-dialog-centered"
+              style="max-width: 35vw"
+            >
               <div class="modal-content">
                 <!-- Modal Header -->
                 <div class="modal-header">
@@ -435,64 +458,45 @@
                 </div>
 
                 <!-- Modal Body -->
-                <div class="modal-body">
-                  <form id="visitingNotesForm">
-                    <!-- Status -->
-                    <div class="mb-3">
-                      <label class="form-label">Status</label>
-                      <!-- <input
-                        type="text"
-                        class="form-control rounded-4"
-                        placeholder="e.g., Completed, In Progress"
-                      /> -->
-                      <select class="form-control rounded-4 custom-select">
-                        <option value="">Select status</option>
-                        <option value="">Completed</option>
-                        <option value="">In progress</option>
-                      </select>
-                    </div>
-
-                    <!-- Date & Time -->
-                    <div class="row">
-                      <div class="col-md-6 mb-3">
-                        <label class="form-label">Date</label>
-                        <input type="date" class="form-control rounded-4" />
-                      </div>
-
-                      <div class="col-md-6 mb-3">
-                        <label class="form-label">Time</label>
-                        <input type="time" class="form-control rounded-4" />
-                      </div>
-                    </div>
-
-                    <!-- Notes -->
-                    <div class="mb-3">
-                      <label class="form-label">Notes</label>
-                      <textarea
-                        class="form-control rounded-4"
-                        rows="4"
-                        placeholder="Enter visiting notes"
-                      ></textarea>
-                    </div>
-                  </form>
+                <div
+                  class="modal-body"
+                  style="max-height: 70dvh; overflow-y: auto"
+                >
+                  <div
+                    class="d-flex flex-column gap-2"
+                    id="visitingNotesForm"
+                  ></div>
                 </div>
 
                 <!-- Modal Footer -->
-                <div class="modal-footer">
+                <div
+                  class="modal-footer d-flex justify-content-between align-items-center"
+                >
                   <button
                     type="button"
-                    class="btn btn-sm btn-success rounded-4"
-                    id="saveNotes"
+                    class="btn btn-sm btn-primary rounded-4"
+                    id="addVistingNotes"
                   >
-                    Save
+                    Add note
                   </button>
-                  <button
-                    type="button"
-                    class="btn btn-sm btn-outline-secondary rounded-4"
-                    data-dismiss="modal"
+                  <div
+                    class="d-flex justify-content-end align-items-center gap-2"
                   >
-                    Close
-                  </button>
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-success rounded-4"
+                      id="saveNotes"
+                    >
+                      Save
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-outline-secondary rounded-4"
+                      data-dismiss="modal"
+                    >
+                      Close
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -694,7 +698,10 @@
                   </div>
                 </div>
 
-                <div class="d-flex align-items-center mt-1 gap-2">
+                <div
+                  style="width: 20vw"
+                  class="d-flex flex-wrap justify-content-center align-items-center mt-1 gap-2"
+                >
                   <span class="text-custom small me-2"
                     >Allergies
                     <button
@@ -706,7 +713,10 @@
                     </button>
                     :</span
                   >
-                  <div id="pAllergies" class="d-flex gap-2"></div>
+                  <div
+                    id="pAllergies"
+                    class="d-flex flex-wrap mx-2 gap-2"
+                  ></div>
                 </div>
 
                 <div
@@ -823,7 +833,7 @@
             </div>
 
             <div
-              class="pb-4 px-4 d-flex justify-content-end align-items-center"
+              class="pb-2 px-4 d-flex justify-content-end align-items-center"
             >
               <input
                 style="width: 10vw"
@@ -1319,7 +1329,8 @@
                                 class="d-flex justify-content-start align-items-center text-custom mb-1 ms-1 gap-1 fw-medium"
                                 >Procedures / Radiology
                                 <input type="checkbox" /> Send to
-                                Radiology?</label>
+                                Radiology?</label
+                              >
                               <button
                                 class="w-100 text-start d-flex justify-content-start align-items-center rounded-4 border py-1"
                                 id="procedure-radiology"
@@ -1426,8 +1437,8 @@
                           <div
                             class="card-body p-0"
                             style="
-                              max-height: 300px;
-                              min-height: 300px;
+                              max-height: 280px;
+                              min-height: 280px;
                               overflow-y: auto;
                             "
                           >
@@ -1491,8 +1502,8 @@
                           <div
                             id="allTestArea"
                             style="
-                              max-height: 320px;
-                              min-height: 320px;
+                              max-height: 280px;
+                              min-height: 280px;
                               overflow-y: auto;
                             "
                             class="list-group list-group-flush border rounded"
@@ -2374,7 +2385,7 @@
                             />
                           </div>
 
-                          <div class="form-group col-8">
+                          <div class="form-group col-4">
                             <label>Description</label>
                             <input
                               type="text"
@@ -2382,6 +2393,24 @@
                               class="form-control input-style rounded-4"
                               placeholder="Enter description"
                             />
+                          </div>
+
+                          <div class="form-group col-4">
+                            <label>Category</label>
+                            <select
+                              id="categoryuploads"
+                              class="form-control input-style rounded-4"
+                            >
+                              <option value="1">General</option>
+                              <option value="2">Xray</option>
+                              <option value="3">CT/MRI</option>
+                              <option value="4">CBCT</option>
+                              <option value="5">Test Reports</option>
+                              <option value="6">Before</option>
+                              <option value="7">After</option>
+                              <option value="8">Prescription</option>
+                              <option value="9">Lagacy</option>
+                            </select>
                           </div>
                         </div>
 
@@ -2462,12 +2491,13 @@
                   >
                     Generate invoice <i class="fas fa-file-invoice ms-2"></i>
                   </a>
-                  <button
+                  <a
+                    href="./preview.html"
                     id="globalSave"
                     class="btn btn-sm btn-success save-btn rounded-4"
                   >
                     Save <i class="fas fa-save ms-2"></i>
-                  </button>
+                  </a>
                   <button
                     class="btn btn-sm btn-success save-btn save-btn-share rounded-4"
                   >

@@ -146,24 +146,6 @@ $(function () {
       $("#pAmount").text(patient.amount || "$0.00");
       $("#pVisits").text(patient.visits || "0");
       $("#pLastVisit").text(patient.lastVisit || "N/A");
-
-      // Clear and update Allergies
-      const $allergyContainer = $("#pAllergies");
-      $allergyContainer.empty();
-      if (patient.allergies) {
-        patient.allergies.forEach((allergy) => {
-          // $allergyContainer.append(
-          //   `<span class="badge bg-danger-subtle text-danger small">${allergy}</span>`
-          // );
-          $allergyContainer.append(
-            `<span class="text-danger text-sm">${allergy}${
-              i < patient.allergies.length - 1 ? "," : ""
-            } </span>`
-          );
-        });
-      } else {
-        $allergyContainer.append(`<span class="text-muted small">None</span>`);
-      }
     }
   });
 
@@ -605,89 +587,25 @@ $(function () {
 
   var $patientAccordion = $("#patientAccordion");
 
-  $("#collapseVitals").on("shown.bs.collapse", function () {
-    var card = $(this).closest(".card");
+  // List all IDs separated by commas
+  $(
+    "#collapseVitals, #collapseNotes, #labArea, #collapseProcedure, #collapsePresc, #collapseDental"
+  ).on("shown.bs.collapse", function () {
+    var $this = $(this);
+    var card = $this.closest(".card");
 
-    $patientAccordion.animate(
+    $patientAccordion.stop().animate(
       {
         scrollTop:
           card.offset().top -
           $patientAccordion.offset().top +
           $patientAccordion.scrollTop() -
-          20,
+          5,
       },
       100
     );
-    $(this).find("input").first().focus();
-  });
-  $("#collapseNotes").on("shown.bs.collapse", function () {
-    var card = $(this).closest(".card");
-    $patientAccordion.animate(
-      {
-        scrollTop:
-          card.offset().top -
-          $patientAccordion.offset().top +
-          $patientAccordion.scrollTop() -
-          20,
-      },
-      100
-    );
-    $(this).find("input").first().focus();
-  });
-  $("#labArea").on("shown.bs.collapse", function () {
-    var card = $(this).closest(".card");
-    $patientAccordion.animate(
-      {
-        scrollTop:
-          card.offset().top -
-          $patientAccordion.offset().top +
-          $patientAccordion.scrollTop() -
-          20,
-      },
-      100
-    );
-    $(this).find("input").first().focus();
-  });
-  $("#collapseProcedure").on("shown.bs.collapse", function () {
-    var card = $(this).closest(".card");
-    $patientAccordion.animate(
-      {
-        scrollTop:
-          card.offset().top -
-          $patientAccordion.offset().top +
-          $patientAccordion.scrollTop() -
-          20,
-      },
-      100
-    );
-    $(this).find("input").first().focus();
-  });
-  $("#collapsePresc").on("shown.bs.collapse", function () {
-    var card = $(this).closest(".card");
-    $patientAccordion.animate(
-      {
-        scrollTop:
-          card.offset().top -
-          $patientAccordion.offset().top +
-          $patientAccordion.scrollTop() -
-          20,
-      },
-      100
-    );
-    $(this).find("input").first().focus();
-  });
-  $("#collapseDental").on("shown.bs.collapse", function () {
-    var card = $(this).closest(".card");
-    $patientAccordion.animate(
-      {
-        scrollTop:
-          card.offset().top -
-          $patientAccordion.offset().top +
-          $patientAccordion.scrollTop() -
-          20,
-      },
-      100
-    );
-    $(this).find("input").first().focus();
+
+    // Focus the first input or textarea found
+    $this.find("input, textarea, select").first().focus();
   });
 });

@@ -41,20 +41,23 @@ $(function () {
     if (list) {
       list.forEach((i) => {
         $allTestArea.append(`
-   <label class="list-group-item list-group-item-action p-1 m-0 cursor-pointer">
-      <div class="d-flex w-100 justify-content-between align-items-center">
-         <div class="px-1">
-            <div class="d-flex justify-content-start align-items-center gap-2">
-              <input type="checkbox" class="selectCheckbox" data-id="${i.id}" />
-              <span class="fw-bold d-block d-md-inline">${i.label}</span>
-            </div>
-           <small class="${
-             i.testCount ? "text-muted d-block ms-4" : "d-none"
-           }">${i.testCount || ""} tests</small>
-        </div>
-       <span class="fw-bold">₹1800</span>
-      </div>
-   </label>`);
+                     <label class="list-group-item list-group-item-action p-1 m-0 cursor-pointer">
+                        <div class="d-flex w-100 justify-content-between align-items-center">
+                           <div class="px-1">
+                              <div class="d-flex justify-content-start align-items-center gap-2">
+                                <input type="checkbox" class="selectCheckbox" data-id="${i.id}" />
+                                <span style="font-weight:normal;" class="d-block d-md-inline">${
+                                  i.label
+                                }</span>
+                              </div>
+                             <small class="${
+                               i.testCount ? "text-muted d-block ms-4" : "d-none"
+                             }">${i.testCount || ""} tests</small>
+                          </div>
+                         <span class="fw-bold">₹1800</span>
+                        </div>
+                     </label>
+                    `);
       });
     }
   }

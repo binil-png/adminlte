@@ -39,8 +39,7 @@ $(function () {
       const boxId = generateBoxId(index);
       const lineTotal = calculateLineTotal(p.qty, p.price, p.discount);
       const initialDisplayClass = defaultHideClass;
-      const initialButtonHtml =
-        'Show more';
+      const initialButtonHtml = "Show more";
 
       container.append(`
       <div class="bg-custom rounded-4 proc-box" data-index="${index}">
@@ -49,9 +48,7 @@ $(function () {
                     <div class="col-6 row">
                       <div class="col-1 text-center pe-0">
                             <label class="form-label small text-muted mb-0 d-none d-md-block">Sr</label>
-                            <span class="d-block mt-1 pt-1">${
-                              index + 1
-                            }</span>
+                            <span class="d-block mt-1 pt-1">${index + 1}</span>
                       </div>
                       <div class="col-11">
                         <label class="form-label small text-muted mb-0">Procedure</label>
@@ -136,10 +133,15 @@ $(function () {
                                   <select
                                     class="form-control form-control-sm custom-select proc-status rounded-3 input-style proc-field rounded-4"
                                   >
-                                    <option ${p.status === "" ? "selected" : ""}></option>
-                                            <option ${p.status === "Planned/Completed" ? "selected" : ""}>Planned</option>
-                                            <option ${p.status === "Planned/Completed" ? "selected" : ""}>Completed</option>
-                                            <option ${p.status === "Planned/Completed" ? "selected" : ""}>Ongoing</option>
+                                                          <option value="">Select status</option>
+                                                           <option value="">Planned</option>
+                                                           <option value="">Completed</option>
+                                                           <option value="">Nursing Ordered</option>
+                                                           <option value="">Nursing Done</option>
+                                                           <option value="">Sent to Radiology</option>
+                                                           <option value="">Radiology Done</option>
+                                                           <option value="">Lab Ordered</option>
+                                                           <option value="">Lab Done</option>
                                    
                                   </select>
                                 </div>
@@ -224,9 +226,9 @@ $(function () {
     }
     $target.slideToggle(200, function () {
       if ($target.is(":visible")) {
-        $button.html('Show less');
+        $button.html("Show less");
       } else {
-        $button.html('Show more');
+        $button.html("Show more");
       }
     });
   });
@@ -351,4 +353,92 @@ $(function () {
   });
 
   renderProcTable();
+  let notesList = [
+    {
+      status: "",
+      date: "",
+      time: "",
+      notes: "",
+    },
+  ];
+
+  const $visitingNotesForm = $("#visitingNotesForm");
+
+  function renderVisitingNotes(list) {
+    $visitingNotesForm.empty();
+    if (list.length) {
+      list.forEach((n, i) => {
+        $visitingNotesForm.append(`
+    <div class="p-2 bg-light rounded-4">
+      <div class="mb-2 d-flex align-items-center gap-2">
+        <div class="flex-fill">
+          <label
+            class="form-label d-flex justify-content-between align-items-center"
+            ><span>Status</span>
+          </label>
+          <select class="form-control rounded-4 custom-select input-style">
+            <option value="">Select status</option>
+            <option value="">Planned</option>
+            <option value="">Completed</option>
+            <option value="">Nursing Ordered</option>
+            <option value="">Nursing Done</option>
+            <option value="">Sent to Radiology</option>
+            <option value="">Radiology Done</option>
+            <option value="">Lab Ordered</option>
+            <option value="">Lab Done</option>
+          </select>
+        </div>
+        <div class="row flex-fill align-items-center">
+          <div class="col-md-6 mx-0 pe-0 mb-2">
+            <label style="margin-bottom: 9px;" class="form-label d-flex justify-content-between align-items-center ">Date</label>
+            <input type="date" class="form-control rounded-4 rounded-end-0 input-style" />
+          </div>
+
+          <div class="col-md-6 mx-0 ps-0 mb-2">
+            <label
+              class="form-label d-flex justify-content-between align-items-center "
+              ><span>Time</span>
+              <button
+                data-index="${i}"
+                class="btn btn-sm text-danger p-0 m-0 visitingnotedelete"
+              >
+                <i class="fas fa-times"></i></button
+            ></label>
+            <input type="time" class="form-control border-start-0 rounded-start-0 rounded-4 input-style" />
+          </div>
+        </div>
+      </div>
+      <div class="mb-2">
+        <label class="form-label">Notes</label>
+        <textarea
+          class="form-control rounded-4 input-style"
+          rows="2"
+          placeholder="Enter visiting notes"
+        ></textarea>
+      </div>
+    </div>
+      `);
+      });
+    } else {
+      $visitingNotesForm.append(`<div>No visiting notes</div>`);
+    }
+  }
+
+  $(document).on("click", ".visitingnotedelete", function () {
+    const index = $(this).data("index");
+    console.log(index);
+    notesList = notesList.filter((n, i) => i != index);
+    renderVisitingNotes(notesList);
+  });
+
+  $("#addVistingNotes").on("click", function () {
+    notesList.push({
+      status: "",
+      date: "",
+      time: "",
+      notes: "",
+    });
+    renderVisitingNotes(notesList);
+  });
+  renderVisitingNotes(notesList);
 });

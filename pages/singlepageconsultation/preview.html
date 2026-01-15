@@ -1,0 +1,1406 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pappyjoe 3 | Contacts</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback"
+    />
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="../../plugins/fontawesome-free/css/all.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Required bootstrap cdn link -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Required bootstrap cdn link -->
+
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../dist/css/adminlte.min.css" />
+    <link rel="stylesheet" href="./singlepage.css" />
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+  </head>
+  <body class="hold-transition">
+    <div class="">
+      <nav class="navbar navbar-expand navbar-white navbar-light">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a
+              id="toggleAside"
+              class="nav-link"
+              data-widget="pushmenu"
+              href="#"
+              role="button"
+              ><i class="fas fa-bars"></i>
+            </a>
+          </li>
+          <li class="nav-item d-none d-sm-inline-block">
+            <a href="../../index.html" class="nav-link">Home</a>
+          </li>
+          <li class="nav-item d-none d-sm-inline-block">
+            <a href="#" class="nav-link">Contact</a>
+          </li>
+        </ul>
+
+        <!-- Right navbar links -->
+        <ul class="navbar-nav ml-auto">
+          <!-- Navbar Search -->
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              data-widget="navbar-search"
+              href="#"
+              role="button"
+            >
+              <i class="fas fa-search"></i>
+            </a>
+            <div class="navbar-search-block">
+              <form class="form-inline">
+                <div class="input-group input-group-sm">
+                  <input
+                    class="form-control form-control-navbar"
+                    type="search"
+                    placeholder="Search"
+                    aria-label="Search"
+                  />
+                  <div class="input-group-append">
+                    <button class="btn btn-navbar" type="submit">
+                      <i class="fas fa-search"></i>
+                    </button>
+                    <button
+                      class="btn btn-navbar"
+                      type="button"
+                      data-widget="navbar-search"
+                    >
+                      <i class="fas fa-times"></i>
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </li>
+
+          <!-- Messages Dropdown Menu -->
+          <li class="nav-item dropdown">
+            <a class="nav-link" data-toggle="dropdown" href="#">
+              <i class="far fa-comments"></i>
+              <span class="badge badge-danger navbar-badge">3</span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+              <a href="#" class="dropdown-item">
+                <!-- Message Start -->
+                <div class="media">
+                  <img
+                    src="../../dist/img/user1-128x128.jpg"
+                    alt="User Avatar"
+                    class="img-size-50 mr-3 img-circle"
+                  />
+                  <div class="media-body">
+                    <h3 class="dropdown-item-title">
+                      Brad Diesel
+                      <span class="float-right text-sm text-danger"
+                        ><i class="fas fa-star"></i
+                      ></span>
+                    </h3>
+                    <p class="text-sm">Call me whenever you can...</p>
+                    <p class="text-sm text-custom">
+                      <i class="far fa-clock mr-1"></i> 4 Hours Ago
+                    </p>
+                  </div>
+                </div>
+                <!-- Message End -->
+              </a>
+              <div class="dropdown-divider"></div>
+              <a href="#" class="dropdown-item">
+                <!-- Message Start -->
+                <div class="media">
+                  <img
+                    src="../../dist/img/user8-128x128.jpg"
+                    alt="User Avatar"
+                    class="img-size-50 img-circle mr-3"
+                  />
+                  <div class="media-body">
+                    <h3 class="dropdown-item-title">
+                      John Pierce
+                      <span class="float-right text-sm text-custom"
+                        ><i class="fas fa-star"></i
+                      ></span>
+                    </h3>
+                    <p class="text-sm">I got your message bro</p>
+                    <p class="text-sm text-custom">
+                      <i class="far fa-clock mr-1"></i> 4 Hours Ago
+                    </p>
+                  </div>
+                </div>
+                <!-- Message End -->
+              </a>
+              <div class="dropdown-divider"></div>
+              <a href="#" class="dropdown-item">
+                <!-- Message Start -->
+                <div class="media">
+                  <img
+                    src="../../dist/img/user3-128x128.jpg"
+                    alt="User Avatar"
+                    class="img-size-50 img-circle mr-3"
+                  />
+                  <div class="media-body">
+                    <h3 class="dropdown-item-title">
+                      Nora Silvester
+                      <span class="float-right text-sm text-warning"
+                        ><i class="fas fa-star"></i
+                      ></span>
+                    </h3>
+                    <p class="text-sm">The subject goes here</p>
+                    <p class="text-sm text-custom">
+                      <i class="far fa-clock mr-1"></i> 4 Hours Ago
+                    </p>
+                  </div>
+                </div>
+                <!-- Message End -->
+              </a>
+              <div class="dropdown-divider"></div>
+              <a href="#" class="dropdown-item dropdown-footer"
+                >See All Messages</a
+              >
+            </div>
+          </li>
+          <!-- Notifications Dropdown Menu -->
+          <li class="nav-item dropdown">
+            <a class="nav-link" data-toggle="dropdown" href="#">
+              <i class="far fa-bell"></i>
+              <span class="badge badge-warning navbar-badge">15</span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+              <span class="dropdown-item dropdown-header"
+                >15 Notifications</span
+              >
+              <div class="dropdown-divider"></div>
+              <a href="#" class="dropdown-item">
+                <i class="fas fa-envelope mr-2"></i> 4 new messages
+                <span class="float-right text-custom text-sm">3 mins</span>
+              </a>
+              <div class="dropdown-divider"></div>
+              <a href="#" class="dropdown-item">
+                <i class="fas fa-users mr-2"></i> 8 friend requests
+                <span class="float-right text-custom text-sm">12 hours</span>
+              </a>
+              <div class="dropdown-divider"></div>
+              <a href="#" class="dropdown-item">
+                <i class="fas fa-file mr-2"></i> 3 new reports
+                <span class="float-right text-custom text-sm">2 days</span>
+              </a>
+              <div class="dropdown-divider"></div>
+              <a href="#" class="dropdown-item dropdown-footer"
+                >See All Notifications</a
+              >
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+              <i class="fas fa-expand-arrows-alt"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              data-widget="control-sidebar"
+              data-slide="true"
+              href="#"
+              role="button"
+            >
+              <i class="fas fa-th-large"></i>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="container-fluid">
+        <div class="row border-top">
+          <!-- Sidebar -->
+          <aside
+            id="asideSideBar"
+            class="col-md-4 col-lg-4 border border-top-0 border-bottom-0 p-3 sidebar hide-scrollbar"
+          >
+            <div class="row pb-2">
+              <div class="col-6 pe-0">
+                <div class="dropdown" id="custom-autocomplete">
+                  <button
+                    class="btn btn-outline-secondary dropdown-toggle w-100 text-start d-flex justify-content-between align-items-center rounded-start-4 border-end-0 rounded-end-0 border"
+                    type="button"
+                    id="dropdownMenuButton"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    <span
+                      id="selected-item"
+                      class="text-wrap d-inline-block text-start"
+                      style="color: #495057; font-size: 14px"
+                      >Search patient...</span
+                    >
+                  </button>
+
+                  <div
+                    class="dropdown-menu w-100 shadow"
+                    aria-labelledby="dropdownMenuButton"
+                  >
+                    <div class="px-3 py-2">
+                      <input
+                        type="text"
+                        class="form-control ignore-edit"
+                        id="searchpreviousPatients"
+                        placeholder="Search options..."
+                        autofocus
+                      />
+                    </div>
+                    <div
+                      id="items-container"
+                      style="max-height: 200px; overflow-y: auto"
+                    ></div>
+                    <div id="no-results" class="px-3 py-2 d-none text-muted">
+                      No results found
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="dropdown col-6 ps-0">
+                <button
+                  class="btn btn-light dropdown-toggle w-100 d-flex justify-content-between align-items-center border rounded-start-0 rounded-end-4"
+                  type="button"
+                  id="selectAppointmenBtn"
+                  data-bs-toggle="dropdown"
+                >
+                  <span
+                    id="selectedText"
+                    style="color: #495057; font-size: 14px"
+                    class="text-wrap d-inline-block text-start"
+                    >Select Appointment</span
+                  >
+                </button>
+
+                <ul class="dropdown-menu w-100 p-1">
+                  <li>
+                    <a
+                      class="dropdown-item ignore-edit appointment-item"
+                      href="#"
+                    >
+                      <div
+                        class="d-flex justify-content-between align-items-start"
+                      >
+                        <div class="appointment-text">
+                          <div class="name-row d-flex justify-content-between">
+                            <span class="fw-semibold"
+                              >Emily Chen With Very Long Name Example</span
+                            >
+                            <span class="badge bg-warning ms-2"
+                              >In-progress</span
+                            >
+                          </div>
+                          <small class="text-muted">10:30 AM • Follow-up</small>
+                        </div>
+                      </div>
+                    </a>
+                  </li>
+
+                  <li>
+                    <a
+                      class="dropdown-item ignore-edit appointment-item"
+                      href="#"
+                    >
+                      <div class="d-flex justify-content-between">
+                        <div>
+                          <div class="fw-semibold">
+                            Sarah Johnson
+                            <span class="badge bg-success">Completed</span>
+                          </div>
+                          <small class="text-muted"
+                            >09:00 AM • Routine Checkup</small
+                          >
+                        </div>
+                      </div>
+                    </a>
+                  </li>
+
+                  <li>
+                    <a
+                      class="dropdown-item ignore-edit appointment-item"
+                      href="#"
+                    >
+                      <div class="d-flex justify-content-between">
+                        <div>
+                          <div class="fw-semibold">
+                            Michael Brown
+                            <span class="badge bg-secondary">Scheduled</span>
+                          </div>
+                          <small class="text-muted"
+                            >02:00 PM • Consultation</small
+                          >
+                        </div>
+                      </div>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <h6 class="text-uppercase text-custom small fw-bold mb-2">
+              Patient History
+            </h6>
+
+            <!-- Chips Filter -->
+            <div
+              class="mb-3 py-3 border-bottom border-top d-flex flex-wrap gap-2"
+              id="chipFilters"
+            >
+              <span
+                role="button"
+                style="color: #495057"
+                class="badge rounded-4 bg-dark text-white p-2 active-filter"
+                data-filter="all"
+                >All</span
+              >
+              <span
+                role="button"
+                style="color: #495057"
+                class="badge rounded-4 p-2 border text-custom"
+                data-filter="vitals"
+                >Vitals</span
+              >
+              <span
+                role="button"
+                style="color: #495057"
+                class="badge rounded-4 p-2 border text-custom"
+                data-filter="notes"
+                >Notes</span
+              >
+              <span
+                role="button"
+                style="color: #495057"
+                class="badge rounded-4 p-2 border text-custom"
+                data-filter="prescription"
+                >Prescription</span
+              >
+              <span
+                role="button"
+                style="color: #495057"
+                class="badge rounded-4 p-2 border text-custom"
+                data-filter="procedure"
+                >Procedure</span
+              >
+              <span
+                role="button"
+                style="color: #495057"
+                class="badge rounded-4 p-2 border text-custom"
+                data-filter="lab_report"
+                >Lab</span
+              >
+              <span
+                role="button"
+                style="color: #495057"
+                class="badge rounded-4 p-2 border text-custom"
+                data-filter="dental"
+                >Dental</span
+              >
+              <span
+                role="button"
+                style="color: #495057"
+                class="badge rounded-4 p-2 border text-custom"
+                data-filter="files"
+                >Files</span
+              >
+            </div>
+
+            <!-- Date Filter -->
+            <div class="mb-3">
+              <label class="form-label small text-custom fw-semibold"
+                >Filter by Date (Select Multiple)</label
+              >
+              <select
+                id="dateFilter"
+                class="form-control rounded-4 custom-select input-style ignore-edit"
+              ></select>
+            </div>
+
+            <!-- Content Area -->
+            <div class="content-area"></div>
+          </aside>
+
+          <div
+            class="modal fade"
+            id="visitingNotesModal"
+            tabindex="-1"
+            aria-hidden="true"
+          >
+            <div
+              class="modal-dialog modal-dialog-centered"
+              style="max-width: 35vw"
+            >
+              <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                  <h6 class="modal-title fw-bold">Add Visiting Notes</h6>
+                  <button
+                    type="button"
+                    class="btn-close btn-sm"
+                    data-dismiss="modal"
+                  ></button>
+                </div>
+
+                <!-- Modal Body -->
+                <div
+                  class="modal-body"
+                  style="max-height: 70dvh; overflow-y: auto"
+                >
+                  <div
+                    class="d-flex flex-column gap-2"
+                    id="visitingNotesForm"
+                  ></div>
+                </div>
+
+                <!-- Modal Footer -->
+                <div
+                  class="modal-footer d-flex justify-content-between align-items-center"
+                >
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-primary rounded-4"
+                    id="addVistingNotes"
+                  >
+                    Add note
+                  </button>
+                  <div
+                    class="d-flex justify-content-end align-items-center gap-2"
+                  >
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-success rounded-4"
+                      id="saveNotes"
+                    >
+                      Save
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-outline-secondary rounded-4"
+                      data-dismiss="modal"
+                    >
+                      Close
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <aside
+            id="asideMenu"
+            class="col-md-2 col-lg-2 border border-top-0 border-bottom-0 p-3 sidebar hide-scrollbar"
+          >
+            <!-- Brand Logo -->
+            <a href="../../index3.html" class="brand-link">
+              <img
+                src="../../dist/img/AdminLTELogo.png"
+                alt="AdminLTE Logo"
+                class="brand-image img-circle elevation-3"
+                style="opacity: 0.8"
+              />
+              <span class="brand-text font-weight-light">Pappyjoe</span>
+            </a>
+
+            <!-- Sidebar -->
+            <div class="sidebar">
+              <!-- Sidebar user (optional) -->
+              <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                <div class="image">
+                  <img
+                    src="../../dist/img/user2-160x160.jpg"
+                    class="img-circle elevation-2"
+                    alt="User Image"
+                  />
+                </div>
+                <div class="info">
+                  <a href="#" class="d-block">Care & Cure</a>
+                </div>
+              </div>
+
+              <!-- SidebarSearch Form -->
+              <div class="form-inline">
+                <div class="input-group" data-widget="sidebar-search">
+                  <input
+                    class="form-control form-control-sidebar"
+                    type="search"
+                    placeholder="Search"
+                    aria-label="Search"
+                  />
+                  <div class="input-group-append">
+                    <button class="btn btn-sidebar">
+                      <i class="fas fa-search fa-fw"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Sidebar Menu -->
+              <nav class="mt-2">
+                <ul
+                  class="nav nav-pills nav-sidebar flex-column"
+                  data-widget="treeview"
+                  role="menu"
+                  data-accordion="false"
+                >
+                  <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+
+                  <li class="nav-item menu-open">
+                    <a href="#" class="nav-link active">
+                      <i class="nav-icon fas fa-book"></i>
+                      <p>
+                        Pages
+                        <i class="fas fa-angle-left right"></i>
+                      </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                      <li class="nav-item">
+                        <a
+                          href="../examples/project-detail.html"
+                          class="nav-link"
+                        >
+                          <i class="far fa-circle nav-icon"></i>
+                          <p>Project Detail</p>
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <a
+                          href="../examples/contacts.html"
+                          class="nav-link active"
+                        >
+                          <i class="far fa-circle nav-icon"></i>
+                          <p>Contacts</p>
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
+
+                  <li class="nav-header">MULTI LEVEL EXAMPLE</li>
+                  <li class="nav-item">
+                    <a href="#" class="nav-link">
+                      <i class="fas fa-circle nav-icon"></i>
+                      <p>Level 1</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="#" class="nav-link">
+                      <i class="nav-icon fas fa-circle"></i>
+                      <p>
+                        Level 1
+                        <i class="right fas fa-angle-left"></i>
+                      </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                      <li class="nav-item">
+                        <a href="#" class="nav-link">
+                          <i class="far fa-circle nav-icon"></i>
+                          <p>Level 2</p>
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <a href="#" class="nav-link">
+                          <i class="far fa-circle nav-icon"></i>
+                          <p>
+                            Level 2
+                            <i class="right fas fa-angle-left"></i>
+                          </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                          <li class="nav-item">
+                            <a href="#" class="nav-link">
+                              <i class="far fa-dot-circle nav-icon"></i>
+                              <p>Level 3</p>
+                            </a>
+                          </li>
+                          <li class="nav-item">
+                            <a href="#" class="nav-link">
+                              <i class="far fa-dot-circle nav-icon"></i>
+                              <p>Level 3</p>
+                            </a>
+                          </li>
+                          <li class="nav-item">
+                            <a href="#" class="nav-link">
+                              <i class="far fa-dot-circle nav-icon"></i>
+                              <p>Level 3</p>
+                            </a>
+                          </li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </nav>
+              <!-- /.sidebar-menu -->
+            </div>
+            <!-- /.sidebar -->
+          </aside>
+
+          <!-- Main Content -->
+          <main class="col-md-8 col-lg-8 p-0 mx-0">
+            <!-- Patient Header -->
+            <div id="drawerOverlay" class="drawer-overlay"></div>
+
+            <div id="customDrawer" class="custom-drawer">
+              <div
+                class="drawer-header d-flex justify-content-between align-items-center p-3 border-bottom"
+              >
+                <h5 class="mb-0" id="drawerHeader"></h5>
+                <button id="closeDrawer" class="btn-close"></button>
+              </div>
+              <div id="drawerContent"></div>
+            </div>
+
+            <div class="card border-0 border-bottom rounded-0 bg-white p-3">
+              <div class="d-flex justify-content-between align-items-center">
+                <!-- Left Section -->
+                <div class="d-flex align-items-center w-auto">
+                  <a role="button" class="openPatientDetails">
+                    <img
+                      id="pAvatar"
+                      src=""
+                      class="rounded-circle border me-4"
+                      width="40"
+                      height="40"
+                    />
+                  </a>
+                  <div>
+                    <div class="d-flex gap-2">
+                      <a role="button" class="openPatientDetails">
+                        <h6 id="pName" class="mb-1 fw-semibold"></h6>
+                      </a>
+                      <span class="text-sm"># 123456 (VIP)</span>
+                    </div>
+                    <div class="d-flex gap-2">
+                      <div id="pBasic" class="text-custom small"></div>
+                      <div class="d-flex align-items-center text-sm">
+                        <i class="bi bi-telephone text-secondary me-2"></i>
+                        <span id="pPhone" class="">
+                          <i class="fa fa-mobile mr-2 text-custom"></i>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  style="width: 20vw"
+                  class="d-flex flex-wrap justify-content-center align-items-center mt-1 gap-2"
+                >
+                  <span class="text-custom small me-2"
+                    >Allergies
+                    <button
+                      class="btn btn-sm text-primary py-0"
+                      type="button"
+                      id="openAllergyModal"
+                    >
+                      <i class="fas fa-plus"></i>
+                    </button>
+                    :</span
+                  >
+                  <div
+                    id="pAllergies"
+                    class="d-flex flex-wrap mx-2 gap-2"
+                  ></div>
+                </div>
+
+                <div
+                  class="modal fade"
+                  id="allergyModal"
+                  tabindex="-1"
+                  aria-hidden="true"
+                >
+                  <div
+                    class="modal-dialog modal-dialog-centered"
+                    style="width: 50vw; max-width: 50vw"
+                  >
+                    <div class="modal-content shadow-lg border-0">
+                      <div class="modal-header bg-light">
+                        <h5 class="modal-title fw-bold" id="allergyModalLabel">
+                          Add Allergy
+                        </h5>
+                      </div>
+                      <div class="modal-body p-4">
+                        <div id="allergyList" class="row g-3">
+                          <div class="col-md-3 allergy-row">
+                            <div class="input-group">
+                              <input
+                                type="text"
+                                class="form-control rounded-start-4 shadow-sm"
+                                placeholder="Enter allergy..."
+                              />
+                              <button
+                                class="btn btn-outline-danger btn-remove-allergy rounded-end-4"
+                                type="button"
+                              >
+                                <i class="fas fa-times"></i>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div
+                          class="mt-4 d-flex justify-content-end align-items-center"
+                        >
+                          <button
+                            id="addAllergy"
+                            class="btn btn-sm btn-outline-primary rounded-4 px-3"
+                          >
+                            <i class="fas fa-plus me-1"></i> Add Allergy
+                          </button>
+                        </div>
+                      </div>
+                      <div class="modal-footer border-0 bg-light">
+                        <button
+                          type="button"
+                          class="btn btn-sm btn-success rounded-4 px-4"
+                        >
+                          Save changes
+                        </button>
+                        <button
+                          type="button"
+                          class="btn btn-sm btn-danger rounded-4 px-4"
+                          data-dismiss="modal"
+                        >
+                          Close
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Right Section -->
+                <div class="d-flex align-items-center gap-4">
+                  <!-- Amount -->
+                  <div class="text-center">
+                    <div class="text-custom small">Amount Due</div>
+                    <div id="pAmount" class=""></div>
+                  </div>
+
+                  <!-- Visits -->
+                  <div class="text-center">
+                    <div class="text-custom small">Visits</div>
+                    <div id="pVisits" class=""></div>
+                  </div>
+
+                  <!-- Last Visit -->
+                  <div class="text-center">
+                    <div class="text-custom small">Last Visit</div>
+                    <div id="pLastVisit" class=""></div>
+                  </div>
+                  <div class="d-flex flex-column gap-1">
+                    <button
+                      style="height: 25px"
+                      class="btn btn-sm btn-outline-primary flex-grow-1 px-2 py-0"
+                    >
+                      Fix Appointment
+                    </button>
+
+                    <div class="d-flex gap-2">
+                      <button
+                        style="height: 25px; padding: 0px"
+                        class="btn btn-sm btn-outline-dark flex-grow-1 openDrawer"
+                        data-drawertype="ip"
+                      >
+                        <i class="fas fa-hospital"></i> IP
+                      </button>
+                      <button
+                        style="height: 25px; padding: 0px"
+                        class="btn btn-sm btn-outline-dark flex-grow-1 openDrawer"
+                        data-drawertype="op"
+                      >
+                        <i class="far fa-hospital"></i> OP
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              style="max-height: 77dvh; overflow-y: auto; padding-bottom: 15px"
+            >
+              <div class="container-fluid py-3 mx-0">
+                <div
+                  class="bg-white rounded-4 overflow-hidden p-2"
+                  style="max-width: 1200px; margin: auto"
+                >
+                  <div class="mb-2" style="border-radius: 8px">
+                    <div class="card-body p-1 rounded-4 bg-light">
+                      <div
+                        class="container-fluid rounded-3"
+                      >
+                        <div class="row g-0 text-center align-items-center">
+                          <div class="col-6 col-lg border-end vital-item">
+                            <small
+                              class="text-muted d-block"
+                              style="font-size: 0.65rem"
+                              >TEMP</small
+                            >
+                            <strong class="small text-danger">98.6°F</strong>
+                          </div>
+
+                          <div class="col-6 col-lg border-end vital-item">
+                            <small
+                              class="text-muted d-block"
+                              style="font-size: 0.65rem"
+                              >HT/WT</small
+                            >
+                            <strong class="small">1.75m/70kg</strong>
+                          </div>
+
+                          <div class="col-6 col-lg border-end vital-item">
+                            <small
+                              class="text-muted d-block"
+                              style="font-size: 0.65rem"
+                              >BP</small
+                            >
+                            <strong class="small text-primary">120/80</strong>
+                          </div>
+
+                          <div class="col-6 col-lg border-end vital-item">
+                            <small
+                              class="text-muted d-block"
+                              style="font-size: 0.65rem"
+                              >GLUCOSE</small
+                            >
+                            <strong class="small text-primary">90 mg</strong>
+                          </div>
+
+                          <div class="col-6 col-lg border-end vital-item">
+                            <small
+                              class="text-muted d-block"
+                              style="font-size: 0.65rem"
+                              >PULSE</small
+                            >
+                            <strong class="small">72 bpm</strong>
+                          </div>
+
+                          <div class="col-6 col-lg border-end vital-item">
+                            <small
+                              class="text-muted d-block"
+                              style="font-size: 0.65rem"
+                              >CHOL</small
+                            >
+                            <strong class="small">180 mg</strong>
+                          </div>
+
+                          <div class="col-6 col-lg border-end vital-item">
+                            <small
+                              class="text-muted d-block"
+                              style="font-size: 0.65rem"
+                              >SPO2</small
+                            >
+                            <strong class="small text-success">98%</strong>
+                          </div>
+
+                          <div class="col-6 col-lg vital-item">
+                            <small
+                              class="text-muted d-block"
+                              style="font-size: 0.65rem"
+                              >RESP RATE</small
+                            >
+                            <strong class="small">16/min</strong>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row mt-2 mx-1 bg-light rounded-4">
+                    <div class="col-md-4 col-lg-4 border-end">
+                      <div class="p-2">
+                        <h6 class="fw-bold small text-primary mb-2">
+                          CLINICAL NOTES
+                        </h6>
+                        <div
+                          class="overflow-auto pe-2"
+                          style="font-size: 0.8rem"
+                        >
+                          <div
+                            class="mb-2 border-start border-3 border-primary ps-2"
+                          >
+                            <div
+                              class="text-muted fw-bold"
+                              style="font-size: 0.7rem"
+                            >
+                              Chief Complaints & History
+                            </div>
+                            <p class="mb-0">
+                              Migraine, Hypertension (3yrs), Dust Allergy.
+                            </p>
+                          </div>
+                          <div
+                            class="mb-2 border-start border-3 border-info ps-2"
+                          >
+                            <div
+                              class="text-muted fw-bold"
+                              style="font-size: 0.7rem"
+                            >
+                              Diagnosis & Advice
+                            </div>
+                            <p class="mb-0 text-muted fw-bold">
+                              Acute Pulpitis.
+                            </p>
+                            <p class="mb-0 italic">Avoid cold drinks.</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-4 col-lg-4 border-end">
+                      <div class="p-2">
+                        <h6 class="fw-bold small text-success mb-2">
+                          PROCEDURES (<span>5 </span>Items)
+                        </h6>
+                        <div
+                          class="overflow-auto pe-2"
+                          style="max-height: 300px"
+                        >
+                          <div
+                            class="p-2 border rounded-3 mb-2 bg-white shadow-sm"
+                            style="font-size: 0.75rem"
+                          >
+                            <div
+                              class="d-flex justify-content-between fw-bold pb-1 mb-1"
+                            >
+                              <span>Scaling & Polishing</span>
+                              <span class="text-success">$80.00</span>
+                            </div>
+                            <div class="row g-1">
+                              <div class="col-6">
+                                <span class="text-muted">Dr:</span> Sarah
+                              </div>
+                              <div class="col-6">
+                                <span class="text-muted">Status:</span>
+                                <span
+                                  class="badge bg-success-subtle text-success py-0"
+                                  >Completed</span
+                                >
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="p-2 border rounded-3 mb-2 bg-white shadow-sm"
+                            style="font-size: 0.75rem"
+                          >
+                            <div
+                              class="d-flex justify-content-between fw-bold pb-1 mb-1"
+                            >
+                              <span
+                                ><span class="badge bg-dark me-1">T22</span>
+                                Composite Filling</span
+                              >
+                              <span class="text-success">$120.00</span>
+                            </div>
+                            <div class="row g-1">
+                              <div class="col-6">
+                                <span class="text-muted">Dr:</span> Arshad
+                              </div>
+                              <div class="col-6">
+                                <span class="text-muted">Status:</span>
+                                <span
+                                  class="badge bg-warning-subtle text-warning py-0"
+                                  >Pending</span
+                                >
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="p-2 border rounded-3 mb-2 bg-white shadow-sm"
+                            style="font-size: 0.75rem"
+                          >
+                            <div
+                              class="d-flex justify-content-between fw-bold pb-1 mb-1"
+                            >
+                              <span>Local Anesthesia</span>
+                              <span class="text-success">$25.00</span>
+                            </div>
+                            <div class="row g-1">
+                              <div class="col-12 text-muted small">
+                                Administered 2% Lidocaine
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="p-2 border rounded-3 mb-2 bg-white shadow-sm"
+                            style="font-size: 0.75rem"
+                          >
+                            <div
+                              class="d-flex justify-content-between fw-bold pb-1 mb-1"
+                            >
+                              <span
+                                ><span class="badge bg-dark me-1">T14</span>
+                                Extraction</span
+                              >
+                              <span class="text-success">$150.00</span>
+                            </div>
+                            <div class="row g-1">
+                              <div class="col-12 text-muted small">
+                                Simple extraction of wisdom tooth
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-4 col-lg-4">
+                      <div class="p-3">
+                        <h6 class="fw-bold small text-danger mb-2">
+                          PRESCRIPTIONS (5 Drugs)
+                        </h6>
+                        <div
+                          class="overflow-auto pe-2"
+                          style="max-height: 550px"
+                        >
+                          <div class="card mb-2 border-0 bg-light shadow-sm">
+                            <div
+                              class="card-body p-2"
+                              style="font-size: 0.75rem"
+                            >
+                              <div
+                                class="d-flex justify-content-between pb-1 mb-1"
+                              >
+                                <strong class="text-dark"
+                                  >Amoxicillin 500mg</strong
+                                >
+                                <span class="badge text-dark">Qty: 15</span>
+                              </div>
+                              <div class="row g-0 text-muted">
+                                <div style="font-size: .9rem;" class="col-6">1-0-1 | 5 Days</div>
+                                <div style="font-size: .9rem;" class="col-6">Oral | Post-Meal</div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="card mb-2 border-0 bg-light shadow-sm">
+                            <div
+                              class="card-body p-2"
+                              style="font-size: 0.75rem"
+                            >
+                              <div
+                                class="d-flex justify-content-between pb-1 mb-1"
+                              >
+                                <strong class="text-dark"
+                                  >Paracetamol 650mg</strong
+                                >
+                                <span class="badge text-dark">Qty: 10</span>
+                              </div>
+                              <div class="row g-0 text-muted">
+                                <div style="font-size: 1rem;" class="col-12">
+                                  1-1-1 | 3 Days | If pain persists
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="card mb-2 border-0 bg-light shadow-sm">
+                            <div
+                              class="card-body p-2"
+                              style="font-size: 0.75rem"
+                            >
+                              <div
+                                class="d-flex justify-content-between pb-1 mb-1"
+                              >
+                                <strong class="text-dark"
+                                  >Ibuprofen 400mg</strong
+                                >
+                                <span class="badge text-dark">Qty: 6</span>
+                              </div>
+                              <div class="row g-0 text-muted">
+                                <div class="col-12">
+                                  0-0-1 | Night Only | Anti-inflammatory
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="card mb-2 border-0 bg-light shadow-sm">
+                            <div
+                              class="card-body p-2"
+                              style="font-size: 0.75rem"
+                            >
+                              <div
+                                class="d-flex justify-content-between pb-1 mb-1"
+                              >
+                                <strong class="text-dark"
+                                  >Pantoprazole 40mg</strong
+                                >
+                                <span class="badge text-dark">Qty: 5</span>
+                              </div>
+                              <div class="row g-0 text-muted">
+                                <div class="col-12">1-0-0 | Empty Stomach</div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="card mb-2 border-0 bg-light shadow-sm">
+                            <div
+                              class="card-body p-2"
+                              style="font-size: 0.75rem"
+                            >
+                              <div
+                                class="d-flex justify-content-between pb-1 mb-1"
+                              >
+                                <strong class="text-dark"
+                                  >Chlorhexidine Mouthwash</strong
+                                >
+                                <span class="badge text-dark">1 Bottle</span>
+                              </div>
+                              <div class="row g-0 text-muted">
+                                <div class="col-12">
+                                  Rinse twice daily after brushing
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mt-2 mx-1 bg-light rounded-4">
+                    <div class="p-2 col-4 border-end">
+                      <h6 class="fw-bold small text-primary mb-2">
+                        LAB TESTS (10)
+                      </h6>
+                      <div class="overflow-auto pe-2" style="max-height: 120px">
+                        <table
+                          class="table table-sm table-hover mb-0"
+                          style="font-size: 0.7rem"
+                        >
+                          <tbody>
+                            <tr>
+                              <td>CBC Report</td>
+                              <td class="text-end text-muted">12 Jan</td>
+                            </tr>
+                            <tr>
+                              <td>Blood Sugar (F)</td>
+                              <td class="text-end text-muted">09 Jan</td>
+                            </tr>
+                            <tr>
+                              <td>Lipid Profile</td>
+                              <td class="text-end text-muted">08 Jan</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+
+                    <div class="p-2 col-4 border-end">
+                      <h6 class="fw-bold small text-primary mb-2">
+                        DENTAL LAB WORK (1)
+                      </h6>
+                      <div class="overflow-auto pe-2" style="max-height: 250px">
+                        <div
+                          class="p-2 border-start border-info border-4 bg-white mb-2 shadow-sm"
+                          style="font-size: 0.75rem"
+                        >
+                          <div
+                            class="d-flex justify-content-between align-items-start mb-1"
+                          >
+                            <div>
+                              <span class="badge bg-info me-1">T14</span>
+                              <strong>Apollo Dental Lab</strong>
+                            </div>
+                            <span
+                              class="badge bg-warning-subtle text-warning border border-warning-subtle"
+                              >Transit</span
+                            >
+                          </div>
+                          <div class="row g-1 small text-muted">
+                            <div class="col-6">
+                              Inv: <span class="text-dark">$250</span>
+                            </div>
+                            <div class="col-6">
+                              Paid: <span class="text-success">$100</span>
+                            </div>
+                            <div class="col-12 mt-1">
+                              Exec: John Doe | Due: 18 Jan
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="p-2 col-4">
+                      <h6 class="fw-bold small text-primary mb-2">
+                        ATTACHED FILES (10)
+                      </h6>
+                      <div
+                        class="d-flex flex-wrap gap-1 overflow-auto"
+                        style="max-height: 80px"
+                      >
+                        <span
+                          class="badge border text-dark fw-normal bg-white"
+                          style="font-size: 0.65rem"
+                          ><i class="far fa-file-pdf text-danger"></i>
+                          Xray.pdf</span
+                        >
+                        <span
+                          class="badge border text-dark fw-normal bg-white"
+                          style="font-size: 0.65rem"
+                          ><i class="far fa-image text-primary"></i>
+                          Scan_Left.jpg</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row justify-content-end align-items-center mx-0">
+                <div
+                  class="col-md-8 col-lg-8 d-flex justify-content-end align-items-center gap-2 mt-3 px-5 col-md-10"
+                >
+                  <a
+                    href="./new.html"
+                    class="btn btn-sm btn-warning save-btn rounded-4"
+                  >
+                    Edit <i class="far fa-edit ms-2"></i>
+                  </a>
+                  <a
+                    class="btn btn-sm btn-primary rounded-4 save-btn"
+                    href="./invoice.html"
+                  >
+                    Generate invoice <i class="fas fa-file-invoice ms-2"></i>
+                  </a>
+                  <button
+                    class="btn btn-sm btn-success save-btn save-btn-share rounded-4"
+                  >
+                    Save and share <i class="fas fa-share-alt ms-2"></i>
+                  </button>
+                  <div id="share-popover-content" class="d-none">
+                    <div class="p-1" style="width: fit-content">
+                      <div class="row g-2 mb-3">
+                        <div class="col-6">
+                          <label class="x-small text-muted mb-1">From</label>
+                          <input
+                            type="date"
+                            id="share-from-date"
+                            class="form-control form-control-sm rounded-3"
+                          />
+                        </div>
+                        <div class="col-6">
+                          <label class="x-small text-muted mb-1">To</label>
+                          <input
+                            type="date"
+                            id="share-to-date"
+                            class="form-control form-control-sm rounded-3"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="bg-light p-2 rounded-3 mb-3">
+                        <div class="form-check mb-1">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            id="check-notes"
+                            checked
+                          />
+                          <label
+                            class="form-check-label small"
+                            for="check-notes"
+                            >Clinical Notes</label
+                          >
+                        </div>
+                        <div class="form-check mb-1">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            id="check-rx"
+                            checked
+                          />
+                          <label class="form-check-label small" for="check-rx"
+                            >Prescription</label
+                          >
+                        </div>
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            id="check-proc"
+                            checked
+                          />
+                          <label class="form-check-label small" for="check-proc"
+                            >Procedure</label
+                          >
+                        </div>
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            id="check-proc"
+                            checked
+                          />
+                          <label class="form-check-label small" for="check-proc"
+                            >File</label
+                          >
+                        </div>
+                      </div>
+
+                      <div
+                        class="d-flex justify-content-between border-top pt-2"
+                      >
+                        <button
+                          class="btn btn-sm btn-outline-success border-0 share-action"
+                          data-share-type="WhatsApp"
+                          title="WhatsApp"
+                        >
+                          <i class="fab fa-whatsapp fa-lg"></i>
+                        </button>
+                        <button
+                          class="btn btn-sm btn-outline-primary border-0 share-action"
+                          data-share-type="Email"
+                          title="Email"
+                        >
+                          <i class="fas fa-envelope fa-lg"></i>
+                        </button>
+                        <button
+                          class="btn btn-sm btn-outline-dark border-0 share-action"
+                          data-share-type="Print"
+                          title="Print"
+                        >
+                          <i class="fas fa-print fa-lg"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+
+    <script src="../../plugins/jquery/jquery.min.js"></script>
+    <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../../dist/js/adminlte.min.js"></script>
+    <script src="./data.js"></script>
+    <script src="./new.js"></script>
+    <script src="./lab.js"></script>
+    <script src="./drawer.js"></script>
+    <script src="./customdropdown.js"></script>
+    <script src="./mockData.js"></script>
+    <script src="./vitals.js"></script>
+    <script src="./dental.js"></script>
+    <script src="./dentalLab.js"></script>
+    <script src="./clinicalNotes.js"></script>
+    <script src="./procedure.js"></script>
+    <script src="./prescription.js"></script>
+    <script src="./collapse.js"></script>
+    <script src="./preview.js"></script>
+    <script src="./invoice.js"></script>
+    <script src="./chart.js"></script>
+  </body>
+</html>

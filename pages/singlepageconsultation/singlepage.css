@@ -324,3 +324,37 @@ label {
   color: #333;
   display: block;
 }
+
+.overflow-auto::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+.overflow-auto::-webkit-scrollbar-thumb {
+  background: #d1d1d1;
+  border-radius: 10px;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.bg-light {
+  background-color: #f8f9fa !important;
+}
+
+#dropdownMenuButton:hover,
+#dropdownMenuButton:focus, 
+#dropdownMenuButton:active, 
+#dropdownMenuButton.show {
+    background-color: transparent !important;
+    color: #495057 !important; /* Keeps text color from turning white */
+    border-color: #ced4da !important; /* Keeps border visible */
+    box-shadow: none !important;
+}
+#selectAppointmenBtn:hover,
+#selectAppointmenBtn:focus, 
+#selectAppointmenBtn:active, 
+#selectAppointmenBtn.show {
+    background-color: transparent !important;
+    color: #495057 !important; /* Keeps text color from turning white */
+    border-color: #ced4da !important; /* Keeps border visible */
+    box-shadow: none !important;
+}

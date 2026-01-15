@@ -7,38 +7,78 @@ $(function () {
     );
   });
 
-  // Better implementation: use template
-  function addAllergyRow(value) {
+  const $allergyContainer = $("#pAllergies");
+
+  let addAllergies = ["Penicillin", "Food allergy"];
+
+  function addAllergyRow(value, index) {
     var row = $('<div class="input-group mb-2 allergy-row col-md-2 col-lg-2">')
       .append(
         $(
-          '<input type="text" class="form-control rounded-start-4 input-style">'
-        ).val(value || "")
+          `<input type="text" data-index="${index}" class="form-control rounded-start-4 input-style allergyinput">`
+        )
+          .val(value || "")
+          .on("change", function () {
+            addAllergies[$(this).data("index")] = $(this).val();
+            $allergyContainer.empty();
+            addAllergies.forEach((allergy, i) => {
+              $allergyContainer.append(
+                `<span class="text-danger text-sm">${allergy}${
+                  i < addAllergies.length - 1 ? "," : ""
+                } </span>`
+              );
+            });
+          })
       )
       .append(
         $('<div class="input-group-append">').append(
           $(
-            '<button style="padding: 0px 8px" class="btn btn-outline-danger btn-remove-allergy rounded-end-4" type="button"><i class="fas fa-times"></i></button>'
+            `<button data-index="${index}" style="padding: 0px 8px" class="btn btn-outline-danger btn-remove-allergy rounded-end-4" type="button"><i class="fas fa-times"></i></button>`
           )
         )
       );
     $("#allergyList").append(row);
   }
 
-  // initialize existing
-  $("#allergyList .allergy-row input").each(function () {
-    /* already exist*/
-  });
+  function appendAllergy(allergy, index) {
+    $allergyContainer.append(
+      `<span class="text-danger text-sm">${allergy}${
+        index < addAllergies.length - 1 ? "," : ""
+      } </span>`
+    );
+  }
+
+  function renderallergies() {
+    $allergyContainer.empty();
+    $("#allergyList").empty();
+    if (addAllergies.length) {
+      addAllergies.forEach((allergy, i) => {
+        appendAllergy(allergy, i);
+        addAllergyRow(allergy, i);
+      });
+    } else {
+      $allergyContainer.append(`<span class="text-muted small">None</span>`);
+    }
+  }
+
+  renderallergies();
 
   $("#addAllergy")
     .off("click")
     .on("click", function (e) {
       e.preventDefault();
-      addAllergyRow("");
+      addAllergies.push("");
+      renderallergies();
     });
 
   $(document).on("click", ".btn-remove-allergy", function () {
+    const index = $(this).data("index");
     $(this).closest(".allergy-row").remove();
+    $allergyContainer.empty();
+    addAllergies = addAllergies.filter((a, i) => i != index);
+    addAllergies.forEach((allergy, i) => {
+      appendAllergy(allergy, i);
+    });
   });
 
   $("#saveVitals").click(function () {
@@ -67,37 +107,8 @@ $(function () {
       respiratoryRate: form
         .find("input[placeholder='Enter respiratory rate']")
         .val(),
-
-      allergies: getAllergies(),
     };
   }
-
-  function getAllergies() {
-    const allergies = [];
-
-    $("#allergyList .allergy-row input").each(function () {
-      const value = $(this).val().trim();
-      if (value !== "") allergies.push(value);
-    });
-
-    return allergies;
-  }
-
-  $("#addAllergy").click(function (e) {
-    e.preventDefault();
-    $("#allergyList").append(`
-    <div class="input-group mb-2 allergy-row col-md-2 col-lg-2">
-      <input type="text" class="form-control rounded-start-4 input-style" />
-      <div class="input-group-append">
-        <button style="padding: 0px 8px" 
-                class="btn btn-outline-danger btn-remove-allergy rounded-end-4" 
-                type="button">
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
-    </div>
-  `);
-  });
 
   function setVitalsFormData(data) {
     const form = $("#vitalsForm");
@@ -117,27 +128,6 @@ $(function () {
     form
       .find("input[placeholder='Enter respiratory rate']")
       .val(data.respiratoryRate);
-
-    setAllergies(data.allergies);
-  }
-
-  function setAllergies(allergies) {
-    $("#allergyList").empty();
-
-    allergies.forEach((item) => {
-      $("#allergyList").append(`
-      <div class="input-group mb-2 allergy-row col-md-2 col-lg-2">
-        <input type="text" class="form-control rounded-start-4 input-style" value="${item}" />
-        <div class="input-group-append">
-          <button style="padding: 0px 8px"
-                  class="btn btn-outline-danger btn-remove-allergy rounded-end-4" 
-                  type="button">
-            <i class="fas fa-times"></i>
-          </button>
-        </div>
-      </div>
-    `);
-    });
   }
 
   $(document).ready(function () {
