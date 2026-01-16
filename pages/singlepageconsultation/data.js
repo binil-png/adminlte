@@ -215,12 +215,12 @@ const labTestData = [
     "Kidney Function Test (KFT)",
     "Urine Routine",
     "Blood Sugar (Fast & PP)",
-    "Uric Acid"
-  ]
+    "Uric Acid",
+  ],
 ].map((tests, i) => {
   // Assuming you have or will create a similar helper function for lab details
-  const detailedTests = generateLabDetails(tests, i); 
-  
+  const detailedTests = generateLabDetails(tests, i);
+
   return {
     type: "lab_report",
     date: `2025-11-${12 + i}`,
@@ -244,13 +244,23 @@ const labTestData = [
                 (t, idx) => `
                 <tr>
                   <td style="border:0px;" class="text-muted">${idx + 1}</td>
-                  <td style="border:0px;" class="fw-bold text-dark">${t.name || ""}</td>
-                  <td style="border:0px;" class="${t.isAbnormal ? 'text-danger fw-bold' : ''}">
+                  <td style="border:0px;" class="fw-bold text-dark">${
+                    t.name || ""
+                  }</td>
+                  <td style="border:0px;" class="${
+                    t.isAbnormal ? "text-danger fw-bold" : ""
+                  }">
                     ${t.result || "--"} <small>${t.unit || ""}</small>
                   </td>
-                  <td style="border:0px;" class="text-muted small">${t.referenceRange || ""}</td>
+                  <td style="border:0px;" class="text-muted small">${
+                    t.referenceRange || ""
+                  }</td>
                   <td style="border:0px;" class="text-end">
-                    <span class="badge ${t.isAbnormal ? 'bg-danger-subtle text-danger' : 'bg-success-subtle text-success'}" style="font-size: 0.6rem;">
+                    <span class="badge ${
+                      t.isAbnormal
+                        ? "bg-danger-subtle text-danger"
+                        : "bg-success-subtle text-success"
+                    }" style="font-size: 0.6rem;">
                       ${t.status || "Final"}
                     </span>
                   </td>
@@ -269,13 +279,13 @@ const labTestData = [
  * Example helper to generate mock data for the lab rows
  */
 function generateLabDetails(testNames, index) {
-  return testNames.map(name => ({
+  return testNames.map((name) => ({
     name: name,
     result: (Math.random() * 100).toFixed(1),
     unit: "mg/dL",
     referenceRange: "70-110",
     isAbnormal: Math.random() > 0.8, // Randomly flag some as abnormal
-    status: "Completed"
+    status: "Completed",
   }));
 }
 
@@ -937,27 +947,216 @@ const labPackages = [
 ];
 
 const categoryTestsMap = {
-  101: labTests.filter(t => [1].includes(t.id)),
-  102: labTests.filter(t => [2, 3, 5, 10].includes(t.id)),
-  103: labTests.filter(t => [4, 9].includes(t.id)),
-  104: labTests.filter(t => [5, 10].includes(t.id)),
-  105: labTests.filter(t => [6].includes(t.id)),
-  106: labTests.filter(t => [7].includes(t.id)),
-  107: labTests.filter(t => [3, 8].includes(t.id)),
-  108: labTests.filter(t => [2].includes(t.id)),
-  109: labTests.filter(t => [6].includes(t.id)),
-  110: labTests.filter(t => [10].includes(t.id))
+  101: {
+    id: 101,
+    label: "Hematology",
+    price: 800,
+    tests: [{ id: 1, label: "Complete Blood Count (CBC)", price: 350 }],
+  },
+  102: {
+    id: 102,
+    label: "Biochemistry",
+    price: 1100,
+    tests: [
+      { id: 2, label: "Liver Function Test (LFT)", price: 750 },
+      { id: 3, label: "Kidney Function Test (KFT)", price: 600 },
+      { id: 5, label: "Lipid Profile (Cholesterol)", price: 500 },
+      { id: 10, label: "C-Reactive Protein (CRP)", price: 400 },
+    ],
+  },
+  103: {
+    id: 103,
+    label: "Diabetes Care",
+    price: 500,
+    tests: [
+      { id: 4, label: "HbA1c (Diabetes Screen)", price: 450 },
+      { id: 9, label: "Blood Glucose (Fasting)", price: 100 },
+    ],
+  },
+  104: {
+    id: 104,
+    label: "Cardiology",
+    price: 1500,
+    tests: [
+      { id: 5, label: "Lipid Profile (Cholesterol)", price: 500 },
+      { id: 10, label: "C-Reactive Protein (CRP)", price: 400 },
+    ],
+  },
+  105: {
+    id: 105,
+    label: "Thyroid Profile",
+    price: 650,
+    tests: [{ id: 6, label: "Thyroid Stimulating Hormone (TSH)", price: 300 }],
+  },
+  106: {
+    id: 106,
+    label: "Vitamins & Minerals",
+    price: 1800,
+    tests: [{ id: 7, label: "Vitamin D (25-OH)", price: 1200 }],
+  },
+  107: {
+    id: 107,
+    label: "Kidney Care",
+    price: 900,
+    tests: [
+      { id: 3, label: "Kidney Function Test (KFT)", price: 600 },
+      { id: 8, label: "Urinalysis", price: 150 },
+    ],
+  },
+  108: {
+    id: 108,
+    label: "Liver Care",
+    price: 850,
+    tests: [{ id: 2, label: "Liver Function Test (LFT)", price: 750 }],
+  },
+  109: {
+    id: 109,
+    label: "Hormone Tests",
+    price: 1400,
+    tests: [{ id: 6, label: "Thyroid Stimulating Hormone (TSH)", price: 300 }],
+  },
+  110: {
+    id: 110,
+    label: "Immunology",
+    price: 1250,
+    tests: [{ id: 10, label: "C-Reactive Protein (CRP)", price: 400 }],
+  },
 };
 
 const packageTestsMap = {
-  201: labTests.filter(t => [1, 4, 8, 9].includes(t.id)),
-  202: labTests.filter(t => [1, 2, 3, 4, 5, 6, 8].includes(t.id)),
-  203: labTests.filter(t => [1, 5, 10, 9].includes(t.id)),
-  204: labTests.filter(t => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(t.id)),
-  205: labTests.filter(t => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(t.id)),
-  206: labTests.filter(t => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(t.id)),
-  207: labTests.filter(t => [4, 9, 3, 8, 1].includes(t.id)),
-  208: labTests.filter(t => [1, 2, 3, 5, 6, 10].includes(t.id)),
-  209: labTests.filter(t => [1, 4, 6, 7, 8].includes(t.id)),
-  210: labTests.filter(t => [1, 10, 2, 3].includes(t.id))
+  201: {
+    id: 201,
+    label: "Basic Health Checkup",
+    price: 1800,
+    tests: [
+      { id: 1, label: "Complete Blood Count (CBC)", price: 350 },
+      { id: 4, label: "HbA1c (Diabetes Screen)", price: 450 },
+      { id: 8, label: "Urinalysis", price: 150 },
+      { id: 9, label: "Blood Glucose (Fasting)", price: 100 },
+    ],
+  },
+  202: {
+    id: 202,
+    label: "Comprehensive Health Checkup",
+    price: 4200,
+    tests: [
+      { id: 1, label: "Complete Blood Count (CBC)", price: 350 },
+      { id: 2, label: "Liver Function Test (LFT)", price: 750 },
+      { id: 3, label: "Kidney Function Test (KFT)", price: 600 },
+      { id: 4, label: "HbA1c (Diabetes Screen)", price: 450 },
+      { id: 5, label: "Lipid Profile (Cholesterol)", price: 500 },
+      { id: 6, label: "Thyroid Stimulating Hormone (TSH)", price: 300 },
+      { id: 8, label: "Urinalysis", price: 150 },
+    ],
+  },
+  203: {
+    id: 203,
+    label: "Cardiac Checkup",
+    price: 2700,
+    tests: [
+      { id: 1, label: "Complete Blood Count (CBC)", price: 350 },
+      { id: 5, label: "Lipid Profile (Cholesterol)", price: 500 },
+      { id: 10, label: "C-Reactive Protein (CRP)", price: 400 },
+      { id: 9, label: "Blood Glucose (Fasting)", price: 100 },
+    ],
+  },
+  204: {
+    id: 204,
+    label: "Senior Citizen Male",
+    price: 5500,
+    tests: [
+      { id: 1, label: "Complete Blood Count (CBC)", price: 350 },
+      { id: 2, label: "Liver Function Test (LFT)", price: 750 },
+      { id: 3, label: "Kidney Function Test (KFT)", price: 600 },
+      { id: 4, label: "HbA1c (Diabetes Screen)", price: 450 },
+      { id: 5, label: "Lipid Profile (Cholesterol)", price: 500 },
+      { id: 6, label: "Thyroid Stimulating Hormone (TSH)", price: 300 },
+      { id: 7, label: "Vitamin D (25-OH)", price: 1200 },
+      { id: 8, label: "Urinalysis", price: 150 },
+      { id: 9, label: "Blood Glucose (Fasting)", price: 100 },
+      { id: 10, label: "C-Reactive Protein (CRP)", price: 400 },
+    ],
+  },
+  205: {
+    id: 205,
+    label: "Senior Citizen Female",
+    price: 5500,
+    tests: [
+      { id: 1, label: "Complete Blood Count (CBC)", price: 350 },
+      { id: 2, label: "Liver Function Test (LFT)", price: 750 },
+      { id: 3, label: "Kidney Function Test (KFT)", price: 600 },
+      { id: 4, label: "HbA1c (Diabetes Screen)", price: 450 },
+      { id: 5, label: "Lipid Profile (Cholesterol)", price: 500 },
+      { id: 6, label: "Thyroid Stimulating Hormone (TSH)", price: 300 },
+      { id: 7, label: "Vitamin D (25-OH)", price: 1200 },
+      { id: 8, label: "Urinalysis", price: 150 },
+      { id: 9, label: "Blood Glucose (Fasting)", price: 100 },
+      { id: 10, label: "C-Reactive Protein (CRP)", price: 400 },
+    ],
+  },
+  206: {
+    id: 206,
+    label: "Full Body Screening",
+    price: 7000,
+    tests: [
+      { id: 1, label: "Complete Blood Count (CBC)", price: 350 },
+      { id: 2, label: "Liver Function Test (LFT)", price: 750 },
+      { id: 3, label: "Kidney Function Test (KFT)", price: 600 },
+      { id: 4, label: "HbA1c (Diabetes Screen)", price: 450 },
+      { id: 5, label: "Lipid Profile (Cholesterol)", price: 500 },
+      { id: 6, label: "Thyroid Stimulating Hormone (TSH)", price: 300 },
+      { id: 7, label: "Vitamin D (25-OH)", price: 1200 },
+      { id: 8, label: "Urinalysis", price: 150 },
+      { id: 9, label: "Blood Glucose (Fasting)", price: 100 },
+      { id: 10, label: "C-Reactive Protein (CRP)", price: 400 },
+    ],
+  },
+  207: {
+    id: 207,
+    label: "Diabetes Essential Package",
+    price: 2200,
+    tests: [
+      { id: 4, label: "HbA1c (Diabetes Screen)", price: 450 },
+      { id: 9, label: "Blood Glucose (Fasting)", price: 100 },
+      { id: 3, label: "Kidney Function Test (KFT)", price: 600 },
+      { id: 8, label: "Urinalysis", price: 150 },
+      { id: 1, label: "Complete Blood Count (CBC)", price: 350 },
+    ],
+  },
+  208: {
+    id: 208,
+    label: "Executive Health Profile",
+    price: 4800,
+    tests: [
+      { id: 1, label: "Complete Blood Count (CBC)", price: 350 },
+      { id: 2, label: "Liver Function Test (LFT)", price: 750 },
+      { id: 3, label: "Kidney Function Test (KFT)", price: 600 },
+      { id: 5, label: "Lipid Profile (Cholesterol)", price: 500 },
+      { id: 6, label: "Thyroid Stimulating Hormone (TSH)", price: 300 },
+      { id: 10, label: "C-Reactive Protein (CRP)", price: 400 },
+    ],
+  },
+  209: {
+    id: 209,
+    label: "Women Wellness Package",
+    price: 3500,
+    tests: [
+      { id: 1, label: "Complete Blood Count (CBC)", price: 350 },
+      { id: 4, label: "HbA1c (Diabetes Screen)", price: 450 },
+      { id: 6, label: "Thyroid Stimulating Hormone (TSH)", price: 300 },
+      { id: 7, label: "Vitamin D (25-OH)", price: 1200 },
+      { id: 8, label: "Urinalysis", price: 150 },
+    ],
+  },
+  210: {
+    id: 210,
+    label: "Post-Viral Recovery Check",
+    price: 2900,
+    tests: [
+      { id: 1, label: "Complete Blood Count (CBC)", price: 350 },
+      { id: 10, label: "C-Reactive Protein (CRP)", price: 400 },
+      { id: 2, label: "Liver Function Test (LFT)", price: 750 },
+      { id: 3, label: "Kidney Function Test (KFT)", price: 600 },
+    ],
+  },
 };
