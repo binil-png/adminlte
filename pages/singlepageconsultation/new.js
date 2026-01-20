@@ -3,7 +3,6 @@ $(function () {
   let patientDataGlobal = null;
   $(document).ready(function () {
     const modal = new bootstrap.Modal(document.getElementById("confirmPopup"));
-
     const excludedIds = ":not(.ignore-edit)";
     $(document).on(
       "input change",
@@ -15,12 +14,14 @@ $(function () {
         }
       }
     );
+
     $(document).on("click", `.dropdown-item${excludedIds}`, function () {
       if (!isEdit) {
         isEdit = true;
         console.log("Global Edit Detected: Custom Dropdown Selection");
       }
     });
+
     $("form").on("submit", function () {
       isEdit = false;
     });
@@ -92,6 +93,7 @@ $(function () {
               $selectedText.html(
                 `<strong>${patient.name}</strong> <small class="ms-2">(${patient.id})</small>`
               );
+              $("#selectedText").text("Select Appointment");
               updatePatientCard(patient);
               $searchInput.val("");
               populateList("");
@@ -560,7 +562,7 @@ $(function () {
   $(document).on("click", ".appointment-item", function () {
     const name = $(this).find(".fw-semibold").text();
     const info = $(this).find("small").text();
-
+    $("#selected-item").html("<span>Search patient...</span>");
     $("#selectedText").text(`${name} — ${info}`);
   });
   const $templatePopup = $(".saveastemplete");

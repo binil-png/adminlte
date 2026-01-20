@@ -552,6 +552,7 @@ function renderVitalsTable(container, vitals) {
       header: "RR (/min)",
     },
   };
+
   const metricOrder = Object.keys(metricDefinitions);
 
   if (sortedData.length === 0) {
@@ -602,6 +603,7 @@ function renderVitalsTable(container, vitals) {
 
     tableRows += `<tr>${rowData}${trendCell}</tr>`;
   });
+
   const vitalsTableHtml = `
         <h6 class="fw-bold small text-custom mt-3">Vitals History (Date Columns)</h6>
         <div class="rounded-2 bg-white mb-2 shadow-sm filter-item" 
@@ -644,16 +646,12 @@ function renderVitalsTable(container, vitals) {
         </div>
     `;
 
-  // 6. Append and Render Charts
   if (container && container.append) {
     container.append(vitalsTableHtml);
-
-    // --- SPARKLINES RENDERING LOOP ---
-    // Charts use the latestTrendData which corresponds to the first date column.
+    
     Object.keys(latestTrendData).forEach((key) => {
       const data = latestTrendData[key];
-
-      // Find the definition for color/unit
+      
       const def = Object.values(metricDefinitions).find((d) => d.key === key);
       const containerId = `sparkline-${key}`;
 

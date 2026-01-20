@@ -70,7 +70,7 @@ label {
   display: none; /* Chrome/Safari */
 }
 .patient-details {
-  max-height: calc(100vh - 230px);
+  max-height: calc(100vh - 207px);
   overflow: auto;
 }
 .input-style {

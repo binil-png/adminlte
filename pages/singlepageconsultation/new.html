@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -26,12 +26,25 @@
     <!-- Theme style -->
     <link rel="stylesheet" href="../../dist/css/adminlte.min.css" />
     <link rel="stylesheet" href="./singlepage.css" />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"
+      rel="stylesheet"
+    />
+    <script src="../../plugins/jquery/jquery.min.js"></script>
+    <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../../dist/js/adminlte.min.js"></script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/highcharts-more.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
   </head>
   <body class="hold-transition">
     <div class="">
-      <nav class="navbar navbar-expand navbar-white navbar-light">
+      <nav
+        class="main-header navbar navbar-expand navbar-light navbar-white ml-0 d-flex justify-content-between align-items-center"
+      >
+        <!-- Left navbar links -->
         <ul class="navbar-nav">
           <li class="nav-item">
             <a
@@ -44,181 +57,332 @@
             </a>
           </li>
           <li class="nav-item d-none d-sm-inline-block">
-            <a href="../../index.html" class="nav-link">Home</a>
+            <a href="https://cloud.pappyjoe.com/clinic/onestep" class="nav-link"
+              >Fast Track</a
+            >
           </li>
+
           <li class="nav-item d-none d-sm-inline-block">
-            <a href="#" class="nav-link">Contact</a>
+            <a
+              href="https://cloud.pappyjoe.com/clinic/calender"
+              class="nav-link"
+              >Calendar</a
+            >
+          </li>
+
+          <li class="nav-item d-none d-sm-inline-block">
+            <a href="https://cloud.pappyjoe.com/load/records" class="nav-link"
+              >Patients</a
+            >
+          </li>
+
+          <li class="nav-item d-none d-sm-inline-block">
+            <a
+              href="https://cloud.pappyjoe.com/clinic/lab_module"
+              class="nav-link"
+              >Lab</a
+            >
+          </li>
+
+          <li class="nav-item d-none d-sm-inline-block">
+            <a href="https://cloud.pappyjoe.com/load/radiology" class="nav-link"
+              >Radiology</a
+            >
+          </li>
+
+          <li class="nav-item d-none d-sm-inline-block">
+            <a href="https://cloud.pappyjoe.com/inventory" class="nav-link"
+              >Pharmacy</a
+            >
+          </li>
+
+          <li class="nav-item d-none d-sm-inline-block">
+            <a href="https://cloud.pappyjoe.com/load/ip" class="nav-link"
+              >In-Patients</a
+            >
           </li>
         </ul>
 
         <!-- Right navbar links -->
-        <ul class="navbar-nav ml-auto">
-          <!-- Navbar Search -->
+        <ul class="navbar-nav">
           <li class="nav-item">
             <a
               class="nav-link"
-              data-widget="navbar-search"
-              href="#"
+              href="https://cloud.pappyjoe.com/clinic/expensemanager"
+              title="EXPENSE MANAGER"
               role="button"
             >
-              <i class="fas fa-search"></i>
+              <i class="fas fa-hand-holding-usd"></i>
             </a>
-            <div class="navbar-search-block">
-              <form class="form-inline">
-                <div class="input-group input-group-sm">
-                  <input
-                    class="form-control form-control-navbar"
-                    type="search"
-                    placeholder="Search"
-                    aria-label="Search"
-                  />
-                  <div class="input-group-append">
-                    <button class="btn btn-navbar" type="submit">
-                      <i class="fas fa-search"></i>
-                    </button>
-                    <button
-                      class="btn btn-navbar"
-                      type="button"
-                      data-widget="navbar-search"
-                    >
-                      <i class="fas fa-times"></i>
-                    </button>
-                  </div>
-                </div>
-              </form>
-            </div>
           </li>
-
           <!-- Messages Dropdown Menu -->
-          <li class="nav-item dropdown">
-            <a class="nav-link" data-toggle="dropdown" href="#">
-              <i class="far fa-comments"></i>
-              <span class="badge badge-danger navbar-badge">3</span>
-            </a>
-            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-              <a href="#" class="dropdown-item">
-                <!-- Message Start -->
-                <div class="media">
-                  <img
-                    src="../../dist/img/user1-128x128.jpg"
-                    alt="User Avatar"
-                    class="img-size-50 mr-3 img-circle"
-                  />
-                  <div class="media-body">
-                    <h3 class="dropdown-item-title">
-                      Brad Diesel
-                      <span class="float-right text-sm text-danger"
-                        ><i class="fas fa-star"></i
-                      ></span>
-                    </h3>
-                    <p class="text-sm">Call me whenever you can...</p>
-                    <p class="text-sm text-custom">
-                      <i class="far fa-clock mr-1"></i> 4 Hours Ago
-                    </p>
-                  </div>
-                </div>
-                <!-- Message End -->
-              </a>
-              <div class="dropdown-divider"></div>
-              <a href="#" class="dropdown-item">
-                <!-- Message Start -->
-                <div class="media">
-                  <img
-                    src="../../dist/img/user8-128x128.jpg"
-                    alt="User Avatar"
-                    class="img-size-50 img-circle mr-3"
-                  />
-                  <div class="media-body">
-                    <h3 class="dropdown-item-title">
-                      John Pierce
-                      <span class="float-right text-sm text-custom"
-                        ><i class="fas fa-star"></i
-                      ></span>
-                    </h3>
-                    <p class="text-sm">I got your message bro</p>
-                    <p class="text-sm text-custom">
-                      <i class="far fa-clock mr-1"></i> 4 Hours Ago
-                    </p>
-                  </div>
-                </div>
-                <!-- Message End -->
-              </a>
-              <div class="dropdown-divider"></div>
-              <a href="#" class="dropdown-item">
-                <!-- Message Start -->
-                <div class="media">
-                  <img
-                    src="../../dist/img/user3-128x128.jpg"
-                    alt="User Avatar"
-                    class="img-size-50 img-circle mr-3"
-                  />
-                  <div class="media-body">
-                    <h3 class="dropdown-item-title">
-                      Nora Silvester
-                      <span class="float-right text-sm text-warning"
-                        ><i class="fas fa-star"></i
-                      ></span>
-                    </h3>
-                    <p class="text-sm">The subject goes here</p>
-                    <p class="text-sm text-custom">
-                      <i class="far fa-clock mr-1"></i> 4 Hours Ago
-                    </p>
-                  </div>
-                </div>
-                <!-- Message End -->
-              </a>
-              <div class="dropdown-divider"></div>
-              <a href="#" class="dropdown-item dropdown-footer"
-                >See All Messages</a
-              >
-            </div>
-          </li>
+
           <!-- Notifications Dropdown Menu -->
           <li class="nav-item dropdown">
-            <a class="nav-link" data-toggle="dropdown" href="#">
+            <a
+              class="nav-link"
+              data-toggle="dropdown"
+              href="#"
+              title="NOTIFICATIONS"
+            >
               <i class="far fa-bell"></i>
-              <span class="badge badge-warning navbar-badge">15</span>
+              <span class="badge badge-warning navbar-badge">1</span>
             </a>
+
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-              <span class="dropdown-item dropdown-header"
-                >15 Notifications</span
+              <span class="dropdown-item dropdown-header">1 Notifications</span>
+
+              <div class="dropdown-divider"></div>
+              <a
+                href="#"
+                class="dropdown-item"
+                data-toggle="modal"
+                data-target="#myModal5hTDWOTN"
               >
-              <div class="dropdown-divider"></div>
-              <a href="#" class="dropdown-item">
-                <i class="fas fa-envelope mr-2"></i> 4 new messages
-                <span class="float-right text-custom text-sm">3 mins</span>
+                <i class="fas fa-envelope mr-2"></i> New Feature Alert:
+                Patient..
+                <span class="float-right text-muted text-sm"></span>
               </a>
+
               <div class="dropdown-divider"></div>
-              <a href="#" class="dropdown-item">
-                <i class="fas fa-users mr-2"></i> 8 friend requests
-                <span class="float-right text-custom text-sm">12 hours</span>
-              </a>
-              <div class="dropdown-divider"></div>
-              <a href="#" class="dropdown-item">
-                <i class="fas fa-file mr-2"></i> 3 new reports
-                <span class="float-right text-custom text-sm">2 days</span>
-              </a>
-              <div class="dropdown-divider"></div>
-              <a href="#" class="dropdown-item dropdown-footer"
+              <a
+                href="https://cloud.pappyjoe.com/clinic/news"
+                class="dropdown-item dropdown-footer"
                 >See All Notifications</a
               >
             </div>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-              <i class="fas fa-expand-arrows-alt"></i>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link" data-toggle="dropdown" href="#" title="ADD NEW">
+              <i class="fas fa-plus"></i>
             </a>
+
+            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+              <div class="dropdown-divider"></div>
+              <a
+                href="https://cloud.pappyjoe.com/clinic/add_patients"
+                class="dropdown-item"
+              >
+                <i class="fas fa-hospital-user"></i> &nbsp; Add Patients
+              </a>
+
+              <div class="dropdown-divider"></div>
+              <a
+                href="https://cloud.pappyjoe.com/clinic/appointmentplus"
+                class="dropdown-item"
+              >
+                <i class="fas fa-calendar-check"></i> &nbsp; Add Appointments
+              </a>
+
+              <div class="dropdown-divider"></div>
+              <a
+                href="https://cloud.pappyjoe.com/clinic/add_staffs"
+                class="dropdown-item"
+              >
+                <i class="fas fa-user-plus"></i> &nbsp; Add Staff
+              </a>
+              <div class="dropdown-divider"></div>
+              <a
+                href="https://cloud.pappyjoe.com/user/add_clinics"
+                class="dropdown-item"
+              >
+                <i class="fas fa-hospital"></i> &nbsp; Add Clinic
+              </a>
+            </div>
           </li>
+
+          <!--  <li class="nav-item">
+        <a class="nav-link"  data-widget="control-sidebar" data-slide="true" href="https://cloud.pappyjoe.com/clinic/expensemanager" role="button">
+         <i class="fas fa-th-large"></i>
+
+
+        <aside class="control-sidebar control-sidebar-dark">
+   
+    <div class="p-3">
+     dsrfedgdfgdfgdfgdfgdf
+    </div>
+  </aside>
+        </a>
+
+
+        
+        
+       
+      </li>
+  
+      -->
+          <li class="nav-item">
+            <div class="form-group">
+              <a class="nav-link" title="DARK MODE/LIGHT MODE">
+                <div class="custom-control custom-switch">
+                  <input
+                    type="checkbox"
+                    class="custom-control-input"
+                    value="1"
+                    onchange="toggleDark(this)"
+                    id="customSwitch1"
+                  />
+                  <label class="custom-control-label" for="customSwitch1">
+                  </label>
+                </div>
+              </a>
+            </div>
+          </li>
+
           <li class="nav-item">
             <a
               class="nav-link"
-              data-widget="control-sidebar"
-              data-slide="true"
-              href="#"
+              data-widget="fullscreen"
+              title="FULL SCREEN MODE"
               role="button"
             >
-              <i class="fas fa-th-large"></i>
+              <i class="fas fa-expand-arrows-alt"></i>
             </a>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link"
+              data-toggle="dropdown"
+              href="#"
+              title="SETTINGS"
+            >
+              <i class="fas fa-cogs"></i>
+            </a>
+
+            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+              <div class="dropdown-divider"></div>
+
+              <a class="dropdown-item">
+                <div class="media">
+                  <img
+                    src="newversion/dist/img/a1.png"
+                    alt="User Avatar"
+                    class="img-size-50 mr-3 img-circle"
+                  />
+                  <div class="media-body">
+                    <h3 class="dropdown-item-title text-bold">
+                      Najiya S Muhammed
+                    </h3>
+                    <p class="text-sm"></p>
+
+                    <i class="fas fa-user-md"></i>&nbsp;Dentistry
+
+                    <p class="text-sm text-muted">
+                      <i class="fas fa-envelope"></i>&nbsp;naj.geeth@gmail.com
+                    </p>
+                  </div>
+                </div>
+              </a>
+
+              <div class="dropdown-divider"></div>
+              <a
+                href="https://cloud.pappyjoe.com/user/accounts"
+                class="dropdown-item"
+              >
+                <i class="fas fa-cogs"></i> &nbsp; My Account
+              </a>
+
+              <div class="dropdown-divider"></div>
+              <a
+                href="https://cloud.pappyjoe.com/load/profile"
+                class="dropdown-item"
+                ><i class="fa fa-user-md"></i> Pappyjoe Public Profile
+                <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(For
+                Doctors)</a
+              >
+              <div class="dropdown-divider"></div>
+              <a
+                href="https://cloud.pappyjoe.com/load/crmview"
+                class="dropdown-item"
+              >
+                <i class="fas fa-users"></i> &nbsp; CRM
+              </a>
+
+              <div class="dropdown-divider"></div>
+              <a
+                href="https://cloud.pappyjoe.com/load/hrmlist"
+                class="dropdown-item"
+              >
+                <i class="fas fa-fingerprint"></i> &nbsp; HRM
+              </a>
+              <div class="dropdown-divider"></div>
+              <a
+                href="https://cloud.pappyjoe.com/load/communication"
+                class="dropdown-item"
+              >
+                <i class="fas fa-envelope"></i> &nbsp; Communication
+              </a>
+
+              <div class="dropdown-divider"></div>
+              <a
+                href="https://cloud.pappyjoe.com/clinic/reporthome"
+                class="dropdown-item"
+              >
+                <i class="fas fa-sign-out-alt"></i> &nbsp; Reports
+              </a>
+
+              <div class="dropdown-divider"></div>
+              <a href="https://cloud-pappyjoe.tawk.help/" class="dropdown-item">
+                <i class="fas fa-question"></i> &nbsp; Faq
+              </a>
+
+              <div class="dropdown-divider"></div>
+              <a
+                href="https://tawk.to/chat/55237db88688a5494c5eab52/1engh3so9"
+                target="_blank"
+                class="dropdown-item"
+              >
+                <i class="fas fa-comments"></i> &nbsp; Support Chat
+              </a>
+
+              <div class="dropdown-divider"></div>
+              <a
+                href="https://cloud.pappyjoe.com/app/logs"
+                class="dropdown-item"
+              >
+                <i class="fas fa-file-invoice-dollar"></i> &nbsp; Financial Logs
+              </a>
+              <div class="dropdown-divider"></div>
+              <a
+                href="https://cloud.pappyjoe.com/app/inventorylogs"
+                class="dropdown-item"
+              >
+                <i class="fas fa-file-invoice-dollar"></i> &nbsp; Inventory Logs
+              </a>
+
+              <div class="dropdown-divider"></div>
+              <a
+                href="https://cloud.pappyjoe.com/app/emrlogs"
+                class="dropdown-item"
+              >
+                <i class="fas fa-notes-medical"></i> &nbsp; EHR Logs
+              </a>
+
+              <div class="dropdown-divider"></div>
+              <a
+                href="https://cloud.pappyjoe.com/clinic/staffs"
+                class="dropdown-item"
+              >
+                <i class="fas fa-users-cog"></i> &nbsp; Staff Settings
+              </a>
+
+              <div class="dropdown-divider"></div>
+              <a
+                href="https://cloud.pappyjoe.com/clinic/settings"
+                class="dropdown-item"
+              >
+                <i class="fas fa-tools"></i> &nbsp; Clinic Settings
+              </a>
+              <div class="dropdown-divider"></div>
+              <a
+                href="https://cloud.pappyjoe.com/user/logout"
+                class="dropdown-item"
+              >
+                <i class="fas fa-sign-out-alt"></i> &nbsp; Logout
+              </a>
+            </div>
           </li>
         </ul>
       </nav>
@@ -1445,9 +1609,7 @@
                             <ul
                               id="selectedTestArea"
                               class="list-group list-group-flush"
-                            >
-                            
-                            </ul>
+                            ></ul>
                           </div>
 
                           <div class="card-footer bg-white border-top-0 pt-0">
@@ -2401,7 +2563,7 @@
                             <label>Category</label>
                             <select
                               id="categoryuploads"
-                              class="form-control input-style rounded-4"
+                              class="form-control custom-select input-style rounded-4"
                             >
                               <option value="1">General</option>
                               <option value="2">Xray</option>
@@ -2498,7 +2660,8 @@
                     id="globalSave"
                     class="btn btn-sm btn-success save-btn rounded-4"
                   >
-                    Save <i class="fas fa-save ms-2"></i>
+                    View details <i class="fas fa-eye"></i>
+                    <!-- <i class="fas fa-save ms-2"></i> -->
                   </a>
                   <button
                     class="btn btn-sm btn-success save-btn save-btn-share rounded-4"
@@ -2655,9 +2818,15 @@
       </div>
     </div>
 
-    <script src="../../plugins/jquery/jquery.min.js"></script>
-    <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="../../dist/js/adminlte.min.js"></script>
+    <footer class="main-footer ml-0">
+      <div class="float-right d-none d-sm-block"><b>Version</b> 3.5.23</div>
+      <strong
+        >Copyright &copy;
+        <a href="https://pappyjoe.com">Pappyjoe App</a>.</strong
+      >
+      All rights reserved.
+    </footer>
+
     <script src="./data.js"></script>
     <script src="./new.js"></script>
     <script src="./lab.js"></script>
