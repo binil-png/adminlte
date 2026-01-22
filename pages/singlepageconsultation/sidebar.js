@@ -1,16 +1,19 @@
-let clinicalNotesToggle = true;
 let showLeft = true;
 
-let api = new ApiService(
-  "https://cloud.pappyjoe.com/api",
-);
+let api = new ApiService("https://cloud.pappyjoe.com/api");
 
 async function applyFilters() {
   const container = $(".content-area");
-  const activeFilter = $("#chipFilters .active-filter").data("filter") || "vitals";
+  container.empty();
+  const activeFilter =
+    $("#chipFilters .active-filter").data("filter") || "vitals";
   if (activeFilter == "vitals") {
-    const vitals = await api.get("/singlepagevitallist");
-    renderVitalsTable(container, vitals.results);
+    const apiVitalsData = await api.get("/singlepagevitallist");
+    renderVitalsTable(container, apiVitalsData.results);
+  }
+  if (activeFilter == "notes") {
+    const apiNotessData = await api.get("/singlepageclinicnoteslist");
+    renderClinicalNotes(container, apiNotessData.results);
   }
 }
 
@@ -37,17 +40,9 @@ function renderHistory() {
     container.append('<hr class="my-4">');
   }
 
-  if (notesList.length > 0) {
-    renderNotesComparisonTable(container, notesList.slice(0, 3));
-  }
-
-  renderOtherHistory(container, otherHistoryData);
 }
 
 function renderOtherHistory(container, historyItems) {
-  // Group by date
-  console.log("historyItems inside renderOtherHistory => ", historyItems);
-
   const grouped = historyItems.reduce((acc, item) => {
     (acc[item.date] = acc[item.date] || []).push(item);
     return acc;
@@ -118,26 +113,17 @@ function renderOtherHistory(container, historyItems) {
       container
         .off("click", ".toggle-view-btn")
         .on("click", ".toggle-view-btn", function () {
-          console.log("clicked");
-          // const $btn = $(this);
-          // const $icon = $btn.find("i");
           const $tableView = $(".clinical-notes-tables");
           const $cardView = $(".clinical-notes-container");
 
           if (clinicalNotesToggle) {
-            console.log("condition 1");
-            // $icon.removeClass("fa-table").addClass("fa-list-alt");
             $cardView.addClass("d-none");
             $tableView.removeClass("d-none");
           } else {
-            console.log("condition 2");
-            // $icon.removeClass("fa-list-alt").addClass("fa-table");
             $tableView.addClass("d-none");
             $cardView.removeClass("d-none");
           }
-          console.log("before = ", clinicalNotesToggle);
           clinicalNotesToggle = !clinicalNotesToggle;
-          console.log("after = ", clinicalNotesToggle);
         });
     });
   });
@@ -165,6 +151,7 @@ function populateDateFilter() {
   $select.empty();
   $select.append(`<option value="all">-- Select All Dates --</option>`);
   const uniqueDates = getUniqueDates();
+  console.log("uniqueDates => ", uniqueDates);
   uniqueDates.forEach((dateString) => {
     const displayLabel = formatDateGroupLabel(dateString);
     $select.append(`<option value="${dateString}">${displayLabel}</option>`);

@@ -482,7 +482,7 @@ function renderMultiSeriesSparkline(containerId, data, definitions) {
 }
 
 function renderVitalsTable(container, vitals) {
-  container.empty()
+  container.empty();
   const metricDefinitions = {
     temperature: {
       unit: " °C",
@@ -530,8 +530,6 @@ function renderVitalsTable(container, vitals) {
     },
   };
 
-  console.log("inside renderVitalsTable => ",vitals)
-
   if (vitals.vitals.length === 0) {
     // Handle no data case
     const noDataHtml = `<h6 class="fw-bold small text-custom mt-3">Vitals History Summary</h6>
@@ -554,17 +552,10 @@ function renderVitalsTable(container, vitals) {
     `,
     )
     .join("");
-
-  const totalColumns = 1 + vitals.vitals.length + 1;
   let tableRows = "";
-
-  console.clear();
   const latestTrendData = vitals.trendData;
-  console.log("latestTrendData = > ", latestTrendData);
-
   vitals.heading.forEach((metricKey) => {
     const def = metricDefinitions[metricKey.key];
-    console.log("def => ", def);
     const metricDataKey = def.key;
     let rowData = `<th scope="row" class="text-custom fw-semibold text-nowrap">${metricKey.title}</th>`;
     vitals.vitals.forEach((record, dateIndex) => {
@@ -667,46 +658,3 @@ $(".classname").select2({
     cache: true,
   },
 });
-
-const data = [
-  {
-    id: "7563790",
-    text: "anish antony anakattil | Mob-53453534543 | Email-HARV416@pappyjoe.com | File No:- | Patient ID:-HARV416 | Address:-",
-  },
-  {
-    id: "7525707",
-    text: "vyasan | Mob-344354576745654 | Email-HARV415@pappyjoe.com | File No:- | Patient ID:-HARV415 | Address:-",
-  },
-  {
-    id: "7525703",
-    text: "jose k | Mob-56456546 | Email-HARV414@pappyjoe.com | File No:- | Patient ID:-HARV414 | Address:-",
-  },
-  {
-    id: "7525698",
-    text: "aravind | Mob-645645645 | Email-HARV413@pappyjoe.com | File No:- | Patient ID:-HARV413 | Address:-",
-  },
-  {
-    id: "7452605",
-    text: "manikandan | Mob-6465465465464 | Email-HARV412@pappyjoe.com | File No:- | Patient ID:-HARV412 | Address:- | Species-",
-  },
-  {
-    id: "7450610",
-    text: "Oreo | Mob-8281545632 | Email-HARV411@pappyjoe.com | File No:- | Patient ID:-HARV411 | Address:-Raj | Species-",
-  },
-  {
-    id: "7450220",
-    text: "ajmeer | Mob-65465464646 | Email-HARV409@pappyjoe.com | File No:- | Patient ID:-HARV409 | Address:-",
-  },
-  {
-    id: "7447201",
-    text: "Jaisalmeer | Mob-5235353454 | Email-HARV408@pappyjoe.com | File No:- | Patient ID:-HARV408 | Address:-",
-  },
-  {
-    id: "7446702",
-    text: "Anjuttan | Mob-7542134560 | Email-HARV406@pappyjoe.com | File No:- | Patient ID:-HARV406 | Address:-Kochi",
-  },
-  {
-    id: "7446623",
-    text: "Aardha | Mob-8454621347 | Email-HARV405@pappyjoe.com | File No:- | Patient ID:-HARV405 | Address:-vengoor",
-  },
-];

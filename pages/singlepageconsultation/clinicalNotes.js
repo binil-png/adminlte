@@ -1,4 +1,5 @@
 $(function () {
+  let clinicalNotesToggle = true;
   function setClinicalNotes(data) {
     $("#chiefComplaints").val(data.chiefComplaints);
     $("#medicalHistory").val(data.medicalHistory);
@@ -49,7 +50,7 @@ $(function () {
 
   // Watch all fields for changes
   $(
-    "#chiefComplaints, #medicalHistory, #observations, #investigations, #diagnosis, #treatment, #advice"
+    "#chiefComplaints, #medicalHistory, #observations, #investigations, #diagnosis, #treatment, #advice",
   ).on("input", function () {
     updateClinicalPreview();
   });
@@ -230,19 +231,19 @@ $(function () {
             </div>`);
     });
   }
-  let isShowProtocol = false
-  const $protocolShowBtn = $("#protocol-show-btn")
-  $protocolShowBtn.on("click",function(){
-    isShowProtocol = !isShowProtocol
-    console.log(isShowProtocol)
-    if(isShowProtocol){
-      $("#protocolArea").removeClass("d-none")
-      $protocolShowBtn.text("Show less")
-    }else{
-      $("#protocolArea").addClass("d-none")
-      $protocolShowBtn.text("Show more")
+  let isShowProtocol = false;
+  const $protocolShowBtn = $("#protocol-show-btn");
+  $protocolShowBtn.on("click", function () {
+    isShowProtocol = !isShowProtocol;
+    console.log(isShowProtocol);
+    if (isShowProtocol) {
+      $("#protocolArea").removeClass("d-none");
+      $protocolShowBtn.text("Show less");
+    } else {
+      $("#protocolArea").addClass("d-none");
+      $protocolShowBtn.text("Show more");
     }
-  })
+  });
   const $container = $("#protocol-container");
   const $searchProtocol = $("#searchProtocol");
   const $noProtocols = $("#no-protocols");
@@ -252,7 +253,7 @@ $(function () {
     const query = filter.toLowerCase();
 
     const filteredPatients = protocols.filter((p) =>
-      p.label.toLowerCase().includes(query)
+      p.label.toLowerCase().includes(query),
     );
 
     if (filteredPatients.length > 0) {
@@ -272,16 +273,16 @@ $(function () {
           if (protocolList[p.id]) {
             $notesContainer.removeClass("d-none");
             $("#doctor-notes").text(protocolList[p.id]?.doctorNotes || "");
-            $("#patient-notes").text(protocolList[p.id]?.patientNotes|| "");
+            $("#patient-notes").text(protocolList[p.id]?.patientNotes || "");
             renderchips(
               protocolList[p.id].lab?.length ? protocolList[p.id].lab : [],
-              $labselectedItems
+              $labselectedItems,
             );
             renderchips(
               protocolList[p.id].radPros.length
                 ? protocolList[p.id].radPros
                 : [],
-              $procedureRadiologyItems
+              $procedureRadiologyItems,
             );
           } else {
             $notesContainer.addClass("d-none");
@@ -322,7 +323,7 @@ $(function () {
     const query = filter.toLowerCase();
     let filteredPatients = [];
     filteredPatients = labinslist.filter((p) =>
-      p.label.toLowerCase().includes(query)
+      p.label.toLowerCase().includes(query),
     );
 
     if (filteredPatients.length > 0) {
@@ -386,7 +387,7 @@ $(function () {
     const selectedId = $(this).data("selected");
     $(this).remove();
     selectedProcedureRadiology = selectedProcedureRadiology.filter(
-      (i) => i.id != selectedId
+      (i) => i.id != selectedId,
     );
   });
   function renderchips(list, con) {
@@ -405,7 +406,7 @@ $(function () {
     const query = filter.toLowerCase();
     let filteredPatients = [];
     filteredPatients = procedureRadiologylist.filter((p) =>
-      p.label.toLowerCase().includes(query)
+      p.label.toLowerCase().includes(query),
     );
 
     if (filteredPatients.length > 0) {
@@ -456,7 +457,7 @@ $(function () {
   });
   populateProcedureRadiologyList("");
 });
-
+let clinicalNotesToggle = true;
 function formatDate(dateStr) {
   return new Date(dateStr).toLocaleDateString("en-GB", {
     day: "2-digit",
@@ -493,8 +494,8 @@ function renderNotesComparisonTable(container, notesData) {
                 .map(
                   (n) =>
                     `<th style="font-size:.8rem" class="text-center bg-white">${formatDate(
-                      n.date
-                    )}</th>`
+                      n.date,
+                    )}</th>`,
                 )
                 .join("")}
             </tr>
@@ -523,10 +524,10 @@ function renderNotesComparisonTable(container, notesData) {
               <ul class="pagination pagination-sm m-0">
                 <li  class="page-item disabled">
                   <a style="padding:0px 8px;" class="page-link" href="#" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span> 
+                    <span aria-hidden="true">&laquo;</span>
                   </a>
                 </li>
-                
+
                 <li class="page-item"><a style="padding:0px 8px;" class="page-link" href="#">1</a></li>
                 <li class="page-item">
                   <a style="padding:0px 8px;" class="page-link" href="#" aria-label="Next">
@@ -540,4 +541,163 @@ function renderNotesComparisonTable(container, notesData) {
   `;
 
   container.append(table);
+}
+
+function renderClinicalNotes(container, historyItems) {
+  const headings = [
+    {
+      title: "Chief Complaints",
+      key: "complaints",
+    },
+    {
+      title: "Medical History",
+      key: "history",
+    },
+    {
+      title: "Observations",
+      key: "observations",
+    },
+    {
+      title: "Investigations",
+      key: "investigations",
+    },
+    {
+      title: "Diagnosis",
+      key: "diagnosis",
+    },
+    {
+      title: "Treatment",
+      key: "treatment",
+    },
+    {
+      title: "Advice",
+      key: "advice",
+    },
+  ];
+  container.empty();
+  historyItems.forEach((notes) => {
+    container.append(`
+      <h6 class="fw-bold small text-custom mt-3 clinical-notes-container">${notes.date}</h6>
+      `);
+    container.append(`
+        <div class="rounded-2 bg-white mb-2 shadow-sm filter-item clinical-notes-container" data-type="notes" data-date="${notes.date}"> 
+             <div class="card-body">
+                <div class="d-flex justify-content-between align-item-center pb-2">
+                          <h6 class="fw-semibold text-custom">
+                              <i class="fas fa-notes-medical text-warning me-2 text-custom"></i> Clinical Notes
+                          </h6>
+                          <button class="btn text-success btn-sm toggle-view-btn" id="table-toggle-btn0"><i class="fas fa-table"></i></button>
+                         </div>
+                          <div class="content-container">
+                            <div class="html-view">
+                               
+       <table class="table table-sm border-0">
+          <tbody>
+            <tr>
+              <th class="border-0 p-0" style="width:110px; font-size:.8rem">Chief Complaints</th>
+              <td class="border-0 p-0" style="font-size:.9rem">: ${notes.complaints || "-"}</td>
+            </tr>
+            <tr>
+              <th class="border-0 p-0" style="width:110px; font-size:.8rem">Medical History</th>
+              <td class="border-0 p-0" style="font-size:.9rem">: ${notes.history || "-"}</td>
+            </tr>
+            <tr>
+              <th class="border-0 p-0" style="width:110px; font-size:.8rem">Observations</th>
+              <td class="border-0 p-0" style="font-size:.9rem">: ${notes.observations || "-"}</td>
+            </tr>
+            <tr>
+              <th class="border-0 p-0" style="width:110px; font-size:.8rem">Investigations</th>
+              <td class="border-0 p-0" style="font-size:.9rem">: ${notes.investigations || "-"}</td>
+            </tr>
+            <tr>
+              <th class="border-0 p-0" style="width:110px; font-size:.8rem">Diagnosis</th>
+              <td class="border-0 p-0" style="font-size:.9rem">: ${notes.diagnosis || "-"}</td>
+            </tr>
+            <tr>
+              <th class="border-0 p-0" style="width:110px; font-size:.8rem">Treatment</th>
+              <td class="border-0 p-0" style="font-size:.9rem">: ${notes.treatment || "-"}</td>
+            </tr>
+            <tr>
+              <th class="border-0 p-0" style="width:110px; font-size:.8rem">Advice</th>
+              <td class="border-0 p-0" style="font-size:.9rem">: ${notes.advice || "-"}</td>
+            </tr>
+          </tbody>
+   </table>
+    </div>
+</div>
+</div>
+    </div>`);
+  });
+
+  let table = `<table class="table table-bordered table-sm align-middle bg-white mb-0">`;
+  let thead = `<thead class="bg-white"><tr><th style="min-width:60px; font-size:.8rem" class="bg-white">Parameter</th>`;
+  let tbody = `<tbody class="bg-white">`;
+  let tdElement = "";
+  headings.forEach((item, i) => {
+    tdElement =
+      tdElement +
+      `<tr><td style="min-width:60px; font-size:.8rem" class="bg-white;font-weight:bold;">${item.title}</td>`;
+    historyItems.forEach((n) => {
+      if (i == 0) {
+        thead = thead + `<th style="min-width:60px; font-size:.8rem" class="bg-white">${n.date}</th>`;
+      }
+      tdElement =
+        tdElement +
+        `<td style="min-width:60px; font-size:.8rem" class="bg-white">${n[item.key]}</td>`;
+    });
+    tdElement = tdElement + `</tr>`;
+  });
+
+  thead = thead + `</tr></thead>`;
+  table = table + thead;
+  tbody = tbody + tdElement;
+  tbody = tbody + "</tbody></table>";
+  table = table + tbody;
+  container.append(`<div class="table-responsive clinical-notes-tables rounded-2 bg-white mb-2 shadow-sm filter-item d-none">
+        <div class="d-flex justify-content-between align-item-center">
+          <h6 class="fw-semibold text-custom p-2">
+            <i class="fas fa-notes-medical text-warning me-2"></i>
+            Clinical Notes
+          </h6>
+          <button  class="btn text-success btn-sm toggle-view-btn"><i class="fas fa-list-alt"></i></button>
+        </div>
+        <div style="overflow-x: auto;" >
+        ${table}
+       </div>
+       <div class="d-flex justify-content-end align-items-center p-2">
+       <nav aria-label="Page navigation with arrows">
+          <ul class="pagination pagination-sm m-0">
+            <li  class="page-item disabled">
+              <a style="padding:0px 8px;" class="page-link" href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span> 
+              </a>
+            </li>
+            
+            <li class="page-item"><a style="padding:0px 8px;" class="page-link" href="#">1</a></li>
+            <li class="page-item">
+              <a style="padding:0px 8px;" class="page-link" href="#" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+          </ul>
+      </nav>
+       </div>
+    </div>
+        `);
+
+  container
+    .off("click", ".toggle-view-btn")
+    .on("click", ".toggle-view-btn", function () {
+      const $tableView = $(".clinical-notes-tables");
+      const $cardView = $(".clinical-notes-container");
+      console.log("--- clicked ---");
+      if (clinicalNotesToggle) {
+        $cardView.addClass("d-none");
+        $tableView.removeClass("d-none");
+      } else {
+        $tableView.addClass("d-none");
+        $cardView.removeClass("d-none");
+      }
+      clinicalNotesToggle = !clinicalNotesToggle;
+    });
 }

@@ -111,6 +111,7 @@ $(function () {
     const $noResults = $("#no-results");
     const excludedIds = ":not(.ignore-edit)";
     applyFilters()
+    populateDateFilter()
     function populateList(filter = "") {
       $container.empty();
       const query = filter.toLowerCase();

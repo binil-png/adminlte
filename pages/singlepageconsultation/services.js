@@ -12,7 +12,8 @@ class ApiService {
     this.status = null;
     const url = `${this.proxy}${this.baseUrl}${endpoint}`;
     try { 
-      const response = await $.ajax({
+      let response = null
+      response = await $.ajax({
         url: url,
         method: method,
         dataType: "json",
@@ -22,7 +23,7 @@ class ApiService {
           this.status = xhr.status;
         },
       });
-
+      
       return response;
     } catch (xhr) {
       this.status = xhr.status;

@@ -319,7 +319,6 @@ const labTestData = [
 ].map((tests, i) => {
   // Assuming you have or will create a similar helper function for lab details
   const detailedTests = generateLabDetails(tests, i);
-
   return {
     type: "lab_report",
     date: `2025-11-${12 + i}`,
@@ -374,9 +373,6 @@ const labTestData = [
   };
 });
 
-/**
- * Example helper to generate mock data for the lab rows
- */
 function generateLabDetails(testNames, index) {
   return testNames.map((name) => ({
     name: name,
@@ -1280,4 +1276,3 @@ const packageTestsMap = {
     ],
   },
 };
-
