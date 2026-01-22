@@ -128,6 +128,105 @@ const vitalsHistory = Array.from({ length: 5 }).map((_, i) => {
   };
 });
 
+const vitalsNewData = {
+  heading: [
+    {
+      title: "Temperature",
+      key: "temperature",
+    },
+    {
+      title: "Height",
+      key: "height",
+    },
+    {
+      title: "Weight",
+      key: "weight",
+    },
+    {
+      title: "Sugar",
+      key: "sugar",
+    },
+    {
+      title: "Cholesterol",
+      key: "cholesterol",
+    },
+    {
+      title: "BP",
+      key: "bp",
+    },
+    {
+      title: "Pulse",
+      key: "pulse",
+    },
+    {
+      title: "SpO2",
+      key: "spo2",
+    },
+    {
+      title: "Respiratory Rate",
+      key: "respiratoryRate",
+    },
+  ],
+
+  vitals: [
+    {
+      date: "05/12/25",
+      time: "",
+      temperature: "41.4",
+      height: "1.77 ",
+      weight: "80.8",
+      sugar: "112",
+      cholesterol: "158",
+      bp: "113/88",
+      pulse: "84",
+      spo2: "94",
+      respiratoryRate: "18",
+    },
+    {
+      date: "04/12/25",
+      time: "",
+      temperature: "42.0",
+      height: "1.60 ",
+      weight: "80.2",
+      sugar: "124",
+      cholesterol: "241",
+      bp: "127/79",
+      pulse: "85",
+      SpO2: "98",
+      respiratoryRate: "15",
+    },
+    {
+      date: "03/12/25",
+      time: "",
+      temperature: "41.0",
+      height: "1.80 ",
+      weight: "62.4",
+      sugar: "103",
+      cholesterol: "210",
+      bp: "122/88",
+      pulse: "65",
+      SpO2: "96",
+      respiratoryRate: "21",
+    },
+  ],
+
+  trendData: {
+    temperature: [40, 44, 39],
+    weight: [80, 78.9, 77],
+    sugar: [95, 98, 92],
+    bp: [
+      [120, 80],
+      [122, 82],
+      [118, 78],
+    ],
+    cholesterol: [
+      [190, 110, 45],
+      [195, 115, 48],
+      [188, 105, 42],
+    ],
+  },
+};
+
 function generatePrescriptionDetails(medicineList, index) {
   const frequencies = ["1-0-1", "1-1-1", "0-1-1", "1-0-0", "0-0-1"];
   const routes = ["Oral", "IV", "IM", "Topical", "Nebulization"];
@@ -191,13 +290,13 @@ const prescriptionData = [
             <td>${i + 1}</td>
             <td class="text-sm">
             ${m.name ? m.name : ""} | ${m.dosage ? m.dosage : ""} | ${
-            m.frequency ? m.frequency : ""
-          } | ${m.route ? m.route : ""} | ${m.timing ? m.timing : ""} | ${
-            m.duration ? m.duration : ""
-          }
+              m.frequency ? m.frequency : ""
+            } | ${m.route ? m.route : ""} | ${m.timing ? m.timing : ""} | ${
+              m.duration ? m.duration : ""
+            }
             </td>
           </tr>
-      `
+      `,
         )
         .join("")}
       </tbody>
@@ -265,7 +364,7 @@ const labTestData = [
                     </span>
                   </td>
                 </tr>
-            `
+            `,
               )
               .join("")}
           </tbody>
@@ -618,7 +717,7 @@ const historyData = [
       <p class="small mb-1"><b>${file}</b></p>
       <p class="small text-muted mb-0">${descriptions[file]}</p>
     `,
-    })
+    }),
   ),
 
   // ================= NEW 10 DENTAL PROCEDURES ==================
@@ -629,7 +728,7 @@ const historyData = [
           <li class="text-sm">
             <span class="text-sm">Tooth no# ${p.toothNo} | ${p.name} | </span>  
             Status: <span class="text-primary">${p.status}</span>)
-          </li>`
+          </li>`,
       )
       .join("");
 
@@ -1181,3 +1280,4 @@ const packageTestsMap = {
     ],
   },
 };
+

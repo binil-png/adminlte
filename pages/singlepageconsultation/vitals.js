@@ -3,7 +3,7 @@ $(function () {
   $("#addAllergy").on("click", function (e) {
     e.preventDefault();
     $("#allergyList").append(
-      '<div class="input-group mb-2 allergy-row">< + """>'
+      '<div class="input-group mb-2 allergy-row">< + """>',
     );
   });
 
@@ -15,7 +15,7 @@ $(function () {
     var row = $('<div class="input-group mb-2 allergy-row col-md-2 col-lg-2">')
       .append(
         $(
-          `<input type="text" data-index="${index}" class="form-control rounded-start-4 input-style allergyinput">`
+          `<input type="text" data-index="${index}" class="form-control rounded-start-4 input-style allergyinput">`,
         )
           .val(value || "")
           .on("change", function () {
@@ -25,17 +25,17 @@ $(function () {
               $allergyContainer.append(
                 `<span class="text-danger text-sm">${allergy}${
                   i < addAllergies.length - 1 ? "," : ""
-                } </span>`
+                } </span>`,
               );
             });
-          })
+          }),
       )
       .append(
         $('<div class="input-group-append">').append(
           $(
-            `<button data-index="${index}" style="padding: 0px 8px" class="btn btn-outline-danger btn-remove-allergy rounded-end-4" type="button"><i class="fas fa-times"></i></button>`
-          )
-        )
+            `<button data-index="${index}" style="padding: 0px 8px" class="btn btn-outline-danger btn-remove-allergy rounded-end-4" type="button"><i class="fas fa-times"></i></button>`,
+          ),
+        ),
       );
     $("#allergyList").append(row);
   }
@@ -44,7 +44,7 @@ $(function () {
     $allergyContainer.append(
       `<span class="text-danger text-sm">${allergy}${
         index < addAllergies.length - 1 ? "," : ""
-      } </span>`
+      } </span>`,
     );
   }
 
@@ -190,7 +190,7 @@ function renderVitalsTrendCharts(containerElement, graphData) {
             color: "#4d94ff",
             type: "line",
             dashStyle: "Dot",
-          }
+          },
         );
       } else if (key === "cholesterol") {
         const totalData = data.map((point) => point[0]);
@@ -217,7 +217,7 @@ function renderVitalsTrendCharts(containerElement, graphData) {
             color: "#007bff",
             type: "line",
             dashStyle: "Dot",
-          }
+          },
         );
       } else {
         seriesConfig.push({
@@ -228,7 +228,7 @@ function renderVitalsTrendCharts(containerElement, graphData) {
       }
       const chartId = "vitals-chart-" + key;
       const $chartDiv = $(
-        `<div id="${chartId}" style="width:${chartWidth}px; height:${chartHeight}px; border: 1px solid #eee; border-radius: 4px; padding: 5px;"></div>`
+        `<div id="${chartId}" style="width:${chartWidth}px; height:${chartHeight}px; border: 1px solid #eee; border-radius: 4px; padding: 5px;"></div>`,
       );
 
       $(containerElement).append($chartDiv);
@@ -403,7 +403,7 @@ function renderMultiSeriesSparkline(containerId, data, definitions) {
         data: data.map((point) => point[1]),
         color: "#4d94ff",
         dashStyle: "Dot",
-      }
+      },
     );
     tooltipFormat = "<b>S:</b> {point.y:.0f} | <b>D:</b> {point.y:.0f}";
   } // Cholesterol: Total (0), LDL (1), HDL (2)
@@ -426,7 +426,7 @@ function renderMultiSeriesSparkline(containerId, data, definitions) {
         data: data.map((point) => point[2]),
         color: "#007bff",
         dashStyle: "Dot",
-      }
+      },
     );
     tooltipFormat = "<b>{series.name}:</b> {point.y:.0f}";
   } else {
@@ -482,80 +482,57 @@ function renderMultiSeriesSparkline(containerId, data, definitions) {
 }
 
 function renderVitalsTable(container, vitals) {
-  const consolidatedVitals = vitals.map((item) => {
-    const v = item.vitalData;
-    return {
-      date: item.date,
-      time: "", // Assuming time is not strictly needed for this pivot view
-      Temperature: v.temperature,
-      Height: v.height,
-      Weight: v.weight,
-      Sugar: v.glucose,
-      Cholesterol: v.cholesterol,
-      BP: v.bp,
-      Pulse: v.pulse,
-      SpO2: v.spo2,
-      "Respiratory Rate": v.respiration,
-      trendData: item.trendData || {},
-    };
-  });
-
-  // 1. Sort the data by date (most recent first)
-  const sortedData = consolidatedVitals.sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-  );
-
-  // 2. Define Metrics and Mapping for display/rendering
+  container.empty()
   const metricDefinitions = {
-    Temperature: {
+    temperature: {
       unit: " °C",
       color: "#ffc107",
       key: "temperature",
       header: "Temp (°C)",
     },
-    Height: {
+    height: {
       unit: " m",
       color: "#9933cc",
       key: "height",
       header: "Height (m)",
     },
-    Weight: {
+    weight: {
       unit: " kg",
       color: "#17a2b8",
       key: "weight",
       header: "Weight (kg)",
     },
-    Sugar: {
+    sugar: {
       unit: " mg/dL",
       color: "#dc3545",
-      key: "bloodSugar",
+      key: "sugar",
       header: "Sugar (mg/dL)",
     },
-    Cholesterol: {
+    cholesterol: {
       unit: " mg/dL",
       color: "#28a745",
       key: "cholesterol",
       header: "Chol. (mg/dL)",
     },
-    BP: { unit: " mmHg", color: "#007bff", key: "bp", header: "BP (mmHg)" },
-    Pulse: {
+    bp: { unit: "mmHg", color: "#007bff", key: "bp", header: "BP (mmHg)" },
+    pulse: {
       unit: " bpm",
       color: "#f8684d",
       key: "pulse",
       header: "Pulse (bpm)",
     },
-    SpO2: { unit: " %", color: "#00bfa5", key: "spo2", header: "SpO2 (%)" },
-    "Respiratory Rate": {
+    spo2: { unit: " %", color: "#00bfa5", key: "spo2", header: "SpO2 (%)" },
+    respiratoryRate: {
       unit: " /min",
       color: "#546e7a",
-      key: "respiratoryrate",
+      key: "respiratoryRate",
       header: "RR (/min)",
     },
   };
 
-  const metricOrder = Object.keys(metricDefinitions);
+  console.log("inside renderVitalsTable => ",vitals)
 
-  if (sortedData.length === 0) {
+  if (vitals.vitals.length === 0) {
     // Handle no data case
     const noDataHtml = `<h6 class="fw-bold small text-custom mt-3">Vitals History Summary</h6>
                             <div class="rounded-2 bg-white mb-2 shadow-sm filter-item p-2">
@@ -568,26 +545,30 @@ function renderVitalsTable(container, vitals) {
   }
 
   // 3. Generate Table Headers (Dates)
-  const dateHeaders = sortedData
+  const dateHeaders = vitals.vitals
     .map(
       (record) => `
         <th scope="col" class="text-start text-nowrap">
-            ${formatDateGroupLabel(record.date)}
+            ${record.date}
         </th>
-    `
+    `,
     )
     .join("");
 
-  const totalColumns = 1 + sortedData.length + 1;
+  const totalColumns = 1 + vitals.vitals.length + 1;
   let tableRows = "";
-  const latestTrendData = sortedData[0].trendData;
 
-  metricOrder.forEach((metricKey) => {
-    const def = metricDefinitions[metricKey];
+  console.clear();
+  const latestTrendData = vitals.trendData;
+  console.log("latestTrendData = > ", latestTrendData);
+
+  vitals.heading.forEach((metricKey) => {
+    const def = metricDefinitions[metricKey.key];
+    console.log("def => ", def);
     const metricDataKey = def.key;
-    let rowData = `<th scope="row" class="text-custom fw-semibold text-nowrap">${def.header}</th>`;
-    sortedData.forEach((record, dateIndex) => {
-      const value = String(record[metricKey] || "-").trim();
+    let rowData = `<th scope="row" class="text-custom fw-semibold text-nowrap">${metricKey.title}</th>`;
+    vitals.vitals.forEach((record, dateIndex) => {
+      const value = String(record[metricKey.key] || "-").trim();
       rowData += `<td class="text-start fw-medium text-nowrap">${value}</td>`;
     });
     const dataExists =
@@ -596,11 +577,9 @@ function renderVitalsTable(container, vitals) {
     let trendCell = `<td></td>`;
 
     if (dataExists) {
-      const chartDiv = `<div id="sparkline-${metricDataKey}" 
-                                   style="display: inline-block; vertical-align: middle;"></div>`;
+      const chartDiv = `<div id="sparkline-${metricDataKey}" style="display: inline-block; vertical-align: middle;"></div>`;
       trendCell = `<td>${chartDiv}</td>`;
     }
-
     tableRows += `<tr>${rowData}${trendCell}</tr>`;
   });
 
@@ -648,10 +627,10 @@ function renderVitalsTable(container, vitals) {
 
   if (container && container.append) {
     container.append(vitalsTableHtml);
-    
+
     Object.keys(latestTrendData).forEach((key) => {
       const data = latestTrendData[key];
-      
+
       const def = Object.values(metricDefinitions).find((d) => d.key === key);
       const containerId = `sparkline-${key}`;
 
@@ -667,3 +646,67 @@ function renderVitalsTable(container, vitals) {
     console.error("Container element is invalid or missing 'append' method.");
   }
 }
+
+$(".classname").select2({
+  placeholder: "Search Patient By Name, Phone, Email (Min 4 Characters)",
+  ajax: {
+    url: "url_insert",
+    type: "post",
+    dataType: "json",
+    delay: 250,
+    data: function (params) {
+      return {
+        searchTerm: params.term, // search term
+      };
+    },
+    processResults: function (response) {
+      return {
+        results: response,
+      };
+    },
+    cache: true,
+  },
+});
+
+const data = [
+  {
+    id: "7563790",
+    text: "anish antony anakattil | Mob-53453534543 | Email-HARV416@pappyjoe.com | File No:- | Patient ID:-HARV416 | Address:-",
+  },
+  {
+    id: "7525707",
+    text: "vyasan | Mob-344354576745654 | Email-HARV415@pappyjoe.com | File No:- | Patient ID:-HARV415 | Address:-",
+  },
+  {
+    id: "7525703",
+    text: "jose k | Mob-56456546 | Email-HARV414@pappyjoe.com | File No:- | Patient ID:-HARV414 | Address:-",
+  },
+  {
+    id: "7525698",
+    text: "aravind | Mob-645645645 | Email-HARV413@pappyjoe.com | File No:- | Patient ID:-HARV413 | Address:-",
+  },
+  {
+    id: "7452605",
+    text: "manikandan | Mob-6465465465464 | Email-HARV412@pappyjoe.com | File No:- | Patient ID:-HARV412 | Address:- | Species-",
+  },
+  {
+    id: "7450610",
+    text: "Oreo | Mob-8281545632 | Email-HARV411@pappyjoe.com | File No:- | Patient ID:-HARV411 | Address:-Raj | Species-",
+  },
+  {
+    id: "7450220",
+    text: "ajmeer | Mob-65465464646 | Email-HARV409@pappyjoe.com | File No:- | Patient ID:-HARV409 | Address:-",
+  },
+  {
+    id: "7447201",
+    text: "Jaisalmeer | Mob-5235353454 | Email-HARV408@pappyjoe.com | File No:- | Patient ID:-HARV408 | Address:-",
+  },
+  {
+    id: "7446702",
+    text: "Anjuttan | Mob-7542134560 | Email-HARV406@pappyjoe.com | File No:- | Patient ID:-HARV406 | Address:-Kochi",
+  },
+  {
+    id: "7446623",
+    text: "Aardha | Mob-8454621347 | Email-HARV405@pappyjoe.com | File No:- | Patient ID:-HARV405 | Address:-vengoor",
+  },
+];
