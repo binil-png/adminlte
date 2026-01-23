@@ -1,5 +1,6 @@
-class ApiService {
-  constructor(baseUrl, proxy = "https://cors-anywhere.herokuapp.com/") {
+class NetworkServices {
+  baseUrl = "";
+  constructor(baseUrl, proxy = "") {
     this.baseUrl = baseUrl;
     this.proxy = proxy;
     this.isLoading = false;
@@ -11,8 +12,8 @@ class ApiService {
     this.error = null;
     this.status = null;
     const url = `${this.proxy}${this.baseUrl}${endpoint}`;
-    try { 
-      let response = null
+    try {
+      let response = null;
       response = await $.ajax({
         url: url,
         method: method,
@@ -23,13 +24,13 @@ class ApiService {
           this.status = xhr.status;
         },
       });
-      
+
       return response;
     } catch (xhr) {
       this.status = xhr.status;
-      this.error = xhr.statusText || "Network Error";
       console.error(`API Call Failed (${method} ${endpoint}):`, this.error);
-      return null;
+      this.error = xhr.statusText || "Network Error";
+      throw new Error(this.error);
     } finally {
       this.isLoading = false;
       this.onStateChange();

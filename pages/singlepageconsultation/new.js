@@ -110,8 +110,7 @@ $(function () {
     const $selectedText = $("#selected-item");
     const $noResults = $("#no-results");
     const excludedIds = ":not(.ignore-edit)";
-    applyFilters()
-    populateDateFilter()
+    applyFilters();
     function populateList(filter = "") {
       $container.empty();
       const query = filter.toLowerCase();
@@ -224,18 +223,17 @@ $(function () {
       $searchInput.focus();
     });
 
-  $("#chipFilters span").click(function () {
-    $("#chipFilters span")
-      .removeClass("bg-dark text-white active-filter")
-      .addClass("border text-muted");
-    $(this)
-      .removeClass("border text-muted")
-      .addClass("bg-dark text-white active-filter");
-    applyFilters();
-  });
+    $("#chipFilters span").click(function () {
+      $("#chipFilters span")
+        .removeClass("bg-dark text-white active-filter")
+        .addClass("border text-muted");
+      $(this)
+        .removeClass("border text-muted")
+        .addClass("bg-dark text-white active-filter");
+      applyFilters();
+    });
 
-
-  $("#dateFilter").on("change", applyFilters);
+    $("#dateFilter").on("change", applyFilters);
 
   });
 
@@ -268,7 +266,7 @@ $(function () {
   $("#asideMenu").removeClass(
     "col-md-2 col-lg-2 border border-top-0 border-bottom-0 p-3 sidebar hide-scrollbar",
   );
-  
+
   const shareBtn = document.querySelector(".save-btn-share");
 
   renderPopover();

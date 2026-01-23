@@ -298,23 +298,6 @@ function renderVitalsTrendCharts(containerElement, graphData) {
   }
 }
 
-function formatDateGroupLabel(dateStr) {
-  const today = new Date();
-  const date = new Date(dateStr);
-
-  const isToday = date.toDateString() === today.toDateString();
-
-  const yesterday = new Date();
-  yesterday.setDate(today.getDate() - 1);
-
-  const isYesterday = date.toDateString() === yesterday.toDateString();
-
-  if (isToday) return "Today";
-  if (isYesterday) return "Yesterday";
-
-  return dateStr.split("-").reverse().join("-"); // dd-mm-yyyy
-}
-
 function renderInlineSparkline(containerId, data, color, unit) {
   if (!data || data.length === 0) return; // Use a minimal, fixed height/width for sparklines
 
@@ -482,99 +465,100 @@ function renderMultiSeriesSparkline(containerId, data, definitions) {
 }
 
 function renderVitalsTable(container, vitals) {
-  container.empty();
-  const metricDefinitions = {
-    temperature: {
-      unit: " °C",
-      color: "#ffc107",
-      key: "temperature",
-      header: "Temp (°C)",
-    },
-    height: {
-      unit: " m",
-      color: "#9933cc",
-      key: "height",
-      header: "Height (m)",
-    },
-    weight: {
-      unit: " kg",
-      color: "#17a2b8",
-      key: "weight",
-      header: "Weight (kg)",
-    },
-    sugar: {
-      unit: " mg/dL",
-      color: "#dc3545",
-      key: "sugar",
-      header: "Sugar (mg/dL)",
-    },
-    cholesterol: {
-      unit: " mg/dL",
-      color: "#28a745",
-      key: "cholesterol",
-      header: "Chol. (mg/dL)",
-    },
-    bp: { unit: "mmHg", color: "#007bff", key: "bp", header: "BP (mmHg)" },
-    pulse: {
-      unit: " bpm",
-      color: "#f8684d",
-      key: "pulse",
-      header: "Pulse (bpm)",
-    },
-    spo2: { unit: " %", color: "#00bfa5", key: "spo2", header: "SpO2 (%)" },
-    respiratoryRate: {
-      unit: " /min",
-      color: "#546e7a",
-      key: "respiratoryRate",
-      header: "RR (/min)",
-    },
-  };
+  if (vitals) {
+    container.empty();
+    const metricDefinitions = {
+      temperature: {
+        unit: " °C",
+        color: "#ffc107",
+        key: "temperature",
+        header: "Temp (°C)",
+      },
+      height: {
+        unit: " m",
+        color: "#9933cc",
+        key: "height",
+        header: "Height (m)",
+      },
+      weight: {
+        unit: " kg",
+        color: "#17a2b8",
+        key: "weight",
+        header: "Weight (kg)",
+      },
+      sugar: {
+        unit: " mg/dL",
+        color: "#dc3545",
+        key: "sugar",
+        header: "Sugar (mg/dL)",
+      },
+      cholesterol: {
+        unit: " mg/dL",
+        color: "#28a745",
+        key: "cholesterol",
+        header: "Chol. (mg/dL)",
+      },
+      bp: { unit: "mmHg", color: "#007bff", key: "bp", header: "BP (mmHg)" },
+      pulse: {
+        unit: " bpm",
+        color: "#f8684d",
+        key: "pulse",
+        header: "Pulse (bpm)",
+      },
+      spo2: { unit: " %", color: "#00bfa5", key: "spo2", header: "SpO2 (%)" },
+      respiratoryRate: {
+        unit: " /min",
+        color: "#546e7a",
+        key: "respiratoryRate",
+        header: "RR (/min)",
+      },
+    };
 
-  if (vitals.vitals.length === 0) {
-    // Handle no data case
-    const noDataHtml = `<h6 class="fw-bold small text-custom mt-3">Vitals History Summary</h6>
+    if (vitals?.vitals?.length === 0) {
+      // Handle no data case
+      const noDataHtml = `<h6 class="fw-bold small text-custom mt-3">Vitals History Summary</h6>
                             <div class="rounded-2 bg-white mb-2 shadow-sm filter-item p-2">
                                 <p class="text-center text-muted mb-0">No Vitals Records Found.</p>
                             </div>`;
-    if (container && container.append) {
-      container.append(noDataHtml);
+      if (container && container.append) {
+        container.append(noDataHtml);
+      }
+      return;
     }
-    return;
-  }
 
-  // 3. Generate Table Headers (Dates)
-  const dateHeaders = vitals.vitals
-    .map(
-      (record) => `
+    // 3. Generate Table Headers (Dates)
+    const dateHeaders = vitals?.vitals
+      .map(
+        (record) => `
         <th scope="col" class="text-start text-nowrap">
             ${record.date}
         </th>
     `,
-    )
-    .join("");
-  let tableRows = "";
-  const latestTrendData = vitals.trendData;
-  vitals.heading.forEach((metricKey) => {
-    const def = metricDefinitions[metricKey.key];
-    const metricDataKey = def.key;
-    let rowData = `<th scope="row" class="text-custom fw-semibold text-nowrap">${metricKey.title}</th>`;
-    vitals.vitals.forEach((record, dateIndex) => {
-      const value = String(record[metricKey.key] || "-").trim();
-      rowData += `<td class="text-start fw-medium text-nowrap">${value}</td>`;
+      )
+      .join("");
+    let tableRows = "";
+    const latestTrendData = vitals?.trendData;
+    vitals?.heading?.forEach((metricKey) => {
+      const def = metricDefinitions[metricKey.key];
+      const metricDataKey = def.key;
+      let rowData = `<th scope="row" class="text-custom fw-semibold text-nowrap">${metricKey.title}</th>`;
+      vitals.vitals.forEach((record, dateIndex) => {
+        const value = String(record[metricKey.key] || "-").trim();
+        rowData += `<td class="text-start fw-medium text-nowrap">${value}</td>`;
+      });
+      const dataExists =
+        latestTrendData[metricDataKey] &&
+        latestTrendData[metricDataKey].length > 0;
+      let trendCell = `<td></td>`;
+
+      if (dataExists) {
+        const chartDiv = `<div id="sparkline-${metricDataKey}" style="display: inline-block; vertical-align: middle;"></div>`;
+        trendCell = `<td>${chartDiv}</td>`;
+      }
+      tableRows += `<tr>${rowData}${trendCell}</tr>`;
     });
-    const dataExists =
-      latestTrendData[metricDataKey] &&
-      latestTrendData[metricDataKey].length > 0;
-    let trendCell = `<td></td>`;
 
-    if (dataExists) {
-      const chartDiv = `<div id="sparkline-${metricDataKey}" style="display: inline-block; vertical-align: middle;"></div>`;
-      trendCell = `<td>${chartDiv}</td>`;
-    }
-    tableRows += `<tr>${rowData}${trendCell}</tr>`;
-  });
-
-  const vitalsTableHtml = `
+    const vitalsTableHtml = `
         <h6 class="fw-bold small text-custom mt-3">Vitals History (Date Columns)</h6>
         <div class="rounded-2 bg-white mb-2 shadow-sm filter-item" 
              data-type="vitals" 
@@ -616,45 +600,27 @@ function renderVitalsTable(container, vitals) {
         </div>
     `;
 
-  if (container && container.append) {
-    container.append(vitalsTableHtml);
+    if (container && container.append) {
+      container.append(vitalsTableHtml);
 
-    Object.keys(latestTrendData).forEach((key) => {
-      const data = latestTrendData[key];
+      Object.keys(latestTrendData).forEach((key) => {
+        const data = latestTrendData[key];
 
-      const def = Object.values(metricDefinitions).find((d) => d.key === key);
-      const containerId = `sparkline-${key}`;
+        const def = Object.values(metricDefinitions).find((d) => d.key === key);
+        const containerId = `sparkline-${key}`;
 
-      if (data && data.length > 0 && def) {
-        if (key === "bp" || key === "cholesterol") {
-          renderMultiSeriesSparkline(containerId, data, def);
-        } else {
-          renderInlineSparkline(containerId, data, def.color, def.unit);
+        if (data && data.length > 0 && def) {
+          if (key === "bp" || key === "cholesterol") {
+            renderMultiSeriesSparkline(containerId, data, def);
+          } else {
+            renderInlineSparkline(containerId, data, def.color, def.unit);
+          }
         }
-      }
-    });
-  } else {
-    console.error("Container element is invalid or missing 'append' method.");
+      });
+    } else {
+      console.error("Container element is invalid or missing 'append' method.");
+    }
   }
 }
 
-$(".classname").select2({
-  placeholder: "Search Patient By Name, Phone, Email (Min 4 Characters)",
-  ajax: {
-    url: "url_insert",
-    type: "post",
-    dataType: "json",
-    delay: 250,
-    data: function (params) {
-      return {
-        searchTerm: params.term, // search term
-      };
-    },
-    processResults: function (response) {
-      return {
-        results: response,
-      };
-    },
-    cache: true,
-  },
-});
+

@@ -11,11 +11,13 @@ $(function () {
     let price = 0;
     if (list.length) {
       list.forEach((t) => {
-        if(t?.tests){
-          let testLabel = ""
-          t.tests.forEach((testName,i)=>{
-             testLabel = testLabel + (i < t.tests.length-1 ? testName.label+", " : testName.label)
-          })
+        if (t?.tests) {
+          let testLabel = "";
+          t.tests.forEach((testName, i) => {
+            testLabel =
+              testLabel +
+              (i < t.tests.length - 1 ? testName.label + ", " : testName.label);
+          });
           const packageElement = `
              <li class="list-group-item border m-1 p-0 rounded-3">
                  <div class="list-group-item-action p-2 cursor-pointer">
@@ -58,9 +60,9 @@ $(function () {
                      </div>
                  </div>
               </li>
-          `
-          $selectedTestArea.append(packageElement)
-        }else{
+          `;
+          $selectedTestArea.append(packageElement);
+        } else {
           $selectedTestArea.append(`
                               <li class="list-group-item d-flex justify-content-between align-items-center border-0 py-2 px-2">
                                  <small>${t.label}</small>
@@ -149,6 +151,7 @@ $(function () {
     renderTest(labTests);
     selected = "test";
   });
+
   $changetopackage.on("click", function () {
     $changetotest.removeClass("active");
     $changetopackage.addClass("active");
@@ -161,7 +164,7 @@ $(function () {
     if (testCategories.length) {
       testCategories.forEach((i) => {
         $categoryArea.append(
-          `<div data-category="${i.id}" role="button" style="width: fit-content; display: inline-block;" class="bg-light px-2 rounded-4 text-sm text-center category-chips">${i.label}</div>`
+          `<div data-category="${i.id}" role="button" style="width: fit-content; display: inline-block;" class="bg-light px-2 rounded-4 text-sm text-center category-chips">${i.label}</div>`,
         );
       });
     }
@@ -173,10 +176,10 @@ $(function () {
     renderSelectedTest(allTest);
   });
 
-  $categoryArea.on("click",".category-chips",function(){
-     const selectedCategory = categoryTestsMap[$(this).data("category")]
-      renderTest(selectedCategory.tests);
-  })
+  $categoryArea.on("click", ".category-chips", function () {
+    const selectedCategory = categoryTestsMap[$(this).data("category")];
+    renderTest(selectedCategory.tests);
+  });
 
   $(document).ready(function () {
     renderSelectedTest(allTest);
@@ -184,3 +187,84 @@ $(function () {
     renderTest(labTests);
   });
 });
+
+function renderLabTests(container, lablist) {
+  if (lablist) {
+    lablist.forEach((lab) => {
+      let labItems = "";
+      lab.list.forEach((l,index) => {
+       labItems += ` 
+       <tr>
+          <td style="border:0px;" class="text-muted">
+            ${index+1}
+          </td>
+          <td style="border:0px;min-width:200px;" class="fw-bold text-dark">
+            ${l.name}
+          </td>
+          <td style="border:0px;" class="${l.isAbnormal ? "text-danger fw-bold" : "fw-bold"}">
+            ${l.result} <small>${l.unit}</small>
+          </td>
+          <td style="border:0px;min-width:100px;" class="text-muted">
+            ${l.referenceRange}
+          </td>
+          <td style="border:0px;min-width:50px;" class="text-end">
+            <span class="${l.status ?  l.isAbnormal ? "badge bg-danger-subtle text-danger":"badge bg-success-subtle text-success" : ""}" style="font-size: 0.6rem;">
+              ${l.status || "--"}
+            </span>
+          </td>
+        </tr>`
+      });
+      container.append(
+        `
+        <div data-date="2025-11-14">
+        <h6 class="fw-bold small text-custom mt-3">${lab.date}</h6>
+          <div
+          class="rounded-2 bg-white mb-2 shadow-sm filter-item"
+          data-type="lab_report"
+          
+          style=""
+        >
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-item-center pb-2">
+              <h6 class="fw-semibold text-custom">
+                <i class="fas fa-microscope text-info me-2 text-custom"></i> Lab
+                Investigation
+              </h6>
+            </div>
+            <div class="content-container">
+              <div class="html-view">
+                <div class="table-responsive">
+                  <table class="table table-sm table-hover mb-0">
+                    <thead class="bg-light">
+                      <tr style="font-size: 0.7rem;" class="text-muted">
+                        <th style="border:0px;" class="fw-bold">
+                          #
+                        </th>
+                        <th style="border:0px;" class="fw-bold">
+                          TEST NAME
+                        </th>
+                        <th style="border:0px;" class="fw-bold">
+                          RESULT
+                        </th>
+                        <th style="border:0px;" class="fw-bold">
+                          REFERENCE
+                        </th>
+                        <th style="border:0px;" class="fw-bold text-end">
+                          STATUS
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody style="font-size: 0.75rem;">${labItems}</tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="card-view d-none"></div>
+            </div>
+          </div>
+        </div>
+        </div>
+        `
+      );
+    });
+  }
+}

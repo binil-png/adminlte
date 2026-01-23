@@ -176,3 +176,46 @@ $(function () {
     }
   });
 });
+
+function renderPrescription(container, precription) {
+  if (precription) {
+    container.empty();
+    let pIndex = 0;
+    let proceTableTd = "";
+    precription.forEach((i) => {
+      i.prescription.forEach((p) => {
+        proceTableTd += `
+      <tr>
+        <td>${++pIndex}</td>
+        <td class="text-sm">${p}</td>
+      </tr>`;
+      });
+
+      container.append(`
+        <divclass="date-wise-prescription" data-date="${i.date}">
+          <h6 class="fw-bold small text-custom mt-3">${i.date}</h6>
+          <div class="rounded-2 bg-white mb-2 shadow-sm filter-item" data-type="prescription" > 
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-item-center pb-2">
+               <h6 class="fw-semibold text-custom">
+                 <i class="fas fa-prescription text-primary me-2 text-custom"></i> Prescription
+               </h6>         
+            </div>
+            <div class="content-container">
+               <div class="html-view">          
+                 <div class="">
+                  <table class="table table-sm">
+                    <tbody>${proceTableTd}</tbody>
+                  </table>
+             </div>
+          </div>
+         <div class="card-view d-none">
+           </div>
+          </div>
+         </div>
+      </div>
+        </divclass=>
+    `);
+    });
+  }
+}

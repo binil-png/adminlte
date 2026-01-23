@@ -544,43 +544,43 @@ function renderNotesComparisonTable(container, notesData) {
 }
 
 function renderClinicalNotes(container, historyItems) {
-  const headings = [
-    {
-      title: "Chief Complaints",
-      key: "complaints",
-    },
-    {
-      title: "Medical History",
-      key: "history",
-    },
-    {
-      title: "Observations",
-      key: "observations",
-    },
-    {
-      title: "Investigations",
-      key: "investigations",
-    },
-    {
-      title: "Diagnosis",
-      key: "diagnosis",
-    },
-    {
-      title: "Treatment",
-      key: "treatment",
-    },
-    {
-      title: "Advice",
-      key: "advice",
-    },
-  ];
-  container.empty();
-  historyItems.forEach((notes) => {
-    container.append(`
-      <h6 class="fw-bold small text-custom mt-3 clinical-notes-container">${notes.date}</h6>
-      `);
-    container.append(`
-        <div class="rounded-2 bg-white mb-2 shadow-sm filter-item clinical-notes-container" data-type="notes" data-date="${notes.date}"> 
+  if (historyItems) {
+    const headings = [
+      {
+        title: "Chief Complaints",
+        key: "complaints",
+      },
+      {
+        title: "Medical History",
+        key: "history",
+      },
+      {
+        title: "Observations",
+        key: "observations",
+      },
+      {
+        title: "Investigations",
+        key: "investigations",
+      },
+      {
+        title: "Diagnosis",
+        key: "diagnosis",
+      },
+      {
+        title: "Treatment",
+        key: "treatment",
+      },
+      {
+        title: "Advice",
+        key: "advice",
+      },
+    ];
+    container.empty();
+    historyItems.forEach((notes) => {
+      container.append(`
+        <div class="date-wise-notes" data-date="${notes.date}">
+         <h6 class="fw-bold small text-custom mt-3 clinical-notes-container">${notes.date}</h6>
+        <div class="rounded-2 bg-white mb-2 shadow-sm filter-item clinical-notes-container" data-type="notes"> 
              <div class="card-body">
                 <div class="d-flex justify-content-between align-item-center pb-2">
                           <h6 class="fw-semibold text-custom">
@@ -595,65 +595,69 @@ function renderClinicalNotes(container, historyItems) {
           <tbody>
             <tr>
               <th class="border-0 p-0" style="width:110px; font-size:.8rem">Chief Complaints</th>
-              <td class="border-0 p-0" style="font-size:.9rem">: ${notes.complaints || "-"}</td>
+              <td class="border-0 p-0" style="font-size:.9rem">: ${notes.complaints}</td>
             </tr>
             <tr>
               <th class="border-0 p-0" style="width:110px; font-size:.8rem">Medical History</th>
-              <td class="border-0 p-0" style="font-size:.9rem">: ${notes.history || "-"}</td>
+              <td class="border-0 p-0" style="font-size:.9rem">: ${notes.history}</td>
             </tr>
             <tr>
               <th class="border-0 p-0" style="width:110px; font-size:.8rem">Observations</th>
-              <td class="border-0 p-0" style="font-size:.9rem">: ${notes.observations || "-"}</td>
+              <td class="border-0 p-0" style="font-size:.9rem">: ${notes.observations}</td>
             </tr>
             <tr>
               <th class="border-0 p-0" style="width:110px; font-size:.8rem">Investigations</th>
-              <td class="border-0 p-0" style="font-size:.9rem">: ${notes.investigations || "-"}</td>
+              <td class="border-0 p-0" style="font-size:.9rem">: ${notes.investigations}</td>
             </tr>
             <tr>
               <th class="border-0 p-0" style="width:110px; font-size:.8rem">Diagnosis</th>
-              <td class="border-0 p-0" style="font-size:.9rem">: ${notes.diagnosis || "-"}</td>
+              <td class="border-0 p-0" style="font-size:.9rem">: ${notes.diagnosis}</td>
             </tr>
             <tr>
               <th class="border-0 p-0" style="width:110px; font-size:.8rem">Treatment</th>
-              <td class="border-0 p-0" style="font-size:.9rem">: ${notes.treatment || "-"}</td>
+              <td class="border-0 p-0" style="font-size:.9rem">: ${notes.treatment}</td>
             </tr>
             <tr>
               <th class="border-0 p-0" style="width:110px; font-size:.8rem">Advice</th>
-              <td class="border-0 p-0" style="font-size:.9rem">: ${notes.advice || "-"}</td>
+              <td class="border-0 p-0" style="font-size:.9rem">: ${notes.advice}</td>
             </tr>
           </tbody>
    </table>
     </div>
 </div>
 </div>
-    </div>`);
-  });
+    </div>
+        </div>
+        `);
+    });
 
-  let table = `<table class="table table-bordered table-sm align-middle bg-white mb-0">`;
-  let thead = `<thead class="bg-white"><tr><th style="min-width:60px; font-size:.8rem" class="bg-white">Parameter</th>`;
-  let tbody = `<tbody class="bg-white">`;
-  let tdElement = "";
-  headings.forEach((item, i) => {
-    tdElement =
-      tdElement +
-      `<tr><td style="min-width:60px; font-size:.8rem" class="bg-white;font-weight:bold;">${item.title}</td>`;
-    historyItems.forEach((n) => {
-      if (i == 0) {
-        thead = thead + `<th style="min-width:60px; font-size:.8rem" class="bg-white">${n.date}</th>`;
-      }
+    let table = `<table class="table table-bordered table-sm align-middle bg-white mb-0">`;
+    let thead = `<thead class="bg-white"><tr><th style="min-width:60px; font-size:.8rem" class="bg-white">Parameter</th>`;
+    let tbody = `<tbody class="bg-white">`;
+    let tdElement = "";
+    headings.forEach((item, i) => {
       tdElement =
         tdElement +
-        `<td style="min-width:60px; font-size:.8rem" class="bg-white">${n[item.key]}</td>`;
+        `<tr><td style="min-width:60px; font-size:.8rem" class="bg-white;font-weight:bold;">${item.title}</td>`;
+      historyItems.forEach((n) => {
+        if (i == 0) {
+          thead =
+            thead +
+            `<th style="min-width:60px; font-size:.8rem" class="bg-white">${n.date}</th>`;
+        }
+        tdElement =
+          tdElement +
+          `<td style="min-width:60px; font-size:.8rem" class="bg-white">${n[item.key]}</td>`;
+      });
+      tdElement = tdElement + `</tr>`;
     });
-    tdElement = tdElement + `</tr>`;
-  });
 
-  thead = thead + `</tr></thead>`;
-  table = table + thead;
-  tbody = tbody + tdElement;
-  tbody = tbody + "</tbody></table>";
-  table = table + tbody;
-  container.append(`<div class="table-responsive clinical-notes-tables rounded-2 bg-white mb-2 shadow-sm filter-item d-none">
+    thead = thead + `</tr></thead>`;
+    table = table + thead;
+    tbody = tbody + tdElement;
+    tbody = tbody + "</tbody></table>";
+    table = table + tbody;
+    container.append(`<div class="table-responsive clinical-notes-tables rounded-2 bg-white mb-2 shadow-sm filter-item d-none">
         <div class="d-flex justify-content-between align-item-center">
           <h6 class="fw-semibold text-custom p-2">
             <i class="fas fa-notes-medical text-warning me-2"></i>
@@ -685,19 +689,20 @@ function renderClinicalNotes(container, historyItems) {
     </div>
         `);
 
-  container
-    .off("click", ".toggle-view-btn")
-    .on("click", ".toggle-view-btn", function () {
-      const $tableView = $(".clinical-notes-tables");
-      const $cardView = $(".clinical-notes-container");
-      console.log("--- clicked ---");
-      if (clinicalNotesToggle) {
-        $cardView.addClass("d-none");
-        $tableView.removeClass("d-none");
-      } else {
-        $tableView.addClass("d-none");
-        $cardView.removeClass("d-none");
-      }
-      clinicalNotesToggle = !clinicalNotesToggle;
-    });
+    container
+      .off("click", ".toggle-view-btn")
+      .on("click", ".toggle-view-btn", function () {
+        const $tableView = $(".clinical-notes-tables");
+        const $cardView = $(".clinical-notes-container");
+        console.log("--- clicked ---");
+        if (clinicalNotesToggle) {
+          $cardView.addClass("d-none");
+          $tableView.removeClass("d-none");
+        } else {
+          $tableView.addClass("d-none");
+          $cardView.removeClass("d-none");
+        }
+        clinicalNotesToggle = !clinicalNotesToggle;
+      });
+  }
 }

@@ -358,3 +358,8 @@ label {
     border-color: #ced4da !important; /* Keeps border visible */
     box-shadow: none !important;
 }
+
+#dateFilter + .select2-container .select2-results__options {
+    max-height: 220px;
+    overflow-y: auto;
+}
