@@ -253,7 +253,7 @@ $(function () {
       {
         scrollTop: newBox.offset().top - 100,
       },
-      500
+      500,
     );
   });
   $(document).on("click", ".btn-remove-proc", function () {
@@ -441,4 +441,68 @@ $(function () {
     renderVisitingNotes(notesList);
   });
   renderVisitingNotes(notesList);
+  $(document).on("click",".openAddProcedure", function () {
+    let visitingNotesModal = new bootstrap.Modal(
+      document.getElementById("visitingNotesModal"),
+    );
+    visitingNotesModal.show();
+  });
 });
+
+function renderProcedure(container, proceduresList) {
+  const status = {
+    Completed: "badge bg-success",
+    Pending: "badge bg-danger",
+    Active: "badge bg-success",
+    Invoiced: "badge bg-primary",
+  };
+  proceduresList.forEach((i) => {
+    let procedureDiv = "";
+    i.procedures.forEach((p, count) => {
+      procedureDiv += `<div class="content-container mt-1 border-b">
+             <div class="d-flex">
+              <small class="me-1">${i.procedures.length > 1 ? count + 1 + ")" : ""}</small>
+              <div class="html-view">
+              <div class="d-flex justify-content-start ailgn-items-center gap-2">
+                <p class="small mb-1">
+                  <b>Procedure:</b> ${p.name}
+                </p>
+                <p class="small mb-1">
+                  <span class="${status[p.status] || "badge bg-secondary"}">${p.status}</span>
+                </p>
+              </div>
+              <p class="small mb-1">
+                <b>Internal Notes:</b> ${p.internalNotes}.
+              </p>
+              <p class="small mb-1">
+                <b>Patient Notes:</b> ${p.patientNotes}.
+              </p>
+              <!-- <small class="text-muted">Radiology Department</small> -->
+            </div>
+             </div>
+            <div class="card-view d-none"></div>
+          </div>`;
+    });
+
+    container.append(
+      ` <div
+        class="rounded-2 bg-white mb-2 shadow-sm filter-item"
+        data-type="procedure"
+        data-date="2025-12-03"
+      >
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-item-center pb-2">
+            <h6 class="fw-semibold text-custom">
+              <i class="fas fa-syringe text-info me-2 text-custom"></i>
+              Procedure Performed
+            </h6>
+            <button class="btn text-primary btn-sm openAddProcedure">
+              <i class="fas fa-file-medical"></i>
+            </button>
+          </div>
+           ${procedureDiv}
+        </div>
+      </div>`,
+    );
+  });
+}

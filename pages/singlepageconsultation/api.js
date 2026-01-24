@@ -49,4 +49,11 @@ class ApiServices {
     );
   }
 
+  async getProcedure() {
+    return await this.execute(
+      () => this.apiObj.get("/singlepageprecedureplanlist"),
+      "No procedures added !"
+    );
+  }
+
 }

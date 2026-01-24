@@ -35,6 +35,12 @@ async function applyFilters() {
     renderPrescription(container, apiPrescriptionData?.results);
   }
 
+  if (activeFilter == "procedure") {
+    const apiProcedureData = await api.getProcedure();
+    dateFilter(apiProcedureData?.results.map(i=>({id:i.date,text:i.date})));
+    console.log("apiProcedureData?.results => ",apiProcedureData?.results)
+    renderProcedure(container, apiProcedureData?.results);
+  }
   if (activeFilter == "lab_report") {
     const apiLabData = await api.getLabList();
     dateFilter(apiLabData?.results.map(i=>({id:i.date,text:i.date})));

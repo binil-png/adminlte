@@ -295,13 +295,6 @@ $(function () {
     allergyModal.show();
   });
 
-  $(".openAddProcedure").on("click", function () {
-    let visitingNotesModal = new bootstrap.Modal(
-      document.getElementById("visitingNotesModal"),
-    );
-    visitingNotesModal.show();
-  });
-
   let $patientAccordion = $("#patientAccordion");
   $(
     "#collapseVitals, #collapseNotes, #labArea, #collapseProcedure, #collapsePresc, #collapseDental",
