@@ -55,5 +55,11 @@ class ApiServices {
       "No procedures added !"
     );
   }
+  async getUploadedFile() {
+    return await this.execute(
+      () => this.apiObj.get("/singlepagefilelist"),
+      "No procedures added !"
+    );
+  }
 
 }

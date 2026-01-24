@@ -46,6 +46,11 @@ async function applyFilters() {
     dateFilter(apiLabData?.results.map(i=>({id:i.date,text:i.date})));
     renderLabTests(container, apiLabData?.results);
   }
+  if (activeFilter == "files") {
+    const apiFileList = await api.getUploadedFile();
+    // dateFilter(apiLabData?.results.map(i=>({id:i.date,text:i.date})));
+    renderFiles(container, apiFileList?.results);
+  }
 }
 
 $(function () {

@@ -78,6 +78,186 @@ $(function () {
         );
       });
     });
-
   });
 });
+
+function renderFiles(container, fileList) {
+  container.empty();
+  let fileDiv = "";
+  fileList.forEach((f) => {
+    fileDiv = "";
+    f.files.forEach((file) => {
+      fileDiv += `<div class="d-flex flex-column">
+          <div
+            class="d-flex align-items-center px-3 py-2 border-bottom filter-item hover-bg"
+            style="transition: background 0.1s ease; cursor: pointer;"
+          >
+            <div class="flex-shrink-0" style="width: 24px;">
+              <i class="fas fa-file text-muted"></i>
+            </div>
+
+            <div class="flex-grow-1 ms-2 overflow-hidden">
+              <div class="d-flex align-items-center gap-2">
+                <a
+                  href="${file.fileName}"
+                  target="_blank"
+                  class="text-decoration-none text-dark fw-semibold small text-truncate"
+                >
+                  ${file.fileName || "File"}
+                </a>
+                <span class="text-muted small" style="font-size: 0.7rem;">
+                  • ${file.category}
+                </span>
+              </div>
+              <div
+                class="text-muted text-truncate"
+                style="font-size: 0.75rem; margin-top: -2px;"
+              >
+                ${file.description || "No description"}
+              </div>
+            </div>
+
+            <div class="ms-2">
+              <a class="text-muted" href="${file.fileName}" target="_blank">
+                <i class="fas fa-eye"></i>
+              </a>
+            </div>
+          </div>
+        </div>`;
+    });
+    container.append(
+      `<div class="date-wise-files" data-date="${f.date}">
+      <h6 class="fw-bold small text-custom mt-3">${f.date}</h6>
+        <div
+          class="border-0 shadow-sm rounded-3 overflow-hidden my-2"
+          style="background-color: white;"
+        >
+          <div class="px-3 py-2 border-bottom d-flex justify-content-between align-items-center">
+            <small
+              class="fw-bold text-uppercase text-muted"
+              style="letter-spacing: 0.5px; font-size: 0.75rem;"
+            >
+              <i class="fas fa-file-alt text-danger me-1"></i> Files
+            </small>
+            <span class="badge bg-light text-dark fw-normal">
+              Total: ${f.files.length}
+            </span>
+          </div>
+
+          <div class="card-body p-0">${fileDiv}</div>
+        </div>
+      </div>`
+    );
+  });
+}
+
+const data = {
+  status: "OK",
+  results: [
+    {
+      date: "24-01-2026",
+      files: [
+        {
+          fileName: "websiteplanet-dummy-540X400 (2)-924.png",
+          description: "",
+          category: "General",
+        },
+        {
+          fileName: "hsd india 31-2-2024-536.jpg",
+          description: "",
+          category: "General",
+        },
+        {
+          fileName: "websiteplanet-dummy-540X400 (1)-749.png",
+          description: "",
+          category: "General",
+        },
+        {
+          fileName: "websiteplanet-dummy-540X400 (3)-284.png",
+          description: "",
+          category: "General",
+        },
+      ],
+    },
+    {
+      date: "10-12-2025",
+      files: [
+        { fileName: "0002-74.DCM", description: "", category: "General" },
+      ],
+    },
+    {
+      date: "04-07-2025",
+      files: [
+        {
+          fileName: "try with spaces-900.png",
+          description: "",
+          category: "General",
+        },
+      ],
+    },
+    {
+      date: "27-06-2025",
+      files: [
+        {
+          fileName: "websiteplanet-dummy-540X400-786.png",
+          description: "",
+          category: "General",
+        },
+      ],
+    },
+    {
+      date: "20-06-2025",
+      files: [
+        {
+          fileName: "6854f18f7e506-334.png",
+          description: "",
+          category: "Patientchart",
+        },
+      ],
+    },
+    {
+      date: "16-06-2025",
+      files: [
+        {
+          fileName: "133886559370483613-650.jpg",
+          description: "",
+          category: "General",
+        },
+        { fileName: "xray (1)-124.jpg", description: "", category: "General" },
+        { fileName: "xray (3)-928.jpg", description: "", category: "General" },
+        { fileName: "xray (2)-702.jpg", description: "", category: "General" },
+        { fileName: "xray (4)-389.jpg", description: "", category: "General" },
+      ],
+    },
+    {
+      date: "13-03-2025",
+      files: [
+        {
+          fileName: "websiteplanet-dummy-540X400 (1)-113.png",
+          description: "",
+          category: "General",
+        },
+        {
+          fileName: "photojelwin-318.jpg",
+          description: "test notes",
+          category: "General",
+        },
+        {
+          fileName: "websiteplanet-dummy-540X400-710.png",
+          description: "",
+          category: "General",
+        },
+        {
+          fileName: "hsd india 31-2-2024-681.jpg",
+          description: "test notes for test",
+          category: "General",
+        },
+        {
+          fileName: "67d2abc43d02f-976.png",
+          description: "",
+          category: "General",
+        },
+      ],
+    },
+  ],
+};

@@ -456,6 +456,7 @@ function renderProcedure(container, proceduresList) {
     Active: "badge bg-success",
     Invoiced: "badge bg-primary",
   };
+  container.empty()
   proceduresList.forEach((i) => {
     let procedureDiv = "";
     i.procedures.forEach((p, count) => {
@@ -485,7 +486,9 @@ function renderProcedure(container, proceduresList) {
     });
 
     container.append(
-      ` <div
+      `<div class="date-wise-procedures" data-date="${i.date}">
+         <h6 class="fw-bold small text-custom mt-3">Dec 05, 2025</h6>
+         <div
         class="rounded-2 bg-white mb-2 shadow-sm filter-item"
         data-type="procedure"
         data-date="2025-12-03"
@@ -502,6 +505,7 @@ function renderProcedure(container, proceduresList) {
           </div>
            ${procedureDiv}
         </div>
+      </div>
       </div>`,
     );
   });
