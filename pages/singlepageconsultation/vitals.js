@@ -90,48 +90,60 @@ $(function () {
     const form = $("#vitalsForm");
 
     return {
-      temperature: form.find("input[name='temp']").val(),
+      temperature: form.find("input[name='temperature']").val(),
       height: form.find("input[name='height']").val(),
       weight: form.find("input[name='weight']").val(),
-
-      bp: {
-        systolic: form.find("input[name='bp']").eq(0).val(),
-        diastolic: form.find("input[name='bp']").eq(1).val(),
-        position: form.find("select").val(),
-      },
-
-      glucose: form.find("input[placeholder='Enter blood glucose']").val(),
-      pulse: form.find("input[placeholder='Enter pulse']").val(),
-      cholesterol: form.find("input[placeholder='Enter cholesterol']").val(),
-      spo2: form.find("input[placeholder='Enter SPO2']").val(),
-      respiratoryRate: form
-        .find("input[placeholder='Enter respiratory rate']")
-        .val(),
+      systolicBp: form.find("input[name='systolic']").val(),
+      diastolicBp: form.find("input[name='diastolic']").val(),
+      position: form.find("select[name='position']").val(),
+      glucose: form.find("input[name='glucose']").val(),
+      pulse: form.find("input[name='pulse']").val(),
+      cholesterol: form.find("input[name='cholesterol']").val(),
+      spo2: form.find("input[placeholder='spo2']").val(),
+      respiratoryRate: form.find("input[name='respiratoryRate']").val(),
     };
   }
 
   function setVitalsFormData(data) {
     const form = $("#vitalsForm");
 
-    form.find("input[name='temp']").val(data.temperature);
+    form.find("input[name='temperature']").val(data.temperature);
     form.find("input[name='height']").val(data.height);
+    0;
     form.find("input[name='weight']").val(data.weight);
-
-    form.find("input[name='bp']").eq(0).val(data.bp.systolic);
-    form.find("input[name='bp']").eq(1).val(data.bp.diastolic);
-    form.find("select").val(data.bp.position);
-
-    form.find("input[placeholder='Enter blood glucose']").val(data.glucose);
-    form.find("input[placeholder='Enter pulse']").val(data.pulse);
-    form.find("input[placeholder='Enter cholesterol']").val(data.cholesterol);
-    form.find("input[placeholder='Enter SPO2']").val(data.spo2);
-    form
-      .find("input[placeholder='Enter respiratory rate']")
-      .val(data.respiratoryRate);
+    form.find("input[name='systolic']").val(data.bp.systolic);
+    form.find("input[name='diastolic']").val(data.bp.diastolic);
+    form.find("select[name='position']").val(data.bp.position);
+    form.find("input[name='glucose']").val(data.glucose);
+    form.find("input[name='pulse']").val(data.pulse);
+    form.find("input[name='cholesterol']").val(data.cholesterol);
+    form.find("input[name='spo2']").val(data.spo2);
+    form.find("input[name='respiratoryRate']").val(data.respiratoryRate);
   }
-
+  
   $(document).ready(function () {
+    const preview = new PreviewComponent($("#vitalPreview"));
+    let previewArray = [];
+    let dataWithKey = {}
+    let bp = {
+      systolic:"",
+      diastolic:"",
+      position:""
+    }
     setVitalsFormData(mockVitals);
+    $("#vitalsForm").on("input change", "input, select", function () {
+      const fieldName = $(this).attr("name");
+      const newValue = $(this).val();
+      const displayName = $(this).data("preview");
+      if(displayName == "BP (mmHg)"){
+         bp[fieldName] = newValue
+         dataWithKey[fieldName] = `${displayName}: ${bp.systolic}/${bp.diastolic} ${bp.position}`
+      }else{
+        dataWithKey[fieldName] = `${displayName}: ${newValue}`
+      }
+      previewArray = Object.entries(dataWithKey).map(([key, val]) => val);
+      preview.data = previewArray
+    });
   });
 });
 

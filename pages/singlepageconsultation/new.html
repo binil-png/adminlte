@@ -1040,9 +1040,9 @@
                     </button>
 
                     <!-- Preview Text -->
-                    <small class="text-custom" id="VitalPreview"
-                      >No items yet</small
-                    >
+                    <small class="text-custom" id="vitalPreview">
+                      Test
+                     </small>
                   </div>
                 </div>
 
@@ -1059,9 +1059,10 @@
                             >Temperature (°F)</label
                           >
                           <input
-                            type="text"
-                            name="temp"
+                            type="number"
+                            name="temperature"
                             class="form-control rounded-4 input-style"
+                            data-preview="Temperature (°F)"
                             placeholder="Enter temperature"
                             value=""
                           />
@@ -1073,6 +1074,7 @@
                           <input
                             type="number"
                             name="height"
+                            data-preview="Height (m)"
                             class="form-control rounded-4 input-style"
                             placeholder="Enter height"
                             value=""
@@ -1085,6 +1087,7 @@
                           <input
                             type="number"
                             name="weight"
+                            data-preview="Weight (kg)"
                             class="form-control rounded-4 input-style"
                             placeholder="Enter weight"
                             value=""
@@ -1096,20 +1099,24 @@
                           >
                           <div class="d-flex">
                             <input
-                              type="text"
-                              name="bp"
+                              type="number"
+                              name="systolic"
+                              data-preview="BP (mmHg)"
                               class="form-control rounded-start-4 rounded-end-0 input-style"
                               value=""
                               placeholder="Systolic"
                             />
                             <input
-                              type="text"
-                              name="bp"
+                              type="number"
+                              name="diastolic"
+                              data-preview="BP (mmHg)"
                               class="form-control border-start-0 border-end-0 rounded-0 input-style"
                               value=""
                               placeholder="Diastolic"
                             />
                             <select
+                              name="position"
+                              data-preview="BP (mmHg)"
                               class="form-control custom-select text-center rounded-end-4 rounded-start-0 input-style"
                             >
                               <option>Sitting</option>
@@ -1123,8 +1130,9 @@
                             >Blood Glucose</label
                           >
                           <input
-                            type="text"
-                            name="bp"
+                            type="number"
+                            name="glucose"
+                            data-preview="Blood Glucose"
                             class="form-control rounded-4 input-style"
                             placeholder="Enter blood glucose"
                             value=""
@@ -1135,8 +1143,9 @@
                             >Pulse</label
                           >
                           <input
-                            type="text"
-                            name="bp"
+                            type="number"
+                            name="pulse"
+                            data-preview="Pulse"
                             class="form-control rounded-4 input-style"
                             placeholder="Enter pulse"
                             value=""
@@ -1147,8 +1156,9 @@
                             >Cholesterol</label
                           >
                           <input
-                            type="text"
-                            name="bp"
+                            type="number"
+                            name="cholesterol"
+                            data-preview="Cholesterol"
                             class="form-control rounded-4 input-style"
                             placeholder="Enter cholesterol"
                             value=""
@@ -1159,8 +1169,9 @@
                             >SPO2 (%)</label
                           >
                           <input
-                            type="text"
-                            name="bp"
+                            type="number"
+                            name="spo2"
+                            data-preview="SPO2 (%)"
                             class="form-control rounded-4 input-style"
                             placeholder="Enter SPO2"
                             value=""
@@ -1171,7 +1182,9 @@
                             >Respiratory Rate</label
                           >
                           <input
-                            name="hr"
+                           type="number"
+                            name="respiratoryRate"
+                            data-preview="Respiratory Rate"
                             class="form-control rounded-4 input-style"
                             placeholder="Enter respiratory rate"
                             value=""

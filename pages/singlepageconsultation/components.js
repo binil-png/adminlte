@@ -44,5 +44,27 @@ class AlertComponent extends Container {
       `<div class="alert alert-warning" role="alert">${message}</div>`,
     );
   }
+}
 
+class PreviewComponent extends Container {
+  _data = [];
+  constructor(container, data = []) {
+    super(container);
+    this.data = data;
+  }
+  set data(value) {
+    this._data = Array.isArray(value) ? value : [value];
+    this.renderPreview();
+  }
+  get data() {
+    return this._data;
+  }
+  renderPreview() {
+    const $el =
+      this.container instanceof $ ? this.container : $(this.container);
+    if ($el.length && this._data) {
+      const displayText = this._data.join(" | ");
+      $el.text(displayText);
+    }
+  }
 }

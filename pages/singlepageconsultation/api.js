@@ -12,7 +12,8 @@ class ApiServices {
       const response = await apiCall();
       return response;
     } catch (error) {
-      const errorMsg = msg || error?.statusText || "Connection to server failed.";
+      const errorMsg =
+        msg || error?.statusText || "Connection to server failed.";
       console.error("API Error:", error);
       this.customAlert.error(errorMsg || `Error: ${error.message}`);
       return null;
@@ -20,7 +21,15 @@ class ApiServices {
       this.loader.stop();
     }
   }
+}
 
+class SinglePageServices extends ApiServices {
+   async getAllDoctors (){
+    
+   }
+}
+
+class SidebarServices extends ApiServices {
   async getVitalsList() {
     return await this.execute(
       () => this.apiObj.get("/singlepagevitallist"),
@@ -38,28 +47,29 @@ class ApiServices {
   async getPrescriptionList() {
     return await this.execute(
       () => this.apiObj.get("/singlepageprescriptionlist"),
-      "No prescription added !"
+      "No prescription added !",
     );
   }
 
   async getLabList() {
     return await this.execute(
       () => this.apiObj.get("/singlepagelablist"),
-      "No lab added !"
+      "No lab added !",
     );
   }
 
   async getProcedure() {
     return await this.execute(
       () => this.apiObj.get("/singlepageprecedureplanlist"),
-      "No procedures added !"
+      "No procedures added !",
     );
   }
+  
   async getUploadedFile() {
     return await this.execute(
       () => this.apiObj.get("/singlepagefilelist"),
-      "No procedures added !"
+      "No procedures added !",
     );
   }
-
 }
+
