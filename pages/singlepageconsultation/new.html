@@ -396,124 +396,15 @@
           >
             <div class="row pb-2">
               <div class="col-6 pe-0">
-                <div class="dropdown" id="custom-autocomplete">
-                  <button
-                    style="background-color: white"
-                    class="btn btn-outline-secondary dropdown-toggle w-100 text-start d-flex justify-content-between align-items-center rounded-start-4 border-end-0 rounded-end-0 border"
-                    type="button"
-                    id="dropdownMenuButton"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    <span
-                      id="selected-item"
-                      class="text-wrap d-inline-block text-start"
-                      style="color: #495057; font-size: 14px"
-                      >Search patient...</span
-                    >
-                  </button>
-
-                  <div
-                    class="dropdown-menu w-100 shadow"
-                    aria-labelledby="dropdownMenuButton"
-                  >
-                    <div class="px-3 py-2">
-                      <input
-                        type="text"
-                        class="form-control ignore-edit"
-                        id="searchpreviousPatients"
-                        placeholder="Search options..."
-                        autofocus
-                      />
-                    </div>
-                    <div
-                      id="items-container"
-                      style="max-height: 200px; overflow-y: auto"
-                    ></div>
-                    <div id="no-results" class="px-3 py-2 d-none text-muted">
-                      No results found
-                    </div>
-                  </div>
-                </div>
+                <select id="patientSearch" class="form-control custom-select border-end rounded-end-0 rounded-4 template-select-style">
+                  <option value="">Select patient</option>
+                </select>
               </div>
+
               <div class="dropdown col-6 ps-0">
-                <button
-                  style="background-color: white"
-                  class="btn btn-light dropdown-toggle w-100 d-flex justify-content-between align-items-center border rounded-start-0 rounded-end-4"
-                  type="button"
-                  id="selectAppointmenBtn"
-                  data-bs-toggle="dropdown"
-                >
-                  <span
-                    id="selectedText"
-                    style="color: #495057; font-size: 14px"
-                    class="text-wrap d-inline-block text-start"
-                    >Select Appointment</span
-                  >
-                </button>
-
-                <ul class="dropdown-menu w-100 p-1">
-                  <li>
-                    <a
-                      class="dropdown-item ignore-edit appointment-item"
-                      href="#"
-                    >
-                      <div
-                        class="d-flex justify-content-between align-items-start"
-                      >
-                        <div class="appointment-text">
-                          <div class="name-row d-flex justify-content-between">
-                            <span class="fw-semibold"
-                              >Emily Chen With Very Long Name Example</span
-                            >
-                            <span class="badge bg-warning ms-2"
-                              >In-progress</span
-                            >
-                          </div>
-                          <small class="text-muted">10:30 AM • Follow-up</small>
-                        </div>
-                      </div>
-                    </a>
-                  </li>
-
-                  <li>
-                    <a
-                      class="dropdown-item ignore-edit appointment-item"
-                      href="#"
-                    >
-                      <div class="d-flex justify-content-between">
-                        <div>
-                          <div class="fw-semibold">
-                            Sarah Johnson
-                            <span class="badge bg-success">Completed</span>
-                          </div>
-                          <small class="text-muted"
-                            >09:00 AM • Routine Checkup</small
-                          >
-                        </div>
-                      </div>
-                    </a>
-                  </li>
-
-                  <li>
-                    <a
-                      class="dropdown-item ignore-edit appointment-item"
-                      href="#"
-                    >
-                      <div class="d-flex justify-content-between">
-                        <div>
-                          <div class="fw-semibold">
-                            Michael Brown
-                            <span class="badge bg-secondary">Scheduled</span>
-                          </div>
-                          <small class="text-muted"
-                            >02:00 PM • Consultation</small
-                          >
-                        </div>
-                      </div>
-                    </a>
-                  </li>
-                </ul>
+                <select id="appointmentSearch" class="form-control custom-select border-start-0 rounded-start-0 rounded-4 template-select-style">
+                  <option value="">Select patient</option>
+                </select>
               </div>
             </div>
 
@@ -594,8 +485,7 @@
                 class="form-control rounded-4 custom-select input-style ignore-edit"
                 id="dateFilter"
                 style="width: 100%"
-              >
-              </select>
+              ></select>
             </div>
 
             <!-- Content Area -->
@@ -839,7 +729,7 @@
                   <a role="button" class="openPatientDetails">
                     <img
                       id="pAvatar"
-                      src=""
+                      src="https://cloud.pappyjoe.com/images/user.png"
                       class="rounded-circle border me-4"
                       width="40"
                       height="40"
@@ -850,7 +740,7 @@
                       <a role="button" class="openPatientDetails">
                         <h6 id="pName" class="mb-1 fw-semibold"></h6>
                       </a>
-                      <span class="text-sm"># 123456 (VIP)</span>
+                      <span id="pId" class="text-sm"></span>
                     </div>
                     <div class="d-flex gap-2">
                       <div id="pBasic" class="text-custom small"></div>
@@ -951,7 +841,7 @@
                 </div>
 
                 <!-- Right Section -->
-                <div class="d-flex align-items-center gap-4">
+                <div class="d-flex align-items-top gap-4">
                   <!-- Amount -->
                   <div class="text-center">
                     <div class="text-custom small">Amount Due</div>
@@ -967,9 +857,10 @@
                   <!-- Last Visit -->
                   <div class="text-center">
                     <div class="text-custom small">Last Visit</div>
-                    <div id="pLastVisit" class=""></div>
+                    <small id="pLastVisit" class=""></small>
                   </div>
-                  <div class="d-flex flex-column gap-1">
+
+                  <div style="width: 115px;" class="d-flex flex-column gap-1">
                     <button
                       style="height: 25px"
                       class="btn btn-sm btn-outline-primary flex-grow-1 px-2 py-0"
@@ -994,6 +885,7 @@
                       </button>
                     </div>
                   </div>
+
                 </div>
               </div>
             </div>
@@ -1002,21 +894,16 @@
               class="pb-2 px-4 d-flex justify-content-end align-items-center"
             >
               <input
-                style="width: 10vw"
+                style="width: 10vw;"
                 type="date"
                 id="dateFilter"
-                class="form-control rounded-start-4 rounded-end-0 input-style p-3"
+                class="form-control rounded-start-4 rounded-end-0 input-style p-2"
                 aria-label="Date"
               />
               <select
-                style="width: 10vw"
-                class="form-control custom-select border-start-0 rounded-start-0 rounded-4 template-select-style"
-              >
-                <option value="">Select Doctor</option>
-                <option value="Dental Cleaning">Doctor A</option>
-                <option value="Root Canal">Doctor B</option>
-                <option value="X-Ray">Doctor C</option>
-              </select>
+                style="width: 10vw;"
+                id="selectedDoctor"
+              ></select>
             </div>
 
             <!-- Accordion Sections -->
@@ -1040,9 +927,7 @@
                     </button>
 
                     <!-- Preview Text -->
-                    <small class="text-custom" id="vitalPreview">
-                      Test
-                     </small>
+                    <small class="text-custom" id="vitalPreview"> Test </small>
                   </div>
                 </div>
 
@@ -1182,7 +1067,7 @@
                             >Respiratory Rate</label
                           >
                           <input
-                           type="number"
+                            type="number"
                             name="respiratoryRate"
                             data-preview="Respiratory Rate"
                             class="form-control rounded-4 input-style"
@@ -2842,13 +2727,13 @@
       All rights reserved.
     </footer>
 
+    <script src="./data.js"></script>
     <script src="./components.js"></script>
     <script src="./services.js"></script>
     <script src="./api.js"></script>
-    <script src="./data.js"></script>
+    <script src="./drawer.js"></script>
     <script src="./new.js"></script>
     <script src="./lab.js"></script>
-    <script src="./drawer.js"></script>
     <script src="./customdropdown.js"></script>
     <script src="./mockData.js"></script>
     <script src="./vitals.js"></script>

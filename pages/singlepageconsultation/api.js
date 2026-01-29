@@ -3,7 +3,6 @@ class ApiServices {
     this.container = container;
     this.apiObj = new NetworkServices("http://localhost:8080");
     this.loader = new Loading(this.container);
-    this.customAlert = new AlertComponent(this.container);
   }
 
   async execute(apiCall, msg) {
@@ -24,8 +23,8 @@ class ApiServices {
 }
 
 class SinglePageServices extends ApiServices {
-   async getAllDoctors (){
-    
+   async getPatientData (id){
+        return await this.apiObj.get(`/singlepageselectpatient?patient_id=${id}`)
    }
 }
 

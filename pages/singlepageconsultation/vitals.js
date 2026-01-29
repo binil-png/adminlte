@@ -1,3 +1,55 @@
+function addAllergyRow(container, value, index) {
+  var row = $('<div class="input-group mb-2 allergy-row col-md-2 col-lg-2">')
+    .append(
+      $(
+        `<input type="text" data-index="${index}" class="form-control rounded-start-4 input-style allergyinput">`,
+      )
+        .val(value || "")
+        .on("change", function () {
+          addAllergies[$(this).data("index")] = $(this).val();
+          container.empty();
+          addAllergies.forEach((allergy, i) => {
+            container.append(
+              `<span class="text-danger text-sm">${allergy}${
+                i < addAllergies.length - 1 ? "," : ""
+              } </span>`,
+            );
+          });
+        }),
+    )
+    .append(
+      $('<div class="input-group-append">').append(
+        $(
+          `<button data-index="${index}" style="padding: 0px 8px" class="btn btn-outline-danger btn-remove-allergy rounded-end-4" type="button"><i class="fas fa-times"></i></button>`,
+        ),
+      ),
+    );
+  $("#allergyList").append(row);
+}
+
+function appendAllergy(container, allergy, index) {
+  container.append(
+    `<span class="text-danger text-sm">${allergy}${
+      index < addAllergies.length - 1 ? "," : ""
+    } </span>`,
+  );
+}
+
+function renderallergies() {
+  const $allergyContainer = $("#pAllergies");
+  $allergyContainer.empty();
+  $("#allergyList").empty();
+  console.log("addAllergies => ", addAllergies);
+  if (addAllergies.length) {
+    addAllergies.forEach((allergy, i) => {
+      appendAllergy($allergyContainer, allergy, i);
+      addAllergyRow($allergyContainer, allergy, i);
+    });
+  } else {
+    $allergyContainer.append(`<span class="text-muted small">None</span>`);
+  }
+}
+
 $(function () {
   // Allergy add/remove
   $("#addAllergy").on("click", function (e) {
@@ -6,60 +58,6 @@ $(function () {
       '<div class="input-group mb-2 allergy-row">< + """>',
     );
   });
-
-  const $allergyContainer = $("#pAllergies");
-
-  let addAllergies = ["Penicillin", "Food allergy"];
-
-  function addAllergyRow(value, index) {
-    var row = $('<div class="input-group mb-2 allergy-row col-md-2 col-lg-2">')
-      .append(
-        $(
-          `<input type="text" data-index="${index}" class="form-control rounded-start-4 input-style allergyinput">`,
-        )
-          .val(value || "")
-          .on("change", function () {
-            addAllergies[$(this).data("index")] = $(this).val();
-            $allergyContainer.empty();
-            addAllergies.forEach((allergy, i) => {
-              $allergyContainer.append(
-                `<span class="text-danger text-sm">${allergy}${
-                  i < addAllergies.length - 1 ? "," : ""
-                } </span>`,
-              );
-            });
-          }),
-      )
-      .append(
-        $('<div class="input-group-append">').append(
-          $(
-            `<button data-index="${index}" style="padding: 0px 8px" class="btn btn-outline-danger btn-remove-allergy rounded-end-4" type="button"><i class="fas fa-times"></i></button>`,
-          ),
-        ),
-      );
-    $("#allergyList").append(row);
-  }
-
-  function appendAllergy(allergy, index) {
-    $allergyContainer.append(
-      `<span class="text-danger text-sm">${allergy}${
-        index < addAllergies.length - 1 ? "," : ""
-      } </span>`,
-    );
-  }
-
-  function renderallergies() {
-    $allergyContainer.empty();
-    $("#allergyList").empty();
-    if (addAllergies.length) {
-      addAllergies.forEach((allergy, i) => {
-        appendAllergy(allergy, i);
-        addAllergyRow(allergy, i);
-      });
-    } else {
-      $allergyContainer.append(`<span class="text-muted small">None</span>`);
-    }
-  }
 
   renderallergies();
 
@@ -84,6 +82,7 @@ $(function () {
   $("#saveVitals").click(function () {
     const vitals = getVitalsFormData();
     console.log("Vitals Saved:", vitals);
+    console.log("globalySelectedDoctor => ", globalySelectedDoctor);
   });
 
   function getVitalsFormData() {
@@ -106,10 +105,8 @@ $(function () {
 
   function setVitalsFormData(data) {
     const form = $("#vitalsForm");
-
     form.find("input[name='temperature']").val(data.temperature);
     form.find("input[name='height']").val(data.height);
-    0;
     form.find("input[name='weight']").val(data.weight);
     form.find("input[name='systolic']").val(data.bp.systolic);
     form.find("input[name='diastolic']").val(data.bp.diastolic);
@@ -120,29 +117,30 @@ $(function () {
     form.find("input[name='spo2']").val(data.spo2);
     form.find("input[name='respiratoryRate']").val(data.respiratoryRate);
   }
-  
+
   $(document).ready(function () {
     const preview = new PreviewComponent($("#vitalPreview"));
     let previewArray = [];
-    let dataWithKey = {}
+    let dataWithKey = {};
     let bp = {
-      systolic:"",
-      diastolic:"",
-      position:""
-    }
+      systolic: "",
+      diastolic: "",
+      position: "",
+    };
     setVitalsFormData(mockVitals);
     $("#vitalsForm").on("input change", "input, select", function () {
       const fieldName = $(this).attr("name");
       const newValue = $(this).val();
       const displayName = $(this).data("preview");
-      if(displayName == "BP (mmHg)"){
-         bp[fieldName] = newValue
-         dataWithKey[fieldName] = `${displayName}: ${bp.systolic}/${bp.diastolic} ${bp.position}`
-      }else{
-        dataWithKey[fieldName] = `${displayName}: ${newValue}`
+      if (displayName == "BP (mmHg)") {
+        bp[fieldName] = newValue;
+        dataWithKey[fieldName] =
+          `${displayName}: ${bp.systolic}/${bp.diastolic} ${bp.position}`;
+      } else {
+        dataWithKey[fieldName] = `${displayName}: ${newValue}`;
       }
       previewArray = Object.entries(dataWithKey).map(([key, val]) => val);
-      preview.data = previewArray
+      preview.data = previewArray;
     });
   });
 });
@@ -634,5 +632,3 @@ function renderVitalsTable(container, vitals) {
     }
   }
 }
-
-

@@ -1,35 +1,7 @@
 $(function () {
   let isEdit = false;
-  let patientDataGlobal = null;
   let popoverInstance = null;
   let selectedTeeth = [];
-
-  const patients = [
-    {
-      id: "P-101",
-      name: "John Doe",
-      phone: "555-0101",
-      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnCl1OBS1ZNiCOAsWamNsbJT96c0JJPqUylg&s",
-    },
-    {
-      id: "P-102",
-      name: "Jane Smith",
-      phone: "555-0102",
-      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnCl1OBS1ZNiCOAsWamNsbJT96c0JJPqUylg&s",
-    },
-    {
-      id: "P-103",
-      name: "Robert Brown",
-      phone: "555-0103",
-      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnCl1OBS1ZNiCOAsWamNsbJT96c0JJPqUylg&s",
-    },
-    {
-      id: "P-104",
-      name: "Alice Wilson",
-      phone: "555-0104",
-      img: "https://icon0.com/free/static2/preview2/stock-photo-avatar-woman-people-icon-character-cartoon-32608.jpg",
-    },
-  ];
 
   const renderPopover = () => {
     if (!shareBtn) return;
@@ -103,74 +75,44 @@ $(function () {
     });
   };
 
+  function updatePatientCard(patient) {
+    console.log(patient)
+    $("#pAvatar").attr("src", patient.imageUrl || "https://cloud.pappyjoe.com/images/user.png");
+    $("#pName").text(patient.patientName || "");
+    $("#pId").text(`#${patient.patientId}` || "");
+    let basic = ""
+    if(patient?.age){
+      basic += `${patient.age || ""} Y ${(patient.address || patient.gender) ? " | " : ""}`
+    }
+
+    if(patient.gender){
+      basic += `${patient.gender || ""} ${patient.address ? " | " : ""}`
+    }
+
+    if(patient.gender){
+      basic += ` ${patient.address || ""}`
+    }
+
+    $("#pBasic").text(basic);
+    $("#pAmount").text(` `);
+    $("#pVisits").text(patient.noOfVisits || "");
+    $("#pLastVisit").text(patient.lastVisit || "");
+    $("#pPhone").html(
+      `<i class="fa fa-mobile mr-2 text-custom"></i> ${patient.mobile || ""}`
+    );
+    addAllergies = patient.allergies
+    renderallergies()
+  }
+
+  function renderPatientData() {
+    updatePatientCard(patientDataGlobal);
+  }
+
   $(document).ready(function () {
     const modal = new bootstrap.Modal(document.getElementById("confirmPopup"));
-    const $container = $("#items-container");
-    const $searchInput = $("#searchpreviousPatients");
-    const $selectedText = $("#selected-item");
-    const $noResults = $("#no-results");
+    const singlePageApi = new SinglePageServices();
     const excludedIds = ":not(.ignore-edit)";
     applyFilters();
-    function populateList(filter = "") {
-      $container.empty();
-      const query = filter.toLowerCase();
-      const filteredPatients = patients.filter(
-        (p) =>
-          p.name.toLowerCase().includes(query) ||
-          p.id.toLowerCase().includes(query),
-      );
-
-      if (filteredPatients.length > 0) {
-        $noResults.addClass("d-none");
-        filteredPatients.forEach((patient) => {
-          const itemHtml = `
-          <button class="dropdown-item py-2 border-bottom ignore-edit" type="button">
-            <div class="d-flex align-items-center">
-              <img src="${patient.img}" class="rounded-circle me-3" width="25" height="25" alt="avatar">
-              <div class="flex-grow-1">
-                <div class="d-flex justify-content-between">
-                  <strong class="mb-0 text-dark">${patient.name}</strong>
-                  <small class="text-primary fw-bold">${patient.id}</small>
-                </div>
-                <div class="text-muted small">${patient.phone}</div>
-              </div>
-            </div>
-          </button>`;
-
-          const $item = $(itemHtml);
-          $item.on("click", function () {
-            if (isEdit) {
-              modal.show();
-              patientDataGlobal = patient;
-            } else {
-              $selectedText.html(
-                `<strong>${patient.name}</strong> <small class="ms-2">(${patient.id})</small>`,
-              );
-              $("#selectedText").text("Select Appointment");
-              updatePatientCard(patient);
-              $searchInput.val("");
-              populateList("");
-            }
-          });
-
-          $container.append($item);
-        });
-      } else {
-        $noResults.removeClass("d-none");
-      }
-    }
-
-    function updatePatientCard(patient) {
-      $("#pAvatar").attr("src", patient.img);
-      $("#pName").text(patient.name);
-      $(".text-sm:contains('#')").text(`# ${patient.id}`);
-      $("#pPhone").html(
-        `<i class="fa fa-mobile mr-2 text-custom"></i> ${patient.phone}`,
-      );
-      $("#pAmount").text(patient.amount || "$0.00");
-      $("#pVisits").text(patient.visits || "0");
-      $("#pLastVisit").text(patient.lastVisit || "N/A");
-    }
 
     $(document).on(
       "input change",
@@ -194,18 +136,7 @@ $(function () {
       isEdit = false;
     });
 
-    populateList();
-
-    $searchInput.on("input", function (e) {
-      if (isEdit) {
-        modal.show();
-      } else {
-        populateList($(this).val());
-      }
-    });
-
     $(".close-confirm-popup").on("click", function () {
-      console.log($(this).attr("id"));
       if ($(this).attr("id") === "confirmSwitchBtn") {
         if (isEdit) {
           updatePatientCard(patientDataGlobal);
@@ -213,14 +144,6 @@ $(function () {
       }
       isEdit = false;
       modal.hide();
-    });
-
-    $searchInput.on("click", function (e) {
-      e.stopPropagation();
-    });
-
-    $("#patient-autocomplete").on("shown.bs.dropdown", function () {
-      $searchInput.focus();
     });
 
     $("#chipFilters span").click(function () {
@@ -235,6 +158,73 @@ $(function () {
 
     $("#dateFilter").on("change", applyFilters);
 
+    const $selectDoctorElem = $("#selectedDoctor");
+    const $patientSearch = $("#patientSearch");
+    const $appointmentSearch = $("#appointmentSearch");
+    $selectDoctorElem.select2({
+      theme: "bootstrap-4",
+      selectionCssClass:
+        "form-control custom-select border-start-0 rounded-start-0 rounded-4 template-select-style",
+      ajax: {
+        url: `${baseUrl}/singlepagedoctorlist`,
+        dataType: "json",
+        delay: 250,
+        processResults: function (data) {
+          return {
+            results: $.map(data.results, function (item) {
+              return {
+                text: item.Name,
+                id: item.doctor_id,
+                selected: item.selected === "Yes",
+              };
+            }),
+          };
+        },
+        cache: true,
+      },
+      placeholder: "Select a doctor",
+      minimumInputLength: 0,
+    });
+
+    $selectDoctorElem.on("change", function () {
+      globalySelectedDoctor = $(this).val();
+    });
+
+    $patientSearch.select2({
+      theme: "bootstrap-4",
+      selectionCssClass:
+        "form-control custom-select border-end-0 rounded-end-0 rounded-4 template-select-style",
+      ajax: {
+        url: `${baseUrl}/singlepagepatientsearchselect`,
+        type: "POST",
+        dataType: "json",
+        delay: 250,
+        processResults: function (data) {
+          console.log(data);
+          return { results: data };
+        },
+        data: function (params) {
+          return { searchTerm: params.term };
+        },
+        cache: true,
+      },
+      placeholder: "Select a patient",
+      minimumInputLength: 0,
+    });
+
+    $patientSearch.on("change", async function () {
+      const patientId = $(this).val();
+      const res = await singlePageApi.getPatientData(patientId);
+      patientDataGlobal = res.results;
+      console.log(patientDataGlobal)
+      renderPatientData();
+    });
+
+    $appointmentSearch.select2({
+      theme: "bootstrap-4",
+      selectionCssClass:
+        "form-control custom-select border-start rounded-start-0 rounded-4 template-select-style",
+    });
   });
 
   $("#globalSave").on("click", () => {
@@ -275,7 +265,6 @@ $(function () {
     const name = $(this).find(".fw-semibold").text();
     const info = $(this).find("small").text();
     $("#selected-item").html("<span>Search patient...</span>");
-    $("#selectedText").text(`${name} — ${info}`);
   });
 
   const $templatePopup = $(".saveastemplete");

@@ -245,35 +245,40 @@ $(function () {
       <div class="px-2 overflow-auto" style="max-height: 90dvh">
         <div class="mb-3">
           <label class="text-muted small fw-bold text-uppercase">Name</label>
-          <div class="fw-normal">John Doe</div>
+          <div class="fw-normal">${patientDataGlobal.patientName || ""}</div>
+        </div>
+      <div class="px-2 overflow-auto" style="max-height: 90dvh">
+        <div class="mb-3">
+          <label class="text-muted small fw-bold text-uppercase">File no</label>
+          <div class="fw-normal">${patientDataGlobal.fileNo || ""}</div>
         </div>
         <div class="mb-3">
           <label class="text-muted small fw-bold text-uppercase"
             >Patient ID</label
           >
-          <div class="fw-normal">RKSA5142</div>
+          <div class="fw-normal">${patientDataGlobal.patientId || ""}</div>
         </div>
         <div class="mb-3">
           <label class="text-muted small fw-bold text-uppercase">Gender</label>
-          <div class="fw-normal">Male</div>
+          <div class="fw-normal">${patientDataGlobal.gender || ""}</div>
         </div>
         <div class="mb-3">
           <label class="text-muted small fw-bold text-uppercase"
             >Date of Birth</label
           >
-          <div class="fw-normal">15-06-1997</div>
+          <div class="fw-normal">${patientDataGlobal.dob || ""}</div>
         </div>
         <div class="mb-3">
           <label class="text-muted small fw-bold text-uppercase"
             >Admission Date</label
           >
-          <div class="fw-normal">08-01-2026</div>
+          <div class="fw-normal">${patientDataGlobal.admissionDate || ""}</div>
         </div>
         <div class="mb-4">
           <label class="text-muted small fw-bold text-uppercase"
             >Card Expiry Date</label
           >
-          <div class="fw-normal">18-01-2026</div>
+          <div class="fw-normal">${patientDataGlobal.cardExpiry || ""}</div>
         </div>
 
         <hr class="text-muted opacity-25" />
@@ -285,23 +290,23 @@ $(function () {
         <div class="mb-3">
           <label class="text-muted small fw-bold text-uppercase">Mobile</label>
           <div class="d-flex align-items-center gap-2">
-            <span>+91 9871237653</span>
-            <div
+            <span>${patientDataGlobal.mobile}</span>
+            <!--<div
               role="button"
               class="bg-light px-2 py-1 rounded-4 text-xs border"
               style="width: fit-content; font-size: 0.75rem"
             >
               WhatsApp
             </div>
-          </div>
+          </div>-->
         </div>
         <div class="mb-3">
           <label class="text-muted small fw-bold text-uppercase">Email</label>
-          <div class="fw-normal">email@gmail.com</div>
+          <div class="fw-normal">${patientDataGlobal.email}</div>
         </div>
         <div class="mb-3">
           <label class="text-muted small fw-bold text-uppercase">Address</label>
-          <div class="fw-normal">TS</div>
+          <div class="fw-normal">${patientDataGlobal.address}</div>
         </div>
       </div>
     </div>     
