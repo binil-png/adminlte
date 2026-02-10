@@ -11,20 +11,24 @@ class ApiServices {
       const response = await apiCall();
       return response;
     } catch (error) {
-      const errorMsg =
-        msg || error?.statusText || "Connection to server failed.";
+      const errorMsg = msg || error?.statusText || "Connection to server failed.";
       console.error("API Error:", error);
-      this.customAlert.error(errorMsg || `Error: ${error.message}`);
       return null;
     } finally {
       this.loader.stop();
     }
   }
+  
 }
 
 class SinglePageServices extends ApiServices {
+  
    async getPatientData (id){
         return await this.apiObj.get(`/singlepageselectpatient?patient_id=${id}`)
+   }
+
+   async saveVitalsData(data){
+        return await this.apiObj.post(`/singlepage_vitals_save`,data)
    }
 }
 

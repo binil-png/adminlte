@@ -15,18 +15,17 @@ $(function () {
 
   $("#saveNotes").on("click", function () {
     const notesData = {
-      chiefComplaints: $("#chiefComplaints").val().trim(),
-      medicalHistory: $("#medicalHistory").val().trim(),
-      observations: $("#observations").val().trim(),
-      investigations: $("#investigations").val().trim(),
-      diagnosis: $("#diagnosis").val().trim(),
-      treatment: $("#treatment").val().trim(),
-      advice: $("#advice").val().trim(),
+      chiefComplaints: $("#chiefComplaints").val(),
+      medicalHistory: $("#medicalHistory").val(),
+      observations: $("#observations").val(),
+      investigations: $("#investigations").val(),
+      diagnosis: $("#diagnosis").val(),
+      treatment: $("#treatment").val(),
+      advice: $("#advice").val(),
     };
 
-    console.log("NOTES SAVED:", notesData); // <-- You get the full object here
+    console.log("NOTES SAVED:", notesData);
 
-    // Update preview text
     $("#clinicalNotesPrev").text(notesData.chiefComplaints || "No items yet");
 
     alert("Clinical Notes Saved!");
@@ -76,6 +75,31 @@ $(function () {
   // Load on page start
   $(document).ready(function () {
     setClinicalNotes(mockClinicalNotes);
+
+    $("#chiefComplaints").select2({
+      placeholder: "Select Chief Complaints",
+      tags: true,
+      selectionCssClass: "complaint-select",
+      dropdownCssClass: "complaint-dropdown",
+      ajax: {
+        url: "http://localhost:8080/singlepage_clinicnotemaster/complaint",
+        type: "post",
+        dataType: "json",
+        delay: 250,
+        data: function (params) {
+          return {
+            searchTerm: params.term,
+          };
+        },
+        processResults: function (response) {
+          return {
+            results: response,
+          };
+        },
+        cache: true,
+      },
+    });
+
   });
 
   function renderClinicalChips() {
@@ -706,3 +730,4 @@ function renderClinicalNotes(container, historyItems) {
       });
   }
 }
+

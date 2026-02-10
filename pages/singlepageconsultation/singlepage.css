@@ -341,25 +341,76 @@ label {
 }
 
 #dropdownMenuButton:hover,
-#dropdownMenuButton:focus, 
-#dropdownMenuButton:active, 
+#dropdownMenuButton:focus,
+#dropdownMenuButton:active,
 #dropdownMenuButton.show {
-    background-color: transparent !important;
-    color: #495057 !important; /* Keeps text color from turning white */
-    border-color: #ced4da !important; /* Keeps border visible */
-    box-shadow: none !important;
+  background-color: transparent !important;
+  color: #495057 !important; /* Keeps text color from turning white */
+  border-color: #ced4da !important; /* Keeps border visible */
+  box-shadow: none !important;
 }
 #selectAppointmenBtn:hover,
-#selectAppointmenBtn:focus, 
-#selectAppointmenBtn:active, 
+#selectAppointmenBtn:focus,
+#selectAppointmenBtn:active,
 #selectAppointmenBtn.show {
-    background-color: transparent !important;
-    color: #495057 !important; /* Keeps text color from turning white */
-    border-color: #ced4da !important; /* Keeps border visible */
-    box-shadow: none !important;
+  background-color: transparent !important;
+  color: #495057 !important; /* Keeps text color from turning white */
+  border-color: #ced4da !important; /* Keeps border visible */
+  box-shadow: none !important;
 }
 
-#dateFilter + .select2-container .select2-results__options {
-    max-height: 220px;
-    overflow-y: auto;
+
+/* 1. Style the Main Textbox (Selection Area) */
+.complaint-select.select2-container--default .select2-selection--multiple {
+    border: 1px solid #dee2e6;
+    border-radius: 1rem !important; /* Matches your rounded-4 */
+    padding: 5px 12px;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    transition: border-color 0.2s ease-in-out;
+}
+
+/* 2. Style the Individual Chips */
+.complaint-select .select2-selection__choice {
+    background-color: #e8f5e9 !important; /* Light Green Background */
+    border: 1px solid #c8e6c9 !important;
+    border-radius: 50px !important; /* Pill shape */
+    padding: 2px 12px 2px 25px !important; /* Space for the 'X' */
+    color: #2e7d32 !important; /* Dark Green Text */
+    font-weight: 500;
+    margin-top: 4px !important;
+    position: relative;
+}
+
+/* 3. Style the 'X' (Remove) Button inside the Chip */
+.complaint-select .select2-selection__choice__remove {
+    color: #2e7d32 !important;
+    border: none !important;
+    font-weight: bold;
+    margin-right: 0;
+    position: absolute;
+    left: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.complaint-select .select2-selection__choice__remove:hover {
+    background-color: transparent !important;
+    color: #c62828 !important; /* Turns red on hover */
+}
+
+/* 4. Style the Dropdown Menu */
+.complaint-dropdown.select2-dropdown {
+    border: none;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    border-radius: 1rem !important;
+    overflow: hidden;
+    margin-top: 5px;
+}
+
+/* 5. Style the Hover/Highlight State in Dropdown */
+.complaint-dropdown .select2-results__option--highlighted[aria-selected] {
+    background-color: #4caf50 !important; /* Material Green */
+    color: white !important;
 }

@@ -71,7 +71,7 @@ const descriptions = {
 
 const notestText = "mb-1";
 const notestStyle = "font-size:.9rem";
-
+const allergies = []
 const mockVitals = {
   temperature: "98.6",
   height: "1.72",
@@ -602,3 +602,4 @@ const packageTestsMap = {
     ],
   },
 };
+  

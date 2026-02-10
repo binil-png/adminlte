@@ -51,7 +51,8 @@ function renderallergies() {
 }
 
 $(function () {
-  // Allergy add/remove
+  const toast = new ToastComponent();
+  const vitalsapi = new SinglePageServices();
   $("#addAllergy").on("click", function (e) {
     e.preventDefault();
     $("#allergyList").append(
@@ -79,10 +80,22 @@ $(function () {
     });
   });
 
-  $("#saveVitals").click(function () {
+  $("#saveVitals").click(async function () {
     const vitals = getVitalsFormData();
     console.log("Vitals Saved:", vitals);
     console.log("globalySelectedDoctor => ", globalySelectedDoctor);
+    const formData = new FormData();
+    if (globalySelectedDoctor) {
+      formData.append("doctorId", globalySelectedDoctor);
+    }
+    for (let key in vitals) {
+      formData.append(key, vitals[key]);
+    }
+    const res = await vitalsapi.saveVitalsData(formData);
+    console.log("res => ", res);
+    if (res.status) {
+      toast.success(res.status);
+    }
   });
 
   function getVitalsFormData() {

@@ -68,3 +68,30 @@ class PreviewComponent extends Container {
     }
   }
 }
+
+class ToastComponent {
+  $toast = null;
+  constructor() {
+    this.$toast = $("#liveToast");
+  }
+  success(message, delay = 3000) {
+    this.$toast.addClass(`bg-success`);
+    $("#toastMessage").text(message);
+    this.$toast.toast({ autohide: true, delay }).toast("show");
+  }
+  danger(message, delay = 3000) {
+    this.$toast.addClass(`bg-danger`);
+    $("#toastMessage").text(message);
+    this.$toast.toast({ autohide: true, delay }).toast("show");
+  }
+  info(message, delay = 3000) {
+    this.$toast.addClass(`bg-info`);
+    $("#toastMessage").text(message);
+    this.$toast.toast({ autohide: true, delay }).toast("show");
+  }
+  warning(message, delay = 3000) {
+    this.$toast.addClass(`bg-warning`);
+    $("#toastMessage").text(message);
+    this.$toast.toast({ autohide: true, delay }).toast("show");
+  }
+}

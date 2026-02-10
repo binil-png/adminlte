@@ -81,15 +81,15 @@ $(function () {
     $("#pName").text(patient.patientName || "");
     $("#pId").text(`#${patient.patientId}` || "");
     let basic = ""
-    if(patient?.age){
+    if (patient?.age) {
       basic += `${patient.age || ""} Y ${(patient.address || patient.gender) ? " | " : ""}`
     }
 
-    if(patient.gender){
+    if (patient.gender) {
       basic += `${patient.gender || ""} ${patient.address ? " | " : ""}`
     }
 
-    if(patient.gender){
+    if (patient.gender) {
       basic += ` ${patient.address || ""}`
     }
 
@@ -164,7 +164,7 @@ $(function () {
     $selectDoctorElem.select2({
       theme: "bootstrap-4",
       selectionCssClass:
-        "form-control custom-select border-start-0 rounded-start-0 rounded-4 template-select-style",
+        "form-control custom-select border-start-0 rounded-start-0 rounded-4 template-select-style w-100",
       ajax: {
         url: `${baseUrl}/singlepagedoctorlist`,
         dataType: "json",
@@ -252,10 +252,6 @@ $(function () {
   });
 
   $("#asideMenu").addClass("aside-hidden");
-
-  $("#asideMenu").removeClass(
-    "col-md-2 col-lg-2 border border-top-0 border-bottom-0 p-3 sidebar hide-scrollbar",
-  );
 
   const shareBtn = document.querySelector(".save-btn-share");
 
