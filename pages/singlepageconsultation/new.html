@@ -32,7 +32,10 @@
     <script src="../../dist/js/adminlte.min.js"></script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/highcharts-more.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"
+      rel="stylesheet"
+    />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
   </head>
@@ -1198,12 +1201,21 @@
                           <label class="fw-medium text-custom mb-1 ms-1"
                             >Medical History</label
                           >
-                          <textarea
+                          <!-- <textarea
                             id="medicalHistory"
                             class="form-control rounded-4"
                             rows="1"
                             placeholder="Previous medical history..."
-                          ></textarea>
+                          ></textarea> -->
+                          <select
+                            class="select2 complaint rounded-4"
+                            id="medicalHistory"
+                            multiple="multiple"
+                            name="medicalHistory"
+                            data-placeholder="Select Medical History"
+                            data-dropdown-css-class="select2-green"
+                            style="width: 100% !important"
+                          ></select>
                         </div>
                       </div>
 
@@ -1212,21 +1224,39 @@
                           <label class="fw-medium text-custom mb-1 ms-1"
                             >Observations</label
                           >
-                          <textarea
+                          <!-- <textarea
                             id="observations"
                             class="form-control rounded-4"
                             rows="1"
-                          ></textarea>
+                          ></textarea> -->
+                          <select
+                            class="select2 complaint rounded-4"
+                            id="observations"
+                            multiple="multiple"
+                            name="observations"
+                            data-placeholder="Select Observations"
+                            data-dropdown-css-class="select2-green"
+                            style="width: 100% !important"
+                          ></select>
                         </div>
                         <div class="form-group col-md-6">
                           <label class="fw-medium text-custom mb-0 ms-1"
                             >Investigations</label
                           >
-                          <textarea
+                          <!-- <textarea
                             id="investigations"
                             class="form-control rounded-4"
                             rows="1"
-                          ></textarea>
+                          ></textarea> -->
+                           <select
+                            class="select2 complaint rounded-4"
+                            id="investigations"
+                            multiple="multiple"
+                            name="investigations"
+                            data-placeholder="Select Investigations"
+                            data-dropdown-css-class="select2-green"
+                            style="width: 100% !important"
+                          ></select>
                         </div>
                       </div>
 
@@ -1235,11 +1265,20 @@
                           <label class="fw-medium text-custom mb-1 ms-1"
                             >Diagnosis</label
                           >
-                          <textarea
+                          <!-- <textarea
                             id="diagnosis"
                             class="form-control rounded-4"
                             rows="1"
-                          ></textarea>
+                          ></textarea> -->
+                          <select
+                            class="select2 complaint rounded-4"
+                            id="diagnosis"
+                            multiple="multiple"
+                            name="diagnosis"
+                            data-placeholder="Select Diagnosis"
+                            data-dropdown-css-class="select2-green"
+                            style="width: 100% !important"
+                          ></select>
                         </div>
                         <div class="form-group col-md-6">
                           <label class="fw-medium text-custom mb-1 ms-1"

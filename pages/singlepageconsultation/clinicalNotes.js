@@ -79,10 +79,105 @@ $(function () {
     $("#chiefComplaints").select2({
       placeholder: "Select Chief Complaints",
       tags: true,
-      selectionCssClass: "complaint-select",
+      selectionCssClass: "custom-select2",
       dropdownCssClass: "complaint-dropdown",
       ajax: {
         url: "http://localhost:8080/singlepage_clinicnotemaster/complaint",
+        type: "post",
+        dataType: "json",
+        delay: 250,
+        data: function (params) {
+          return {
+            searchTerm: params.term,
+          };
+        },
+        processResults: function (response) {
+          return {
+            results: response,
+          };
+        },
+        cache: true,
+      },
+    });
+
+    $("#medicalHistory").select2({
+      placeholder: "Select Medical History",
+      tags: true,
+      selectionCssClass: "custom-select2",
+      dropdownCssClass: "complaint-dropdown",
+      ajax: {
+        url: "http://localhost:8080/singlepage_clinicnotemaster/history",
+        type: "post",
+        dataType: "json",
+        delay: 250,
+        data: function (params) {
+          return {
+            searchTerm: params.term,
+          };
+        },
+        processResults: function (response) {
+          return {
+            results: response,
+          };
+        },
+        cache: true,
+      },
+    });
+
+    $("#observations").select2({
+      placeholder: "Select Observations",
+      tags: true,
+      selectionCssClass: "custom-select2",
+      dropdownCssClass: "complaint-dropdown",
+      ajax: {
+        url: "http://localhost:8080/singlepage_clinicnotemaster/observation",
+        type: "post",
+        dataType: "json",
+        delay: 250,
+        data: function (params) {
+          return {
+            searchTerm: params.term,
+          };
+        },
+        processResults: function (response) {
+          return {
+            results: response,
+          };
+        },
+        cache: true,
+      },
+    });
+
+    $("#investigations").select2({
+      placeholder: "Select Investigations",
+      tags: true,
+      selectionCssClass: "custom-select2",
+      dropdownCssClass: "complaint-dropdown",
+      ajax: {
+        url: "http://localhost:8080/singlepage_clinicnotemaster/investigation",
+        type: "post",
+        dataType: "json",
+        delay: 250,
+        data: function (params) {
+          return {
+            searchTerm: params.term,
+          };
+        },
+        processResults: function (response) {
+          return {
+            results: response,
+          };
+        },
+        cache: true,
+      },
+    });
+       $("#diagnosis").select2({
+      placeholder: "Select Diagnosis",
+      tags: true,
+      selectionCssClass: "custom-select2",
+      dropdownCssClass: "complaint-dropdown",
+      ajax: {
+        url: "http://localhost:8080/singlepage_clinicnotemaster/diagnose",
         type: "post",
         dataType: "json",
         delay: 250,
