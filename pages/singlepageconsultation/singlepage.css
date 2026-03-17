@@ -75,7 +75,7 @@ label {
 }
 .input-style {
   height: 28px;
-  padding: 3px 7px; /* small padding to keep text readable */
+  padding: 3px 7px;
   font-size: 14px;
   line-height: 1.2;
 }
@@ -102,9 +102,9 @@ label {
 }
 .template-select-style {
   height: 32px;
-  padding: 4px 8px; /* small padding to keep text readable */
+  padding: 4px 8px;
   font-size: 14px;
-  line-height: 1.4;
+  /* line-height: 1.4; */
 }
 .aside-hidden {
   display: none;
@@ -359,23 +359,44 @@ label {
   box-shadow: none !important;
 }
 
-.select2-container {
+/* .select2-container {
   width: 100% !important;
-}
-
-.select2-container .select2-selection {
-  border-radius: 10px;
-  border: 1px solid #d1d5db;
-  transition: all 0.2s ease;
-}
+} */
 
 .select2-container--focus .select2-selection {
   border-color: #2563eb;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+  outline-color: transparent !important;
 }
 
+.custom-select2 .select2-container--focus .select2-selection {
+  border-color: #2563eb !important;
+  outline-color: transparent !important;
+}
 
-/* 1. Style the Main Textbox (Selection Area) */
+.complaint-dropdown .select2-dropdown {
+  border: none;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  border-radius: 1rem;
+  overflow: hidden;
+  margin-top: 5px;
+}
+
+.custom-select2 .select2-selection__choice__remove:hover {
+  background-color: transparent !important;
+  color: #c62828 !important;
+}
+
+.select2-container .select2-selection {
+  border: 1px solid #d1d5db;
+  transition: all 0.2s ease;
+  font-size: 14px;
+}
+
+.custom-select2 .select2-search__field {
+  border: none !important;
+  outline: none !important;
+}
+
 .custom-select2 .select2-container--default .select2-selection--multiple {
   border: 1px solid #dee2e6;
   border-radius: 1rem;
@@ -386,7 +407,20 @@ label {
   justify-content: center;
 }
 
-/* 2. Style the Individual Chips */
+.custom-select2 .select2-selection__choice__remove {
+  color: #2e7d32 !important;
+  border: none !important;
+  font-weight: bold;
+  margin-right: 0;
+}
+
+.custom-select2 .select2-container .select2-selection {
+  border-radius: 1rem !important;
+  border: 1px solid #d1d5db;
+  transition: all 0.2s ease;
+  font-size: 14px;
+}
+
 .custom-select2 .select2-selection__choice {
   background-color: #e8f5e9 !important;
   border: 1px solid #c8e6c9 !important;
@@ -395,31 +429,4 @@ label {
   font-weight: 500;
   margin-top: 4px !important;
   position: relative;
-}
-
-/* 3. Style the 'X' (Remove) Button inside the Chip */
-.custom-select2 .select2-selection__choice__remove {
-  color: #2e7d32 !important;
-  border: none !important;
-  font-weight: bold;
-  margin-right: 0;
-}
-
-.custom-select2 .select2-selection__choice__remove:hover {
-  background-color: transparent !important;
-  color: #c62828 !important;
-}
-
-.custom-select2 .select2-search__field {
-  border: none !important;
-  outline: none !important;
-}
-
-/* 4. Style the Dropdown Menu */
-.complaint-dropdown.select2-dropdown {
-  border: none;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-  border-radius: 1rem;
-  overflow: hidden;
-  margin-top: 5px;
 }

@@ -15,18 +15,21 @@ $(function () {
 
   $("#saveNotes").on("click", function () {
     const notesData = {
-      chiefComplaints: $("#chiefComplaints").val(),
-      medicalHistory: $("#medicalHistory").val(),
-      observations: $("#observations").val(),
-      investigations: $("#investigations").val(),
+      complaints: $("#chiefComplaints").val(),
+      history: $("#medicalHistory").val(),
+      observation: $("#observations").val(),
+      investigation: $("#investigations").val(),
       diagnosis: $("#diagnosis").val(),
+      note: $("#notes").val(),
       treatment: $("#treatment").val(),
       advice: $("#advice").val(),
+      date_time: new Date().toISOString(),
+      doctor_id: globalySelectedDoctor,
     };
 
     console.log("NOTES SAVED:", notesData);
 
-    $("#clinicalNotesPrev").text(notesData.chiefComplaints || "No items yet");
+    $("#clinicalNotesPrev").text(notesData.complaints || "No items yet");
 
     alert("Clinical Notes Saved!");
   });
@@ -79,10 +82,10 @@ $(function () {
     $("#chiefComplaints").select2({
       placeholder: "Select Chief Complaints",
       tags: true,
-      selectionCssClass: "custom-select2",
+      selectionCssClass: "custom-select2 rounded-4 w-100",
       dropdownCssClass: "complaint-dropdown",
       ajax: {
-        url: "http://localhost:8080/singlepage_clinicnotemaster/complaint",
+        url: `${baseUrl}/singlepage_clinicnotemaster/complaint`,
         type: "post",
         dataType: "json",
         delay: 250,
@@ -103,10 +106,10 @@ $(function () {
     $("#medicalHistory").select2({
       placeholder: "Select Medical History",
       tags: true,
-      selectionCssClass: "custom-select2",
+      selectionCssClass: "custom-select2 rounded-4 w-100",
       dropdownCssClass: "complaint-dropdown",
       ajax: {
-        url: "http://localhost:8080/singlepage_clinicnotemaster/history",
+        url: `${baseUrl}/singlepage_clinicnotemaster/history`,
         type: "post",
         dataType: "json",
         delay: 250,
@@ -127,10 +130,10 @@ $(function () {
     $("#observations").select2({
       placeholder: "Select Observations",
       tags: true,
-      selectionCssClass: "custom-select2",
+      selectionCssClass: "custom-select2 rounded-4 w-100",
       dropdownCssClass: "complaint-dropdown",
       ajax: {
-        url: "http://localhost:8080/singlepage_clinicnotemaster/observation",
+        url: `${baseUrl}/singlepage_clinicnotemaster/observation`,
         type: "post",
         dataType: "json",
         delay: 250,
@@ -151,33 +154,10 @@ $(function () {
     $("#investigations").select2({
       placeholder: "Select Investigations",
       tags: true,
-      selectionCssClass: "custom-select2",
+      selectionCssClass: "custom-select2 rounded-4 w-100",
       dropdownCssClass: "complaint-dropdown",
       ajax: {
-        url: "http://localhost:8080/singlepage_clinicnotemaster/investigation",
-        type: "post",
-        dataType: "json",
-        delay: 250,
-        data: function (params) {
-          return {
-            searchTerm: params.term,
-          };
-        },
-        processResults: function (response) {
-          return {
-            results: response,
-          };
-        },
-        cache: true,
-      },
-    });
-       $("#diagnosis").select2({
-      placeholder: "Select Diagnosis",
-      tags: true,
-      selectionCssClass: "custom-select2",
-      dropdownCssClass: "complaint-dropdown",
-      ajax: {
-        url: "http://localhost:8080/singlepage_clinicnotemaster/diagnose",
+        url: `${baseUrl}/singlepage_clinicnotemaster/investigation`,
         type: "post",
         dataType: "json",
         delay: 250,
@@ -195,6 +175,77 @@ $(function () {
       },
     });
 
+    $("#diagnosis").select2({
+      placeholder: "Select Diagnosis",
+      tags: true,
+      selectionCssClass: "custom-select2 rounded-4 w-100",
+      dropdownCssClass: "complaint-dropdown",
+      ajax: {
+        url: `${baseUrl}/singlepage_clinicnotemaster/diagnose`,
+        type: "post",
+        dataType: "json",
+        delay: 250,
+        data: function (params) {
+          return {
+            searchTerm: params.term,
+          };
+        },
+        processResults: function (response) {
+          return {
+            results: response,
+          };
+        },
+        cache: true,
+      },
+    });
+
+    $("#notes").select2({
+      placeholder: "Select Notes",
+      tags: true,
+      selectionCssClass: "custom-select2 rounded-4 w-100",
+      dropdownCssClass: "complaint-dropdown",
+      ajax: {
+        url: `${baseUrl}/singlepage_clinicnotemaster/note`,
+        type: "post",
+        dataType: "json",
+        delay: 250,
+        data: function (params) {
+          return {
+            searchTerm: params.term,
+          };
+        },
+        processResults: function (response) {
+          return {
+            results: response,
+          };
+        },
+        cache: true,
+      },
+    });
+
+    $("#treatment").select2({
+      placeholder: "Select treatment recommendation",
+      tags: true,
+      selectionCssClass: "custom-select2 rounded-4 w-100",
+      dropdownCssClass: "complaint-dropdown",
+      ajax: {
+        url: `${baseUrl}/singlepage_clinicnotemaster/recommend`,
+        type: "post",
+        dataType: "json",
+        delay: 250,
+        data: function (params) {
+          return {
+            searchTerm: params.term,
+          };
+        },
+        processResults: function (response) {
+          return {
+            results: response,
+          };
+        },
+        cache: true,
+      },
+    });
   });
 
   function renderClinicalChips() {
@@ -269,6 +320,7 @@ $(function () {
       label: "Lab 4",
     },
   ];
+
   const procedureRadiologylist = [
     {
       id: 1,
@@ -825,4 +877,3 @@ function renderClinicalNotes(container, historyItems) {
       });
   }
 }
-

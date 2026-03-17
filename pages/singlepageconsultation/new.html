@@ -1248,7 +1248,7 @@
                             class="form-control rounded-4"
                             rows="1"
                           ></textarea> -->
-                           <select
+                          <select
                             class="select2 complaint rounded-4"
                             id="investigations"
                             multiple="multiple"
@@ -1262,7 +1262,9 @@
 
                       <div class="form-row">
                         <div class="form-group col-md-6">
-                          <label class="fw-medium text-custom mb-1 ms-1">Diagnosis</label>
+                          <label class="fw-medium text-custom mb-1 ms-1"
+                            >Diagnosis</label
+                          >
                           <!-- <textarea
                             id="diagnosis"
                             class="form-control rounded-4"
@@ -1282,15 +1284,43 @@
                           <label class="fw-medium text-custom mb-1 ms-1"
                             >Treatment recommendation</label
                           >
-                          <textarea
+                          <!-- <textarea
                             id="treatment"
                             class="form-control rounded-4"
                             rows="1"
-                          ></textarea>
+                          ></textarea> -->
+                          <select
+                            class="select2 complaint rounded-4"
+                            id="treatment"
+                            multiple="multiple"
+                            name="treatment"
+                            data-placeholder="Select treatment recommendation"
+                            data-dropdown-css-class="select2-green"
+                            style="width: 100% !important"
+                          ></select>
                         </div>
                       </div>
 
                       <div class="form-row">
+                        <div class="form-group col-md-6">
+                          <label class="fw-medium text-custom mb-1 ms-1"
+                            >Notes</label
+                          >
+                          <!-- <textarea
+                            id="notes"
+                            class="form-control rounded-4"
+                            rows="1"
+                          ></textarea> -->
+                          <select
+                            class="select2 complaint"
+                            id="notes"
+                            multiple="multiple"
+                            name="notes"
+                            data-placeholder="Select Notes"
+                            data-dropdown-css-class="select2-green"
+                            style="width: 100% !important"
+                          ></select>
+                        </div>
                         <div class="form-group col-md-6">
                           <label class="fw-medium text-custom mb-1 ms-1"
                             >Advice</label
@@ -1298,18 +1328,10 @@
                           <textarea
                             id="advice"
                             class="form-control rounded-4"
+                            style="height: 28px;padding: 3px 7px;font-size: 14px;"
                             rows="1"
-                          ></textarea>
-                        </div>
-                        <div class="form-group col-md-6">
-                          <label class="fw-medium text-custom mb-1 ms-1"
-                            >Notes</label
                           >
-                          <textarea
-                            id="notes"
-                            class="form-control rounded-4"
-                            rows="1"
-                          ></textarea>
+                          </textarea>
                         </div>
                       </div>
 
@@ -2111,9 +2133,9 @@
                               ></textarea>
                             </div>
                             <div class="">
-                              <label class="fw-medium text-custom"
-                                >Advice</label
-                              >
+                              <label class="fw-medium text-custom">
+                                Advice
+                              </label>
                               <textarea
                                 class="form-control rounded-4"
                                 id="dentalNotes"
@@ -2793,27 +2815,6 @@
       >
       All rights reserved.
     </footer>
-
-    <script src="./data.js"></script>
-    <script src="./components.js"></script>
-    <script src="./services.js"></script>
-    <script src="./api.js"></script>
-    <script src="./drawer.js"></script>
-    <script src="./new.js"></script>
-    <script src="./lab.js"></script>
-    <script src="./customdropdown.js"></script>
-    <script src="./mockData.js"></script>
-    <script src="./vitals.js"></script>
-    <script src="./dental.js"></script>
-    <script src="./dentalLab.js"></script>
-    <script src="./clinicalNotes.js"></script>
-    <script src="./procedure.js"></script>
-    <script src="./prescription.js"></script>
-    <script src="./files.js"></script>
-    <script src="./collapse.js"></script>
-    <script src="./preview.js"></script>
-    <script src="./sidebar.js"></script>
-    <script src="./invoice.js"></script>
-    <script src="./chart.js"></script>
+    <script src="./main.js"></script>
   </body>
 </html>
