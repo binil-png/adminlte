@@ -15,23 +15,39 @@ $(function () {
 
   $("#saveNotes").on("click", function () {
     const notesData = {
-      complaints: $("#chiefComplaints").val(),
-      history: $("#medicalHistory").val(),
-      observation: $("#observations").val(),
-      investigation: $("#investigations").val(),
-      diagnosis: $("#diagnosis").val(),
-      note: $("#notes").val(),
-      treatment: $("#treatment").val(),
-      advice: $("#advice").val(),
-      date_time: new Date().toISOString(),
-      doctor_id: globalySelectedDoctor,
+      complaints: $("#chiefComplaints").val() || [],
+      history: $("#medicalHistory").val() || [],
+      observation: $("#observations").val() || [],
+      investigation: $("#investigations").val() || [],
+      diagnosis: $("#diagnosis").val() || [],
+      note: $("#notes").val() || [],
+      date_time: new Date().toISOString().split("T")[0],
+      doctor_id:
+        typeof globalySelectedDoctor !== "undefined"
+          ? globalySelectedDoctor
+          : 0,
     };
 
-    console.log("NOTES SAVED:", notesData);
-
-    $("#clinicalNotesPrev").text(notesData.complaints || "No items yet");
-
-    alert("Clinical Notes Saved!");
+    $.ajax({
+      url: `${baseUrl}/singlepage_saveclinicnote`,
+      type: "post",
+      dataType: "json",
+      data: JSON.stringify(notesData),
+      contentType: "application/json; charset=utf-8",
+      success: function (response) {
+        console.log("NOTES SAVED:", response);
+        const complaintsText =
+          Array.isArray(notesData.complaints) && notesData.complaints.length > 0
+            ? notesData.complaints.join(", ")
+            : "No items yet";
+        $("#clinicalNotesPrev").text(complaintsText);
+        alert("Clinical Notes Saved!");
+      },
+      error: function (error) {
+        console.error("Error saving clinical notes:", error);
+        alert("Found some error while saving clinical notes!");
+      },
+    });
   });
 
   function updateClinicalPreview() {
