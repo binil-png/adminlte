@@ -53,38 +53,11 @@ $(function () {
                       <div class="col-11">
                         <label class="form-label small text-muted mb-0">Procedure</label>
                         <select class="form-control form-control-sm custom-select proc-name rounded-3 input-style proc-field rounded-4">
-                            <option ${
-                              p.name == "Blood Test" ? "selected" : ""
-                            } value="Blood Test">Blood Test</option>
-                            <option ${
-                              p.name == "X-Ray Chest" ? "selected" : ""
-                            } value="X-Ray Chest">X-Ray Chest</option>
-                            <option ${
-                              p.name == "ECG" ? "selected" : ""
-                            } value="ECG">ECG</option>
-                            <option ${
-                              p.name == "Ultrasound Abdomen" ? "selected" : ""
-                            } value="Ultrasound Abdomen">Ultrasound Abdomen</option>
-                            <option ${
-                              p.name == "Wound Dressing" ? "selected" : ""
-                            } value="Wound Dressing">Wound Dressing</option>
-                            <option ${
-                              p.name == "IV Cannula Insertion" ? "selected" : ""
-                            } value="IV Cannula Insertion">IV Cannula Insertion</option>
-                            <option ${
-                              p.name == "Nebulization" ? "selected" : ""
-                            } value="Nebulization">Nebulization</option>
-                            <option ${
-                              p.name == "Fever Panel Test" ? "selected" : ""
-                            } value="Fever Panel Test">Fever Panel Test</option>
-                            <option ${
-                              p.name == "Vaccination (Tetanus)"
-                                ? "selected"
+                            ${
+                              p.name
+                                ? `<option value="${p.name}" selected>${p.name}</option>`
                                 : ""
-                            } value="Vaccination (Tetanus)">Vaccination (Tetanus)</option>
-                            <option ${
-                              p.name == "CT Scan Brain" ? "selected" : ""
-                            } value="CT Scan Brain">CT Scan Brain</option>
+                            }
                         </select>
                       </div>  
                     </div>
@@ -107,12 +80,12 @@ $(function () {
                     <div class="col-3 px-1">
                         <label class="form-label small text-muted mb-0">Disc</label>
                         <div class="d-flex">
-                        <input type="number" class="form-control rounded-4 border-end-0 rounded-end-0 form-control-sm input-style text-center" value="${
+                        <input type="number" class="form-control proc-discount rounded-4 border-end-0 rounded-end-0 form-control-sm input-style text-center" value="${
                           p.discount
                         }">
-                        <select style="width:30px" class="form-control rounded-4 border-start-1 rounded-start-0 form-control-sm input-style text-center">
-                            <option value="per">%</option>
-                            <option value="rs">₹</option>
+                        <select style="width:30px" class="form-control proc-discount-unit rounded-4 border-start-1 rounded-start-0 form-control-sm input-style text-center">
+                            <option ${p.discountUnit === "per" ? "selected" : ""} value="per">%</option>
+                            <option ${p.discountUnit === "rs" ? "selected" : ""} value="rs">₹</option>
                         </select>
                         </div>
                     </div>
@@ -216,7 +189,46 @@ $(function () {
     });
 
     updateProcSummary();
+    initProcSelect2();
   }
+
+  function initProcSelect2() {
+    $(".proc-name").select2({
+      placeholder: "Select Procedure",
+      tags: true,
+      width: "100%",
+      selectionCssClass: "custom-select2 rounded-4 w-100",
+      dropdownCssClass: "complaint-dropdown",
+      ajax: {
+        url: `${baseUrl}/singlepage_proceduremaster`,
+        type: "get",
+        dataType: "json",
+        delay: 250,
+        data: function (params) {
+          return {
+            searchterm: params.term,
+          };
+        },
+        processResults: function (response) {
+          return {
+            results: response,
+          };
+        },
+        cache: true,
+      },
+    });
+  }
+
+  $(document).on("select2:select", ".proc-name", function (e) {
+    const data = e.params.data;
+    const $box = $(this).closest(".proc-box");
+    const index = $box.data("index");
+
+    if (data.cost) {
+      const $priceInput = $box.find(".proc-price");
+      $priceInput.val(data.cost).trigger("change");
+    }
+  });
   $(document).on("click", ".btn-toggle-fields", function () {
     const $button = $(this);
     const targetId = $button.data("target");
@@ -446,6 +458,69 @@ $(function () {
       document.getElementById("visitingNotesModal"),
     );
     visitingNotesModal.show();
+  });
+
+  $(document).on("click", "#saveProcedure", function () {
+    const doctorId =
+      typeof globalySelectedDoctor !== "undefined"
+        ? globalySelectedDoctor
+        : "405968";
+    const today = new Date().toISOString().split("T")[0];
+
+    const payload = {
+      doctor_id: doctorId,
+      date: today,
+      items: {},
+    };
+
+    $(".proc-box").each(function (index) {
+      const $box = $(this);
+
+      // Get Select2 data to find id
+      const select2Data = $box.find(".proc-name").select2("data")[0];
+      const procedureId = select2Data ? select2Data.id : "";
+
+      const dateVal = $box.find(".proc-date").val();
+      const timeVal = $box.find(".proc-time").val();
+      const dateTime =
+        dateVal && timeVal ? `${dateVal} ${timeVal}:00` : "2026-02-01 10:10:00"; // Fallback as per request example if empty
+
+      const discUnit = $box.find(".proc-discount-unit").val();
+      const discountType = discUnit === "per" ? "%" : "INR";
+
+      payload.items[index.toString()] = {
+        procedure_id: procedureId,
+        quantity: $box.find(".proc-qty").val() || "1",
+        price: $box.find(".proc-price").val() || "0",
+        discount: $box.find(".proc-discount").val() || "0",
+        discount_type: discountType,
+        note: $box.find(".proc-patient-instructions").val() || "",
+        total: $box.find(".proc-line-total").text().replace("₹", "") || "0",
+        intnote: $box.find(".proc-internal-notes").val() || "",
+        pdate: dateTime,
+        edate: dateTime,
+        appointment: "0",
+        prostatus: "No",
+        status: $box.find(".proc-status").val() || "Completed",
+      };
+    });
+
+    console.log("Saving Procedures Payload:", payload);
+
+    $.ajax({
+      url: `${baseUrl}/api/singlepage_saveprocedures`,
+      type: "POST",
+      contentType: "application/json",
+      data: JSON.stringify(payload),
+      success: function (response) {
+        alert("Procedures saved successfully!");
+        console.log("Save Success:", response);
+      },
+      error: function (xhr) {
+        alert("Error saving procedures.");
+        console.error("Save Error:", xhr);
+      },
+    });
   });
 });
 
