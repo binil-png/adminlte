@@ -20,9 +20,7 @@ $(function () {
   function renderProcTable() {
     const container = $("#procContainer");
     container.empty();
-
     const defaultHideClass = "d-none";
-    console.log("procData => ",procData)
     procData.forEach((p, index) => {
       const boxId = generateBoxId(index);
       const lineTotal = calculateLineTotal(p.qty, p.price, p.discount);
@@ -38,8 +36,8 @@ $(function () {
                             <span class="d-block mt-1 pt-1">${index + 1}</span>
                       </div>
                       <div class="col-11">
-                        <label class="form-label small text-muted mb-0">Procedure</label>
-                        <select class="form-control form-control-sm custom-select proc-name rounded-3 input-style proc-field rounded-4">
+                        <label class="form-label small text-muted mb-0 select2-label">Procedure</label>
+                        <select class="form-control form-control-sm proc-name proc-field">
                             ${
                               p.name
                                 ? `<option value="${p.name}" selected>${p.name}</option>`
@@ -93,15 +91,15 @@ $(function () {
                                   <select
                                     class="form-control form-control-sm custom-select proc-status rounded-3 input-style proc-field rounded-4"
                                   >
-                                                          <option value="">Select status</option>
-                                                           <option value="">Planned</option>
-                                                           <option value="">Completed</option>
-                                                           <option value="">Nursing Ordered</option>
-                                                           <option value="">Nursing Done</option>
-                                                           <option value="">Sent to Radiology</option>
-                                                           <option value="">Radiology Done</option>
-                                                           <option value="">Lab Ordered</option>
-                                                           <option value="">Lab Done</option>
+                                                           <option value="">Select status</option>
+                                                           <option value="Planned">Planned</option>
+                                                           <option value="Completed">Completed</option>
+                                                           <option value="Nursing Ordered">Nursing Ordered</option>
+                                                           <option value="Nursing Done">Nursing Done</option>
+                                                           <option value="Sent to Radiology">Sent to Radiology</option>
+                                                           <option value="Radiology Done">Radiology Done</option>
+                                                           <option value="Lab Ordered">Lab Ordered</option>
+                                                           <option value="Lab Done">Lab Done</option>
                                    
                                   </select>
                                 </div>
@@ -239,7 +237,7 @@ $(function () {
     procData.push({
       name: "",
       instruction: "",
-      qty: 1,
+      qty: 0,
       price: 0,
       discount: 0,
       discountUnit: "per",
@@ -415,7 +413,7 @@ $(function () {
     });
     renderVisitingNotes(notesList);
   });
-  $(document).on("click",".openAddProcedure", function () {
+  $(document).on("click", ".openAddProcedure", function () {
     let visitingNotesModal = new bootstrap.Modal(
       document.getElementById("visitingNotesModal"),
     );
@@ -424,7 +422,7 @@ $(function () {
 
   $(document).on("click", "#saveProcedure", function () {
     const doctorId =
-      typeof globalySelectedDoctor !== "undefined"
+      typeof globalySelectedDoctor !== "undefined" && globalySelectedDoctor
         ? globalySelectedDoctor
         : "405968";
     const today = new Date().toISOString().split("T")[0];
@@ -450,6 +448,10 @@ $(function () {
       const discUnit = $box.find(".proc-discount-unit").val();
       const discountType = discUnit === "per" ? "%" : "INR";
 
+      const status = $box.find(".proc-status").val() || "Completed";
+      const appointment = status === "Planned" ? "1" : "0";
+      const prostatus = status === "Planned" ? "Yes" : "No";
+
       payload.items[index.toString()] = {
         procedure_id: procedureId,
         quantity: $box.find(".proc-qty").val() || "1",
@@ -461,9 +463,9 @@ $(function () {
         intnote: $box.find(".proc-internal-notes").val() || "",
         pdate: dateTime,
         edate: dateTime,
-        appointment: "0",
-        prostatus: "No",
-        status: $box.find(".proc-status").val() || "Completed",
+        appointment: appointment,
+        prostatus: prostatus,
+        status: status,
       };
     });
 
@@ -475,11 +477,13 @@ $(function () {
       contentType: "application/json",
       data: JSON.stringify(payload),
       success: function (response) {
-        alert("Procedures saved successfully!");
+        const toast = new ToastComponent();
+        toast.success("Procedures saved successfully!");
         console.log("Save Success:", response);
       },
       error: function (xhr) {
-        alert("Error saving procedures.");
+        const toast = new ToastComponent();
+        toast.danger("Error saving procedures.");
         console.error("Save Error:", xhr);
       },
     });
@@ -493,7 +497,7 @@ function renderProcedure(container, proceduresList) {
     Active: "badge bg-success",
     Invoiced: "badge bg-primary",
   };
-  container.empty()
+  container.empty();
   proceduresList.forEach((i) => {
     let procedureDiv = "";
     i.procedures.forEach((p, count) => {
@@ -547,3 +551,5 @@ function renderProcedure(container, proceduresList) {
     );
   });
 }
+
+

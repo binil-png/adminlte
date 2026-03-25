@@ -368,7 +368,7 @@ label {
   outline-color: transparent !important;
 }
 
-.custom-select2 .select2-container--focus .select2-selection {
+.select2-selection--single.custom-select2.select2-container--focus {
   border-color: #2563eb !important;
   outline-color: transparent !important;
 }
@@ -379,11 +379,6 @@ label {
   border-radius: 1rem;
   overflow: hidden;
   margin-top: 5px;
-}
-
-.custom-select2 .select2-selection__choice__remove:hover {
-  background-color: transparent !important;
-  color: #c62828 !important;
 }
 
 .select2-container .select2-selection {
@@ -397,12 +392,12 @@ label {
   outline: none !important;
 }
 
-.custom-select2 .select2-container--default .select2-selection--multiple {
+.select2-selection--multiple.custom-select2 {
   border: 1px solid #dee2e6;
-  border-radius: 1rem;
+  border-radius: 1rem !important;
   padding: 5px 12px;
   min-height: 50px;
-  display: flex;
+  display: flex !important;
   align-items: center;
   justify-content: center;
 }
@@ -414,14 +409,12 @@ label {
   margin-right: 0;
 }
 
-.custom-select2 .select2-container .select2-selection {
-  border-radius: 1rem !important;
-  border: 1px solid #d1d5db;
-  transition: all 0.2s ease;
-  font-size: 14px;
+.custom-select2 .select2-selection__choice__remove:hover {
+  background-color: transparent !important;
+  color: #c62828 !important;
 }
 
-.custom-select2 .select2-selection__choice {
+.select2-selection--multiple.custom-select2 .select2-selection__choice {
   background-color: #e8f5e9 !important;
   border: 1px solid #c8e6c9 !important;
   border-radius: 50px !important;
@@ -430,3 +423,49 @@ label {
   margin-top: 4px !important;
   position: relative;
 }
+
+/* Single Select2 Procedure Specific Fix */
+.select2-selection--single.custom-select2 {
+  height: 28px !important;
+  border-radius: 1rem !important;
+  border: 1px solid #d1d5db !important;
+  display: flex !important;
+  align-items: center !important;
+  position: relative !important;
+}
+
+.select2-selection--single.custom-select2 .select2-selection__rendered {
+  line-height: 28px !important;
+  padding-left: 8px !important;
+  font-size: 13px !important;
+  color: #495057 !important;
+}
+
+.select2-selection--single.custom-select2 .select2-selection__arrow {
+  height: 26px !important;
+  width: 25px !important;
+  right: 5px !important;
+}
+
+.select2-selection--single.custom-select2 .select2-selection__arrow b {
+  display: none !important;
+}
+
+.select2-selection--single.custom-select2 .select2-selection__arrow::after {
+  content: "\f107";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  font-size: 12px;
+  color: #6c757d;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.select2-label {
+    font-weight: 500;
+    color: #6c757d;
+    margin-bottom: 2px !important;
+}
+
