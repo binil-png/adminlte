@@ -15,24 +15,12 @@ $(function () {
     return total.toFixed(2);
   }
 
+  window.procData = [];
+
   function renderProcTable() {
     const container = $("#procContainer");
     container.empty();
 
-    if (typeof procData === "undefined") {
-      console.error("procData array is not defined. Using placeholder data.");
-      window.procData = window.procData || [
-        {
-          name: "Blood Test",
-          instruction: "",
-          qty: 1,
-          price: 1500,
-          discount: 10,
-          status: "",
-          total: 1350,
-        },
-      ];
-    }
     const defaultHideClass = "d-none";
 
     procData.forEach((p, index) => {
@@ -357,22 +345,7 @@ $(function () {
     recalcProcRow(row);
   });
 
-  $(document).on("click", ".proc-template", function () {
-    const templateProcs = $(this).data("procs");
-    procData = templateProcs;
-    console.log(procData);
-    renderProcTable();
-  });
-
-  renderProcTable();
-  let notesList = [
-    {
-      status: "",
-      date: "",
-      time: "",
-      notes: "",
-    },
-  ];
+  let notesList = [];
 
   const $visitingNotesForm = $("#visitingNotesForm");
 
@@ -452,7 +425,6 @@ $(function () {
     });
     renderVisitingNotes(notesList);
   });
-  renderVisitingNotes(notesList);
   $(document).on("click",".openAddProcedure", function () {
     let visitingNotesModal = new bootstrap.Modal(
       document.getElementById("visitingNotesModal"),
