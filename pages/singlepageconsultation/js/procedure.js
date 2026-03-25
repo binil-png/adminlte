@@ -551,5 +551,3 @@ function renderProcedure(container, proceduresList) {
     );
   });
 }
-
-
