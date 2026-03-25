@@ -22,13 +22,12 @@ $(function () {
     container.empty();
 
     const defaultHideClass = "d-none";
-
+    console.log("procData => ",procData)
     procData.forEach((p, index) => {
       const boxId = generateBoxId(index);
       const lineTotal = calculateLineTotal(p.qty, p.price, p.discount);
       const initialDisplayClass = defaultHideClass;
       const initialButtonHtml = "Show more";
-
       container.append(`
       <div class="bg-custom rounded-4 proc-box" data-index="${index}">
             <div class="p-2">
@@ -238,7 +237,7 @@ $(function () {
       window.procData = [];
     }
     procData.push({
-      name: "Blood Test",
+      name: "",
       instruction: "",
       qty: 1,
       price: 0,
@@ -251,7 +250,7 @@ $(function () {
     const newBox = $("#procContainer").children().last();
     $("html, body").animate(
       {
-        scrollTop: newBox.offset().top - 100,
+        scrollTop: newBox.offset()?.top - 100,
       },
       500,
     );
@@ -328,15 +327,6 @@ $(function () {
   }
 
   $("#addProc").on("click", function () {
-    procData.push({
-      name: "",
-      qty: 1,
-      price: 0,
-      discount: 0,
-      status: "",
-      total: 0,
-    });
-
     renderProcTable();
   });
 
