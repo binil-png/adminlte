@@ -427,10 +427,10 @@ label {
 /* Single Select2 Procedure Specific Fix */
 .select2-selection--single.custom-select2 {
   height: 28px !important;
-  border-radius: 1rem !important;
+  padding: 0 !important;
+  border-radius: 1rem;
   border: 1px solid #d1d5db !important;
-  display: flex !important;
-  align-items: center !important;
+  display: block !important;
   position: relative !important;
 }
 
@@ -442,9 +442,12 @@ label {
 }
 
 .select2-selection--single.custom-select2 .select2-selection__arrow {
+  position: absolute !important;
   height: 26px !important;
   width: 25px !important;
   right: 5px !important;
+  top: 1px !important; 
+  left: auto !important; /* To avoid centering due to flex or other rules */
 }
 
 .select2-selection--single.custom-select2 .select2-selection__arrow b {
@@ -455,7 +458,7 @@ label {
   content: "\f107";
   font-family: "Font Awesome 5 Free";
   font-weight: 900;
-  font-size: 12px;
+  font-size: 11px; /* Slightly smaller */
   color: #6c757d;
   position: absolute;
   top: 50%;

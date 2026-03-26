@@ -95,28 +95,7 @@ const mockClinicalNotes = {
   advice: "Drink warm water & rest well",
 };
 
-const clinicalTemplates = [
-  {
-    label: "Fever & Cold",
-    chief: "Fever, cold for 2 days",
-    history: "No major history",
-    observation: "Mild throat redness",
-    investigation: "CBC recommended",
-    diagnosis: "Viral Fever",
-    treatment: "Paracetamol + Rest",
-    advice: "Stay hydrated",
-  },
-  {
-    label: "Headache",
-    chief: "Severe headache",
-    history: "Migraine history",
-    observation: "No nausea",
-    investigation: "MRI if persists",
-    diagnosis: "Migraine",
-    treatment: "Pain killers",
-    advice: "Avoid stress",
-  },
-];
+const clinicalTemplates = [];
 
 let procData = [];
 
@@ -143,169 +122,13 @@ const prescriptionTemplates = {
   ],
 };
 
-const prescriptions = [
-  {
-    medicine: "Amoxicillin 500mg",
-    brand: "Amoxil", // Example Brand
-    dosage: "1",
-    dosageUnit: "mg",
-    duration: 7,
-    durationUnit: "1", // Days
-    frequency: "1-0-1",
-    frequencyUnit: "2", // After food
-    dispenseValue: 14, // 2 times a day * 7 days = 14 tablets
-    dispenseUnit: "Nos", // Can also be 'Strip' (e.g., 2 strips of 10)
-  },
-  {
-    medicine: "Ibuprofen 400mg",
-    brand: "Advil", // Example Brand
-    dosage: "1",
-    dosageUnit: "mg",
-    duration: 5,
-    durationUnit: "1",
-    frequency: "1-1-1",
-    frequencyUnit: "1", // Before food
-    dispenseValue: 15, // 3 times a day * 5 days = 15 tablets
-    dispenseUnit: "Strip",
-  },
-  {
-    medicine: "Azithromycin 250mg",
-    brand: "Zithromax", // Example Brand
-    dosage: "1",
-    dosageUnit: "mg",
-    duration: 3,
-    durationUnit: "1",
-    frequency: "1-0-0",
-    frequencyUnit: "2",
-    dispenseValue: 3, // 1 time a day * 3 days = 3 tablets (often packaged this way)
-    dispenseUnit: "Nos",
-  },
-  {
-    medicine: "Pantoprazole 40mg",
-    brand: "Protonix", // Example Brand
-    dosage: "1",
-    dosageUnit: "mg",
-    duration: 10,
-    durationUnit: "1",
-    frequency: "0-0-1",
-    frequencyUnit: "1",
-    dispenseValue: 10, // 1 time a day * 10 days = 10 tablets
-    dispenseUnit: "Strip",
-  },
-  {
-    medicine: "Metformin 500mg",
-    brand: "Glucophage", // Example Brand
-    dosage: "1",
-    dosageUnit: "mg",
-    duration: 30,
-    durationUnit: "3", // Months (90 days)
-    frequency: "1-0-1", // 2 times a day
-    frequencyUnit: "3", // None
-    dispenseValue: 180, // 2 times a day * 90 days = 180 tablets
-    dispenseUnit: "Nos",
-  },
-  {
-    medicine: "Vitamin D3 60k IU",
-    brand: "D-Rise", // Example Brand
-    dosage: "1",
-    dosageUnit: "mg",
-    duration: 8,
-    durationUnit: "2", // Weeks (8 capsules for 8 weeks)
-    frequency: "0-0-1", // Assumed once weekly
-    frequencyUnit: "2",
-    dispenseValue: 8,
-    dispenseUnit: "Capsules",
-  },
-  {
-    medicine: "Cough Syrup 5ml",
-    brand: "Ascoril", // Example Brand
-    dosage: "5",
-    dosageUnit: "ml",
-    duration: 7,
-    durationUnit: "1",
-    frequency: "1-1-1", // 3 times a day (total 15ml/day)
-    frequencyUnit: "3",
-    // Total required: 15ml/day * 7 days = 105ml. Dispense a 100ml bottle.
-    dispenseValue: 100,
-    dispenseUnit: "ml Bottle",
-  },
-  {
-    medicine: "ORS Solution 200ml",
-    brand: "Electral", // Example Brand
-    dosage: "200",
-    dosageUnit: "ml",
-    duration: 2,
-    durationUnit: "1",
-    frequency: "2-2-2", // 6 times a day (total 1200ml/day)
-    frequencyUnit: "3",
-    // Total required: 1200ml/day * 2 days = 2400ml. Dispense 12 sachets (200ml each).
-    dispenseValue: 12,
-    dispenseUnit: "Sachets",
-  },
-  {
-    medicine: "Aspirin 75mg",
-    brand: "Ecosprin", // Example Brand
-    dosage: "1",
-    dosageUnit: "mg",
-    duration: 30,
-    durationUnit: "3", // Months (90 days)
-    frequency: "1-0-0", // 1 time a day
-    frequencyUnit: "2",
-    dispenseValue: 90, // 1 time a day * 90 days = 90 tablets
-    dispenseUnit: "Nos",
-  },
-  {
-    medicine: "Loratadine 10mg",
-    brand: "Claritin", // Example Brand
-    dosage: "10",
-    dosageUnit: "mg",
-    duration: 7,
-    durationUnit: "1",
-    frequency: "0-0-1", // 1 time a day
-    frequencyUnit: "3",
-    dispenseValue: 7, // 1 time a day * 7 days = 7 tablets
-    dispenseUnit: "Strip",
-  },
-];
+const prescriptions = [];
 
-const labTests = [
-  { id: 1, label: "Complete Blood Count (CBC)", price: 350 },
-  { id: 2, label: "Liver Function Test (LFT)", price: 750 },
-  { id: 3, label: "Kidney Function Test (KFT)", price: 600 },
-  { id: 4, label: "HbA1c (Diabetes Screen)", price: 450 },
-  { id: 5, label: "Lipid Profile (Cholesterol)", price: 500 },
-  { id: 6, label: "Thyroid Stimulating Hormone (TSH)", price: 300 },
-  { id: 7, label: "Vitamin D (25-OH)", price: 1200 },
-  { id: 8, label: "Urinalysis", price: 150 },
-  { id: 9, label: "Blood Glucose (Fasting)", price: 100 },
-  { id: 10, label: "C-Reactive Protein (CRP)", price: 400 },
-];
+const labTests = [];
 
-const testCategories = [
-  { id: 101, label: "Hematology", price: 800 },
-  { id: 102, label: "Biochemistry", price: 1100 },
-  { id: 103, label: "Diabetes Care", price: 500 },
-  { id: 104, label: "Cardiology", price: 1500 },
-  { id: 105, label: "Thyroid Profile", price: 650 },
-  { id: 106, label: "Vitamins & Minerals", price: 1800 },
-  { id: 107, label: "Kidney Care", price: 900 },
-  { id: 108, label: "Liver Care", price: 850 },
-  { id: 109, label: "Hormone Tests", price: 1400 },
-  { id: 110, label: "Immunology", price: 1250 },
-];
+const testCategories = [];
 
-const labPackages = [
-  { id: 201, label: "Basic Health Checkup", testCount: 4, price: 1800 },
-  { id: 202, label: "Comprehensive Health Checkup", testCount: 7, price: 4200 },
-  { id: 203, label: "Cardiac Checkup", testCount: 4, price: 2700 },
-  { id: 204, label: "Senior Citizen Male", testCount: 12, price: 5500 },
-  { id: 205, label: "Senior Citizen Female", testCount: 13, price: 5500 },
-  { id: 206, label: "Full Body Screening", testCount: 15, price: 7000 },
-  { id: 207, label: "Diabetes Essential Package", testCount: 5, price: 2200 },
-  { id: 208, label: "Executive Health Profile", testCount: 10, price: 4800 },
-  { id: 209, label: "Women Wellness Package", testCount: 8, price: 3500 },
-  { id: 210, label: "Post-Viral Recovery Check", testCount: 6, price: 2900 },
-];
+const labPackages = [];
 
 const categoryTestsMap = {
   101: {
