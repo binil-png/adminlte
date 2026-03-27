@@ -1,5 +1,7 @@
 $(function () {
   let allFiles = [];
+  const apiBase = (typeof baseUrl !== 'undefined') ? baseUrl : "";
+
   $(document).ready(function () {
     // Show input area
     $("#showFileArea").click(function () {
@@ -15,6 +17,8 @@ $(function () {
     $("#addFileToList").click(function () {
       let file = $("#singleFile")[0].files[0];
       let desc = $("#singleDescription").val();
+      let categoryId = $("#categoryuploads").val();
+      let categoryName = $("#categoryuploads option:selected").text();
 
       if (!file) {
         alert("Please select a file.");
@@ -22,14 +26,15 @@ $(function () {
       }
 
       // Save data in array
-      allFiles.push({ file: file, description: desc });
+      allFiles.push({ file: file, description: desc, categoryId: categoryId });
 
       // Add UI box
       $("#fileList").append(`
       <li class="border rounded p-2 mb-2 d-flex justify-content-between align-items-center">
         <div class="d-flex flex-column gap-1">
           <strong>${file.name}</strong>
-          <p class="text-muted mb-0">Description: ${
+          <small class="text-muted">Category: ${categoryName}</small>
+          <p class="text-muted mb-0 small">Description: ${
             desc || "No description"
           }</p>
         </div>
@@ -55,15 +60,42 @@ $(function () {
 
     // Save button
     $("#saveFiles").click(function () {
-      console.log("FILES TO UPLOAD: ", allFiles);
+      if (allFiles.length === 0) {
+        alert("Please add at least one file to the list.");
+        return;
+      }
+
+      const $btn = $(this);
+      const originalText = $btn.html();
+      $btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm me-2"></span> Saving...');
 
       let formData = new FormData();
-      allFiles.forEach((item, i) => {
-        formData.append("files", item.file);
-        formData.append("descriptions[]", item.description);
+      allFiles.forEach((item) => {
+        formData.append("file[]", item.file);
+        formData.append("notes[]", item.description);
+        formData.append("category_id[]", item.categoryId);
       });
 
-      alert("Files ready. Check console.");
+      $.ajax({
+        url: `${apiBase}/singlepage_savefiles`,
+        method: "POST",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (response) {
+          alert("Files saved successfully!");
+          allFiles = [];
+          $("#fileList").empty();
+          $("#closeFileToList").click(); // Hide input area if open
+        },
+        error: function (xhr) {
+          console.error("Failed to save files:", xhr);
+          alert("Error saving files. Please try again.");
+        },
+        complete: function() {
+          $btn.prop('disabled', false).html(originalText);
+        }
+      });
     });
 
     $("#fileInput").on("change", function () {
