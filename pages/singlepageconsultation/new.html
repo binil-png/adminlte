@@ -1630,6 +1630,7 @@
                           <div class="input-group">
                             <input
                               type="text"
+                              id="labSearchInput"
                               class="form-control form-control-sm rounded-4"
                               placeholder="Search..."
                             />
@@ -1641,6 +1642,12 @@
                                 Tests
                               </button>
                               <button
+                                id="changetocategory"
+                                class="btn btn-outline-secondary"
+                              >
+                                Category
+                              </button>
+                              <button
                                 id="changetopackage"
                                 class="btn btn-outline-secondary rounded-end-4"
                               >
@@ -1650,7 +1657,7 @@
                           </div>
                           <div
                             id="categoryArea"
-                            class="d-flex flex-wrap justify-content-start align-items-center gap-1 py-2"
+                            class="d-flex flex-wrap justify-content-start align-items-center gap-1 py-1"
                           ></div>
                           <div
                             id="allTestArea"
@@ -1666,12 +1673,14 @@
                           >
                             <div class="btn-group btn-group-sm ms-2">
                               <button
+                                id="labPrevBtn"
                                 class="btn btn-sm py-0 px-2 m-0 btn-outline-secondary rounded-start-4"
                               >
                                 Prev
                               </button>
                               <button
-                                class="btn btn-sm py-0 px-2 m-0 btn-outline-secondary rounded-end-4 active"
+                                id="labNextBtn"
+                                class="btn btn-sm py-0 px-2 m-0 btn-outline-secondary rounded-end-4"
                               >
                                 Next
                               </button>

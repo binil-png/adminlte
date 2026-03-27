@@ -1,190 +1,227 @@
 $(function () {
-  let allTest = [];
-  let selected = "test";
+  let allTest = []; // This stores the items selected by the user
+  let currentFetchedList = []; // This stores results from the current API call
+  let selectedMode = "test"; // 'test', 'category', or 'package'
+  let price = 0;
   const $categoryArea = $("#categoryArea");
   const $selectedTestArea = $("#selectedTestArea");
   const $allTestArea = $("#allTestArea");
   const $labpricearea = $("#labpricearea");
   const $selectedCount = $("#selectedCount");
-  function renderSelectedTest(list) {
-    $selectedTestArea.empty();
-    let price = 0;
-    if (list.length) {
-      list.forEach((t) => {
-        if (t?.tests) {
-          let testLabel = "";
-          t.tests.forEach((testName, i) => {
-            testLabel =
-              testLabel +
-              (i < t.tests.length - 1 ? testName.label + ", " : testName.label);
-          });
-          const packageElement = `
-             <li class="list-group-item border m-1 p-0 rounded-3">
-                 <div class="list-group-item-action p-2 cursor-pointer">
-                        <div class="d-flex justify-content-between align-items-start mb-1">
-                          <span
-                            class="mb-0 text-dark text-sm"
-                            style="word-break: break-word"
-                          >
-                            ${t.label}
-                          </span>
-                          <button
-                            data-id="${t.id}"
-                            class="btn btn-link text-danger p-0 border-0 test-cancel ms-2"
-                            title="Remove Package"
-                          >
-                            <i class="fas fa-times-circle"></i>
-                          </button>
-                        </div>
+  const $labSearchInput = $("#labSearchInput");
+  const $labPrevBtn = $("#labPrevBtn");
+  const $labNextBtn = $("#labNextBtn");
 
-                        <div class="d-flex flex-column gap-2">
-                          <small
-                            class="text-muted"
-                            style="
-                              word-break: break-word;
-                              overflow-wrap: break-word;
-                              line-height: 1.4;
-                            "
-                          >
-                            ${testLabel}
-                          </small>
-                          <div
-                            class="d-flex justify-content-end align-items-center"
-                          >
-                            <span
-                              class="badge text-primary fw-bold"
-                            >
-                              ₹${t.price}
-                            </span>
-                        </div>
-                     </div>
-                 </div>
-              </li>
-          `;
-          $selectedTestArea.append(packageElement);
-        } else {
-          $selectedTestArea.append(`
-                              <li class="list-group-item d-flex justify-content-between align-items-center border-0 py-2 px-2">
-                                 <small>${t.label}</small>
-                                 <div class="d-flex justify-content-end align-items-center gap-2">
-                                    <small class="fw-bold text-primary"><b>₹${t.price}</b></small>
-                                   <button data-id="${t.id}" class="btn text-danger text-md test-cancel p-0 m-0" style="font-size: 0.6rem"><i class="fas fa-times-circle"></i></button>
-                                 </div>
-                              </li>
-                            `);
+  let currentStart = 0;
+  const pageSize = 10;
+
+  // Define baseUrl - check if it's already defined globally, otherwise use empty string
+  const apiBase = (typeof baseUrl !== 'undefined') ? baseUrl : "";
+
+  function fetchLabData(type) {
+    selectedMode = type;
+    renderLoading();
+    $labPrevBtn.prop('disabled', true);
+    $labNextBtn.prop('disabled', true);
+
+    let endpoint = "";
+    if (type === "test") endpoint = `/singlepage_labmaster/test?start=${currentStart}&limit=${pageSize}`;
+    else if (type === "category") endpoint = `/singlepage_labmaster/category?start=${currentStart}&limit=${pageSize}`;
+    else if (type === "package") endpoint = `/singlepage_labmaster/package?start=${currentStart}&limit=${pageSize}`;
+
+    $.ajax({
+      url: `${apiBase}${endpoint}`,
+      method: "GET",
+      dataType: "json",
+      success: function (data) {
+        // Map data if needed (some APIs return result in different keys)
+        currentFetchedList = Array.isArray(data) ? data : (data.results || data.items || []);
+        renderTest(currentFetchedList);
+        
+        // If it's categories, maybe we want to render them as top chips too?
+        if (type === "category") {
+           renderTopChips(currentFetchedList);
         }
 
-        price += t.price;
+        // Pagination buttons state
+        $labPrevBtn.prop('disabled', currentStart === 0);
+        // Disable next if we fetched less than pageSize (indicates no more records)
+        $labNextBtn.prop('disabled', currentFetchedList.length < pageSize);
+      },
+      error: function (xhr) {
+        console.error("Failed to fetch lab data:", xhr);
+        $allTestArea.empty().append('<div class="p-3 text-center text-danger small">Failed to load data. Please try again.</div>');
+      }
+    });
+  }
+
+  function renderSelectedTest(list) {
+    $selectedTestArea.empty();
+ 
+    if (list.length) {
+      list.forEach((t) => {
+        const itemHtml = `
+          <li class="list-group-item d-flex justify-content-between align-items-center border-0 py-2 px-2">
+             <div>
+                <small class="fw-semibold d-block">${t.name || t.label || t.text}</small>
+                <small class="text-muted text-xs">${t.type}</small>
+             </div>
+             <div class="d-flex justify-content-end align-items-center gap-2">
+                <small class="fw-bold text-primary">₹${t.cost || 0}</small>
+                <button data-id="${t.id}" class="btn text-danger text-md test-cancel p-0 m-0" style="font-size: 0.6rem">
+                  <i class="fas fa-times-circle"></i>
+                </button>
+             </div>
+          </li>
+        `;
+        $selectedTestArea.append(itemHtml);
+        price += parseFloat(t.cost || 0);
       });
-      $labpricearea.text(price);
+      $labpricearea.text("₹" + price);
       $selectedCount.text(list.length);
     } else {
       $selectedTestArea.append(`
         <li class="list-group-item d-flex justify-content-between align-items-center border-0 py-2">
-          <small>No test selected</small>
+          <small class="text-muted">No items selected</small>
         </li>
-        `);
+      `);
       $selectedCount.text(0);
-      $labpricearea.text(0);
+      $labpricearea.text("₹0");
     }
   }
 
   function renderTest(list) {
     $allTestArea.empty();
-    if (list) {
+    if (list && list.length) {
       list.forEach((i) => {
+        const isChecked = allTest.some(item => item.id == i.id);
         $allTestArea.append(`
-                     <label class="list-group-item list-group-item-action p-1 m-0 cursor-pointer">
-                        <div class="d-flex w-100 justify-content-between align-items-center">
-                           <div class="px-1">
-                              <div class="d-flex justify-content-start align-items-center gap-2">
-                                <input type="checkbox" class="selectCheckbox" data-id="${
-                                  i.id
-                                }" />
-                                <span style="font-weight:normal;" class="d-block d-md-inline">${
-                                  i.label
-                                }</span>
-                              </div>
-                             <small class="${
-                               i.testCount
-                                 ? "text-muted d-block ms-4"
-                                 : "d-none"
-                             }">${i.testCount || ""} tests</small>
-                          </div>
-                         <span class="fw-bold text-primary">₹${i.price}</span>
-                        </div>
-                     </label>
-                    `);
+          <label class="list-group-item list-group-item-action p-1 m-0 cursor-pointer border-0 border-bottom">
+            <div class="d-flex w-100 justify-content-between align-items-center">
+               <div class="px-1 d-flex align-items-center gap-2">
+                  <input type="checkbox" class="selectCheckbox" data-id="${i.id}" ${isChecked ? 'checked' : ''} />
+                  <div>
+                    <span style="font-weight:normal;" class="d-block text-sm">${i.name || i.text || i.label}</span>
+                    ${i.testCount ? `<small class="text-muted">${i.testCount} tests included</small>` : ''}
+                  </div>
+               </div>
+               <span class="fw-bold text-primary text-sm">₹${i.cost || 0}</span>
+            </div>
+          </label>
+        `);
       });
+    } else {
+      $allTestArea.append('<div class="p-3 text-center text-muted small">No results found</div>');
     }
   }
 
+  function renderLoading() {
+    $allTestArea.empty().append(`
+      <div class="d-flex justify-content-center align-items-center h-100 py-5">
+        <div class="spinner-border spinner-border-sm text-primary me-2" role="status"></div>
+        <span class="text-muted small">Loading...</span>
+      </div>
+    `);
+  }
+
+  // Checkbox Selection
   $allTestArea.on("change", ".selectCheckbox", function () {
     const id = $(this).data("id");
     const isChecked = $(this).is(":checked");
     if (isChecked) {
-      if (selected == "test") {
-        const item = labTests.find((i) => i.id == id);
-        allTest.push(item);
-        renderSelectedTest(allTest);
-      } else {
-        allTest = [...allTest, packageTestsMap[parseInt(id)]];
-        renderSelectedTest(allTest);
+      const item = currentFetchedList.find((i) => i.id == id);
+      if (item && !allTest.some(t => t.id == id)) {
+        allTest.push({...item,type:selectedMode});
       }
     } else {
-      if (selected == "test") {
-        allTest = allTest.filter((i) => i.id != id);
-        renderSelectedTest(allTest);
-      } else {
-        allTest = allTest.filter((test) => test.id != id);
-        renderSelectedTest(allTest);
-      }
+      allTest = allTest.filter((i) => i.id != id);
     }
+    renderSelectedTest(allTest);
   });
 
+  // Tab Buttons
   const $changetotest = $("#changetotest");
   const $changetopackage = $("#changetopackage");
+  const $changetocategory = $("#changetocategory");
+
+  function setActiveTab(btn) {
+    $(".btn-group .btn").removeClass("active");
+    btn.addClass("active");
+  }
 
   $changetotest.on("click", function () {
-    $changetotest.addClass("active");
-    $changetopackage.removeClass("active");
-    renderTest(labTests);
-    selected = "test";
+    currentStart = 0;
+    setActiveTab($(this));
+    fetchLabData("test");
   });
 
   $changetopackage.on("click", function () {
-    $changetotest.removeClass("active");
-    $changetopackage.addClass("active");
-    renderTest(labPackages);
-    selected = "package";
+    currentStart = 0;
+    setActiveTab($(this));
+    fetchLabData("package");
   });
 
-  function renderTopChips() {
+  $changetocategory.on("click", function () {
+    currentStart = 0;
+    setActiveTab($(this));
+    fetchLabData("category");
+  });
+
+  // Pagination Handlers
+  $labNextBtn.on("click", function () {
+    currentStart += pageSize;
+    fetchLabData(selectedMode);
+  });
+
+  $labPrevBtn.on("click", function () {
+    if (currentStart >= pageSize) {
+      currentStart -= pageSize;
+      fetchLabData(selectedMode);
+    }
+  });
+
+  // Search local filtering
+  $labSearchInput.on("input", function() {
+    const term = $(this).val().toLowerCase();
+    const filtered = currentFetchedList.filter(item => 
+       (item.label || item.text || "").toLowerCase().includes(term)
+    );
+    renderTest(filtered);
+  });
+
+  function renderTopChips(categories) {
     $categoryArea.empty();
-    if (testCategories.length) {
-      testCategories.forEach((i) => {
+    if (categories && categories.length) {
+      categories.forEach((i) => {
         $categoryArea.append(
-          `<div data-category="${i.id}" role="button" style="width: fit-content; display: inline-block;" class="bg-light px-2 rounded-4 text-sm text-center category-chips">${i.label}</div>`,
+          `<div data-id="${i.id}" role="button" class="badge bg-light text-custom fw-normal px-2 py-1 rounded-4 category-chips cursor-pointer border">${i.name || i.text || i.label}</div>`,
         );
       });
     }
   }
 
+  // Remove Item
   $selectedTestArea.on("click", ".test-cancel", function () {
-    const testId = $(this).data("id");
-    allTest = allTest.filter((i) => i.id != testId);
+    const id = $(this).data("id");
+    allTest = allTest.filter((i) => i.id != id);
     renderSelectedTest(allTest);
+    // Uncheck in the list if currently displayed
+    $allTestArea.find(`.selectCheckbox[data-id="${id}"]`).prop('checked', false);
   });
 
+  // Category Chip Filtering (Mock behavior - since categories usually filter tests)
   $categoryArea.on("click", ".category-chips", function () {
-    const selectedCategory = categoryTestsMap[$(this).data("category")];
-    renderTest(selectedCategory.tests);
+    const id = $(this).data("id");
+    // Usually this would call an API with ?category=id
+    // For now, let's switch to Tests mode and filter (if possible) or just fetch
+    $changetotest.click();
+    // In a real app, this would be: fetchLabData("test", id);
   });
 
   $(document).ready(function () {
+    // Initial fetch
+    fetchLabData("test");
     renderSelectedTest(allTest);
-    renderTopChips();
-    renderTest(labTests);
   });
 });
 
@@ -193,6 +230,7 @@ function renderLabTests(container, lablist) {
     lablist.forEach((lab) => {
       let labItems = "";
       lab.list.forEach((l,index) => {
+        console.log(l)
        labItems += ` 
        <tr>
           <td style="border:0px;" class="text-muted">
