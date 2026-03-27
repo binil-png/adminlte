@@ -367,7 +367,7 @@ label {
 .select2-selection--single {
   height: 32px !important;
   border: 1px solid #d1d5db !important;
-  /* border-radius: 0.5rem !important; */
+  border-radius: 1rem !important;
   background-color: #fff !important;
   display: flex !important;
   align-items: center !important;
@@ -422,7 +422,7 @@ label {
 .select2-selection--multiple {
   min-height: 32px !important;
   border: 1px solid #d1d5db !important;
-  /* border-radius: 0.5rem !important; */
+  border-radius: 1rem !important;
   padding: 2px 8px !important;
   display: flex !important;
   align-items: center !important;
@@ -438,12 +438,30 @@ label {
   margin: 0 !important;
   list-style: none !important;
   width: 100% !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+}
+
+.select2-selection--multiple .select2-search--inline {
+  display: flex !important;
+  align-items: center !important;
+  margin: 0 !important;
+}
+
+.select2-selection--multiple .select2-search--inline .select2-search__field {
+  margin: 0 !important;
+  padding: 0 4px !important;
+  height: 28px !important;
+  line-height: 28px !important;
+  font-size: 14px !important;
+  background-color: transparent !important;
+  vertical-align: middle !important;
 }
 
 .select2-selection--multiple .select2-selection__choice {
   background-color: #e8f5e9 !important;
   border: 1px solid #c8e6c9 !important;
-  /* border-radius: 12px !important; */
+  border-radius: 1rem !important;
   color: #2e7d32 !important;
   margin: 2px 0 !important;
   padding: 1px 10px !important;
@@ -468,7 +486,7 @@ label {
 /* Dropdown styling */
 .select2-dropdown {
   border: 1px solid #dee2e6 !important;
-  /* border-radius: 0.75rem !important; */
+  border-radius: 1rem !important;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1) !important;
   overflow: hidden !important;
   margin-top: 4px !important;
