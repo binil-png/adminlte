@@ -11,7 +11,8 @@ $(function () {
         avatar: $("#pAvatar").attr("src"),
         amountDue: $("#pAmount").text(),
         visits: $("#pVisits").text(),
-        lastVisit: $("#pLastVisit").text()
+        lastVisit: $("#pLastVisit").text(),
+        allergies: $("#pAllergies").html()
       },
       vitals: {
         temperature: $("input[name='temperature']").val(),
@@ -58,7 +59,8 @@ $(function () {
           givenDate: $("#givenDate").val(),
           teeth: $("#selectedLabContainer").find('.badge').map(function(){ return $(this).text().trim(); }).get()
       },
-      files: []
+      files: [],
+      patientDataGlobal: (typeof patientDataGlobal !== 'undefined') ? patientDataGlobal : null
     };
 
     // Gather procedures
@@ -131,6 +133,11 @@ $(function () {
       const data = JSON.parse(rawData);
       console.log("Loading data from localStorage:", data);
 
+      // Restore global patient data for drawers/modals
+      if (data.patientDataGlobal) {
+          window.patientDataGlobal = data.patientDataGlobal;
+      }
+
       // Populate Patient Info
       if (data.patient) {
         $("#pName").text(data.patient.name);
@@ -140,6 +147,8 @@ $(function () {
         $("#pAmount").text(data.patient.amountDue);
         $("#pVisits").text(data.patient.visits);
         $("#pLastVisit").text(data.patient.lastVisit);
+        $("#pId").text(data.patient.id);
+        $("#pAllergies").html(data.patient.allergies);
       }
 
       // Populate Vitals in Preview (specific elements in preview.html)
