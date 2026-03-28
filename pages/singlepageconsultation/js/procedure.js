@@ -1,7 +1,23 @@
 $(function () {
+
   function generateBoxId(index) {
     return `proc-box-${index}-extra-fields`;
   }
+
+        function initPrescTemplateSelect2() {
+      $("#procTemplateSelect").select2({
+        placeholder: "Select Template",
+        width: "100%",
+        ajax: {
+          url: `${baseUrl}/singlepage_rxtemplate`,
+          dataType: "json",
+          delay: 250,
+          data: (params) => ({ searchterm: params.term || "" }),
+          processResults: (data) => ({ results: data }),
+          cache: true,
+        },
+      });
+    }
 
   function calculateLineTotal(qty, price, discount) {
     const quantity = parseFloat(qty) || 0;
@@ -16,7 +32,7 @@ $(function () {
   }
 
   window.procData = [];
-
+  initPrescTemplateSelect2()
   function renderProcTable() {
     const container = $("#procContainer");
     container.empty();
@@ -26,7 +42,6 @@ $(function () {
       const lineTotal = calculateLineTotal(p.qty, p.price, p.discount);
       const initialDisplayClass = defaultHideClass;
       const initialButtonHtml = "Show more";
-      console.log("procedure data =>", p);
       container.append(`
       <div class="bg-custom rounded-4 proc-box" data-index="${index}">
             <div class="p-2">
@@ -176,6 +191,99 @@ $(function () {
 
     updateProcSummary();
     initProcSelect2();
+    initProcTemplateSelect2();
+  }
+
+  // Fetch templates when the accordion is opened
+  $("#collapseProcedure").on("show.bs.collapse", function () {
+    loadProcTemplateChips();
+  });
+
+  function loadProcTemplateChips() {
+    $.ajax({
+      url: `${baseUrl}/singlepage_proceduretemplate`,
+      type: "GET",
+      dataType: "json",
+      data: { searchterm: "" },
+      success: function (response) {
+        const $container = $("#procTemplateChips");
+        $container.find(".proc-template-chip").remove();
+        
+        // Render chips before the Select2 dropdown
+        response.forEach((t) => {
+          $container.prepend(`
+            <span class="badge badge-primary p-2 rounded-4 proc-template-chip" role="button" data-id="${t.id}">
+              ${t.text}
+            </span>
+          `);
+        });
+      },
+      error: function (xhr) {
+        console.error("Error loading template chips:", xhr);
+      }
+    });
+  }
+
+  function applyProcedureTemplate(templateId) {
+    if (templateId) {
+      $.ajax({
+        url: `${baseUrl}/singlepage_gettemplatecontent`,
+        type: "GET",
+        data: { uniqueid: templateId },
+        success: function (response) {
+          if (Array.isArray(response)) {
+            response.forEach((item) => {
+              const qty = parseFloat(item.quantity || item.qty) || 1;
+              const price = parseFloat(item.price) || 0;
+              const discount = parseFloat(item.discount) || 0;
+              const total = calculateLineTotal(qty, price, discount);
+
+              procData.push({
+                id: item.procedure_id || item.id || "",
+                name: item.procedure_name || item.name || item.text || "",
+                instruction: item.note || item.instruction || "",
+                qty: qty,
+                price: price,
+                discount: discount,
+                discountUnit: item.discount_type === "INR" ? "rs" : "per",
+                status: item.status || "Completed",
+                total: parseFloat(total),
+              });
+            });
+            renderProcTable();
+          }
+        },
+        error: function (xhr) {
+          console.error("Error fetching template content:", xhr);
+        },
+      });
+    }
+  }
+
+  function initProcTemplateSelect2() {
+    $("#procTemplateSelect").select2({
+      placeholder: "Select Template",
+      width: "100%",
+      selectionCssClass: "custom-select2 rounded-4 w-100",
+      dropdownCssClass: "complaint-dropdown",
+      ajax: {
+        url: `${baseUrl}/singlepage_proceduretemplate`,
+        type: "get",
+        dataType: "json",
+        delay: 250,
+        data: function (params) {
+          return {
+            searchterm: params.term,
+          };
+        },
+        processResults: function (response) {
+          return {
+            results: response,
+          };
+        },
+        cache: true,
+      },
+    });
   }
 
   function initProcSelect2() {
@@ -222,6 +330,15 @@ $(function () {
     }
     
     updateProcSummary();
+  });
+
+  $(document).on("select2:select", "#procTemplateSelect", function (e) {
+    applyProcedureTemplate(e.params.data.id);
+  });
+
+  $(document).on("click", ".proc-template-chip", function () {
+    const templateId = $(this).data("id");
+    applyProcedureTemplate(templateId);
   });
   $(document).on("click", ".btn-toggle-fields", function () {
     const $button = $(this);

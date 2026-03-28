@@ -86,13 +86,13 @@ const mockVitals = {
 };
 
 const mockClinicalNotes = {
-  chiefComplaints: "Fever, cold, body pain",
-  medicalHistory: "No major history, allergic to dust",
-  observations: "High temperature, throat congestion",
-  investigations: "Blood test suggested",
-  diagnosis: "Viral infection",
-  treatment: "Paracetamol 650mg",
-  advice: "Drink warm water & rest well",
+  chiefComplaints: "",
+  medicalHistory: "",
+  observations: "",
+  investigations: "",
+  diagnosis: "",
+  treatment: "",
+  advice: "",
 };
 
 const clinicalTemplates = [];

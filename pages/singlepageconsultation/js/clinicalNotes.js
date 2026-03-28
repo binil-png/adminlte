@@ -8,9 +8,9 @@ $(function () {
     $("#diagnosis").val(data.diagnosis);
     $("#treatment").val(data.treatment);
     $("#advice").val(data.advice);
+    $("#notes").val(data.notes || []);
 
-    // Set preview text
-    $("#clinicalNotesPrev").text(data.chiefComplaints || "No items yet");
+    updateClinicalPreview();
   }
 
   $("#saveNotes").on("click", function () {
@@ -51,25 +51,35 @@ $(function () {
   });
 
   function updateClinicalPreview() {
-    const chief = $("#chiefComplaints").val();
-    const obs = $("#observations").val();
-    const diag = $("#diagnosis").val();
-    const treat = $("#treatment").val();
+    const chief = $("#chiefComplaints").val() || [];
+    const history = $("#medicalHistory").val() || [];
+    const obs = $("#observations").val() || [];
+    const investigations = $("#investigations").val() || [];
+    const diag = $("#diagnosis").val() || [];
+    const treat = $("#treatment").val() || [];
+    const notes = $("#notes").val() || [];
+    const advice = $("#advice").val() || "";
 
-    const preview = `
-    Chief: ${chief || "—"} | 
-    Obs: ${obs || "—"} | 
-    Dx: ${diag || "—"} | 
-    Tx: ${treat || "—"}
-  `;
+    const parts = [];
+    const formatValue = (val) => (Array.isArray(val) ? val.join(", ") : val);
 
-    $("#clinicalNotesPrev").text(preview.trim());
+    if (formatValue(chief)) parts.push(`Chief: ${formatValue(chief)}`);
+    if (formatValue(history)) parts.push(`History: ${formatValue(history)}`);
+    if (formatValue(obs)) parts.push(`Obs: ${formatValue(obs)}`);
+    if (formatValue(investigations)) parts.push(`Inv: ${formatValue(investigations)}`);
+    if (formatValue(diag)) parts.push(`Dx: ${formatValue(diag)}`);
+    if (formatValue(treat)) parts.push(`Tx: ${formatValue(treat)}`);
+    if (formatValue(notes)) parts.push(`Note: ${formatValue(notes)}`);
+    if (advice.trim()) parts.push(`Advice: ${advice}`);
+
+    const preview = parts.length > 0 ? parts.join(" | ") : "No items yet";
+    $("#clinicalNotesPrev").text(preview);
   }
 
-  // Watch all fields for changes
+  // Watch all fields for changes (Select2 triggers 'change')
   $(
-    "#chiefComplaints, #medicalHistory, #observations, #investigations, #diagnosis, #treatment, #advice",
-  ).on("input", function () {
+    "#chiefComplaints, #medicalHistory, #observations, #investigations, #diagnosis, #treatment, #advice, #notes",
+  ).on("change input", function () {
     updateClinicalPreview();
   });
 
@@ -81,14 +91,10 @@ $(function () {
     $("#diagnosis").val($(this).data("diagnosis") || "");
     $("#treatment").val($(this).data("treatment") || "");
     $("#advice").val($(this).data("advice") || "");
-    const preview = `
-    Chief: ${$(this).data("chief") || "—"} | 
-    Obs: ${$(this).data("observation") || "—"} | 
-    Dx: ${$(this).data("diagnosis") || "—"} | 
-    Tx: ${$(this).data("treatment") || "—"}
-  `;
-
-    $("#clinicalNotesPrev").text(preview.trim());
+    $("#notes").val($(this).data("notes") || "");
+    
+    // Trigger updateClinicalPreview to refresh the header text
+    updateClinicalPreview();
   });
 
   // Load on page start

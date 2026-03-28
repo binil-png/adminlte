@@ -82,11 +82,16 @@ $(function () {
           <div class="d-flex align-items-end">
             <div class="flex-grow-1">
               <label class="small text-muted mb-0">Medicine Name</label>
-              <select class="form-control select2-medicine input-style" style="width:100%"></select>
+              <select class="form-control select2-medicine input-style rounded-start-4 rounded-end-0" style="width:100%"></select>
             </div>
             <div class="flex-grow-1">
               <label class="small text-muted mb-0">Generic Name</label>
-              <input class="form-control med-generic input-style rounded-start-0" placeholder="Generic" readonly style="border-left: 0;">
+              <input 
+                class="form-control med-generic input-style rounded-start-0 rounded-end-4" 
+                placeholder="Generic" 
+                readonly 
+                style="border-left: 0; height:32px;"
+              >
             </div>
           </div>
         </div>
@@ -318,17 +323,72 @@ $(function () {
       }
     }
 
-    // ---------- 4. CLICK TEMPLATE CHIP ----------
-    $(".quick-badges span").on("click", function () {
-      const templateName = $(this).text().trim();
-      // Check if prescriptionTemplates exists globaly
-      if (
-        typeof prescriptionTemplates !== "undefined" &&
-        prescriptionTemplates[templateName]
-      ) {
-        setPrescriptions(prescriptionTemplates[templateName]);
-        updatePrescriptionPreview();
-      }
+    // ---------- 4. TEMPLATE LOADING ----------
+    function initPrescTemplateSelect2() {
+      $("#prescTemplateSelect").select2({
+        placeholder: "Select Template",
+        width: "180px",
+        ajax: {
+          url: `${baseUrl}/singlepage_rxtemplate`,
+          dataType: "json",
+          delay: 250,
+          data: (params) => ({ searchterm: params.term || "" }),
+          processResults: (data) => ({ results: data }),
+          cache: true,
+        },
+      });
+    }
+
+    function loadPrescTemplateChips() {
+      $.ajax({
+        url: `${baseUrl}/singlepage_rxtemplate`,
+        type: "GET",
+        dataType: "json",
+        data: { searchterm: "" },
+        success: function (response) {
+          const $container = $("#prescTemplateChips");
+          $container.find(".presc-template-chip").remove();
+          
+          response.forEach((t) => {
+            $container.prepend(`
+              <span class="badge badge-primary p-2 rounded-4 presc-template-chip" role="button" data-id="${t.id}">
+                ${t.text}
+              </span>
+            `);
+          });
+        },
+        error: function (xhr) {
+          console.error("Error loading prescription templates:", xhr);
+        }
+      });
+    }
+
+    function applyPrescriptionTemplate(templateId) {
+      if (!templateId) return;
+      
+      $.ajax({
+        url: `${baseUrl}/singlepage_rxtemplatecontent`,
+        type: "GET",
+        data: { uniqueid: templateId },
+        success: function (response) {
+          if (Array.isArray(response)) {
+            // Option to merge or clear. Existing setPrescriptions(data) clears first.
+            setPrescriptions(response);
+            updatePrescriptionPreview();
+          }
+        },
+        error: function (xhr) {
+          console.error("Error fetching prescription template content:", xhr);
+        }
+      });
+    }
+
+    $(document).on("select2:select", "#prescTemplateSelect", function (e) {
+      applyPrescriptionTemplate(e.params.data.id);
+    });
+
+    $(document).on("click", ".presc-template-chip", function () {
+      applyPrescriptionTemplate($(this).data("id"));
     });
 
     // ---------- 5. ADD MED BUTTON ----------
@@ -347,6 +407,7 @@ $(function () {
     });
 
     // ---------- 7. SAVE PRESCRIPTION ----------
+    // ... (rest of the save logic)
     $("#savePresc").on("click", function () {
       const itemsArr = getPrescriptions();
       if (itemsArr.length === 0) {
@@ -365,7 +426,7 @@ $(function () {
           frequency: item.frequency.text || "",
           consume: item.consumption.text || "",
           duration: item.duration.text || "",
-          from_time: "", // Use time from timeFilter if you want: $("#timeFilter").val()
+          from_time: "", 
           to_time: "",
           site: item.injection_site.text || "",
           volume: "",
@@ -382,7 +443,6 @@ $(function () {
         items: itemsObj,
       };
 
-      // Add patient/doctor context if available globally
       if (typeof selectedPatientId !== "undefined")
         payload.patient_id = selectedPatientId;
       if (typeof selectedAppointmentId !== "undefined")
@@ -417,6 +477,9 @@ $(function () {
     });
 
     // Initial load
+    initPrescTemplateSelect2();
+    loadPrescTemplateChips();
+
     if (typeof prescriptions !== "undefined") {
       setPrescriptions(prescriptions);
     }
