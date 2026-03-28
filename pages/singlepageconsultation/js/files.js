@@ -2,6 +2,15 @@ $(function () {
   let allFiles = [];
   const apiBase = (typeof baseUrl !== 'undefined') ? baseUrl : "";
 
+  function updateFilePreview() {
+    if (allFiles && allFiles.length > 0) {
+      const previewText = allFiles.map(f => f.file.name).join(", ");
+      $("#filePreview").text(previewText);
+    } else {
+      $("#filePreview").text("No items yet");
+    }
+  }
+
   $(document).ready(function () {
     // Show input area
     $("#showFileArea").click(function () {
@@ -49,6 +58,7 @@ $(function () {
       $("#singleDescription").val("");
       $("#fileInputArea").addClass("d-none");
       $("#showFileArea").removeClass("d-none");
+      updateFilePreview();
     });
 
     // Remove a file box
@@ -56,6 +66,7 @@ $(function () {
       let index = $(this).closest("li").index();
       allFiles.splice(index, 1);
       $(this).closest("li").remove();
+      updateFilePreview();
     });
 
     // Save button
@@ -87,6 +98,7 @@ $(function () {
           allFiles = [];
           $("#fileList").empty();
           $("#closeFileToList").click(); // Hide input area if open
+          updateFilePreview();
         },
         error: function (xhr) {
           console.error("Failed to save files:", xhr);

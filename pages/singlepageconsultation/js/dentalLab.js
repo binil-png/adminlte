@@ -125,6 +125,13 @@ $(function () {
     }
 
     $("#selectedLabContainer").html(renderElements);
+    
+    // Update header preview
+    if (selectedArray.length > 0) {
+      $("#dentalLabPreview").text("Teeth: " + selectedArray.join(", "));
+    } else {
+      $("#dentalLabPreview").text("No items yet");
+    }
   };
   renderSelectedTooth();
   $(document).on("click", "#selectAllBtn", function () {

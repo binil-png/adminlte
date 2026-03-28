@@ -504,3 +504,21 @@ label {
   color: #fff !important;
 }
 
+/* Accordion Preview Text Style */
+.preview-text {
+  max-width: 60%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 0.85rem;
+  color: #6c757d;
+  margin-left: auto;
+  margin-right: 1rem;
+}
+
+@media (max-width: 768px) {
+  .preview-text {
+    max-width: 40%;
+    font-size: 0.75rem;
+  }
+}

@@ -10,6 +10,15 @@ $(function () {
     return `dental-box-${index}-extra-fields`;
   }
 
+  function updateDentalPreview() {
+    const procedures = dentalDataList.filter(p => p.name).map(p => p.name);
+    if (procedures.length > 0) {
+      $("#selectedTeethPreview").text(procedures.join(", "));
+    } else {
+      $("#selectedTeethPreview").text("No items yet");
+    }
+  }
+
   // 2. Procedures Rendering
   function renderDentalTable(dentalData) {
     const container = $("#dentalContainer");
@@ -135,6 +144,7 @@ $(function () {
       `);
     });
     updateDentalTotals();
+    updateDentalPreview();
   }
 
   // 3. Tooth UI Rendering Logic
@@ -215,6 +225,7 @@ $(function () {
       .find(".dental-line-total")
       .text(`₹${dentalDataList[index].total.toFixed(2)}`);
     updateDentalTotals();
+    updateDentalPreview();
   });
   $(document).on("click", ".btn-toggle-dental-fields", function (e) {
     e.preventDefault();

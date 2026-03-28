@@ -55,6 +55,15 @@ $(function () {
     });
   }
 
+  function updateLabPreview(list) {
+    if (list.length > 0) {
+      const previewText = list.map(t => t.name || t.label || t.text).join(", ");
+      $("#labPreview").text(previewText);
+    } else {
+      $("#labPreview").text("No items yet");
+    }
+  }
+
   function renderSelectedTest(list) {
     $selectedTestArea.empty();
  
@@ -88,6 +97,7 @@ $(function () {
       $selectedCount.text(0);
       $labpricearea.text("₹0");
     }
+    updateLabPreview(list);
   }
 
   function renderTest(list) {

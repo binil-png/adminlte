@@ -46,6 +46,16 @@ $(function () {
       return list;
     }
 
+    function updatePrescriptionPreview() {
+      const itemsArr = getPrescriptions();
+      if (itemsArr.length > 0) {
+        const previewText = itemsArr.map(item => item.medicine_name || "New Medicine").join(", ");
+        $("#prescPreview").text(previewText);
+      } else {
+        $("#prescPreview").text("No items yet");
+      }
+    }
+
     // ---------- 2. SET DATA INTO UI ----------
     function setPrescriptions(data) {
       $("#medList").empty(); // Clear old list
@@ -133,6 +143,7 @@ $(function () {
 
       $("#medList").append(row);
       initRowSelect2(row, data);
+      updatePrescriptionPreview();
     }
 
     function initRowSelect2(row, data) {
@@ -181,6 +192,7 @@ $(function () {
           if (unitMatch) {
             row.find(".dosage-unit").val(unitMatch[0].toLowerCase());
           }
+          updatePrescriptionPreview();
         }
       });
 
@@ -315,6 +327,7 @@ $(function () {
         prescriptionTemplates[templateName]
       ) {
         setPrescriptions(prescriptionTemplates[templateName]);
+        updatePrescriptionPreview();
       }
     });
 
@@ -329,6 +342,7 @@ $(function () {
         .closest(".medicine-card")
         .fadeOut(200, function () {
           $(this).remove();
+          updatePrescriptionPreview();
         });
     });
 
