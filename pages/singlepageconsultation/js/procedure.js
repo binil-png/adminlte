@@ -26,6 +26,7 @@ $(function () {
       const lineTotal = calculateLineTotal(p.qty, p.price, p.discount);
       const initialDisplayClass = defaultHideClass;
       const initialButtonHtml = "Show more";
+      console.log("procedure data =>", p);
       container.append(`
       <div class="bg-custom rounded-4 proc-box" data-index="${index}">
             <div class="p-2">
@@ -39,8 +40,8 @@ $(function () {
                         <label class="form-label small text-muted mb-0 select2-label">Procedure</label>
                         <select class="form-control form-control-sm proc-name proc-field">
                             ${
-                              p.name
-                                ? `<option value="${p.name}" selected>${p.name}</option>`
+                              p.id || p.name
+                                ? `<option value="${p.id || p.name}" selected>${p.name}</option>`
                                 : ""
                             }
                         </select>
@@ -209,10 +210,18 @@ $(function () {
     const $box = $(this).closest(".proc-box");
     const index = $box.data("index");
 
+    // Update procData with both ID and Text (Name)
+    if (procData[index]) {
+      procData[index].id = data.id;
+      procData[index].name = data.text;
+    }
+
     if (data.cost) {
       const $priceInput = $box.find(".proc-price");
       $priceInput.val(data.cost).trigger("change");
     }
+    
+    updateProcSummary();
   });
   $(document).on("click", ".btn-toggle-fields", function () {
     const $button = $(this);
@@ -235,6 +244,7 @@ $(function () {
       window.procData = [];
     }
     procData.push({
+      id: "",
       name: "",
       instruction: "",
       qty: 0,
@@ -285,7 +295,14 @@ $(function () {
       newValue = parseFloat(newValue) || 0;
     }
 
-    procData[index][fieldClass] = newValue;
+    if (fieldClass === "name") {
+      const selectData = $(this).select2('data')[0];
+      procData[index].id = $(this).val();
+      procData[index].name = selectData ? selectData.text : $(this).val();
+    } else {
+      procData[index][fieldClass] = newValue;
+    }
+
     const newQty = $qtyInput.val();
     const newPrice = $priceInput.val();
     const newDiscount = $discInput.val();
@@ -297,7 +314,13 @@ $(function () {
 
   function recalcProcRow(row) {
     const index = row.data("index");
-    const name = row.find(".proc-name").val();
+    if (index === undefined) return;
+
+    const $select = row.find(".proc-name");
+    const selectData = $select.select2('data')[0];
+    const id = $select.val();
+    const name = selectData ? selectData.text : $select.val();
+    
     const qty = parseFloat(row.find(".proc-qty").val()) || 1;
     const price = parseFloat(row.find(".proc-price").val()) || 0;
     const discount = parseFloat(row.find(".proc-discount").val()) || 0;
@@ -305,9 +328,18 @@ $(function () {
 
     const total = price * qty * (1 - discount / 100);
 
-    procData[index] = { name, qty, price, discount, status, total };
+    procData[index] = { 
+      ...procData[index],
+      id, 
+      name, 
+      qty, 
+      price, 
+      discount, 
+      status, 
+      total 
+    };
 
-    row.find(".proc-line-total").text("₹" + total);
+    row.find(".proc-line-total").text("₹" + total.toFixed(2));
 
     updateProcSummary();
   }
