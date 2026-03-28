@@ -140,11 +140,35 @@ $(function () {
       diastolic: "",
       position: "",
     };
-    setVitalsFormData(mockVitals);
+
+    // Helper to update top summary strip
+    function updateTopSummary() {
+      const temp = $("input[name='temperature']").val();
+      const height = $("input[name='height']").val();
+      const weight = $("input[name='weight']").val();
+      const systolic = $("input[name='systolic']").val();
+      const diastolic = $("input[name='diastolic']").val();
+      const glucose = $("input[name='glucose']").val();
+      const pulse = $("input[name='pulse']").val();
+      const chol = $("input[name='cholesterol']").val();
+      const spo2 = $("input[name='spo2']").val();
+      const rr = $("input[name='respiratoryRate']").val();
+
+      $("#topTemp").text(temp ? `${temp}°F` : "—");
+      $("#topHtWt").text(height || weight ? `${height || "—"}m/${weight || "—"}kg` : "—");
+      $("#topBP").text(systolic || diastolic ? `${systolic || "—"}/${diastolic || "—"}` : "—");
+      $("#topGlucose").text(glucose ? `${glucose} mg` : "—");
+      $("#topPulse").text(pulse ? `${pulse} bpm` : "—");
+      $("#topChol").text(chol ? `${chol} mg` : "—");
+      $("#topSPO2").text(spo2 ? `${spo2}%` : "—");
+      $("#topRespRate").text(rr ? `${rr}/min` : "—");
+    }
+
     $("#vitalsForm").on("input change", "input, select", function () {
       const fieldName = $(this).attr("name");
       const newValue = $(this).val();
       const displayName = $(this).data("preview");
+
       if (displayName == "BP (mmHg)") {
         bp[fieldName] = newValue;
         dataWithKey[fieldName] =
@@ -152,8 +176,15 @@ $(function () {
       } else {
         dataWithKey[fieldName] = `${displayName}: ${newValue}`;
       }
-      previewArray = Object.entries(dataWithKey).map(([key, val]) => val);
+
+      // Update accordion summary text
+      previewArray = Object.entries(dataWithKey)
+        .filter(([key, val]) => val.split(": ")[1]?.trim()) // Only show fields with values
+        .map(([key, val]) => val);
       preview.data = previewArray;
+
+      // Update top strip summary
+      updateTopSummary();
     });
   });
 });

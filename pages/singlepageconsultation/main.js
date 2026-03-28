@@ -20,6 +20,7 @@ const imports = [
   "./js/preview.js",
   "./js/invoice.js",
   "./js/new.js",
+  "./js/persistence.js",
 ];
 
 function loadScripts() {
