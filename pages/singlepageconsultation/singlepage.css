@@ -504,6 +504,17 @@ label {
   color: #fff !important;
 }
 
+/* Global Select2 Results Height */
+.select2-results__options {
+  max-height: 250px !important;
+  overflow-y: auto !important;
+}
+
+.fixed-height-dropdown .select2-results__options {
+  max-height: 250px !important;
+  overflow-y: auto !important;
+}
+
 /* Accordion Preview Text Style */
 .preview-text {
   max-width: 60%;

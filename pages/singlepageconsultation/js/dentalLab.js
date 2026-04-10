@@ -159,4 +159,137 @@ $(function () {
     }
     renderSelectedTooth();
   });
+
+  // Base URL for APIs
+  const apiBase = (typeof baseUrl !== 'undefined') ? baseUrl : "";
+
+  // Initialize Select2 for Lab Name
+  $("#labName").select2({
+    placeholder: "Choose Lab...",
+    width: "100%",
+    selectionCssClass: "custom-select2 rounded-4",
+    dropdownCssClass: "complaint-dropdown",
+    ajax: {
+      url: `${apiBase}/singlepage_labmaster/dentallab`,
+      dataType: "json",
+      delay: 250,
+      data: function (params) {
+        return {
+          searchterm: params.term || "",
+          start: 0,
+          limit: 10
+        };
+      },
+      processResults: function (data) {
+        return {
+          results: data.map(item => ({
+            id: item.id,
+            text: item.name
+          }))
+        };
+      },
+      cache: true
+    }
+  });
+
+  // Initialize Select2 for Brand
+  $("#brand").select2({
+    placeholder: "Choose Brand...",
+    width: "100%",
+    selectionCssClass: "custom-select2 rounded-4",
+    dropdownCssClass: "complaint-dropdown",
+    ajax: {
+      url: `${apiBase}/singlepage_labmaster/brand`,
+      dataType: "json",
+      delay: 250,
+      data: function (params) {
+        return {
+          searchterm: params.term || "",
+          start: 0,
+          limit: 10
+        };
+      },
+      processResults: function (data) {
+        return {
+          results: data.map(item => ({
+            id: item.name,
+            text: item.name
+          }))
+        };
+      },
+      cache: true
+    }
+  });
+
+  // Save Dental Lab Order
+  $(document).on("click", "#saveDental", function () {
+    const $btn = $(this);
+    const originalHtml = $btn.html();
+    const labId = $("#labName").val();
+    const selectedTeethArray = Object.keys(selectedTooth);
+    
+    if (!labId) {
+      if (typeof ToastComponent !== 'undefined') {
+        new ToastComponent().danger("Please select a lab.");
+      } else {
+        alert("Please select a lab.");
+      }
+      return;
+    }
+    
+    if (selectedTeethArray.length === 0) {
+      if (typeof ToastComponent !== 'undefined') {
+        new ToastComponent().danger("Please select at least one tooth.");
+      } else {
+        alert("Please select at least one tooth.");
+      }
+      return;
+    }
+
+    const patientName = $("#pName").text().trim();
+    
+    // Create FormData as requested
+    const formData = new FormData();
+    formData.append("lab_id", labId);
+    formData.append("teeth", selectedTeethArray.join(","));
+    formData.append("typeofwork", $("#workType").val());
+    formData.append("remarks", $("#remarks").val());
+    formData.append("givendate", $("#givenDate").val());
+    formData.append("deliverydate", $("#deliveryDate").val());
+    formData.append("ex_name", patientName);
+    formData.append("amount", $("#invoiceAmount").val() || 0);
+    formData.append("paidamount", $("#labAmount").val() || 0);
+    formData.append("deliverystatus", "Ordered");
+
+    // Show loading state
+    $btn.prop("disabled", true).html('<span class="spinner-border spinner-border-sm me-2"></span> Saving...');
+
+    $.ajax({
+      url: `${apiBase}/singlepage_dentallab_save`,
+      type: "POST",
+      data: formData,
+      processData: false,
+      contentType: false,
+      success: function (response) {
+        if (typeof ToastComponent !== 'undefined') {
+          new ToastComponent().success("Dental lab order saved successfully!");
+        } else {
+          alert.success("Dental lab order saved successfully!");
+        }
+        console.log("Lab Save Success:", response);
+      },
+      error: function (xhr) {
+        if (typeof ToastComponent !== 'undefined') {
+          new ToastComponent().danger("Error saving dental lab order.");
+        } else {
+          alert("Error saving dental lab order.");
+        }
+        console.error("Lab Save Error:", xhr);
+      },
+      complete: function () {
+        // Restore button state
+        $btn.prop("disabled", false).html(originalHtml);
+      }
+    });
+  });
 });

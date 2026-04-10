@@ -621,7 +621,7 @@ $(function () {
     console.log("Saving Procedures Payload:", payload);
 
     $.ajax({
-      url: `${baseUrl}/api/singlepage_saveprocedures`,
+      url: `${baseUrl}/singlepage_saveprocedures`,
       type: "POST",
       contentType: "application/json",
       data: JSON.stringify(payload),

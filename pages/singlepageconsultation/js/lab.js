@@ -233,6 +233,64 @@ $(function () {
     fetchLabData("test");
     renderSelectedTest(allTest);
   });
+
+  // Save Lab Prescription
+  $("#saveLab").on("click", function () {
+    const $btn = $(this);
+    if (allTest.length === 0) {
+      const toast = new ToastComponent();
+      toast.warning("Please select at least one lab item.");
+      return;
+    }
+
+    // Loading state
+    const originalHtml = $btn.html();
+    $btn.prop("disabled", true).html('<span class="spinner-border spinner-border-sm me-2" role="status"></span>Saving...');
+
+    // Prepare payload
+    const today = new Date().toISOString().split("T")[0];
+    const payload = {
+      date: $("#dateFilter").val() || today,
+      items: {}
+    };
+
+    allTest.forEach((item, index) => {
+      payload.items[index.toString()] = {
+        item_id: item.id.toString(),
+        type: item.type,
+        cost: (item.cost || 0).toString()
+      };
+    });
+
+    console.log("Saving Lab Prescription Payload:", payload);
+
+    $.ajax({
+      url: `${apiBase}/singlepage_savelabprescription`,
+      method: "POST",
+      contentType: "application/json",
+      data: JSON.stringify(payload),
+      success: function (response) {
+        const toast = new ToastComponent();
+        toast.success("Lab prescription saved successfully!");
+        console.log("Lab Save Success:", response);
+        
+        // Optionally clear selection after successful save
+        // allTest = [];
+        // renderSelectedTest(allTest);
+        // Reset checkboxes if visible
+        $allTestArea.find(".selectCheckbox").prop("checked", false);
+      },
+      error: function (xhr) {
+        const toast = new ToastComponent();
+        toast.danger("Failed to save lab prescription.");
+        console.error("Lab Save Error:", xhr);
+      },
+      complete: function() {
+        // Restore button state
+        $btn.prop("disabled", false).html(originalHtml);
+      }
+    });
+  });
 });
 
 function renderLabTests(container, lablist) {

@@ -192,6 +192,7 @@ $(function () {
 
     $patientSearch.select2({
       theme: "bootstrap-4",
+      dropdownCssClass: "fixed-height-dropdown",
       selectionCssClass:
         "form-control custom-select border-end-0 rounded-end-0 rounded-4 template-select-style",
       ajax: {
