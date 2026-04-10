@@ -413,22 +413,80 @@ $(function () {
     },
   };
 
-  function renderchips(list, con) {
-    con.empty();
-    list.forEach((i) => {
-      con.append(`
-             <div class="px-1 lab-tooth-selected rounded-4 border d-flex align-items-center gap-2 text-sm labinsitems" 
-                 style="cursor: pointer;" data-selected=${i.id}>
-                <span>${i.label}</span>
-                <i class="fas fa-times-circle"></i>
-            </div>`);
+  function initProtocolSelect2() {
+    $("#protocolSelect").select2({
+      placeholder: "Select a protocol",
+      allowClear: true,
+      width: "100%",
+      selectionCssClass: "custom-select2 rounded-4",
+      dropdownCssClass: "complaint-dropdown",
+      data: protocols.map((p) => ({ id: p.id, text: p.label })),
+    });
+
+    $("#protocolSelect").on("change", function () {
+      const selectedId = $(this).val();
+      const $notesContainer = $(".notescontainer");
+
+      if (selectedId && protocolList[selectedId]) {
+        const protocol = protocolList[selectedId];
+        $notesContainer.removeClass("d-none");
+        $("#doctor-notes").text(protocol.doctorNotes || "");
+        $("#patient-notes").text(protocol.patientNotes || "");
+
+        // Populate Lab Investigations
+        if (protocol.lab) {
+          const labIds = protocol.lab.map((l) => l.id);
+          $("#labInvestigationSelect").val(labIds).trigger("change");
+        } else {
+          $("#labInvestigationSelect").val([]).trigger("change");
+        }
+
+        // Populate Procedures / Radiology
+        if (protocol.radPros) {
+          const radIds = protocol.radPros.map((r) => r.id);
+          $("#procedureRadiologySelect").val(radIds).trigger("change");
+        } else {
+          $("#procedureRadiologySelect").val([]).trigger("change");
+        }
+      } else {
+        $notesContainer.addClass("d-none");
+        $("#doctor-notes").text("");
+        $("#patient-notes").text("");
+        $("#labInvestigationSelect").val([]).trigger("change");
+        $("#procedureRadiologySelect").val([]).trigger("change");
+      }
     });
   }
+
+  function initInvestigationSelect2() {
+    $("#labInvestigationSelect").select2({
+      placeholder: "Select Lab Investigations",
+      allowClear: true,
+      multiple: true,
+      width: "100%",
+      selectionCssClass: "custom-select2 rounded-4",
+      dropdownCssClass: "complaint-dropdown",
+      data: labinslist.map((l) => ({ id: l.id, text: l.label })),
+    });
+
+    $("#procedureRadiologySelect").select2({
+      placeholder: "Select Procedures / Radiology",
+      allowClear: true,
+      multiple: true,
+      width: "100%",
+      selectionCssClass: "custom-select2 rounded-4",
+      dropdownCssClass: "complaint-dropdown",
+      data: procedureRadiologylist.map((r) => ({ id: r.id, text: r.label })),
+    });
+  }
+
+  initProtocolSelect2();
+  initInvestigationSelect2();
+
   let isShowProtocol = false;
   const $protocolShowBtn = $("#protocol-show-btn");
   $protocolShowBtn.on("click", function () {
     isShowProtocol = !isShowProtocol;
-    console.log(isShowProtocol);
     if (isShowProtocol) {
       $("#protocolArea").removeClass("d-none");
       $protocolShowBtn.text("Show less");
@@ -437,218 +495,6 @@ $(function () {
       $protocolShowBtn.text("Show more");
     }
   });
-  const $container = $("#protocol-container");
-  const $searchProtocol = $("#searchProtocol");
-  const $noProtocols = $("#no-protocols");
-  const $protocolNameDisplay = $("#protocolNameDisplay");
-  function populateProtocolList(filter = "") {
-    $container.empty();
-    const query = filter.toLowerCase();
-
-    const filteredPatients = protocols.filter((p) =>
-      p.label.toLowerCase().includes(query),
-    );
-
-    if (filteredPatients.length > 0) {
-      $noProtocols.addClass("d-none");
-      filteredPatients.forEach((p) => {
-        const itemHtml = `
-          <button class="dropdown-item py-2 border-bottom ignore-edit" type="button">
-            <div class="d-flex align-items-center">
-              <div class="text-muted small">${p.label}</div>
-            </div>
-          </button>`;
-
-        const $item = $(itemHtml);
-        const $notesContainer = $(".notescontainer");
-        $item.on("click", function () {
-          $protocolNameDisplay.text(p.label);
-          if (protocolList[p.id]) {
-            $notesContainer.removeClass("d-none");
-            $("#doctor-notes").text(protocolList[p.id]?.doctorNotes || "");
-            $("#patient-notes").text(protocolList[p.id]?.patientNotes || "");
-            renderchips(
-              protocolList[p.id].lab?.length ? protocolList[p.id].lab : [],
-              $labselectedItems,
-            );
-            renderchips(
-              protocolList[p.id].radPros.length
-                ? protocolList[p.id].radPros
-                : [],
-              $procedureRadiologyItems,
-            );
-          } else {
-            $notesContainer.addClass("d-none");
-            renderchips([], $labselectedItems);
-            renderchips([], $procedureRadiologyItems);
-          }
-        });
-
-        $container.append($item);
-      });
-    } else {
-      $noProtocols.removeClass("d-none");
-    }
-  }
-
-  populateProtocolList("");
-
-  $searchProtocol.on("input", function (e) {
-    populateProtocolList($(this).val());
-  });
-
-  //populate lab list
-  const $labcontainer = $("#labinsvestigation-container");
-  const $searchlabinstruction = $("#searchlabinstruction");
-  const $nolabins = $("#no-labins");
-  const $labselectedItems = $("#labselectedItems");
-  let selectedLabs = [];
-  $(document).on("click", ".labinsitems", function (e) {
-    e.stopPropagation();
-    e.preventDefault();
-    const selectedId = $(this).data("selected");
-    $(this).remove();
-    selectedLabs = selectedLabs.filter((i) => i.id != selectedId);
-  });
-
-  function populatelabinsList(filter = "") {
-    $labcontainer.empty();
-    const query = filter.toLowerCase();
-    let filteredPatients = [];
-    filteredPatients = labinslist.filter((p) =>
-      p.label.toLowerCase().includes(query),
-    );
-
-    if (filteredPatients.length > 0) {
-      $nolabins.addClass("d-none");
-      filteredPatients.forEach((p) => {
-        const itemHtml = `
-          <button class="dropdown-item py-2 border-bottom ignore-edit" type="button">
-            <div class="d-flex align-items-center">
-              <div class="text-muted small">${p.label}</div>
-            </div>
-          </button>`;
-
-        const $item = $(itemHtml);
-        $item.on("click", function () {
-          selectedLabs.push(p);
-          renderchips(selectedLabs, $labselectedItems);
-        });
-
-        $labcontainer.append($item);
-      });
-    } else {
-      const newObj = {
-        id: Date.now(),
-        label: filter,
-      };
-      filteredPatients.push(newObj);
-      $nolabins.addClass("d-none");
-      filteredPatients.forEach((p) => {
-        const itemHtml = `
-          <button class="dropdown-item py-2 border-bottom ignore-edit" type="button">
-            <div class="d-flex align-items-center">
-              <div class="text-muted small">${p.label}</div>
-            </div>
-          </button>`;
-
-        const $item = $(itemHtml);
-        $item.on("click", function () {
-          selectedLabs.push(p);
-          renderchips(selectedLabs, $labselectedItems);
-        });
-
-        $labcontainer.append($item);
-      });
-      // $nolabins.removeClass("d-none");
-    }
-  }
-  $searchlabinstruction.on("input", function (e) {
-    populatelabinsList($(this).val());
-  });
-  populatelabinsList("");
-
-  //  populate lab and radiology list
-  const $procedureRadiology = $("#procedure-radiology-container");
-  const $procedureRadiologySearch = $("#procedure-radiology-input");
-  const $noprocedurelab = $("#no-procedure-radiology");
-  const $procedureRadiologyItems = $("#procedure-radiology-item");
-  let selectedProcedureRadiology = [];
-  $(document).on("click", ".labinsitems", function (e) {
-    e.stopPropagation();
-    e.preventDefault();
-    const selectedId = $(this).data("selected");
-    $(this).remove();
-    selectedProcedureRadiology = selectedProcedureRadiology.filter(
-      (i) => i.id != selectedId,
-    );
-  });
-  function renderchips(list, con) {
-    con.empty();
-    list.forEach((i) => {
-      con.append(`
-             <div class="px-1 lab-tooth-selected rounded-4 border d-flex align-items-center gap-2 text-sm labinsitems" 
-                 style="cursor: pointer;" data-selected=${i.id}>
-                <span>${i.label}</span>
-                <i class="fas fa-times-circle"></i>
-            </div>`);
-    });
-  }
-  function populateProcedureRadiologyList(filter = "") {
-    $procedureRadiology.empty();
-    const query = filter.toLowerCase();
-    let filteredPatients = [];
-    filteredPatients = procedureRadiologylist.filter((p) =>
-      p.label.toLowerCase().includes(query),
-    );
-
-    if (filteredPatients.length > 0) {
-      $noprocedurelab.addClass("d-none");
-      filteredPatients.forEach((p) => {
-        const itemHtml = `
-          <button class="dropdown-item py-2 border-bottom ignore-edit" type="button">
-            <div class="d-flex align-items-center">
-              <div class="text-muted small">${p.label}</div>
-            </div>
-          </button>`;
-
-        const $item = $(itemHtml);
-        $item.on("click", function () {
-          selectedProcedureRadiology.push(p);
-          renderchips(selectedProcedureRadiology, $procedureRadiologyItems);
-        });
-
-        $procedureRadiology.append($item);
-      });
-    } else {
-      filteredPatients.push({
-        id: Date.now(),
-        label: filter,
-      });
-
-      filteredPatients.forEach((p) => {
-        const itemHtml = `
-          <button class="dropdown-item py-2 border-bottom ignore-edit" type="button">
-            <div class="d-flex align-items-center">
-              <div class="text-muted small">${p.label}</div>
-            </div>
-          </button>`;
-
-        const $item = $(itemHtml);
-        $item.on("click", function () {
-          selectedProcedureRadiology.push(p);
-          renderchips(selectedProcedureRadiology, $procedureRadiologyItems);
-        });
-
-        $procedureRadiology.append($item);
-      });
-      // $noprocedurelab.removeClass("d-none");
-    }
-  }
-  $procedureRadiologySearch.on("input", function (e) {
-    populateProcedureRadiologyList($(this).val());
-  });
-  populateProcedureRadiologyList("");
 });
 let clinicalNotesToggle = true;
 function formatDate(dateStr) {

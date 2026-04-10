@@ -1347,45 +1347,17 @@
                         </button>
                       </div>
                       <div id="protocolArea" class="d-none">
-                        <div
-                          class="dropdown py-2 pt-0 mt-0"
-                          id="custom-autocomplete"
-                        >
-                          <label class="fw-medium text-custom mb-1 ms-1"
-                            >Select protocol</label
-                          >
-                          <button
-                            class="btn btn-outline-secondary dropdown-toggle w-100 text-start d-flex justify-content-between align-items-center rounded-4 border"
-                            id="protocolDropdown"
-                            data-bs-toggle="dropdown"
-                            aria-expanded="false"
-                          >
-                            <span id="protocolNameDisplay">&nbsp</span>
-                          </button>
-
-                          <div
-                            class="dropdown-menu w-100 shadow"
-                            aria-labelledby="protocolDropdown"
-                          >
-                            <div class="px-3 py-2">
-                              <input
-                                type="text"
-                                class="form-control ignore-edit"
-                                id="searchProtocol"
-                                placeholder="Search options..."
-                                autofocus
-                              />
-                            </div>
-                            <div
-                              id="protocol-container"
-                              style="max-height: 200px; overflow-y: auto"
-                            ></div>
-                            <div
-                              id="no-protocols"
-                              class="px-3 py-2 d-none text-muted"
+                        <div class="row">
+                          <div class="col-12 mb-2">
+                            <label class="fw-medium text-custom mb-1 ms-1"
+                              >Select protocol</label
                             >
-                              No results found
-                            </div>
+                            <select
+                              id="protocolSelect"
+                              class="form-control rounded-4"
+                            >
+                              <option value="">Select a protocol</option>
+                            </select>
                           </div>
                         </div>
 
@@ -1424,106 +1396,28 @@
                             </div>
                           </div>
 
-                          <div class="col-6">
-                            <div
-                              class="dropdown py-2 pt-0"
-                              id="custom-autocomplete"
+                          <div class="col-6 pt-2">
+                            <label class="fw-medium text-custom mb-1 ms-1"
+                              >Lab investigations</label
                             >
-                              <label class="fw-medium text-custom mb-1 ms-1"
-                                >Lab investigations</label
-                              >
-                              <button
-                                class="w-100 text-start d-flex justify-content-start align-items-center rounded-4 border py-1"
-                                id="labInvestigation"
-                                data-bs-toggle="dropdown"
-                                aria-expanded="false"
-                              >
-                                <span>&nbsp;</span>
-                                <span
-                                  class="d-flex gap-2 flex-wrap"
-                                  id="labselectedItems"
-                                >
-                                  &nbsp;
-                                </span>
-                              </button>
-
-                              <div
-                                class="dropdown-menu w-100 shadow"
-                                aria-labelledby="labInvestigation"
-                              >
-                                <div class="px-3 py-2">
-                                  <input
-                                    type="text"
-                                    class="form-control ignore-edit"
-                                    id="searchlabinstruction"
-                                    placeholder="Search options..."
-                                    autofocus
-                                  />
-                                </div>
-                                <div
-                                  id="labinsvestigation-container"
-                                  style="max-height: 200px; overflow-y: auto"
-                                ></div>
-                                <div
-                                  id="no-labins"
-                                  class="px-3 py-2 d-none text-muted"
-                                >
-                                  No results found
-                                </div>
-                              </div>
-                            </div>
+                            <select
+                              id="labInvestigationSelect"
+                              class="form-control rounded-4"
+                              multiple
+                            ></select>
                           </div>
-                          <div class="col-6">
-                            <div
-                              class="dropdown py-2 pt-0"
-                              id="custom-autocomplete"
+                          <div class="col-6 pt-2">
+                            <label
+                              class="d-flex justify-content-start align-items-center text-custom mb-1 ms-1 gap-1 fw-medium"
+                              >Procedures / Radiology
+                              <input type="checkbox" /> Send to
+                              Radiology?</label
                             >
-                              <label
-                                class="d-flex justify-content-start align-items-center text-custom mb-1 ms-1 gap-1 fw-medium"
-                                >Procedures / Radiology
-                                <input type="checkbox" /> Send to
-                                Radiology?</label
-                              >
-                              <button
-                                class="w-100 text-start d-flex justify-content-start align-items-center rounded-4 border py-1"
-                                id="procedure-radiology"
-                                data-bs-toggle="dropdown"
-                                aria-expanded="false"
-                              >
-                                <span>&nbsp;</span>
-                                <span
-                                  class="d-flex gap-2 flex-wrap"
-                                  id="procedure-radiology-item"
-                                >
-                                  &nbsp;
-                                </span>
-                              </button>
-
-                              <div
-                                class="dropdown-menu w-100 shadow"
-                                aria-labelledby="procedure-radiology"
-                              >
-                                <div class="px-3 py-2">
-                                  <input
-                                    type="text"
-                                    class="form-control ignore-edit"
-                                    id="procedure-radiology-input"
-                                    placeholder="Search options..."
-                                    autofocus
-                                  />
-                                </div>
-                                <div
-                                  id="procedure-radiology-container"
-                                  style="max-height: 200px; overflow-y: auto"
-                                ></div>
-                                <div
-                                  id="no-procedure-radiology"
-                                  class="px-3 py-2 d-none text-muted"
-                                >
-                                  No results found
-                                </div>
-                              </div>
-                            </div>
+                            <select
+                              id="procedureRadiologySelect"
+                              class="form-control rounded-4"
+                              multiple
+                            ></select>
                           </div>
                         </div>
                       </div>
