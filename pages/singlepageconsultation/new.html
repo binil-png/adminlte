@@ -935,7 +935,7 @@
               class="accordion pb-5 px-3 patient-details hide-scrollbar"
             >
               <!-- Vitals -->
-              <div class="card mb-2">
+              <div class="card mb-0 rounded-bottom-0 border-bottom-0 shadow-none">
                 <div class="card-header" id="headingVitals">
                   <div
                     role="button"
@@ -950,7 +950,9 @@
                     </button>
 
                     <!-- Preview Text -->
-                    <small class="preview-text" id="vitalPreview">No items yet</small>
+                    <small class="preview-text" id="vitalPreview"
+                      >No items yet</small
+                    >
                   </div>
                 </div>
 
@@ -959,7 +961,7 @@
                   class="collapse"
                   data-parent="#patientAccordion"
                 >
-                  <div class="card-body">
+                  <div class="card-body p-4">
                     <form id="vitalsForm">
                       <div class="form-row">
                         <div class="form-group col-md-2">
@@ -1118,7 +1120,7 @@
               </div>
 
               <!-- Clinical Notes -->
-              <div class="card mb-2">
+              <div class="card mb-0 rounded-0 border-bottom-0 shadow-none">
                 <div class="card-header" id="headingClinicalNotes">
                   <div
                     role="button"
@@ -1147,7 +1149,7 @@
                   class="collapse show"
                   data-parent="#patientAccordion"
                 >
-                  <div class="card-body">
+                  <div class="card-body p-4">
                     <!-- <div
                       class="p-2 d-flex justify-content-between align-items-center"
                     >
@@ -1328,111 +1330,21 @@
                           <textarea
                             id="advice"
                             class="form-control rounded-4"
-                            style="height: 28px;padding: 3px 7px;font-size: 14px;"
+                            style="
+                              height: 28px;
+                              padding: 3px 7px;
+                              font-size: 14px;
+                            "
                             rows="1"
                           >
                           </textarea>
                         </div>
                       </div>
 
-                      <div
-                        class="d-flex justify-content-end align-items-center py-2"
-                      >
-                        <button
-                          id="protocol-show-btn"
-                          type="button"
-                          class="btn btn-sm"
-                        >
-                          Show more
-                        </button>
-                      </div>
-                      <div id="protocolArea" class="d-none">
-                        <div class="row">
-                          <div class="col-12 mb-2">
-                            <label class="fw-medium text-custom mb-1 ms-1"
-                              >Select protocol</label
-                            >
-                            <select
-                              id="protocolSelect"
-                              class="form-control rounded-4"
-                            >
-                              <option value="">Select a protocol</option>
-                            </select>
-                          </div>
-                        </div>
-
-                        <div class="row">
-                          <div class="col-6 notescontainer d-none">
-                            <div class="border rounded-2 h-100 shadow-sm">
-                              <div
-                                class="border-bottom p-2 bg-light small fw-bold text-secondary text-uppercase"
-                              >
-                                <i class="fas fa-user-md me-1"></i> Notes to the
-                                Doctor
-                              </div>
-                              <div class="p-2">
-                                <p
-                                  id="doctor-notes"
-                                  class="mb-0 small text-muted"
-                                ></p>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="col-6 notescontainer d-none">
-                            <div class="border rounded-2 h-100 shadow-sm">
-                              <div
-                                class="border-bottom p-2 bg-light small fw-bold text-secondary text-uppercase"
-                              >
-                                <i class="fas fa-user me-1"></i> Notes to the
-                                Patient
-                              </div>
-                              <div class="p-2">
-                                <p
-                                  id="patient-notes"
-                                  class="mb-0 small text-muted"
-                                ></p>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="col-6 pt-2">
-                            <label class="fw-medium text-custom mb-1 ms-1"
-                              >Lab investigations</label
-                            >
-                            <select
-                              id="labInvestigationSelect"
-                              class="form-control rounded-4"
-                              multiple
-                            ></select>
-                          </div>
-                          <div class="col-6 pt-2">
-                            <label
-                              class="d-flex justify-content-start align-items-center text-custom mb-1 ms-1 gap-1 fw-medium"
-                              >Procedures / Radiology
-                              <input type="checkbox" /> Send to
-                              Radiology?</label
-                            >
-                            <select
-                              id="procedureRadiologySelect"
-                              class="form-control rounded-4"
-                              multiple
-                            ></select>
-                          </div>
-                        </div>
-                      </div>
-
                       <div class="text-right">
                         <button
                           type="button"
-                          class="btn btn-sm btn-sm btn-warning rounded-4 btn-sm"
-                          id="aidx"
-                        >
-                          AI Diagnosis <i class="fas fa-robot ms-2"></i>
-                        </button>
-                        <button
-                          type="button"
-                          class="btn btn-sm btn-primary rounded-4 btn-sm"
+                          class="btn btn-sm btn-primary rounded-4"
                           id="saveNotes"
                         >
                           Save <i class="fas fa-save ms-2"></i>
@@ -1443,8 +1355,69 @@
                 </div>
               </div>
 
+              <div class="card mb-0 rounded-0 border-bottom-0 shadow-none d-none" id="aiDiagnosisSection">
+                <div class="card-body p-4">
+                  <div class="row align-items-end">
+                    <div class="col-md-8">
+                      <label class="fw-medium text-custom mb-1 ms-1">Select Protocol</label>
+                      <select id="protocolSelect" class="form-control select2 rounded-4">
+                        <option value="">Select a protocol</option>
+                      </select>
+                    </div>
+                    <div class="col-md-4 text-right">
+                      <button
+                        type="button"
+                        class="btn btn-warning rounded-4 btn-sm"
+                        id="aidx"
+                        style="height: 38px; width: 100%;"
+                      >
+                        AI Diagnosis <i class="fas fa-robot ms-2"></i>
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- <div class="row mt-3">
+                    <div class="col-6 notescontainer d-none">
+                      <div class="border rounded-2 h-100 shadow-sm">
+                        <div class="border-bottom p-2 bg-light small fw-bold text-secondary text-uppercase">
+                          <i class="fas fa-user-md me-1"></i> Notes to the Doctor
+                        </div>
+                        <div class="p-2">
+                          <p id="doctor-notes" class="mb-0 small text-muted"></p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-6 notescontainer d-none">
+                      <div class="border rounded-2 h-100 shadow-sm">
+                        <div class="border-bottom p-2 bg-light small fw-bold text-secondary text-uppercase">
+                          <i class="fas fa-user me-1"></i> Notes to the Patient
+                        </div>
+                        <div class="p-2">
+                          <p id="patient-notes" class="mb-0 small text-muted"></p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row mt-3">
+                    <div class="col-6">
+                      <label class="fw-medium text-custom mb-1 ms-1">Lab investigations</label>
+                      <select id="labInvestigationSelect" class="form-control select2 rounded-4" multiple="multiple"></select>
+                    </div>
+                    <div class="col-6">
+                      <label class="d-flex justify-content-start align-items-center text-custom mb-1 ms-1 gap-1 fw-medium">
+                        Procedures / Radiology
+                        <input type="checkbox" class="ms-2" /> <small>Send to Radiology?</small>
+                      </label>
+                      <select id="procedureRadiologySelect" class="form-control select2 rounded-4" multiple="multiple"></select>
+                    </div>
+                  </div> -->
+
+                </div>
+              </div>
+
               <!-- Lab -->
-              <div class="card mb-2">
+              <div class="card mb-0 rounded-0 border-bottom-0 border-top-1 shadow-none">
                 <div class="card-header" id="headingLab">
                   <div
                     role="button"
@@ -1471,7 +1444,7 @@
                   class="collapse"
                   data-parent="#patientAccordion"
                 >
-                  <div class="p-3">
+                  <div class="p-4">
                     <div class="row g-3">
                       <div class="col-md-4 p-0 mt-3 mx-0">
                         <div class="border rounded-3 h-100">
@@ -1589,7 +1562,7 @@
               </div>
 
               <!-- Procedures & Treatments (no need for dental)-->
-              <div class="card mb-2">
+              <div class="card mb-0 rounded-0 border-bottom-0 shadow-none">
                 <div
                   role="button"
                   id="headingProcedure"
@@ -1618,7 +1591,7 @@
                   class="collapse"
                   data-parent="#patientAccordion"
                 >
-                  <div class="card-body">
+                  <div class="card-body p-4">
                     <div
                       class="pb-1 d-flex justify-content-between align-items-center"
                     >
@@ -1694,7 +1667,7 @@
               </div>
 
               <!-- Prescriptions -->
-              <div class="card mb-2">
+              <div class="card mb-0 rounded-0 border-bottom-0 shadow-none">
                 <div class="card-header" id="headingPresc">
                   <div
                     role="button"
@@ -1723,7 +1696,7 @@
                   class="collapse"
                   data-parent="#patientAccordion"
                 >
-                  <div class="card-body">
+                  <div class="card-body p-4">
                     <div class="ps-3">
                       <div
                         class="d-flex ps-0 pb-3 gap-2 justify-content-between align-items-center"
@@ -1736,8 +1709,7 @@
                             id="prescTemplateSelect"
                             style="width: 180px"
                             class="form-control custom-select rounded-4 input-style"
-                          >
-                          </select>
+                          ></select>
                         </div>
                         <button
                           type="button"
@@ -1776,7 +1748,7 @@
               </div>
 
               <!-- Dental procedure (only for dental doctors) -->
-              <div class="card mb-2">
+              <div class="card mb-0 rounded-0 border-bottom-0 shadow-none">
                 <div class="card-header" id="headingDental">
                   <div
                     role="button"
@@ -1802,7 +1774,7 @@
                   class="collapse"
                   data-parent="#patientAccordion"
                 >
-                  <div class="card-body">
+                  <div class="card-body p-4">
                     <button
                       id="selectFullMouth"
                       class="btn btn-sm text-success px-0"
@@ -2104,7 +2076,7 @@
               </div>
 
               <!-- Dental procedure lab (only for dental doctors) -->
-              <div class="card mb-2">
+              <div class="card mb-0 rounded-0 border-bottom-0 shadow-none">
                 <div class="card-header" id="headingDentalLab">
                   <div
                     role="button"
@@ -2130,7 +2102,7 @@
                   class="collapse"
                   data-parent="#patientAccordion"
                 >
-                  <div class="card-body">
+                  <div class="card-body p-4">
                     <div
                       class="d-flex justify-content-between align-items-center"
                     >
@@ -2366,7 +2338,7 @@
               </div>
 
               <!-- Files -->
-              <div class="card mb-2 rounded-bottom-3">
+              <div class="card mb-0 rounded-top-0 rounded-bottom-4 shadow-none">
                 <div class="card-header" id="headingFiles">
                   <div
                     role="button"
@@ -2391,7 +2363,7 @@
                   class="collapse"
                   data-parent="#patientAccordion"
                 >
-                  <div class="card-body py-2 mx-3">
+                  <div class="card-body p-4 mx-3">
                     <ul id="fileList" class="list-unstyled"></ul>
                     <form id="filesForm">
                       <!-- Hidden File + Description Area -->

@@ -81,7 +81,25 @@ $(function () {
     "#chiefComplaints, #medicalHistory, #observations, #investigations, #diagnosis, #treatment, #advice, #notes",
   ).on("change input", function () {
     updateClinicalPreview();
+    checkAIDiagnosisVisibility();
   });
+
+  function checkAIDiagnosisVisibility() {
+    const complaints = $("#chiefComplaints").val();
+    const history = $("#medicalHistory").val();
+    const observations = $("#observations").val();
+
+    // Values from Select2 (tags) are arrays. Check if any have length > 0.
+    const hasComplaints = Array.isArray(complaints) && complaints.length > 0;
+    const hasHistory = Array.isArray(history) && history.length > 0;
+    const hasObservations = Array.isArray(observations) && observations.length > 0;
+
+    if (hasComplaints || hasHistory || hasObservations) {
+      $("#aiDiagnosisSection").removeClass("d-none");
+    } else {
+      $("#aiDiagnosisSection").addClass("d-none");
+    }
+  }
 
   $(document).on("click", ".note-template", function () {
     $("#chiefComplaints").val($(this).data("chief") || "");
@@ -483,18 +501,7 @@ $(function () {
   initProtocolSelect2();
   initInvestigationSelect2();
 
-  let isShowProtocol = false;
-  const $protocolShowBtn = $("#protocol-show-btn");
-  $protocolShowBtn.on("click", function () {
-    isShowProtocol = !isShowProtocol;
-    if (isShowProtocol) {
-      $("#protocolArea").removeClass("d-none");
-      $protocolShowBtn.text("Show less");
-    } else {
-      $("#protocolArea").addClass("d-none");
-      $protocolShowBtn.text("Show more");
-    }
-  });
+  checkAIDiagnosisVisibility();
 });
 let clinicalNotesToggle = true;
 function formatDate(dateStr) {
