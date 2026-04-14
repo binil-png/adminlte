@@ -43,16 +43,18 @@ $(function () {
       const initialDisplayClass = defaultHideClass;
       const initialButtonHtml = "Show more";
       container.append(`
-      <div class="bg-custom rounded-4 proc-box" data-index="${index}">
+      <div class="bg-custom rounded-4 proc-box mb-3" data-index="${index}">
             <div class="p-2">
                 <div class="row g-2 align-items-end">
-                    <div class="col-6 row">
+                    <div class="col-8 row">
                       <div class="col-1 text-center pe-0">
                             <label class="form-label small text-muted mb-0 d-none d-md-block">Sr</label>
                             <span class="d-block mt-1 pt-1">${index + 1}</span>
                       </div>
                       <div class="col-11">
-                        <label class="form-label small text-muted mb-0 select2-label">Procedure</label>
+                        <label class="form-label small text-muted mb-0 select2-label">
+                            Procedure
+                        </label>
                         <select class="form-control form-control-sm proc-name proc-field">
                             ${
                               p.id || p.name
@@ -63,119 +65,82 @@ $(function () {
                       </div>  
                     </div>
 
-                 <div class="col-6 row">
-                   <div class="col-3 px-1">
+                 <div class="col-4 row">
+                    <div class="col-4 px-1">
                         <label class="form-label small text-muted mb-0">Qty</label>
                         <input type="number" class="form-control form-control-sm proc-qty rounded-3 input-style proc-field text-center rounded-4" value="${
                           p.qty
                         }">
-                   </div>
+                    </div>
 
-                    <div class="col-3 px-1">
+                    <div class="col-4 px-1">
                         <label class="form-label small text-muted mb-0">Price</label>
                         <input type="number" class="form-control form-control-sm proc-price rounded-3 input-style proc-field rounded-4" value="${
                           p.price
                         }">
                     </div>
                     
-                    <div class="col-3 px-1">
-                        <label class="form-label small text-muted mb-0">Disc</label>
-                        <div class="d-flex">
-                        <input type="number" class="form-control proc-discount rounded-4 border-end-0 rounded-end-0 form-control-sm input-style text-center" value="${
-                          p.discount
-                        }">
-                        <select style="width:30px" class="form-control proc-discount-unit rounded-4 border-start-1 rounded-start-0 form-control-sm input-style text-center">
-                            <option ${p.discountUnit === "per" ? "selected" : ""} value="per">%</option>
-                            <option ${p.discountUnit === "rs" ? "selected" : ""} value="rs">₹</option>
-                        </select>
-                        </div>
-                    </div>
-                    
-                    <div class="col-3 ps-1 d-flex align-items-center justify-content-end">
+                    <div class="col-4 ps-1 d-flex align-items-center justify-content-end">
                         <div class="text-right">
                         <label class="form-label small text-muted mb-0 d-none d-md-block">Total</label>
                         <strong class="d-block text-sm text-success proc-line-total">₹${lineTotal}</strong>
                         </div>
                     </div>
-                    </div>
+                 </div>
                 </div>
                 
                 <div id="${boxId}" class="${initialDisplayClass} mt-2 pt-2 border-top">
-                             <div class="row g-2 mb-1 align-items-center">
-                               <div class="col-4">
-                                  <label class="form-label small text-muted mb-0">Status</label>
-                                  <select
-                                    class="form-control form-control-sm custom-select proc-status rounded-3 input-style proc-field rounded-4"
-                                  >
-                                                           <option value="">Select status</option>
-                                                           <option value="Planned">Planned</option>
-                                                           <option value="Completed">Completed</option>
-                                                           <option value="Nursing Ordered">Nursing Ordered</option>
-                                                           <option value="Nursing Done">Nursing Done</option>
-                                                           <option value="Sent to Radiology">Sent to Radiology</option>
-                                                           <option value="Radiology Done">Radiology Done</option>
-                                                           <option value="Lab Ordered">Lab Ordered</option>
-                                                           <option value="Lab Done">Lab Done</option>
-                                   
-                                  </select>
-                                </div>
-                                <div class="col-4">
-                                        <label class="form-label small text-muted mb-0">Date/Time</label>
-                                        <div class="input-group">
-                                          <input
-                                            type="date"
-                                            class="form-control form-control-sm proc-date rounded-4 rounded-end-0 input-style proc-field"
-                                            placeholder="dd-mm-yyyy"
-                                            value=""
-                                          />
-                                            <input
-                                            type="time"
-                                            class="form-control form-control-sm proc-time rounded-0 input-style proc-field"
-                                            placeholder="--:--"
-                                            value=""
-                                          />
-                                            <button
-                                          type="button"
-                                          class="btn btn-primary btn-sm rounded-4 rounded-start-0"
-                                          style="height: calc(1.5em + 0.5rem + 2px)"
-                                        >
-                                          Fixed
-                                        </button>
-                                        </div>
-                                </div>
-                               <div class="col-4">
-                                  <label class="form-label small text-muted mb-0">Select doctor</label>
-                                  <select
-                                    class="form-control form-control-sm custom-select proc-status rounded-3 input-style proc-field rounded-4"
-                                  >
-                                            <option >Select doctor</option>
-                                            <option >Doctor A</option>
-                                            <option>Doctor B</option>
-                                            <option>Doctor C</option>
-                                   
-                                  </select>
-                                </div>
-                              </div>
-                              <div class="row g-2">
-                                   <div class="col-4">
-                                  <label class="form-label small text-muted mb-0">Internal Notes</label>
-                                  <textarea
-                                    class="form-control form-control-sm proc-internal-notes rounded-3 input-style proc-field rounded-4"
-                                    placeholder="Add internal notes here..."></textarea>
-                               </div>
-                                <div class="col-4">
-                                  <label class="form-label small text-muted mb-0">Patient Instructions</label>
-                                  <textarea
-                                    class="form-control form-control-sm proc-patient-instructions rounded-3 input-style proc-field rounded-4"
-                                    placeholder="Add patient instructions here..."
-                                  >${p.instruction || ""}</textarea>
-                                </div>
-                              </div>
+                    <!-- Additional fields (discount, status, etc.) -->
+                    <div class="row g-2 mb-2">
+                        <div class="col-3">
+                            <label class="form-label small text-muted mb-0">Discount</label>
+                            <div class="d-flex">
+                                <input type="number" class="form-control proc-discount rounded-4 border-end-0 rounded-end-0 form-control-sm input-style text-center" value="${p.discount || 0}">
+                                <select style="width:30px" class="form-control proc-discount-unit rounded-4 border-start-1 rounded-start-0 form-control-sm input-style text-center">
+                                    <option ${p.discountUnit === "per" ? "selected" : ""} value="per">%</option>
+                                    <option ${p.discountUnit === "rs" ? "selected" : ""} value="rs">₹</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <label class="form-label small text-muted mb-0">Status</label>
+                            <select class="form-control form-control-sm custom-select proc-status rounded-4 input-style proc-field">
+                                <option value="">Select status</option>
+                                <option value="Planned" ${p.status === 'Planned' ? 'selected' : ''}>Planned</option>
+                                <option value="Completed" ${p.status === 'Completed' ? 'selected' : ''}>Completed</option>
+                                <option value="Nursing Ordered" ${p.status === 'Nursing Ordered' ? 'selected' : ''}>Nursing Ordered</option>
+                                <option value="Nursing Done" ${p.status === 'Nursing Done' ? 'selected' : ''}>Nursing Done</option>
+                            </select>
+                        </div>
+                        <div class="col-3">
+                            <label class="form-label small text-muted mb-0">Date</label>
+                            <input type="date" class="form-control form-control-sm proc-date rounded-4 input-style proc-field" value="${p.date || ''}">
+                        </div>
+                        <div class="col-3">
+                            <label class="form-label small text-muted mb-0">Time</label>
+                            <input type="time" class="form-control form-control-sm proc-time rounded-4 input-style proc-field" value="${p.time || ''}">
+                        </div>
+                    </div>
+                    <div class="row g-2">
+                        <div class="col-6">
+                            <label class="form-label small text-muted mb-0">Internal Notes</label>
+                            <textarea class="form-control form-control-sm proc-internal-notes rounded-4 input-style proc-field" rows="1">${p.intnote || ""}</textarea>
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label small text-muted mb-0">Patient Instructions</label>
+                            <textarea class="form-control form-control-sm proc-patient-instructions rounded-4 input-style proc-field" rows="1">${p.instruction || ""}</textarea>
+                        </div>
+                    </div>
                 </div>
 
             </div>
             <div class="row pt-2 align-items-center">
-               <div class="col-6"></div>
+               <div class="col-6 ps-4 d-flex align-items-center gap-2">
+                  <button type="button" class="btn btn-xs btn-outline-primary rounded-4 select-tooth-btn" data-index="${index}">
+                    <i class="fas fa-plus me-1"></i> Select Tooth
+                  </button>
+                  ${p.tooth ? `<span class="badge badge-info text-sm">Tooth: ${p.tooth} ${p.surfaces ? `(${p.surfaces})` : ''}</span>` : ''}
+               </div>
                <div class="col-6 text-end">
                    <button type="button" class="btn btn-xs p-0 text-decoration-none text-semibold btn-toggle-fields" data-target="#${boxId}">
                         ${initialButtonHtml}
@@ -569,6 +534,177 @@ $(function () {
     visitingNotesModal.show();
   });
 
+  // --- Dental Logic Integration ---
+  let selectedTeethNumbers = []; 
+  let selectedSurfaces = [];
+  let editingProcIndex = null;
+
+  function renderSelectedTeethBoxes() {
+    const container = $("#selectedTeethBoxes");
+    container.empty();
+    selectedTeethNumbers.forEach(num => {
+      container.append(`
+        <div class="px-3 py-1 bg-white border rounded-4 d-flex align-items-center gap-2 text-custom fw-bold shadow-sm" style="font-size: 0.85rem;">
+          Tooth ${num}
+          <i class="fas fa-times-circle text-danger remove-tooth-box" data-tooth="${num}" role="button"></i>
+        </div>
+      `);
+    });
+  }
+
+  $(document).on("click", ".remove-tooth-box", function(e) {
+    e.stopPropagation();
+    const num = $(this).data("tooth");
+    selectedTeethNumbers = selectedTeethNumbers.filter(n => n !== num);
+    $(`#dental-tooth-${num}`).removeClass("border-primary bg-light");
+    $(`#child-tooth-${num}`).removeClass("border-primary bg-light");
+    renderSelectedTeethBoxes();
+  });
+
+  function renderTeethUI(teethArray) {
+    const row1 = document.getElementById("teethSelector1");
+    const row2 = document.getElementById("teethSelector2");
+    if (!row1 || !row2) return;
+    row1.innerHTML = ""; row2.innerHTML = "";
+    teethArray.forEach((tooth, index) => {
+      const isUpper = index < 16;
+      const elem = `
+        <span role="button" id="dental-tooth-${tooth.number}" class="rounded-3 border p-2 d-flex flex-column align-items-center gap-2 tooth-item" data-tooth="${tooth.number}">
+          ${isUpper ? "" : `<small>${tooth.number}</small>`}
+          ${isUpper ? `<img width="30" height="50" src="./Teeth/${tooth.image}" />` : `<img width="30" height="30" src="./Teeth/${tooth.surface}" />`}
+          ${isUpper ? `<img width="30" height="30" src="./Teeth/${tooth.surface}" />` : `<img width="30" height="50" src="./Teeth/${tooth.image}" />`}
+          ${isUpper ? `<small>${tooth.number}</small>` : ""}
+        </span>`;
+      (isUpper ? row1 : row2).insertAdjacentHTML("beforeend", elem);
+    });
+  }
+
+  function renderChildTeethUI(teethArray) {
+    const row1 = document.getElementById("childTeethSelector1");
+    const row2 = document.getElementById("childTeethSelector2");
+    if (!row1 || !row2) return;
+    row1.innerHTML = ""; row2.innerHTML = "";
+    teethArray.forEach((tooth, index) => {
+      const isUpper = index < 10;
+      const elem = `
+        <span role="button" id="child-tooth-${tooth.number}" class="rounded-3 border p-2 d-flex flex-column align-items-center gap-2 tooth-item" data-tooth="${tooth.number}">
+          ${isUpper ? "" : `<small>${tooth.number}</small>`}
+          ${isUpper ? `<img width="30" height="50" src="./Teeth/${tooth.image}" />` : `<img width="30" height="30" src="./Teeth/${tooth.surface}" />`}
+          ${isUpper ? `<img width="30" height="30" src="./Teeth/${tooth.surface}" />` : `<img width="30" height="50" src="./Teeth/${tooth.image}" />`}
+          ${isUpper ? `<small>${tooth.number}</small>` : ""}
+        </span>`;
+      (isUpper ? row1 : row2).insertAdjacentHTML("beforeend", elem);
+    });
+  }
+
+  if (typeof teeth !== 'undefined') renderTeethUI(teeth);
+  if (typeof childTeeth !== 'undefined') renderChildTeethUI(childTeeth);
+
+  const $toggleBtn = $("#dentalToothToggle");
+  let isAdult = true;
+  $(document).on("click", "#dentalToothToggle", function () {
+    isAdult = !isAdult;
+    if (isAdult) {
+      $(this).html('<i class="fas fa-child"></i> Change to child');
+      $("#adultTooth").removeClass("d-none").addClass("d-block");
+      $("#childTooth").removeClass("d-block").addClass("d-none");
+    } else {
+      $(this).html('<i class="fas fa-male"></i> Change to adult');
+      $("#childTooth").removeClass("d-none").addClass("d-block");
+      $("#adultTooth").removeClass("d-block").addClass("d-none");
+    }
+  });
+
+  $(document).on("click", ".select-tooth-btn", function () {
+    editingProcIndex = $(this).data("index");
+    const proc = procData[editingProcIndex];
+
+    // Reset and Load Selection
+    selectedTeethNumbers = proc.tooth ? proc.tooth.split(", ").filter(n => n !== "Full Mouth") : [];
+    if (proc.tooth === "Full Mouth") selectedTeethNumbers = ["Full Mouth"];
+    
+    selectedSurfaces = proc.surfaces ? proc.surfaces.split(", ") : [];
+    
+    // UI Reset
+    $(".tooth-item").removeClass("border-primary bg-light");
+    selectedTeethNumbers.forEach(num => {
+        $(`#dental-tooth-${num}`).addClass("border-primary bg-light");
+        $(`#child-tooth-${num}`).addClass("border-primary bg-light");
+    });
+
+    $(".surface").removeClass("active");
+    selectedSurfaces.forEach(s => {
+        $(`.surface[data-surface="${s}"]`).addClass("active");
+    });
+    $("#selectedSurfacesText").text(selectedSurfaces.join(", ") || "—");
+
+    if (proc.tooth === "Full Mouth") {
+        $("#forTooth").addClass("d-none");
+        $("#forMouth").removeClass("d-none");
+        $("#toothModalLabel").text("Procedure for Full Mouth");
+    } else {
+        $("#forTooth").removeClass("d-none");
+        $("#forMouth").addClass("d-none");
+        $("#toothModalLabel").text("Select Tooth for " + (proc.name || "Procedure"));
+    }
+
+    // Modal Fields
+    $("#modalDentalComplaints").val(proc.intnote || "");
+    $("#modalDentalAdvice").val(proc.instruction || "");
+
+    renderSelectedTeethBoxes();
+    const modal = new bootstrap.Modal(document.getElementById("toothModal"));
+    modal.show();
+  });
+
+  $(document).on("click", ".tooth-item", function () {
+    const toothNum = $(this).data("tooth");
+    if (selectedTeethNumbers.includes(toothNum)) {
+      selectedTeethNumbers = selectedTeethNumbers.filter(n => n !== toothNum);
+      $(this).removeClass("border-primary bg-light");
+    } else {
+      if (selectedTeethNumbers.includes("Full Mouth")) selectedTeethNumbers = [];
+      selectedTeethNumbers.push(toothNum);
+      $(this).addClass("border-primary bg-light");
+    }
+    renderSelectedTeethBoxes();
+  });
+
+  $(document).on("click", "#selectFullMouth", function () {
+    selectedTeethNumbers = ["Full Mouth"];
+    $(".tooth-item").removeClass("border-primary bg-light");
+    $("#forTooth").addClass("d-none");
+    $("#forMouth").removeClass("d-none");
+    $("#toothModalLabel").text("Procedure for Full Mouth");
+    renderSelectedTeethBoxes();
+  });
+
+  $(document).on("click", ".surface", function () {
+    $(this).toggleClass("active");
+    const surfaceName = $(this).data("surface");
+    if ($(this).hasClass("active")) {
+      selectedSurfaces.push(surfaceName);
+    } else {
+      selectedSurfaces = selectedSurfaces.filter((s) => s !== surfaceName);
+    }
+    $("#selectedSurfacesText").text(selectedSurfaces.join(", ") || "—");
+  });
+
+  $(document).on("click", "#confirmDentalProc", function () {
+    if (editingProcIndex !== null && procData[editingProcIndex]) {
+        procData[editingProcIndex].tooth = selectedTeethNumbers.join(", ");
+        procData[editingProcIndex].surfaces = selectedSurfaces.join(", ");
+        
+        const note = $("#modalDentalComplaints").val() || $("#modalDentalObservations").val();
+        if (note) procData[editingProcIndex].intnote = note;
+        const advice = $("#modalDentalAdvice").val();
+        if (advice) procData[editingProcIndex].instruction = advice;
+
+        renderProcTable();
+        bootstrap.Modal.getInstance(document.getElementById("toothModal")).hide();
+    }
+  });
+
   $(document).on("click", "#saveProcedure", function () {
     const doctorId =
       typeof globalySelectedDoctor !== "undefined" && globalySelectedDoctor
@@ -601,6 +737,7 @@ $(function () {
       const appointment = status === "Planned" ? "1" : "0";
       const prostatus = status === "Planned" ? "Yes" : "No";
 
+      const p = procData[index];
       payload.items[index.toString()] = {
         procedure_id: procedureId,
         quantity: $box.find(".proc-qty").val() || "1",
@@ -615,6 +752,8 @@ $(function () {
         appointment: appointment,
         prostatus: prostatus,
         status: status,
+        tooth_info: p.tooth || "",
+        surfaces: p.surfaces || "",
       };
     });
 

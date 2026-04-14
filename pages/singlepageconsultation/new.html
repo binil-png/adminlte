@@ -1592,9 +1592,7 @@
                   data-parent="#patientAccordion"
                 >
                   <div class="card-body p-4">
-                    <div
-                      class="pb-1 d-flex justify-content-between align-items-center"
-                    >
+                    <div class="pb-1 d-flex justify-content-between align-items-center">
                       <div
                         id="procTemplateChips"
                         style="width: 60%"
@@ -1747,328 +1745,242 @@
                 </div>
               </div>
 
-              <!-- Dental procedure (only for dental doctors) -->
-              <div class="card mb-0 rounded-0 border-bottom-0 shadow-none">
-                <div class="card-header" id="headingDental">
-                  <div
-                    role="button"
-                    data-toggle="collapse"
-                    data-target="#collapseDental"
-                    class="d-flex gap-2 justify-content-between align-items-center"
-                  >
-                    <button
-                      class="btn btn-sm collapsed text-decoration-none p-0"
-                    >
-                      <span class="mb-0 fw-semibold text-custom">
-                        Dental Notes & Procedure
-                      </span>
-                    </button>
-                    <small class="preview-text" id="selectedTeethPreview"
-                      >No items yet</small
-                    >
-                  </div>
-                </div>
 
-                <div
-                  id="collapseDental"
-                  class="collapse"
-                  data-parent="#patientAccordion"
-                >
-                  <div class="card-body p-4">
-                    <button
-                      id="selectFullMouth"
-                      class="btn btn-sm text-success px-0"
-                    >
-                      Select full mouth <i class="fas fa-teeth-open"></i>
-                    </button>
+              <!-- modal -->
+              <div
+                class="modal fade"
+                id="toothModal"
+                tabindex="-1"
+                aria-labelledby="toothModalLabel"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog modal-dialog-centered modal-xl">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="toothModalLabel">
+                        Dental procedure
+                      </h5>
+                    </div>
+
                     <div
-                      class="d-flex justify-content-between align-items-center"
+                      style="
+                        min-height: 70dvh;
+                        max-height: 70dvh;
+                        overflow-y: auto;
+                      "
+                      class="px-5 py-3"
                     >
-                      <div class="d-flex flex-column gap-2">
-                        <label class="font-weight-bold text-custom">
-                          Select Teeth
-                        </label>
-                      </div>
-                      <div
-                        class="d-flex gap-2 justify-content-end align-items-center pb-2"
-                      >
-                        <button
-                          id="dentalToothToggle"
-                          class="btn btn-sm text-success"
-                        >
-                          Change to child <i class="fa fa-child"></i>
-                        </button>
-                      </div>
-                    </div>
-                    <div id="adultTooth">
-                      <div
-                        class="d-flex flex-wrap gap-2 mb-3 justify-content-center"
-                        id="teethSelector1"
-                      ></div>
-                      <div
-                        class="d-flex flex-wrap gap-2 mb-3 justify-content-center"
-                        id="teethSelector2"
-                      ></div>
-                    </div>
-
-                    <div class="d-none" id="childTooth">
-                      <div
-                        class="d-flex flex-wrap gap-2 mb-3 justify-content-center"
-                        id="childTeethSelector1"
-                      ></div>
-                      <div
-                        class="d-flex flex-wrap gap-2 mb-3 justify-content-center"
-                        id="childTeethSelector2"
-                      ></div>
-                    </div>
-
-                    <div class="mt-2 ms-3 font-weight-bold text-custom">
-                      Total: ₹ <span id="dentalSum">0</span>
-                    </div>
-
-                    <div class="text-right mt-3">
-                      <button
-                        type="button"
-                        class="btn btn-sm btn-primary rounded-4"
-                        id="saveDental"
-                      >
-                        Save <i class="fas fa-save ms-2"></i>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <!-- modal -->
-                <div
-                  class="modal fade"
-                  id="toothModal"
-                  tabindex="-1"
-                  aria-labelledby="toothModalLabel"
-                  aria-hidden="true"
-                >
-                  <div class="modal-dialog modal-dialog-centered modal-xl">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="toothModalLabel">
-                          Dental procedure
-                        </h5>
-                        <!-- <button  data-dismiss="modal" class="btn btn-sm text-danger rounded-4"><i class="fas fa-times"></i></button> -->
-                      </div>
-
-                      <div
-                        style="
-                          min-height: 70dvh;
-                          max-height: 70dvh;
-                          overflow-y: auto;
-                        "
-                        class="px-5 py-3"
-                      >
-                        <div
-                          class="w-50 py-2 quick-badges d-flex gap-1 flex-wrap justify-content-start align-items-center"
-                        >
-                          <span class="badge badge-primary">Template A</span>
-                          <span class="badge badge-primary">Template B</span>
-                          <span class="badge badge-primary">Template C</span>
-                          <select
-                            class="form-control custom-select proc-name rounded-4 w-25 template-select-style"
-                          >
-                            <option value="">Select template</option>
-                            <option value="Dental Cleaning">Template 1</option>
-                            <option value="Root Canal">Template 2</option>
-                            <option value="X-Ray">Template 3</option>
-                          </select>
+                      <!-- Dental Chart Section -->
+                      <div class="dental-chart-section mb-4" id="dentalChartContainer">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                          <h6 class="fw-bold text-custom mb-0">Dental Charting</h6>
+                          <div class="d-flex gap-2">
+                             <button id="selectFullMouth" class="btn btn-sm btn-link text-success text-decoration-none p-0">
+                              Select full mouth <i class="fas fa-teeth-open ms-1"></i>
+                            </button>
+                            <button id="dentalToothToggle" class="btn btn-sm btn-outline-success rounded-4">
+                              <i class="fa fa-child me-1"></i> Change to child
+                            </button>
+                          </div>
                         </div>
-                        <div id="forTooth" class="row py-3">
-                          <div class="col-md-6 col-lg-6">
-                            <div class="row border rounded">
-                              <div class="col-12 text-center p-4">
-                                <h6 class="text-custom fw-bold mb-3">
-                                  Mark Affected Surfaces
-                                </h6>
 
-                                <div class="tooth-map-container mx-auto">
-                                  <small
-                                    class="text-muted"
-                                    style="
-                                      position: absolute;
-                                      top: -25px;
-                                      left: 50%;
-                                      transform: translateX(-50%);
-                                      font-size: 10px;
-                                    "
-                                    >BUCCAL (Cheek)</small
-                                  >
+                        <div id="adultTooth">
+                          <div class="d-flex flex-wrap gap-2 mb-3 justify-content-center" id="teethSelector1"></div>
+                          <div class="d-flex flex-wrap gap-2 mb-3 justify-content-center" id="teethSelector2"></div>
+                        </div>
 
-                                  <div
-                                    class="surface buccal"
-                                    data-surface="Buccal"
-                                    title="Buccal"
-                                  ></div>
-                                  <div
-                                    class="surface mesial"
-                                    data-surface="Mesial"
-                                    title="Mesial"
-                                  ></div>
-                                  <div
-                                    class="surface occlusal"
-                                    data-surface="Occlusal"
-                                    title="Occlusal"
-                                  ></div>
-                                  <div
-                                    class="surface distal"
-                                    data-surface="Distal"
-                                    title="Distal"
-                                  ></div>
-                                  <div
-                                    class="surface lingual"
-                                    data-surface="Lingual"
-                                    title="Lingual"
-                                  ></div>
+                        <div class="d-none" id="childTooth">
+                          <div class="d-flex flex-wrap gap-2 mb-3 justify-content-center" id="childTeethSelector1"></div>
+                          <div class="d-flex flex-wrap gap-2 mb-3 justify-content-center" id="childTeethSelector2"></div>
+                        </div>
 
-                                  <small
-                                    class="text-muted"
-                                    style="
-                                      position: absolute;
-                                      bottom: -25px;
-                                      left: 50%;
-                                      transform: translateX(-50%);
-                                      font-size: 10px;
-                                    "
-                                    >LINGUAL (Tongue)</small
-                                  >
-                                </div>
+                        <div id="selectedTeethBoxes" class="d-flex flex-wrap gap-2 mt-3 pt-2 border-top">
+                            <!-- Selected teeth will appear here as boxes -->
+                        </div>
+                      </div>
 
-                                <div class="mt-4">
-                                  <p class="small text-muted mb-1">
-                                    Marked Surfaces:
-                                  </p>
-                                  <h5
-                                    id="selectedSurfacesText"
-                                    class="text-danger fw-bold"
-                                  >
-                                    —
-                                  </h5>
-                                </div>
+                      <div id="forTooth" class="row py-3">
+                        <div class="col-md-6 col-lg-6">
+                          <div class="row border rounded">
+                            <div class="col-12 text-center p-4">
+                              <h6 class="text-custom fw-bold mb-3">
+                                Mark Affected Surfaces
+                              </h6>
+
+                              <div class="tooth-map-container mx-auto">
+                                <small
+                                  class="text-muted"
+                                  style="
+                                    position: absolute;
+                                    top: -25px;
+                                    left: 50%;
+                                    transform: translateX(-50%);
+                                    font-size: 10px;
+                                  "
+                                  >BUCCAL (Cheek)</small
+                                >
+
+                                <div
+                                  class="surface buccal"
+                                  data-surface="Buccal"
+                                  title="Buccal"
+                                ></div>
+                                <div
+                                  class="surface mesial"
+                                  data-surface="Mesial"
+                                  title="Mesial"
+                                ></div>
+                                <div
+                                  class="surface occlusal"
+                                  data-surface="Occlusal"
+                                  title="Occlusal"
+                                  ></div>
+                                <div
+                                  class="surface distal"
+                                  data-surface="Distal"
+                                  title="Distal"
+                                ></div>
+                                <div
+                                  class="surface lingual"
+                                  data-surface="Lingual"
+                                  title="Lingual"
+                                ></div>
+
+                                <small
+                                  class="text-muted"
+                                  style="
+                                    position: absolute;
+                                    bottom: -25px;
+                                    left: 50%;
+                                    transform: translateX(-50%);
+                                    font-size: 10px;
+                                  "
+                                  >LINGUAL (Tongue)</small
+                                >
+                              </div>
+
+                              <div class="mt-4">
+                                <p class="small text-muted mb-1">
+                                  Marked Surfaces:
+                                </p>
+                                <h5
+                                  id="selectedSurfacesText"
+                                  class="text-danger fw-bold"
+                                >
+                                  —
+                                </h5>
                               </div>
                             </div>
                           </div>
-                          <div class="col-md-6 col-lg-6 gap-2">
-                            <div class="">
-                              <label class="fw-medium text-custom"
-                                >Cheif complaints</label
-                              >
-                              <textarea
-                                class="form-control rounded-4"
-                                id="dentalNotes"
-                                rows="1"
-                              ></textarea>
-                            </div>
-                            <div class="">
-                              <label class="fw-medium text-custom"
-                                >Observations</label
-                              >
-                              <textarea
-                                class="form-control rounded-4"
-                                id="dentalNotes"
-                                rows="1"
-                              ></textarea>
-                            </div>
-                            <div class="">
-                              <label class="fw-medium text-custom"
-                                >Medical history</label
-                              >
-                              <textarea
-                                class="form-control rounded-4"
-                                id="dentalNotes"
-                                rows="1"
-                              ></textarea>
-                            </div>
-                            <div class="">
-                              <label class="fw-medium text-custom">
-                                Advice
-                              </label>
-                              <textarea
-                                class="form-control rounded-4"
-                                id="dentalNotes"
-                                rows="1"
-                              ></textarea>
-                            </div>
-                          </div>
                         </div>
-                        <div id="forMouth" class="row py-3">
-                          <div class="col-6">
-                            <label class="fw-medium text-custom mb-0 ms-1"
+                        <div class="col-md-6 col-lg-6 gap-2">
+                          <div class="">
+                            <label class="fw-medium text-custom"
                               >Cheif complaints</label
                             >
                             <textarea
-                              class="form-control rounded-4"
-                              id="dentalNotes"
+                              class="form-control rounded-4 modal-dental-notes"
+                              id="modalDentalComplaints"
                               rows="1"
                             ></textarea>
                           </div>
-                          <div class="col-6">
-                            <label class="fw-medium text-custom mb-0 ms-1"
+                          <div class="">
+                            <label class="fw-medium text-custom"
                               >Observations</label
                             >
                             <textarea
-                              class="form-control rounded-4"
-                              id="dentalNotes"
+                              class="form-control rounded-4 modal-dental-notes"
+                              id="modalDentalObservations"
                               rows="1"
                             ></textarea>
                           </div>
-                          <div class="col-6">
-                            <label class="fw-medium text-custom mb-0 ms-1"
+                          <div class="">
+                            <label class="fw-medium text-custom"
                               >Medical history</label
                             >
                             <textarea
-                              class="form-control rounded-4"
-                              id="dentalNotes"
+                              class="form-control rounded-4 modal-dental-notes"
+                              id="modalDentalHistory"
                               rows="1"
                             ></textarea>
                           </div>
-                          <div class="col-6">
-                            <label class="fw-medium text-custom mb-0 ms-1"
-                              >Advice</label
-                            >
+                          <div class="">
+                            <label class="fw-medium text-custom">
+                              Advice
+                            </label>
                             <textarea
-                              class="form-control rounded-4"
-                              id="dentalNotes"
+                              class="form-control rounded-4 modal-dental-notes"
+                              id="modalDentalAdvice"
                               rows="1"
                             ></textarea>
                           </div>
                         </div>
-
-                        <div class="">
-                          <div id="dentalContainer"></div>
+                      </div>
+                      <div id="forMouth" class="row py-3 d-none">
+                        <div class="col-6">
+                          <label class="fw-medium text-custom mb-0 ms-1"
+                            >Cheif complaints</label
+                          >
+                          <textarea
+                            class="form-control rounded-4"
+                            id="mouthDentalComplaints"
+                            rows="1"
+                          ></textarea>
+                        </div>
+                        <div class="col-6">
+                          <label class="fw-medium text-custom mb-0 ms-1"
+                            >Observations</label
+                          >
+                          <textarea
+                            class="form-control rounded-4"
+                            id="mouthDentalObservations"
+                            rows="1"
+                          ></textarea>
+                        </div>
+                        <div class="col-6">
+                          <label class="fw-medium text-custom mb-0 ms-1"
+                            >Medical history</label
+                          >
+                          <textarea
+                            class="form-control rounded-4"
+                            id="mouthDentalHistory"
+                            rows="1"
+                          ></textarea>
+                        </div>
+                        <div class="col-6">
+                          <label class="fw-medium text-custom mb-0 ms-1"
+                            >Advice</label
+                          >
+                          <textarea
+                            class="form-control rounded-4"
+                            id="mouthDentalAdvice"
+                            rows="1"
+                          ></textarea>
                         </div>
                       </div>
 
+                    </div>
+
+                    <div
+                      class="modal-footer d-flex justify-content-end align-items-center"
+                    >
                       <div
-                        class="modal-footer d-flex justify-content-between align-items-center"
+                        class="d-flex justify-content-end align-items-center gap-2"
                       >
                         <button
                           type="button"
-                          class="btn btn-sm btn-link"
-                          id="addDentalProc"
+                          class="btn rounded-4 btn-sm btn-outline-success"
+                          id="confirmDentalProc"
                         >
-                          + ADD NEW
+                          Confirm <i class="fas fa-check ms-2"></i>
                         </button>
-                        <div
-                          class="d-flex justify-content-end align-items-center gap-2"
+                        <button
+                          type="button"
+                          class="btn btn-sm btn-outline-danger rounded-4"
+                          data-dismiss="modal"
                         >
-                          <button
-                            type="button"
-                            class="btn rounded-4 btn-sm btn-outline-success"
-                          >
-                            Save <i class="fas fa-save ms-2"></i>
-                          </button>
-                          <button
-                            type="button"
-                            class="btn btn-sm btn-outline-danger rounded-4"
-                            data-dismiss="modal"
-                          >
-                            Close <i class="fas fa-times ms-2"></i>
-                          </button>
-                        </div>
+                          Close <i class="fas fa-times ms-2"></i>
+                        </button>
                       </div>
                     </div>
                   </div>

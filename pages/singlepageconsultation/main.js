@@ -10,7 +10,6 @@ const imports = [
   "./js/collapse.js",
   "./js/sidebar.js",
   "./js/vitals.js",
-  "./js/dental.js",
   "./js/dentalLab.js",
   "./js/clinicalNotes.js",
   "./js/procedure.js",
