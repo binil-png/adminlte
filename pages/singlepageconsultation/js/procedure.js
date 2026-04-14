@@ -139,7 +139,7 @@ $(function () {
                   <button type="button" class="btn btn-xs btn-outline-primary rounded-4 select-tooth-btn" data-index="${index}">
                     <i class="fas fa-plus me-1"></i> Select Tooth
                   </button>
-                  ${p.tooth ? `<span class="badge badge-info text-sm">Tooth: ${p.tooth} ${p.surfaces ? `(${p.surfaces})` : ''}</span>` : ''}
+                  ${p.toothNo && p.toothNo.length > 0 ? `<span class="badge badge-info text-sm">Tooth: ${p.toothNo.join(", ")} ${p.surfaces ? `(${p.surfaces})` : ''}</span>` : ''}
                </div>
                <div class="col-6 text-end">
                    <button type="button" class="btn btn-xs p-0 text-decoration-none text-semibold btn-toggle-fields" data-target="#${boxId}">
@@ -213,6 +213,8 @@ $(function () {
                 discountUnit: item.discount_type === "INR" ? "rs" : "per",
                 status: item.status || "Completed",
                 total: parseFloat(total),
+                toothNo: [],
+                surfaces: ""
               });
             });
             renderProcTable();
@@ -335,6 +337,8 @@ $(function () {
       discountUnit: "per",
       status: "",
       total: 0,
+      toothNo: [],
+      surfaces: ""
     });
     renderProcTable();
     const newBox = $("#procContainer").children().last();
@@ -619,36 +623,38 @@ $(function () {
     editingProcIndex = $(this).data("index");
     const proc = procData[editingProcIndex];
 
-    // Reset and Load Selection
-    selectedTeethNumbers = proc.tooth ? proc.tooth.split(", ").filter(n => n !== "Full Mouth") : [];
-    if (proc.tooth === "Full Mouth") selectedTeethNumbers = ["Full Mouth"];
+    // Ensure state is clean for this row
+    selectedTeethNumbers = Array.isArray(proc.toothNo) ? [...proc.toothNo] : [];
+    selectedSurfaces = proc.surfaces ? proc.surfaces.split(", ").filter(s => s) : [];
     
-    selectedSurfaces = proc.surfaces ? proc.surfaces.split(", ") : [];
-    
-    // UI Reset
+    // UI Reset - Clear all selections first
     $(".tooth-item").removeClass("border-primary bg-light");
+    $(".surface").removeClass("active");
+
+    // Pre-fill from procedure data
     selectedTeethNumbers.forEach(num => {
         $(`#dental-tooth-${num}`).addClass("border-primary bg-light");
         $(`#child-tooth-${num}`).addClass("border-primary bg-light");
     });
 
-    $(".surface").removeClass("active");
     selectedSurfaces.forEach(s => {
         $(`.surface[data-surface="${s}"]`).addClass("active");
     });
+    
     $("#selectedSurfacesText").text(selectedSurfaces.join(", ") || "—");
 
-    if (proc.tooth === "Full Mouth") {
+    if (selectedTeethNumbers.includes("Full Mouth")) {
         $("#forTooth").addClass("d-none");
         $("#forMouth").removeClass("d-none");
         $("#toothModalLabel").text("Procedure for Full Mouth");
     } else {
         $("#forTooth").removeClass("d-none");
         $("#forMouth").addClass("d-none");
-        $("#toothModalLabel").text("Select Tooth for " + (proc.name || "Procedure"));
+        const procName = proc.name || $(`div.proc-box[data-index="${editingProcIndex}"]`).find(".proc-name option:selected").text() || "Procedure";
+        $("#toothModalLabel").text("Select Tooth for " + procName);
     }
 
-    // Modal Fields
+    // Modal Notes Fields
     $("#modalDentalComplaints").val(proc.intnote || "");
     $("#modalDentalAdvice").val(proc.instruction || "");
 
@@ -660,10 +666,15 @@ $(function () {
   $(document).on("click", ".tooth-item", function () {
     const toothNum = $(this).data("tooth");
     if (selectedTeethNumbers.includes(toothNum)) {
-      selectedTeethNumbers = selectedTeethNumbers.filter(n => n !== toothNum);
+      selectedTeethNumbers = selectedTeethNumbers.filter(n => n != toothNum);
       $(this).removeClass("border-primary bg-light");
     } else {
-      if (selectedTeethNumbers.includes("Full Mouth")) selectedTeethNumbers = [];
+      // If Full Mouth was selected, clicking a specific tooth should switch to tooth selection
+      if (selectedTeethNumbers.includes("Full Mouth")) {
+          selectedTeethNumbers = [];
+          $("#forTooth").removeClass("d-none");
+          $("#forMouth").addClass("d-none");
+      }
       selectedTeethNumbers.push(toothNum);
       $(this).addClass("border-primary bg-light");
     }
@@ -680,10 +691,13 @@ $(function () {
   });
 
   $(document).on("click", ".surface", function () {
-    $(this).toggleClass("active");
     const surfaceName = $(this).data("surface");
+    $(this).toggleClass("active");
+    
     if ($(this).hasClass("active")) {
-      selectedSurfaces.push(surfaceName);
+      if (!selectedSurfaces.includes(surfaceName)) {
+        selectedSurfaces.push(surfaceName);
+      }
     } else {
       selectedSurfaces = selectedSurfaces.filter((s) => s !== surfaceName);
     }
@@ -692,6 +706,9 @@ $(function () {
 
   $(document).on("click", "#confirmDentalProc", function () {
     if (editingProcIndex !== null && procData[editingProcIndex]) {
+        // Save as array to toothNo
+        procData[editingProcIndex].toothNo = [...selectedTeethNumbers];
+        // Keep tooth as string for compatibility if needed, but the UI will use toothNo
         procData[editingProcIndex].tooth = selectedTeethNumbers.join(", ");
         procData[editingProcIndex].surfaces = selectedSurfaces.join(", ");
         
@@ -701,7 +718,15 @@ $(function () {
         if (advice) procData[editingProcIndex].instruction = advice;
 
         renderProcTable();
-        bootstrap.Modal.getInstance(document.getElementById("toothModal")).hide();
+        
+        const modalEl = document.getElementById("toothModal");
+        const modal = bootstrap.Modal.getInstance(modalEl);
+        if (modal) modal.hide();
+        
+        // Reset state
+        editingProcIndex = null;
+        selectedTeethNumbers = [];
+        selectedSurfaces = [];
     }
   });
 
