@@ -1,5 +1,12 @@
-$(function () {
-  const STORAGE_KEY = "lastConsultationData";
+  const LAST_PATIENT_KEY = "lastConsultationPatient";
+  const BASE_STORAGE_KEY = "consultationData_";
+  let currentPatientId = null;
+
+  function getStorageKey() {
+    // Attempt to get patient ID from global state
+    const pid = window.patientDataGlobal ? (window.patientDataGlobal.patientId || window.patientDataGlobal.patient_id) : null;
+    return pid ? BASE_STORAGE_KEY + pid : null;
+  }
 
   function gatherAllData() {
     const data = {
@@ -12,7 +19,8 @@ $(function () {
         amountDue: $("#pAmount").text(),
         visits: $("#pVisits").text(),
         lastVisit: $("#pLastVisit").text(),
-        allergies: $("#pAllergies").html()
+        allergies: $("#pAllergies").html(),
+        allergiesList: (typeof window.addAllergies !== 'undefined') ? window.addAllergies : []
       },
       vitals: {
         temperature: $("input[name='temperature']").val(),
@@ -30,18 +38,19 @@ $(function () {
         respiratoryRate: $("input[name='respiratoryRate']").val()
       },
       clinicalNotes: {
-        chiefComplaints: $("#chiefComplaints").find('option:selected').map(function(){ return $(this).text(); }).get(),
-        medicalHistory: $("#medicalHistory").find('option:selected').map(function(){ return $(this).text(); }).get(),
-        observations: $("#observations").find('option:selected').map(function(){ return $(this).text(); }).get(),
-        investigations: $("#investigations").find('option:selected').map(function(){ return $(this).text(); }).get(),
-        diagnosis: $("#diagnosis").find('option:selected').map(function(){ return $(this).text(); }).get(),
-        treatment: $("#treatment").find('option:selected').map(function(){ return $(this).text(); }).get(),
-        notes: $("#notes").find('option:selected').map(function(){ return $(this).text(); }).get(),
-        advice: $("#advice").val()
+        chiefComplaints: $("#chiefComplaints").val(),
+        medicalHistory: $("#medicalHistory").val(),
+        observations: $("#observations").val(),
+        investigations: $("#investigations").val(),
+        diagnosis: $("#diagnosis").val(),
+        treatment: $("#treatment").val(),
+        notes: $("#notes").val(),
+        advice: $("#advice").val() || ""
       },
-      procedures: [],
-      prescriptions: [],
-      lab: [],
+      procedures: (typeof window.procData !== 'undefined') ? JSON.parse(JSON.stringify(window.procData)) : [],
+      prescriptions: (typeof window.getPrescriptionData === 'function') ? window.getPrescriptionData() : [],
+      labTests: (typeof window.labTestsList !== 'undefined') ? JSON.parse(JSON.stringify(window.labTestsList)) : [],
+      dentalProcedures: (typeof window.dentalProceduresList !== 'undefined') ? JSON.parse(JSON.stringify(window.dentalProceduresList)) : [],
       dental: {
         teeth: $("#selectedTeethPreview").text(),
         sum: $("#dentalSum").text()
@@ -57,23 +66,27 @@ $(function () {
           deliveryStatus: $("#deliveryStatus").val(),
           deliveryDate: $("#deliveryDate").val(),
           givenDate: $("#givenDate").val(),
-          teeth: $("#selectedLabContainer").find('.badge').map(function(){ return $(this).text().trim(); }).get()
+          teeth: (typeof window.selectedLabTeeth !== 'undefined') ? Object.keys(window.selectedLabTeeth) : []
       },
-      files: [],
-      patientDataGlobal: (typeof patientDataGlobal !== 'undefined') ? patientDataGlobal : null
+      files: (typeof window.uploadedFilesList !== 'undefined') ? JSON.parse(JSON.stringify(window.uploadedFilesList)) : [],
+      patientDataGlobal: (typeof window.patientDataGlobal !== 'undefined') ? window.patientDataGlobal : null
     };
 
     // Gather procedures
-    $(".proc-box").each(function () {
-        const row = $(this);
-        data.procedures.push({
-            name: row.find("select.proc-name option:selected").text().trim() || "Procedure", 
-            qty: row.find(".proc-qty").val(),
-            price: row.find(".proc-price").val(),
-            doctor: row.find("label:contains('doctor')").next("select").val() || "—",
-            status: row.find("label:contains('Status')").next("select").val() || "Planned"
+    if (typeof window.procData !== 'undefined' && window.procData.length > 0) {
+        data.procedures = JSON.parse(JSON.stringify(window.procData));
+    } else {
+        $(".proc-box").each(function () {
+            const row = $(this);
+            data.procedures.push({
+                name: row.find("select.proc-name option:selected").text().trim() || "Procedure", 
+                qty: row.find(".proc-qty").val(),
+                price: row.find(".proc-price").val(),
+                doctor: row.find("label:contains('doctor')").next("select").val() || "—",
+                status: row.find("label:contains('Status')").next("select").val() || "Planned"
+            });
         });
-    });
+    }
 
     // Gather prescriptions
     $(".medicine-card").each(function () {
@@ -88,18 +101,23 @@ $(function () {
         });
     });
 
-    // Gather lab tests
-    $("#selectedTestArea li").each(function() {
-        data.lab.push($(this).find("small").first().text());
-    });
+    // Gather lab tests (prefer global list if available)
+    if (typeof window.labTestsList === 'undefined') {
+        $("#selectedTestArea li").each(function() {
+            const text = $(this).find("small").first().text();
+            if (text && text !== "No items selected") data.labTests.push(text);
+        });
+    }
 
     // Gather attached files
-    $("#fileList li").each(function() {
-        data.files.push({
-            name: $(this).find('span').first().text(),
-            category: $(this).find('.badge').text()
+    if (typeof window.uploadedFilesList === 'undefined') {
+        $("#fileList li").each(function() {
+            data.files.push({
+                name: $(this).find('strong').first().text(),
+                category: $(this).find('small').first().text()
+            });
         });
-    });
+    }
 
     // Gather follow up
     data.nextReview = {
@@ -110,52 +128,183 @@ $(function () {
     return data;
   }
 
-  function saveToLocalStorage() {
-    const data = gatherAllData();
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-    console.log("Data persisted to localStorage:", data);
+  function resetConsultationForm() {
+    console.log("Persistence: Resetting consultation form...");
+    $("form#vitalsForm")[0]?.reset();
+    $("form#notesForm")[0]?.reset();
+    $(".select2.complaint").val([]).trigger("change");
+    if (typeof window.procData !== "undefined") {
+      window.procData = [];
+      if (typeof window.renderProcTable === "function") window.renderProcTable();
+    }
+    if (typeof window.setPrescriptions === "function") {
+      window.setPrescriptions([]);
+    }
+    if (typeof window.renderProcTable === "function") {
+      window.procData = [];
+      window.renderProcTable();
+    }
+    if (typeof window.renderLabSelectedTests === "function") {
+        window.renderLabSelectedTests([]);
+    }
+    if (typeof window.renderUploadedFiles === "function") {
+        window.renderUploadedFiles(); // It clears because uploadedFilesList is usually reset elsewhere or we should reset it
+    }
+    window.uploadedFilesList = [];
+    $("#fileList").empty();
+    $("#selectedLabContainer").empty();
+    $("#selectedTeethPreview").text("No items yet");
+    $("#dentalSum").text("0");
+    $(".preview-text").text("No items yet");
   }
 
-  // Bind to the View details (globalSave) button
-  $("#globalSave").on("click", function (e) {
+  function saveToLocalStorage() {
+    const key = getStorageKey();
+    if (!key) {
+        console.warn("Persistence: No patient selected, skipping save.");
+        return;
+    }
+
+    const data = gatherAllData();
+    localStorage.setItem(key, JSON.stringify(data));
+    console.log(`Persistence: Data saved for key ${key}`, data);
+  }
+
+  // Debounced auto-save
+  let autoSaveTimeout;
+  function debouncedAutoSave() {
+    console.log("Persistence: Changes detected, auto-save scheduled...");
+    clearTimeout(autoSaveTimeout);
+    autoSaveTimeout = setTimeout(saveToLocalStorage, 1500);
+  }
+
+  // Bind change events to all relevant static fields
+  $(document).on("input change", "input, textarea, select", function() {
+    if ($(this).hasClass("select2-search__field") || $(this).closest(".select2-container").length > 0) return;
+    debouncedAutoSave();
+  });
+
+  // Track Select2 changes explicitly
+  $(document).on("change", ".select2, .select2-hidden-accessible", function() {
+    debouncedAutoSave();
+  });
+
+  $(document).on("click", "#addProcedureBtn, #addMedicine, #addFileToList, #addToSelectedTests, .btn-add-test, #confirmDentalProc, #saveAllergyChanges", function() {
+    debouncedAutoSave();
+  });
+
+  $("#globalSave, #saveVitals, #saveNotes, #saveLab, #saveProcedure, #savePresc, #saveDental, #saveFiles, #saveAllergyChanges, .save-all-btn").on("click", function () {
     saveToLocalStorage();
   });
 
-  // If we are on the preview page, load the data
-  if (window.location.pathname.includes("preview.html")) {
-      loadFromLocalStorage();
-  }
+  // Handle explicit patient switch
+  $(document).on("patientMatched", function(e, patient) {
+    console.log("Persistence: Patient matched event received:", patient);
+    const pid = patient.patientId || patient.patient_id;
+    currentPatientId = pid;
+    
+    // Remember this patient as the last active one
+    localStorage.setItem(LAST_PATIENT_KEY, JSON.stringify(patient));
+    
+    loadFromLocalStorage();
+  });
+
+  // Periodic check for patient switch (fallback)
+  setInterval(() => {
+    const pid = window.patientDataGlobal ? (window.patientDataGlobal.patientId || window.patientDataGlobal.patient_id) : null;
+    if (pid && pid !== currentPatientId) {
+        console.log(`Persistence: Detected patient switch to ${pid}`);
+        currentPatientId = pid;
+        loadFromLocalStorage();
+    }
+  }, 2000);
+
+  // Initial Load Logic
+  $(document).ready(function() {
+      // 1. Check if we already have a global patient (set by new.js or other)
+      if (window.patientDataGlobal) {
+          console.log("Persistence: Global patient found on load.");
+          loadFromLocalStorage();
+      } 
+      // 2. Otherwise try to restore from last session
+      else {
+          const lastPatientStr = localStorage.getItem(LAST_PATIENT_KEY);
+          if (lastPatientStr) {
+              const lastPatient = JSON.parse(lastPatientStr);
+              console.log("Persistence: Restoring last active patient:", lastPatient);
+              window.patientDataGlobal = lastPatient;
+              // Trigger UI update in new.js (sidebar)
+              $(document).trigger("patientMatched", [lastPatient]);
+          }
+      }
+
+      // If we are on the preview page, we should load data
+      if (window.location.pathname.includes("preview.html")) {
+          loadFromLocalStorage();
+      }
+  });
 
   function loadFromLocalStorage() {
-      const rawData = localStorage.getItem(STORAGE_KEY);
-      if (!rawData) return;
+      resetConsultationForm();
+
+      let key = getStorageKey();
+      if (!key) {
+        const keys = Object.keys(localStorage).filter(k => k.startsWith(BASE_STORAGE_KEY));
+        if (keys.length > 0) key = keys[0];
+      }
+
+      if (!key) return;
+
+      const rawData = localStorage.getItem(key);
+      if (!rawData) {
+          console.log(`Persistence: No local data found for key ${key}`);
+          return;
+      }
 
       const data = JSON.parse(rawData);
-      console.log("Loading data from localStorage:", data);
+      console.log(`Persistence: Loading data for key ${key}`, data);
 
-      // Restore global patient data for drawers/modals
       if (data.patientDataGlobal) {
           window.patientDataGlobal = data.patientDataGlobal;
       }
 
-      // Populate Patient Info
+      // Populate Patient Sidebar
       if (data.patient) {
         $("#pName").text(data.patient.name);
         $("#pAvatar").attr("src", data.patient.avatar);
         $("#pBasic").text(data.patient.basic);
-        $("#pPhone").html(`<i class="fa fa-mobile mr-2 text-custom"></i> ${data.patient.phone}`);
+        if ($("#pPhone").length) $("#pPhone").html(`<i class="fa fa-mobile mr-2 text-custom"></i> ${data.patient.phone}`);
         $("#pAmount").text(data.patient.amountDue);
         $("#pVisits").text(data.patient.visits);
         $("#pLastVisit").text(data.patient.lastVisit);
         $("#pId").text(data.patient.id);
-        $("#pAllergies").html(data.patient.allergies);
+        
+        // Restore global allergy list and sync UI
+        if (typeof window.addAllergies !== 'undefined' && data.patient.allergiesList) {
+            window.addAllergies = data.patient.allergiesList;
+            if (typeof window.renderallergies === 'function') window.renderallergies();
+        } else {
+            $("#pAllergies").html(data.patient.allergies);
+        }
       }
 
-      // Populate Vitals in Preview (specific elements in preview.html)
+      // Populate Vitals
       if (data.vitals) {
+          $("input[name='temperature']").val(data.vitals.temperature);
+          $("input[name='height']").val(data.vitals.height);
+          $("input[name='weight']").val(data.vitals.weight);
+          $("input[name='systolic']").val(data.vitals.bp?.systolic);
+          $("input[name='diastolic']").val(data.vitals.bp?.diastolic);
+          $("select[name='position']").val(data.vitals.bp?.position);
+          $("input[name='glucose']").val(data.vitals.glucose);
+          $("input[name='pulse']").val(data.vitals.pulse);
+          $("input[name='cholesterol']").val(data.vitals.cholesterol);
+          $("input[name='spo2']").val(data.vitals.spo2);
+          $("input[name='respiratoryRate']").val(data.vitals.respiratoryRate);
+
           $("#topTemp").text(`${data.vitals.temperature || "—"}°F`);
           $("#topHtWt").text(`${data.vitals.height || "—"}m/${data.vitals.weight || "—"}kg`);
-          $("#topBP").text(`${data.vitals.bp.systolic || "—"}/${data.vitals.bp.diastolic || "—"}`);
+          $("#topBP").text(`${data.vitals.bp?.systolic || "—"}/${data.vitals.bp?.diastolic || "—"}`);
           $("#topGlucose").text(`${data.vitals.glucose || "—"} mg`);
           $("#topPulse").text(`${data.vitals.pulse || "—"} bpm`);
           $("#topChol").text(`${data.vitals.cholesterol || "—"} mg`);
@@ -165,12 +314,22 @@ $(function () {
 
       // Populate Clinical Notes
       if (data.clinicalNotes) {
-          const cn = data.clinicalNotes;
+          if (typeof window.setClinicalNotes === 'function') {
+              window.setClinicalNotes(data.clinicalNotes);
+          } else {
+              const cn = data.clinicalNotes;
+              $("#chiefComplaints").val(cn.chiefComplaints).trigger('change');
+              $("#medicalHistory").val(cn.medicalHistory).trigger('change');
+              $("#observations").val(cn.observations).trigger('change');
+              $("#investigations").val(cn.investigations).trigger('change');
+              $("#diagnosis").val(cn.diagnosis).trigger('change');
+              $("#treatment").val(cn.treatment).trigger('change');
+              $("#notes").val(cn.notes).trigger('change');
+              $("#advice").val(cn.advice);
+          }
           
-          // Chief Complaints & History section
           const formatText = (arr) => Array.isArray(arr) ? arr.join(", ") : arr;
-          
-          // Populate different areas in preview.html for all clinical note fields
+          const cn = data.clinicalNotes;
           const cc = formatText(cn.chiefComplaints);
           const hist = formatText(cn.medicalHistory);
           const obs = formatText(cn.observations);
@@ -180,174 +339,142 @@ $(function () {
           const notes = formatText(cn.notes);
           const adv = cn.advice;
 
-          // Target specific sections in preview.html
-          // Chief Complaints & History
-          $(".border-primary p").html(`
-              <strong>Chief Complaints:</strong> ${cc || "—"}<br>
-              <strong>History:</strong> ${hist || "—"}
-          `);
-          
-          // Observations & Investigations
-          if ($(".clinical-details-section").length === 0) {
-              // Add a new section for more detail if it doesn't exist
-              $(".border-info").before(`
-                  <div class="mb-2 border-start border-3 border-warning ps-2 clinical-details-section">
-                    <div class="text-muted fw-bold" style="font-size: 0.7rem">Observations & Investigations</div>
-                    <p class="mb-0" style="font-size: 0.8rem">
-                        <strong>Obs:</strong> ${obs || "—"}<br>
-                        <strong>Inv:</strong> ${inv || "—"}
-                    </p>
-                  </div>
-              `);
-          } else {
-              $(".clinical-details-section p").html(`
-                  <strong>Obs:</strong> ${obs || "—"}<br>
-                  <strong>Inv:</strong> ${inv || "—"}
-              `);
+          $(".border-primary p").html(`<strong>Chief Complaints:</strong> ${cc || "—"}<br><strong>History:</strong> ${hist || "—"}`);
+          if ($(".clinical-details-section").length > 0) {
+              $(".clinical-details-section p").html(`<strong>Obs:</strong> ${obs || "—"}<br><strong>Inv:</strong> ${inv || "—"}`);
           }
-
-          // Diagnosis & Advice
           $(".border-info p:first").html(`<strong>Diagnosis:</strong> ${diag || "—"}`);
           $(".border-info p:last").html(`<strong>Advice:</strong> ${adv || "—"}`);
-
-          // Add treatment & notes if they exist
-          if ($(".treatment-notes-section").length === 0) {
-              $(".border-info").after(`
-                  <div class="mb-2 border-start border-3 border-success ps-2 treatment-notes-section">
-                    <div class="text-muted fw-bold" style="font-size: 0.7rem">Treatment & Additional Notes</div>
-                    <p class="mb-0" style="font-size: 0.8rem">
-                        <strong>Treatment:</strong> ${treat || "—"}<br>
-                        <strong>Notes:</strong> ${notes || "—"}
-                    </p>
-                  </div>
-              `);
-          } else {
-              $(".treatment-notes-section p").html(`
-                  <strong>Treatment:</strong> ${treat || "—"}<br>
-                  <strong>Notes:</strong> ${notes || "—"}
-              `);
+          if ($(".treatment-notes-section").length > 0) {
+              $(".treatment-notes-section p").html(`<strong>Treatment:</strong> ${treat || "—"}<br><strong>Notes:</strong> ${notes || "—"}`);
           }
       }
 
-      // Populate Procedures
-      if (data.procedures) {
+      if (data.procedures && data.procedures.length > 0) {
+          if (typeof window.procData !== 'undefined') {
+              window.procData = JSON.parse(JSON.stringify(data.procedures));
+              if (typeof window.renderProcTable === 'function') window.renderProcTable();
+          }
           const container = $("#procedurePreviewList");
-          container.empty(); 
-          data.procedures.forEach(proc => {
-              container.append(`
-                  <div class="p-2 border rounded-3 mb-2 bg-white shadow-sm" style="font-size: 0.75rem">
-                    <div class="d-flex justify-content-between fw-bold pb-1 mb-1">
-                      <span>${proc.name || "—"}</span>
-                      <span class="text-success">${proc.price ? "₹" + proc.price : "—"}</span>
-                    </div>
-                    <div class="row g-1">
-                      <div class="col-6"><span class="text-muted">Dr:</span> ${proc.doctor || "—"}</div>
-                      <div class="col-6"><span class="text-muted">Status:</span> 
-                        <span class="badge bg-success-subtle text-success py-0">${proc.status || "—"}</span>
+          if (container.length) {
+              container.empty(); 
+              data.procedures.forEach(proc => {
+                  container.append(`
+                      <div class="p-2 border rounded-3 mb-2 bg-white shadow-sm" style="font-size: 0.75rem">
+                        <div class="d-flex justify-content-between fw-bold pb-1 mb-1">
+                          <span>${proc.name || "—"}</span>
+                          <span class="text-success">${proc.price ? "₹" + proc.price : "—"}</span>
+                        </div>
+                        <div class="row g-1">
+                          <div class="col-6"><span class="text-muted">Dr:</span> ${proc.doctor || "—"}</div>
+                          <div class="col-6"><span class="text-muted">Status:</span> 
+                            <span class="badge bg-success-subtle text-success py-0">${proc.status || "—"}</span>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-              `);
-          });
-          $(".fw-bold:contains('PROCEDURES') span").text(data.procedures.length);
+                  `);
+              });
+          }
       }
 
-      // Populate Dental Procedures Summary
+      if (data.procedures && data.procedures.length > 0) {
+          if (typeof window.renderProcTable === 'function') {
+              window.procData = data.procedures;
+              window.renderProcTable();
+          }
+           const container = $("#procedurePreviewList");
+           if (container.length) {
+               container.empty();
+               data.procedures.forEach(proc => {
+                   container.append(`<div class="p-2 border-bottom" style="font-size: 0.75rem"><div class="fw-bold text-primary">${proc.name || "—"}</div><div class="text-muted">Qty: ${proc.qty || "1"} | ₹${proc.price || "0"}${proc.toothNo ? ` | Tooth: ${proc.toothNo.join(", ")}` : ""}</div></div>`);
+               });
+           }
+      }
+
+      if (data.dentalProcedures && data.dentalProcedures.length > 0) {
+          if (typeof window.renderDentalTable === 'function') {
+              window.renderDentalTable(data.dentalProcedures);
+          }
+      }
+
       if (data.dental && data.dental.teeth && data.dental.teeth !== "No items yet") {
           const container = $("#dentalProcedurePreviewList");
-          container.empty().removeClass("d-none");
-          container.append(`
-              <div class="p-2 border-start border-3 border-danger bg-white shadow-sm mb-2" style="font-size: 0.75rem">
-                  <div class="fw-bold mb-1">DENTAL SUMMARY</div>
-                  <div class="text-muted"><strong>Teeth:</strong> ${data.dental.teeth}</div>
-                  <div class="text-danger fw-bold mt-1">Estim. Total: ₹${data.dental.sum || "0"}</div>
-              </div>
-          `);
-      } else {
-          $("#dentalProcedurePreviewList").addClass("d-none");
+          if (container.length) {
+              container.empty().removeClass("d-none");
+              container.append(`<div class="p-2 border-start border-3 border-danger bg-white shadow-sm mb-2" style="font-size: 0.75rem"><div class="fw-bold mb-1">DENTAL SUMMARY</div><div class="text-muted"><strong>Teeth:</strong> ${data.dental.teeth}</div><div class="text-danger fw-bold mt-1">Estim. Total: ₹${data.dental.sum || "0"}</div></div>`);
+          }
+          if ($("#selectedTeethPreview").length) $("#selectedTeethPreview").text(data.dental.teeth);
+          if ($("#dentalSum").length) $("#dentalSum").text(data.dental.sum);
       }
 
-      // Populate Prescriptions
-      if (data.prescriptions) {
+      if (data.prescriptions && data.prescriptions.length > 0) {
+          if (typeof window.setPrescriptions === 'function') window.setPrescriptions(data.prescriptions);
           const container = $("#prescriptionPreviewList");
-          container.empty(); 
-          data.prescriptions.forEach(med => {
-              container.append(`
-                  <div class="card mb-2 border-0 bg-light shadow-sm">
-                    <div class="card-body p-2" style="font-size: 0.75rem">
-                      <div class="d-flex justify-content-between pb-1 mb-1">
-                        <strong class="text-dark">${med.name || "—"}</strong>
-                        <span class="badge text-dark">Qty: ${med.qty || "0"}</span>
-                      </div>
-                      <div class="row g-0 text-muted">
-                        <div style="font-size: .9rem;" class="col-6">${med.dosage || "—"} | ${med.duration || "0"} Days</div>
-                        <div style="font-size: .9rem;" class="col-6">Oral | ${med.instruction || "—"}</div>
-                      </div>
-                    </div>
-                  </div>
-              `);
-          });
-          $(".fw-bold:contains('PRESCRIPTIONS')").text(`PRESCRIPTIONS (${data.prescriptions.length} Drugs)`);
+          if (container.length) {
+              container.empty(); 
+              data.prescriptions.forEach(med => {
+                  container.append(`<div class="card mb-2 border-0 bg-light shadow-sm"><div class="card-body p-2" style="font-size: 0.75rem"><div class="d-flex justify-content-between pb-1 mb-1"><strong class="text-dark">${med.name || "—"}</strong><span class="badge text-dark">Qty: ${med.qty || "0"}</span></div><div class="row g-0 text-muted"><div style="font-size: .9rem;" class="col-6">${med.dosage || "—"} | ${med.duration || "0"} Days</div><div style="font-size: .9rem;" class="col-6">Oral | ${med.instruction || "—"}</div></div></div></div>`);
+              });
+          }
       }
 
-      // Populate Lab
-      if (data.lab) {
+      if (data.labTests && data.labTests.length > 0) {
+          if (typeof window.renderLabSelectedTests === 'function') {
+              window.renderLabSelectedTests(data.labTests);
+          }
           const tbody = $("#labPreviewList");
-          tbody.empty();
-          data.lab.forEach(test => {
-              tbody.append(`
-                <tr>
-                    <td>${test || "—"}</td>
-                    <td class="text-end text-muted">Today</td>
-                </tr>
-              `);
-          });
-          $(".fw-bold:contains('LAB TESTS')").text(`LAB TESTS (${data.lab.length})`);
+          if (tbody.length) {
+              tbody.empty();
+              data.labTests.forEach(test => {
+                  const testName = typeof test === 'object' ? (test.name || test.text || test.label) : test;
+                  tbody.append(`<tr><td>${testName || "—"}</td><td class="text-end text-muted">Today</td></tr>`);
+              });
+          }
       }
 
-      // Populate Dental Lab
-      if (data.dentalLab && data.dentalLab.labName) {
-          const container = $("#dentalLabPreviewList");
-          container.empty();
-          container.append(`
-              <div class="p-2 border rounded-3 bg-white shadow-sm" style="font-size: 0.75rem">
-                  <div class="d-flex justify-content-between fw-bold pb-1 border-bottom mb-1">
-                      <span>${data.dentalLab.labName} (${data.dentalLab.brand || "—"})</span>
-                      <span class="text-primary">${data.dentalLab.deliveryStatus || "—"}</span>
-                  </div>
-                  <div class="row g-1 mt-1">
-                      <div class="col-6"><strong>Work:</strong> ${data.dentalLab.workType || "—"}</div>
-                      <div class="col-6"><strong>Teeth:</strong> ${data.dentalLab.teeth.join(", ") || "—"}</div>
-                      <div class="col-6 text-muted">Due: ${data.dentalLab.deliveryDate || "—"}</div>
-                      <div class="col-6 text-muted">Amt: ₹${data.dentalLab.invoiceAmount || "0"}</div>
-                  </div>
-              </div>
-          `);
-          $(".fw-bold:contains('DENTAL LAB WORK')").text(`DENTAL LAB WORK (1)`);
+      if (data.files && data.files.length > 0) {
+          if (typeof window.renderUploadedFiles === 'function') {
+              window.uploadedFilesList = data.files;
+              window.renderUploadedFiles();
+          }
       }
 
-      // Populate Attached Files
-      if (data.files) {
-          const container = $("#attachedFilesPreviewList");
-          container.empty();
-          data.files.forEach(file => {
-              container.append(`
-                  <div class="d-flex align-items-center p-1 border rounded bg-white shadow-sm" style="font-size: 0.65rem; min-width: 45%">
-                      <i class="fas fa-file-alt text-primary me-2"></i>
-                      <div class="text-truncate" style="max-width: 80px" title="${file.name}">${file.name}</div>
-                      <span class="badge bg-light text-dark ms-1" style="font-size: 0.5rem">${file.category}</span>
-                  </div>
-              `);
-          });
-          $(".fw-bold:contains('ATTACHED FILES')").text(`ATTACHED FILES (${data.files.length})`);
+      if (data.dentalLab) {
+          const dl = data.dentalLab;
+          if (dl.labName) {
+              const $labSelect = $("#labName");
+              if ($labSelect.length) {
+                  const option = new Option(dl.labName, dl.labName, true, true);
+                  $labSelect.append(option).trigger('change');
+              }
+          }
+          if (dl.brand) {
+              const $brandSelect = $("#brand");
+              if ($brandSelect.length) {
+                  const option = new Option(dl.brand, dl.brand, true, true);
+                  $brandSelect.append(option).trigger('change');
+              }
+          }
+          $("#workType").val(dl.workType || "");
+          $("#remarks").val(dl.remarks || "");
+          $("#invoiceAmount").val(dl.invoiceAmount || "");
+          $("#labAmount").val(dl.labAmount || "");
+          $("#executiveName").val(dl.executiveName || "");
+          $("#deliveryStatus").val(dl.deliveryStatus || "");
+          $("#deliveryDate").val(dl.deliveryDate || "");
+          $("#givenDate").val(dl.givenDate || "");
+          
+          if (dl.teeth && dl.teeth.length > 0) {
+              if (typeof window.setDentalLabTeeth === 'function') {
+                  window.setDentalLabTeeth(dl.teeth);
+              }
+          }
       }
 
-      // Populate Next Review
       if (data.nextReview && data.nextReview.date) {
+          $("#reviewDate").val(data.nextReview.date);
+          $("#timeFilter").val(data.nextReview.time);
           $("#pNextReview").text(`${data.nextReview.date} ${data.nextReview.time || ""}`);
           $(".next-review-container").removeClass("d-none");
-      } else {
-          $(".next-review-container").addClass("d-none");
       }
   }
-});

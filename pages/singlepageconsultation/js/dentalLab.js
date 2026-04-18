@@ -4,7 +4,7 @@ $(function () {
     modal.show();
   });
 
-  let selectedTooth = {};
+  window.selectedLabTeeth = {};
 
   function renderTeethUI(teethArray) {
     const row1 = document.getElementById("dentalUpperLab");
@@ -84,11 +84,11 @@ $(function () {
 
   $(document).on("click", ".lab-tooth", function () {
     const toothNo = $(this).data("tooth");
-    if (selectedTooth[toothNo]) {
-      delete selectedTooth[toothNo];
+    if (window.selectedLabTeeth[toothNo]) {
+      delete window.selectedLabTeeth[toothNo];
       $(`#lab-dental-tooth-${toothNo}`).removeClass("lab-tooth-selected")
     } else {
-      selectedTooth[toothNo] = toothNo;
+      window.selectedLabTeeth[toothNo] = toothNo;
       $(`#lab-dental-tooth-${toothNo}`).addClass("lab-tooth-selected")
     }
      
@@ -97,14 +97,14 @@ $(function () {
 
   $(document).on("click", ".toothDeleteBtn", function () {
     const selectedNo = $(this).data("selected");
-    if (selectedTooth[selectedNo]) {
-      delete selectedTooth[selectedNo];
+    if (window.selectedLabTeeth[selectedNo]) {
+      delete window.selectedLabTeeth[selectedNo];
       renderSelectedTooth();
     }
   });
 
   const renderSelectedTooth = () => {
-    const selectedArray = Object.keys(selectedTooth);
+    const selectedArray = Object.keys(window.selectedLabTeeth);
     let renderElements = "";
 
     selectedArray.forEach((num) => {
@@ -136,22 +136,22 @@ $(function () {
   renderSelectedTooth();
   $(document).on("click", "#selectAllBtn", function () {
     if (isLabAdult) {
-      selectedTooth = {};
+      window.selectedLabTeeth = {};
       teeth.forEach((i) => {
-        selectedTooth[i.number] = i.number;
+        window.selectedLabTeeth[i.number] = i.number;
       });
       renderTeethUI(teeth);
     } else {
-      selectedTooth = {};
+      window.selectedLabTeeth = {};
       childTeeth.forEach((i) => {
-        selectedTooth[i.number] = i.number;
+        window.selectedLabTeeth[i.number] = i.number;
       });
       renderChildTeethUI(childTeeth);
     }
     renderSelectedTooth();
   });
   $(document).on("click", "#clearSelected", function () {
-    selectedTooth = {};
+    window.selectedLabTeeth = {};
     if (isLabAdult) {
       renderTeethUI(teeth);
     } else {
@@ -159,6 +159,16 @@ $(function () {
     }
     renderSelectedTooth();
   });
+
+  window.setDentalLabTeeth = function(teethArray) {
+      window.selectedLabTeeth = {};
+      if (Array.isArray(teethArray)) {
+          teethArray.forEach(num => {
+              window.selectedLabTeeth[num] = num;
+          });
+      }
+      renderSelectedTooth();
+  }
 
   // Base URL for APIs
   const apiBase = (typeof baseUrl !== 'undefined') ? baseUrl : "";
@@ -226,7 +236,7 @@ $(function () {
     const $btn = $(this);
     const originalHtml = $btn.html();
     const labId = $("#labName").val();
-    const selectedTeethArray = Object.keys(selectedTooth);
+    const selectedTeethArray = Object.keys(window.selectedLabTeeth);
     
     if (!labId) {
       if (typeof ToastComponent !== 'undefined') {

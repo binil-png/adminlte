@@ -1,14 +1,16 @@
 $(function () {
   $(document).ready(function () {
-    function getPrescriptions() {
+    window.getPrescriptionData = function() {
       const list = [];
 
       $("#medList .medicine-card").each(function () {
         const card = $(this);
+        const medName = card.find(".select2-medicine option:selected").text();
+        if (!medName || medName === "Search Medicine") return;
 
         list.push({
           medicine_id: card.find(".select2-medicine").val(),
-          medicine_name: card.find(".select2-medicine option:selected").text(),
+          medicine_name: medName,
           generic_name: card.find(".med-generic").val(),
           dosage: {
             value: card.find(".dosage-value").val(),
@@ -42,12 +44,11 @@ $(function () {
         });
       });
 
-      console.log("Prescription Data:", list);
       return list;
     }
 
     function updatePrescriptionPreview() {
-      const itemsArr = getPrescriptions();
+      const itemsArr = window.getPrescriptionData();
       if (itemsArr.length > 0) {
         const previewText = itemsArr.map(item => item.medicine_name || "New Medicine").join(", ");
         $("#prescPreview").text(previewText);
@@ -57,7 +58,7 @@ $(function () {
     }
 
     // ---------- 2. SET DATA INTO UI ----------
-    function setPrescriptions(data) {
+    window.setPrescriptions = function(data) {
       $("#medList").empty(); // Clear old list
       if (Array.isArray(data)) {
         data.forEach((med) => addMedicineRow(med));
@@ -409,7 +410,7 @@ $(function () {
     // ---------- 7. SAVE PRESCRIPTION ----------
     // ... (rest of the save logic)
     $("#savePresc").on("click", function () {
-      const itemsArr = getPrescriptions();
+      const itemsArr = window.getPrescriptionData();
       if (itemsArr.length === 0) {
         if (typeof showToast === "function") {
           showToast("Please add at least one medicine", "warning");
@@ -484,7 +485,7 @@ $(function () {
       setPrescriptions(prescriptions);
     }
 
-    if ($("#medList .medicine-card").length === 0) {
+    if ($("#medList .medicine-card").length === 0 && !window.patientDataGlobal) {
       addMedicineRow();
     }
   });

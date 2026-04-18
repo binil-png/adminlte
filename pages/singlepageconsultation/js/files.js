@@ -1,10 +1,11 @@
 $(function () {
-  let allFiles = [];
+  window.uploadedFilesList = [];
   const apiBase = (typeof baseUrl !== 'undefined') ? baseUrl : "";
 
-  function updateFilePreview() {
-    if (allFiles && allFiles.length > 0) {
-      const previewText = allFiles.map(f => f.file.name).join(", ");
+  window.renderUploadedFiles = function () {
+    const list = window.uploadedFilesList;
+    if (list && list.length > 0) {
+      const previewText = list.map(f => f.file.name).join(", ");
       $("#filePreview").text(previewText);
     } else {
       $("#filePreview").text("No items yet");
@@ -35,7 +36,7 @@ $(function () {
       }
 
       // Save data in array
-      allFiles.push({ file: file, description: desc, categoryId: categoryId });
+      window.uploadedFilesList.push({ file: file, description: desc, categoryId: categoryId });
 
       // Add UI box
       $("#fileList").append(`
@@ -58,20 +59,20 @@ $(function () {
       $("#singleDescription").val("");
       $("#fileInputArea").addClass("d-none");
       $("#showFileArea").removeClass("d-none");
-      updateFilePreview();
+      window.renderUploadedFiles();
     });
 
     // Remove a file box
     $(document).on("click", ".removeFile", function () {
       let index = $(this).closest("li").index();
-      allFiles.splice(index, 1);
+      window.uploadedFilesList.splice(index, 1);
       $(this).closest("li").remove();
-      updateFilePreview();
+      window.renderUploadedFiles();
     });
 
     // Save button
     $("#saveFiles").click(function () {
-      if (allFiles.length === 0) {
+      if (window.uploadedFilesList.length === 0) {
         alert("Please add at least one file to the list.");
         return;
       }
@@ -81,7 +82,7 @@ $(function () {
       $btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm me-2"></span> Saving...');
 
       let formData = new FormData();
-      allFiles.forEach((item) => {
+      window.uploadedFilesList.forEach((item) => {
         formData.append("file[]", item.file);
         formData.append("notes[]", item.description);
         formData.append("category_id[]", item.categoryId);
@@ -95,10 +96,10 @@ $(function () {
         contentType: false,
         success: function (response) {
           alert("Files saved successfully!");
-          allFiles = [];
+          window.uploadedFilesList = [];
           $("#fileList").empty();
           $("#closeFileToList").click(); // Hide input area if open
-          updateFilePreview();
+          window.renderUploadedFiles();
         },
         error: function (xhr) {
           console.error("Failed to save files:", xhr);

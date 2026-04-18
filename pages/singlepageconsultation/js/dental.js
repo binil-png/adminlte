@@ -1,7 +1,7 @@
 // unifiedDentalProcedure.js
 $(function () {
   // 1. Data Structure
-  let dentalDataList = [
+  window.dentalProceduresList = [
     { name: "", qty: 1, price: 0, toothInfo: "", notes: "", total: 0 },
   ];
   let currentActiveToothIndex = null; // Tracks which box the modal is updating
@@ -11,7 +11,8 @@ $(function () {
   }
 
   function updateDentalPreview() {
-    const procedures = dentalDataList.filter(p => p.name).map(p => p.name);
+    const list = window.dentalProceduresList || [];
+    const procedures = list.filter(p => p.name).map(p => p.name);
     if (procedures.length > 0) {
       $("#selectedTeethPreview").text(procedures.join(", "));
     } else {
@@ -20,11 +21,13 @@ $(function () {
   }
 
   // 2. Procedures Rendering
-  function renderDentalTable(dentalData) {
+  window.renderDentalTable = function(dentalData) {
+    if (typeof dentalData !== 'undefined') window.dentalProceduresList = dentalData;
+    const items = window.dentalProceduresList;
     const container = $("#dentalContainer");
     container.empty();
 
-    dentalData.forEach((p, index) => {
+    items.forEach((p, index) => {
       const boxId = generateDentalBoxId(index);
       const lineTotal = (parseFloat(p.qty) || 0) * (parseFloat(p.price) || 0);
 
@@ -185,7 +188,7 @@ $(function () {
   // 4. Interaction Handlers
   $(document).on("click", "#addDentalProc", function () {
     console.log("add btn clicked");
-    dentalDataList.push({
+    window.dentalProceduresList.push({
       name: "",
       qty: 1,
       price: 0,
@@ -193,14 +196,14 @@ $(function () {
       notes: "",
       total: 0,
     });
-    renderDentalTable(dentalDataList);
+    window.renderDentalTable(window.dentalProceduresList);
   });
 
   $(document).on("click", ".btn-remove-dental", function () {
     const index = $(this).closest(".dental-box").data("index");
     if (confirm("Remove dental procedure?")) {
-      dentalDataList.splice(index, 1);
-      renderDentalTable(dentalDataList);
+      window.dentalProceduresList.splice(index, 1);
+      window.renderDentalTable(window.dentalProceduresList);
     }
   });
 
@@ -209,21 +212,21 @@ $(function () {
     const index = $box.data("index");
 
     if ($(this).hasClass("dental-name"))
-      dentalDataList[index].name = $(this).val();
+      window.dentalProceduresList[index].name = $(this).val();
     if ($(this).hasClass("dental-qty"))
-      dentalDataList[index].qty = parseFloat($(this).val()) || 0;
+      window.dentalProceduresList[index].qty = parseFloat($(this).val()) || 0;
     if ($(this).hasClass("dental-price"))
-      dentalDataList[index].price = parseFloat($(this).val()) || 0;
+      window.dentalProceduresList[index].price = parseFloat($(this).val()) || 0;
     if ($(this).hasClass("dental-tooth-info"))
-      dentalDataList[index].toothInfo = $(this).val();
+      window.dentalProceduresList[index].toothInfo = $(this).val();
     if ($(this).hasClass("dental-notes"))
-      dentalDataList[index].notes = $(this).val();
+      window.dentalProceduresList[index].notes = $(this).val();
 
-    dentalDataList[index].total =
-      dentalDataList[index].qty * dentalDataList[index].price;
+    window.dentalProceduresList[index].total =
+      window.dentalProceduresList[index].qty * window.dentalProceduresList[index].price;
     $box
       .find(".dental-line-total")
-      .text(`₹${dentalDataList[index].total.toFixed(2)}`);
+      .text(`₹${window.dentalProceduresList[index].total.toFixed(2)}`);
     updateDentalTotals();
     updateDentalPreview();
   });
@@ -289,7 +292,7 @@ $(function () {
   });
 
   function updateDentalTotals() {
-    const sum = dentalDataList.reduce((a, b) => a + (b.total || 0), 0);
+    const sum = window.dentalProceduresList.reduce((a, b) => a + (b.total || 0), 0);
     $("#dentalSum").text(sum.toFixed(2));
   }
   function renderChildTeethUI(teethArray) {
@@ -327,7 +330,7 @@ $(function () {
   }
   renderChildTeethUI(childTeeth);
   renderTeethUI(teeth);
-  renderDentalTable(dentalDataList);
+  window.renderDentalTable(window.dentalProceduresList);
 
   const $toggleBtn = $("#dentalToothToggle");
   let isAdult = true;

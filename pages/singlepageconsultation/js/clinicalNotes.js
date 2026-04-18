@@ -1,16 +1,39 @@
 $(function () {
   let clinicalNotesToggle = true;
-  function setClinicalNotes(data) {
-    $("#chiefComplaints").val(data.chiefComplaints);
-    $("#medicalHistory").val(data.medicalHistory);
-    $("#observations").val(data.observations);
-    $("#investigations").val(data.investigations);
-    $("#diagnosis").val(data.diagnosis);
-    $("#treatment").val(data.treatment);
-    $("#advice").val(data.advice);
-    $("#notes").val(data.notes || []);
+  window.setClinicalNotes = function(data) {
+    if (!data) return;
+    
+    const fields = [
+        { id: "#chiefComplaints", val: data.chiefComplaints },
+        { id: "#medicalHistory", val: data.medicalHistory },
+        { id: "#observations", val: data.observations },
+        { id: "#investigations", val: data.investigations },
+        { id: "#diagnosis", val: data.diagnosis },
+        { id: "#treatment", val: data.treatment },
+        { id: "#notes", val: data.notes }
+    ];
 
-    updateClinicalPreview();
+    fields.forEach(field => {
+        const $el = $(field.id);
+        const values = Array.isArray(field.val) ? field.val : (field.val ? [field.val] : []);
+        
+        if ($el.hasClass("select2-hidden-accessible")) {
+            // Ensure options exist for Select2 tags
+            values.forEach(v => {
+                const text = typeof v === 'object' ? (v.text || v.id) : v;
+                const id = typeof v === 'object' ? v.id : v;
+                if ($el.find(`option[value='${id}']`).length === 0) {
+                    $el.append(new Option(text, id, true, true));
+                }
+            });
+            $el.val(values.map(v => typeof v === 'object' ? v.id : v)).trigger('change');
+        } else {
+            $el.val(field.val);
+        }
+    });
+
+    $("#advice").val(data.advice || "");
+    if (typeof updateClinicalPreview === 'function') updateClinicalPreview();
   }
 
   $("#saveNotes").on("click", function () {
@@ -117,7 +140,9 @@ $(function () {
 
   // Load on page start
   $(document).ready(function () {
-    setClinicalNotes(mockClinicalNotes);
+    if (!window.patientDataGlobal && typeof mockClinicalNotes !== 'undefined') {
+        window.setClinicalNotes(mockClinicalNotes);
+    }
 
     $("#chiefComplaints").select2({
       placeholder: "Select Chief Complaints",

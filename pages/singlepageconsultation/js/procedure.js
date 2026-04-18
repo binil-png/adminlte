@@ -33,7 +33,7 @@ $(function () {
 
   window.procData = [];
   initPrescTemplateSelect2()
-  function renderProcTable() {
+  window.renderProcTable = function() {
     const container = $("#procContainer");
     container.empty();
     const defaultHideClass = "d-none";

@@ -100,13 +100,22 @@ $(function () {
     $("#pPhone").html(
       `<i class="fa fa-mobile mr-2 text-custom"></i> ${patient.mobile || ""}`
     );
-    addAllergies = patient.allergies
-    renderallergies()
+    addAllergies = patient.allergies;
+    renderallergies();
+    
+    // Notify persistence layer to load saved progress for this patient
+    $(document).trigger("patientMatched", [patient]);
   }
 
   function renderPatientData() {
     updatePatientCard(patientDataGlobal);
   }
+
+  $(document).on("patientMatched", function(e, patient) {
+    if (patient) {
+      updatePatientCard(patient);
+    }
+  });
 
   $(document).ready(function () {
     // Removed bootstrap.Modal instantiation in favor of jQuery plugin for compatibility
@@ -204,9 +213,6 @@ $(function () {
         processResults: function (data) {
           console.log(data);
           return { results: data };
-        },
-        data: function (params) {
-          return { searchTerm: params.term };
         },
         cache: true,
       },

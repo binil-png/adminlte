@@ -1,5 +1,5 @@
 $(function () {
-  let allTest = []; // This stores the items selected by the user
+  window.labTestsList = []; // This stores the items selected by the user
   let currentFetchedList = []; // This stores results from the current API call
   let selectedMode = "test"; // 'test', 'category', or 'package'
   let price = 0;
@@ -64,11 +64,13 @@ $(function () {
     }
   }
 
-  function renderSelectedTest(list) {
+  window.renderLabSelectedTests = function (list) {
+    if (list) window.labTestsList = list;
     $selectedTestArea.empty();
+    price = 0;
  
-    if (list.length) {
-      list.forEach((t) => {
+    if (window.labTestsList.length) {
+      window.labTestsList.forEach((t) => {
         const itemHtml = `
           <li class="list-group-item d-flex justify-content-between align-items-center border-0 py-2 px-2">
              <div>
@@ -87,7 +89,7 @@ $(function () {
         price += parseFloat(t.cost || 0);
       });
       $labpricearea.text("₹" + price);
-      $selectedCount.text(list.length);
+      $selectedCount.text(window.labTestsList.length);
     } else {
       $selectedTestArea.append(`
         <li class="list-group-item d-flex justify-content-between align-items-center border-0 py-2">
@@ -97,7 +99,7 @@ $(function () {
       $selectedCount.text(0);
       $labpricearea.text("₹0");
     }
-    updateLabPreview(list);
+    updateLabPreview(window.labTestsList);
   }
 
   function renderTest(list) {
@@ -140,13 +142,13 @@ $(function () {
     const isChecked = $(this).is(":checked");
     if (isChecked) {
       const item = currentFetchedList.find((i) => i.id == id);
-      if (item && !allTest.some(t => t.id == id)) {
-        allTest.push({...item,type:selectedMode});
+      if (item && !window.labTestsList.some(t => t.id == id)) {
+        window.labTestsList.push({...item,type:selectedMode});
       }
     } else {
-      allTest = allTest.filter((i) => i.id != id);
+      window.labTestsList = window.labTestsList.filter((i) => i.id != id);
     }
-    renderSelectedTest(allTest);
+    window.renderLabSelectedTests(window.labTestsList);
   });
 
   // Tab Buttons
@@ -213,8 +215,8 @@ $(function () {
   // Remove Item
   $selectedTestArea.on("click", ".test-cancel", function () {
     const id = $(this).data("id");
-    allTest = allTest.filter((i) => i.id != id);
-    renderSelectedTest(allTest);
+    window.labTestsList = window.labTestsList.filter((i) => i.id != id);
+    window.renderLabSelectedTests(window.labTestsList);
     // Uncheck in the list if currently displayed
     $allTestArea.find(`.selectCheckbox[data-id="${id}"]`).prop('checked', false);
   });
@@ -231,13 +233,13 @@ $(function () {
   $(document).ready(function () {
     // Initial fetch
     fetchLabData("test");
-    renderSelectedTest(allTest);
+    window.renderLabSelectedTests(window.labTestsList);
   });
 
   // Save Lab Prescription
   $("#saveLab").on("click", function () {
     const $btn = $(this);
-    if (allTest.length === 0) {
+    if (window.labTestsList.length === 0) {
       const toast = new ToastComponent();
       toast.warning("Please select at least one lab item.");
       return;
@@ -254,7 +256,7 @@ $(function () {
       items: {}
     };
 
-    allTest.forEach((item, index) => {
+    window.labTestsList.forEach((item, index) => {
       payload.items[index.toString()] = {
         item_id: item.id.toString(),
         type: item.type,
