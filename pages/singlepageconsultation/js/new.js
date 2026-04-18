@@ -109,7 +109,8 @@ $(function () {
   }
 
   $(document).ready(function () {
-    const modal = new bootstrap.Modal(document.getElementById("confirmPopup"));
+    // Removed bootstrap.Modal instantiation in favor of jQuery plugin for compatibility
+    // const modal = new bootstrap.Modal(document.getElementById("confirmPopup"));
     const singlePageApi = new SinglePageServices();
     const excludedIds = ":not(.ignore-edit)";
     applyFilters();
@@ -143,7 +144,7 @@ $(function () {
         }
       }
       isEdit = false;
-      modal.hide();
+      $("#confirmPopup").modal("hide");
     });
 
     $("#chipFilters span").click(function () {
@@ -224,7 +225,32 @@ $(function () {
     $appointmentSearch.select2({
       theme: "bootstrap-4",
       selectionCssClass:
-        "form-control custom-select border-start rounded-start-0 rounded-4 template-select-style",
+        "form-control custom-select border-start-0 rounded-start-0 rounded-4 template-select-style",
+      ajax: {
+        url: `${baseUrl}/singlepage_appointmentlist`,
+        dataType: "json",
+        delay: 250,
+        data: function (params) {
+          return {
+            searchTerm: params.term,
+          };
+        },
+        processResults: function (data) {
+          var results = Array.isArray(data) ? data : data.results || [];
+          return {
+            results: $.map(results, function (item) {
+              return {
+                text: `${item.Doctor_Name} - ${item.Appointment_Date} ${item.Appointment_Time} (${item.Appointment_Status})`,
+                id: item.Appointment_Id,
+                ...item,
+              };
+            }),
+          };
+        },
+        cache: true,
+      },
+      placeholder: "Select appointment",
+      minimumInputLength: 0,
     });
   });
 
@@ -275,10 +301,7 @@ $(function () {
   });
 
   $("#openAllergyModal").on("click", function () {
-    let allergyModal = new bootstrap.Modal(
-      document.getElementById("allergyModal"),
-    );
-    allergyModal.show();
+    $("#allergyModal").modal("show");
   });
 
   let $patientAccordion = $("#patientAccordion");

@@ -30,6 +30,10 @@ class SinglePageServices extends ApiServices {
    async saveVitalsData(data){
         return await this.apiObj.post(`/singlepage_vitals_save`,data)
    }
+
+   async saveAllergyData(data){
+        return await this.apiObj.post(`/singlepage_patientprofilesave`,data)
+   }
 }
 
 class SidebarServices extends ApiServices {

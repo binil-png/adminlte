@@ -275,7 +275,7 @@
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
               <div class="dropdown-divider"></div>
 
-              <a class="dropdown-item">
+              <!-- <a class="dropdown-item">
                 <div class="media">
                   <img
                     src="newversion/dist/img/a1.png"
@@ -295,7 +295,7 @@
                     </p>
                   </div>
                 </div>
-              </a>
+              </a> -->
 
               <div class="dropdown-divider"></div>
               <a
@@ -819,38 +819,22 @@
                         </h5>
                       </div>
                       <div class="modal-body p-4">
-                        <div id="allergyList" class="row g-3">
-                          <div class="col-md-3 allergy-row">
-                            <div class="input-group">
-                              <input
-                                type="text"
-                                class="form-control rounded-start-4 shadow-sm"
-                                placeholder="Enter allergy..."
-                              />
-                              <button
-                                class="btn btn-outline-danger btn-remove-allergy rounded-end-4"
-                                type="button"
-                              >
-                                <i class="fas fa-times"></i>
-                              </button>
-                            </div>
+                        <div class="row g-3">
+                          <div class="col-12">
+                            <label class="form-label small text-muted">Select or search allergies</label>
+                            <select
+                              id="allergySearch"
+                              class="form-control rounded-4"
+                              multiple="multiple"
+                              style="width: 100%"
+                            ></select>
                           </div>
-                        </div>
-
-                        <div
-                          class="mt-4 d-flex justify-content-end align-items-center"
-                        >
-                          <button
-                            id="addAllergy"
-                            class="btn btn-sm btn-outline-primary rounded-4 px-3"
-                          >
-                            <i class="fas fa-plus me-1"></i> Add Allergy
-                          </button>
                         </div>
                       </div>
                       <div class="modal-footer border-0 bg-light">
                         <button
                           type="button"
+                          id="saveAllergyChanges"
                           class="btn btn-sm btn-success rounded-4 px-4"
                         >
                           Save changes

@@ -1,31 +1,4 @@
-function addAllergyRow(container, value, index) {
-  var row = $('<div class="input-group mb-2 allergy-row col-md-2 col-lg-2">')
-    .append(
-      $(
-        `<input type="text" data-index="${index}" class="form-control rounded-start-4 input-style allergyinput">`,
-      )
-        .val(value || "")
-        .on("change", function () {
-          addAllergies[$(this).data("index")] = $(this).val();
-          container.empty();
-          addAllergies.forEach((allergy, i) => {
-            container.append(
-              `<span class="text-danger text-sm">${allergy}${
-                i < addAllergies.length - 1 ? "," : ""
-              } </span>`,
-            );
-          });
-        }),
-    )
-    .append(
-      $('<div class="input-group-append">').append(
-        $(
-          `<button data-index="${index}" style="padding: 0px 8px" class="btn btn-outline-danger btn-remove-allergy rounded-end-4" type="button"><i class="fas fa-times"></i></button>`,
-        ),
-      ),
-    );
-  $("#allergyList").append(row);
-}
+// Removed addAllergyRow as it's replaced by Select2 multi-select
 
 function appendAllergy(container, allergy, index) {
   container.append(
@@ -38,47 +11,104 @@ function appendAllergy(container, allergy, index) {
 function renderallergies() {
   const $allergyContainer = $("#pAllergies");
   $allergyContainer.empty();
-  $("#allergyList").empty();
-  console.log("addAllergies => ", addAllergies);
-  if (addAllergies.length) {
+  
+  if (addAllergies && addAllergies.length) {
     addAllergies.forEach((allergy, i) => {
       appendAllergy($allergyContainer, allergy, i);
-      addAllergyRow($allergyContainer, allergy, i);
     });
+    // Sync Select2 if it's initialized
+    if ($("#allergySearch").hasClass("select2-hidden-accessible")) {
+      $("#allergySearch").val(addAllergies).trigger("change.select2");
+    }
   } else {
     $allergyContainer.append(`<span class="text-muted small">None</span>`);
+    if ($("#allergySearch").hasClass("select2-hidden-accessible")) {
+      $("#allergySearch").val([]).trigger("change.select2");
+    }
   }
 }
 
 $(function () {
   const toast = new ToastComponent();
   const vitalsapi = new SinglePageServices();
-  $("#addAllergy").on("click", function (e) {
-    e.preventDefault();
-    $("#allergyList").append(
-      '<div class="input-group mb-2 allergy-row">< + """>',
-    );
+  $("#allergySearch").select2({
+    theme: "bootstrap-4",
+    placeholder: "Search or add allergies",
+    allowClear: true,
+    tags: true, // Allow adding new allergies
+    multiple: true,
+    ajax: {
+      url: `${baseUrl}/singlepage_allergy`,
+      dataType: "json",
+      delay: 250,
+      data: function (params) {
+        return {
+          searchterm: params.term,
+        };
+      },
+      processResults: function (data) {
+        return {
+          results: data,
+        };
+      },
+      cache: true,
+    },
+  }).on("change", function() {
+    addAllergies = $(this).val() || [];
+    const $allergyContainer = $("#pAllergies");
+    $allergyContainer.empty();
+    if (addAllergies.length) {
+      addAllergies.forEach((allergy, i) => {
+        appendAllergy($allergyContainer, allergy, i);
+      });
+    } else {
+      $allergyContainer.append(`<span class="text-muted small">None</span>`);
+    }
+  });
+
+  // Re-sync on modal open to be safe
+  $("#allergyModal").on("shown.bs.modal", function() {
+    $("#allergySearch").val(addAllergies).trigger("change.select2");
+  });
+
+  $("#saveAllergyChanges").on("click", async function() {
+    const $btn = $(this);
+    const originalText = $btn.html();
+    const formData = new FormData();
+    
+    if (addAllergies && addAllergies.length > 0) {
+      addAllergies.forEach(allergy => {
+        formData.append("allergy[]", allergy);
+      });
+    }
+
+    if (patientDataGlobal && patientDataGlobal.patientId) {
+      formData.append("patient_id", patientDataGlobal.patientId);
+    }
+
+    $btn.prop("disabled", true).html('<span class="spinner-border spinner-border-sm me-2"></span> Saving...');
+
+    try {
+      const res = await vitalsapi.saveAllergyData(formData);
+      console.log("Allergy Save Response:", res);
+      
+      // Check for common success indicators or a successful object returned
+      if (res && !(res instanceof Error) && (res.status || res.success || res.results || res === "success" || res.status === "success")) {
+        toast.success("Allergies updated successfully");
+        $("#allergyModal").modal("hide");
+      } else {
+        const errorMsg = res && res.message ? res.message : "Failed to update allergies";
+        toast.danger(errorMsg);
+      }
+    } catch (error) {
+      console.error("Allergy Save Error:", error);
+      toast.danger("An error occurred while saving allergies");
+    } finally {
+      $btn.prop("disabled", false).html(originalText);
+    }
   });
 
   renderallergies();
-
-  $("#addAllergy")
-    .off("click")
-    .on("click", function (e) {
-      e.preventDefault();
-      addAllergies.push("");
-      renderallergies();
-    });
-
-  $(document).on("click", ".btn-remove-allergy", function () {
-    const index = $(this).data("index");
-    $(this).closest(".allergy-row").remove();
-    $allergyContainer.empty();
-    addAllergies = addAllergies.filter((a, i) => i != index);
-    addAllergies.forEach((allergy, i) => {
-      appendAllergy(allergy, i);
-    });
-  });
 
   $("#saveVitals").click(async function () {
     const vitals = getVitalsFormData();
