@@ -102,13 +102,14 @@ $(function () {
     );
     addAllergies = patient.allergies;
     renderallergies();
-    
-    // Notify persistence layer to load saved progress for this patient
-    $(document).trigger("patientMatched", [patient]);
   }
 
   function renderPatientData() {
-    updatePatientCard(patientDataGlobal);
+    if (window.patientDataGlobal) {
+        updatePatientCard(window.patientDataGlobal);
+        // Notify persistence layer to load saved progress for this patient
+        $(document).trigger("patientMatched", [window.patientDataGlobal]);
+    }
   }
 
   $(document).on("patientMatched", function(e, patient) {

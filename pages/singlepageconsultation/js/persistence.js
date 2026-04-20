@@ -72,54 +72,10 @@
       patientDataGlobal: (typeof window.patientDataGlobal !== 'undefined') ? window.patientDataGlobal : null
     };
 
-    // Gather procedures
-    if (typeof window.procData !== 'undefined' && window.procData.length > 0) {
-        data.procedures = JSON.parse(JSON.stringify(window.procData));
-    } else {
-        $(".proc-box").each(function () {
-            const row = $(this);
-            data.procedures.push({
-                name: row.find("select.proc-name option:selected").text().trim() || "Procedure", 
-                qty: row.find(".proc-qty").val(),
-                price: row.find(".proc-price").val(),
-                doctor: row.find("label:contains('doctor')").next("select").val() || "—",
-                status: row.find("label:contains('Status')").next("select").val() || "Planned"
-            });
-        });
-    }
+    // The object is already initialized with global data getters for 
+    // procedures, prescriptions, labTests, dentalProcedures, files, etc.
+    // We only need to gather manual fields like follow-up.
 
-    // Gather prescriptions
-    $(".medicine-card").each(function () {
-        const card = $(this);
-        data.prescriptions.push({
-            name: card.find(".select2-medicine option:selected").text().trim() || "Medicine",
-            dosage: (card.find(".dosage-value").val() || "1") + " " + (card.find(".dosage-unit").val() || ""),
-            frequency: card.find(".select2-frequency option:selected").text().trim() || "0-0-1",
-            duration: card.find(".select2-duration option:selected").text().trim() || "1 Day",
-            instruction: card.find(".select2-consumption option:selected").text().trim() || "After Food",
-            qty: card.find(".dispense-value").val() || "1"
-        });
-    });
-
-    // Gather lab tests (prefer global list if available)
-    if (typeof window.labTestsList === 'undefined') {
-        $("#selectedTestArea li").each(function() {
-            const text = $(this).find("small").first().text();
-            if (text && text !== "No items selected") data.labTests.push(text);
-        });
-    }
-
-    // Gather attached files
-    if (typeof window.uploadedFilesList === 'undefined') {
-        $("#fileList li").each(function() {
-            data.files.push({
-                name: $(this).find('strong').first().text(),
-                category: $(this).find('small').first().text()
-            });
-        });
-    }
-
-    // Gather follow up
     data.nextReview = {
         date: $("#reviewDate").val(),
         time: $("#timeFilter").val()
@@ -140,15 +96,11 @@
     if (typeof window.setPrescriptions === "function") {
       window.setPrescriptions([]);
     }
-    if (typeof window.renderProcTable === "function") {
-      window.procData = [];
-      window.renderProcTable();
-    }
     if (typeof window.renderLabSelectedTests === "function") {
         window.renderLabSelectedTests([]);
     }
     if (typeof window.renderUploadedFiles === "function") {
-        window.renderUploadedFiles(); // It clears because uploadedFilesList is usually reset elsewhere or we should reset it
+        window.renderUploadedFiles(); 
     }
     window.uploadedFilesList = [];
     $("#fileList").empty();
@@ -170,29 +122,7 @@
     console.log(`Persistence: Data saved for key ${key}`, data);
   }
 
-  // Debounced auto-save
-  let autoSaveTimeout;
-  function debouncedAutoSave() {
-    console.log("Persistence: Changes detected, auto-save scheduled...");
-    clearTimeout(autoSaveTimeout);
-    autoSaveTimeout = setTimeout(saveToLocalStorage, 1500);
-  }
-
-  // Bind change events to all relevant static fields
-  $(document).on("input change", "input, textarea, select", function() {
-    if ($(this).hasClass("select2-search__field") || $(this).closest(".select2-container").length > 0) return;
-    debouncedAutoSave();
-  });
-
-  // Track Select2 changes explicitly
-  $(document).on("change", ".select2, .select2-hidden-accessible", function() {
-    debouncedAutoSave();
-  });
-
-  $(document).on("click", "#addProcedureBtn, #addMedicine, #addFileToList, #addToSelectedTests, .btn-add-test, #confirmDentalProc, #saveAllergyChanges", function() {
-    debouncedAutoSave();
-  });
-
+  // Explicit Save Listeners (Removed debounced auto-save on input change)
   $("#globalSave, #saveVitals, #saveNotes, #saveLab, #saveProcedure, #savePresc, #saveDental, #saveFiles, #saveAllergyChanges, .save-all-btn").on("click", function () {
     saveToLocalStorage();
   });
