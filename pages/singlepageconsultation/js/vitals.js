@@ -172,7 +172,7 @@ $(function () {
     };
 
     // Helper to update top summary strip
-    function updateTopSummary() {
+    window.updateTopSummary = function() {
       const temp = $("input[name='temperature']").val();
       const height = $("input[name='height']").val();
       const weight = $("input[name='weight']").val();
