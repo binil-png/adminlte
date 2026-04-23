@@ -763,19 +763,22 @@
                     />
                   </a>
                   <div>
-                    <div class="d-flex gap-2">
+                    <div class="d-flex gap-2 align-items-center">
                       <a role="button" class="openPatientDetails">
                         <h6 id="pName" class="mb-1 fw-semibold"></h6>
                       </a>
-                      <span id="pId" class="text-sm"></span>
+                      <span id="pId" class="text-sm text-muted"></span>
+                      <span id="pFileNo" class="text-sm text-secondary ms-1"></span>
                     </div>
-                    <div class="d-flex gap-2">
+                    <div class="d-flex flex-wrap gap-2 align-items-center pt-1">
                       <div id="pBasic" class="text-custom small"></div>
-                      <div class="d-flex align-items-center text-sm">
-                        <i class="bi bi-telephone text-secondary me-2"></i>
-                        <span id="pPhone" class="">
-                          <i class="fa fa-mobile mr-2 text-custom"></i>
-                        </span>
+                      <div class="d-flex align-items-center text-sm border-start ps-2">
+                        <i class="fa fa-mobile-alt text-custom me-1"></i>
+                        <span id="pPhone" class="text-muted small"></span>
+                      </div>
+                      <div class="d-flex align-items-center text-sm border-start ps-2">
+                        <i class="fa fa-envelope text-custom me-1"></i>
+                        <span id="pEmail" class="text-muted small"></span>
                       </div>
                     </div>
                   </div>

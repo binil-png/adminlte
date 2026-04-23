@@ -2,7 +2,6 @@ $(function () {
   let isEdit = false;
   let popoverInstance = null;
   let selectedTeeth = [];
-
   const renderPopover = () => {
     if (!shareBtn) return;
 
@@ -76,43 +75,53 @@ $(function () {
   };
 
   function updatePatientCard(patient) {
-    console.log(patient)
-    $("#pAvatar").attr("src", patient.imageUrl || "https://cloud.pappyjoe.com/images/user.png");
-    $("#pName").text(patient.patientName || "");
-    $("#pId").text(`#${patient.patientId}` || "");
-    let basic = ""
-    if (patient?.age) {
-      basic += `${patient.age || ""} Y ${(patient.address || patient.gender) ? " | " : ""}`
-    }
+    if (!patient) return;
 
-    if (patient.gender) {
-      basic += `${patient.gender || ""} ${patient.address ? " | " : ""}`
-    }
+    console.log("Updating Patient Card:", patient);
 
-    if (patient.gender) {
-      basic += ` ${patient.address || ""}`
-    }
-
-    $("#pBasic").text(basic);
-    $("#pAmount").text(` `);
-    $("#pVisits").text(patient.noOfVisits || "");
-    $("#pLastVisit").text(patient.lastVisit || "");
-    $("#pPhone").html(
-      `<i class="fa fa-mobile mr-2 text-custom"></i> ${patient.mobile || ""}`
+    $("#pAvatar").attr(
+      "src",
+      patient.imageUrl || "https://cloud.pappyjoe.com/images/user.png",
     );
-    addAllergies = patient.allergies;
-    renderallergies();
+    $("#pName").text(patient.patientName || "Unknown Patient");
+    $("#pId").text(patient.patientId ? `#${patient.patientId}` : "");
+    $("#pFileNo").text(patient.fileNo ? `| File: ${patient.fileNo}` : "");
+
+    let basicParts = [];
+    if (patient.age) basicParts.push(`${patient.age} Y`);
+    if (patient.gender) basicParts.push(patient.gender);
+    if (patient.address) basicParts.push(patient.address);
+    $("#pBasic").text(basicParts.join(" | "));
+
+    $("#pAmount").text("—");
+    $("#pVisits").text(
+      patient.noOfVisits !== undefined ? patient.noOfVisits : "—",
+    );
+    $("#pLastVisit").text(patient.lastVisit || "—");
+
+    $("#pPhone").text(patient.mobile || "—");
+    $("#pEmail").text(patient.email || "—");
+
+    // Update allergies (global variable used by vitals.js)
+    addAllergies = Array.isArray(patient.allergies)
+      ? patient.allergies.filter((a) => a && a.trim() !== "")
+      : [];
+    if (typeof renderallergies === "function") {
+      renderallergies();
+    }
   }
 
   function renderPatientData() {
     if (window.patientDataGlobal) {
-        updatePatientCard(window.patientDataGlobal);
-        // Notify persistence layer to load saved progress for this patient
-        $(document).trigger("patientMatched", [window.patientDataGlobal]);
+      updatePatientCard(window.patientDataGlobal);
+      // Notify persistence layer to load saved progress for this patient
+      $(document).trigger("patientMatched", [window.patientDataGlobal]);
+    } else {
+      console.log("condition false => ",window.patientDataGlobal);
     }
   }
 
-  $(document).on("patientMatched", function(e, patient) {
+  $(document).on("patientMatched", function (e, patient) {
     if (patient) {
       updatePatientCard(patient);
     }
@@ -224,8 +233,7 @@ $(function () {
     $patientSearch.on("change", async function () {
       const patientId = $(this).val();
       const res = await singlePageApi.getPatientData(patientId);
-      patientDataGlobal = res.results;
-      console.log(patientDataGlobal)
+      window.patientDataGlobal = res.results;
       renderPatientData();
     });
 
